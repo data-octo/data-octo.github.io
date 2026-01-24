@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>chapter08-cryptography.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="chapter-8-cryptography-fundamentals">Chapter 8: Cryptography Fundamentals</h1>
+<h2 id="%F0%9F%8E%AF-learning-objectives">🎯 Learning Objectives</h2>
+<p>By the end of this chapter, you will be able to:</p>
+<ul>
+<li>Understand the fundamental principles of cryptography and its role in cybersecurity</li>
+<li>Explain the difference between symmetric and asymmetric encryption</li>
+<li>Implement AES, RSA, and ECC encryption algorithms using OpenSSL</li>
+<li>Understand Public Key Infrastructure (PKI) and digital certificates</li>
+<li>Analyze and secure TLS/SSL communications</li>
+<li>Implement PGP for secure email and file encryption</li>
+<li>Understand cryptographic attacks and countermeasures</li>
+<li>Apply cryptographic principles to secure data storage and transmission</li>
+</ul>
+<h2 id="%F0%9F%94%90-what-is-cryptography">🔐 What is Cryptography?</h2>
+<p>Cryptography is the science and practice of securing information through mathematical techniques that transform data into unreadable formats, ensuring confidentiality, integrity, and authenticity.</p>
+<h3 id="the-foundation-of-digital-trust">The Foundation of Digital Trust</h3>
+<p>Cryptography provides the mathematical foundation for:</p>
+<ul>
+<li><strong>Secure Communications</strong>: Protecting data in transit</li>
+<li><strong>Data Protection</strong>: Securing information at rest</li>
+<li><strong>Authentication</strong>: Verifying identity and integrity</li>
+<li><strong>Digital Signatures</strong>: Ensuring non-repudiation</li>
+</ul>
+<h3 id="why-cryptography-matters">Why Cryptography Matters</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Cryptography Benefits] --> B[Confidentiality]
+    A --> C[Integrity]
+    A --> D[Authentication]
+    A --> E[Non-repudiation]
+    
+    B --> B1[Data secrecy]
+    B --> B2[Privacy protection]
+    B --> B3[Access control]
+    
+    C --> C1[Data validation]
+    C --> C2[Tamper detection]
+    C --> C3[Error detection]
+    
+    D --> D1[Identity verification]
+    D --> D2[Source validation]
+    D --> D3[Trust establishment]
+    
+    E --> E1[Proof of origin]
+    E --> E2[Action verification]
+    E --> E3[Legal compliance]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+</div></code></pre>
+<h2 id="%F0%9F%94%91-cryptographic-principles">🔑 Cryptographic Principles</h2>
+<p>Understanding the fundamental principles of cryptography is essential for implementing secure systems.</p>
+<h3 id="core-cryptographic-concepts">Core Cryptographic Concepts</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Cryptographic Principles] --> B[Plaintext]
+    A --> C[Encryption]
+    A --> D[Ciphertext]
+    A --> E[Decryption]
+    A --> F[Key Management]
+    
+    B --> B1[Original message]
+    B --> B2[Readable data]
+    B --> B3[Input to encryption]
+    
+    C --> C1[Encryption algorithm]
+    C --> C2[Secret key]
+    C --> C3[Mathematical transformation]
+    
+    D --> D1[Encrypted message]
+    D --> D2[Unreadable data]
+    D --> D3[Output of encryption]
+    
+    E --> E1[Decryption algorithm]
+    E --> E2[Secret key]
+    E --> E3[Reverse transformation]
+    
+    F --> F1[Key generation]
+    F --> F2[Key distribution]
+    F --> F3[Key storage]
+    
+    B --> G[Encryption Process]
+    G --> C
+    C --> D
+    D --> H[Decryption Process]
+    H --> E
+    E --> I[Recovered Plaintext]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+    style G fill:#e8f5e8
+    style H fill:#fff3e0
+    style I fill:#fce4ec
+</div></code></pre>
+<h3 id="1-plaintext">1. <strong>Plaintext</strong></h3>
+<ul>
+<li><strong>Definition</strong>: Original, readable message or data</li>
+<li><strong>Characteristics</strong>: Human-readable, meaningful content</li>
+<li><strong>Examples</strong>: Email messages, documents, passwords</li>
+</ul>
+<h3 id="2-encryption">2. <strong>Encryption</strong></h3>
+<ul>
+<li><strong>Definition</strong>: Process of converting plaintext to ciphertext</li>
+<li><strong>Components</strong>: Algorithm + Key + Plaintext</li>
+<li><strong>Output</strong>: Unreadable ciphertext</li>
+</ul>
+<h3 id="3-ciphertext">3. <strong>Ciphertext</strong></h3>
+<ul>
+<li><strong>Definition</strong>: Encrypted, unreadable message</li>
+<li><strong>Characteristics</strong>: Appears random, meaningless</li>
+<li><strong>Purpose</strong>: Protects data confidentiality</li>
+</ul>
+<h3 id="4-decryption">4. <strong>Decryption</strong></h3>
+<ul>
+<li><strong>Definition</strong>: Process of converting ciphertext back to plaintext</li>
+<li><strong>Components</strong>: Algorithm + Key + Ciphertext</li>
+<li><strong>Output</strong>: Recovered plaintext</li>
+</ul>
+<h3 id="5-key-management">5. <strong>Key Management</strong></h3>
+<ul>
+<li><strong>Definition</strong>: Processes for handling cryptographic keys</li>
+<li><strong>Components</strong>: Generation, distribution, storage, rotation</li>
+<li><strong>Critical</strong>: Security depends on key secrecy</li>
+</ul>
+<h2 id="%F0%9F%94%84-types-of-cryptography">🔄 Types of Cryptography</h2>
+<p>Cryptography can be classified into different types based on the number of keys used and their purpose.</p>
+<h3 id="symmetric-vs-asymmetric-cryptography">Symmetric vs. Asymmetric Cryptography</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Cryptography Types] --> B[Symmetric Cryptography]
+    A --> C[Asymmetric Cryptography]
+    A --> D[Hash Functions]
+    
+    B --> B1[Single key]
+    B --> B2[Fast encryption]
+    B --> B3[Key distribution problem]
+    
+    C --> C1[Key pair]
+    C --> C2[Slow encryption]
+    C --> C3[Key distribution solved]
+    
+    D --> D1[No keys]
+    D --> D2[One-way function]
+    D --> D3[Data integrity]
+    
+    B --> E[Use Cases]
+    E --> E1[Bulk data encryption]
+    E --> E2[Database encryption]
+    E --> E3[File encryption]
+    
+    C --> F[Use Cases]
+    F --> F1[Key exchange]
+    F --> F2[Digital signatures]
+    F --> F3[Authentication]
+    
+    D --> G[Use Cases]
+    G --> G1[Password hashing]
+    G --> G2[Data verification]
+    G --> G3[Digital fingerprints]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#e8f5e8
+    style F fill:#fff3e0
+    style G fill:#fce4ec
+</div></code></pre>
+<h2 id="%F0%9F%94%90-symmetric-cryptography">🔐 Symmetric Cryptography</h2>
+<p>Symmetric cryptography uses the same key for both encryption and decryption.</p>
+<h3 id="how-symmetric-encryption-works">How Symmetric Encryption Works</h3>
+<pre><code class="language-mermaid"><div class="mermaid">sequenceDiagram
+    participant Alice
+    participant Bob
+    participant Eve
+    
+    Note over Alice,Bob: Both have the same secret key
+    
+    Alice->>Alice: Plaintext + Secret Key
+    Alice->>Alice: Encryption Algorithm
+    Alice->>Alice: Ciphertext
+    
+    Alice->>Bob: Send Ciphertext
+    
+    Note over Eve: Intercepts ciphertext (cannot read)
+    
+    Bob->>Bob: Ciphertext + Secret Key
+    Bob->>Bob: Decryption Algorithm
+    Bob->>Bob: Plaintext
+</div></code></pre>
+<h3 id="advantages-of-symmetric-cryptography">Advantages of Symmetric Cryptography</h3>
+<ul>
+<li><strong>Speed</strong>: Fast encryption and decryption</li>
+<li><strong>Efficiency</strong>: Low computational overhead</li>
+<li><strong>Simplicity</strong>: Single key management</li>
+</ul>
+<h3 id="disadvantages-of-symmetric-cryptography">Disadvantages of Symmetric Cryptography</h3>
+<ul>
+<li><strong>Key Distribution</strong>: How to securely share the secret key</li>
+<li><strong>Key Management</strong>: Number of keys grows with users</li>
+<li><strong>Scalability</strong>: Difficult to manage in large systems</li>
+</ul>
+<h3 id="common-symmetric-algorithms">Common Symmetric Algorithms</h3>
+<h4 id="1-aes-advanced-encryption-standard">1. <strong>AES (Advanced Encryption Standard)</strong></h4>
+<ul>
+<li><strong>Key Sizes</strong>: 128, 192, or 256 bits</li>
+<li><strong>Block Size</strong>: 128 bits</li>
+<li><strong>Security</strong>: Considered cryptographically secure</li>
+<li><strong>Performance</strong>: Fast and efficient</li>
+</ul>
+<h4 id="2-chacha20">2. <strong>ChaCha20</strong></h4>
+<ul>
+<li><strong>Key Size</strong>: 256 bits</li>
+<li><strong>Nonce Size</strong>: 96 bits</li>
+<li><strong>Security</strong>: High security margin</li>
+<li><strong>Performance</strong>: Excellent on mobile devices</li>
+</ul>
+<h4 id="3-twofish">3. <strong>Twofish</strong></h4>
+<ul>
+<li><strong>Key Size</strong>: Up to 256 bits</li>
+<li><strong>Block Size</strong>: 128 bits</li>
+<li><strong>Security</strong>: Strong security analysis</li>
+<li><strong>Performance</strong>: Good performance characteristics</li>
+</ul>
+<h2 id="%F0%9F%94%91-asymmetric-cryptography">🔑 Asymmetric Cryptography</h2>
+<p>Asymmetric cryptography uses a pair of mathematically related keys: public and private.</p>
+<h3 id="how-asymmetric-encryption-works">How Asymmetric Encryption Works</h3>
+<pre><code class="language-mermaid"><div class="mermaid">sequenceDiagram
+    participant Alice
+    participant Bob
+    participant Eve
+    
+    Note over Bob: Bob generates key pair
+    
+    Bob->>Bob: Generate Public/Private Key Pair
+    Bob->>Alice: Send Public Key
+    
+    Note over Eve: Intercepts public key (can read)
+    
+    Alice->>Alice: Plaintext + Bob's Public Key
+    Alice->>Alice: Encryption Algorithm
+    Alice->>Alice: Ciphertext
+    
+    Alice->>Bob: Send Ciphertext
+    
+    Note over Eve: Intercepts ciphertext (cannot read)
+    
+    Bob->>Bob: Ciphertext + Bob's Private Key
+    Bob->>Bob: Decryption Algorithm
+    Bob->>Bob: Plaintext
+</div></code></pre>
+<h3 id="key-pair-characteristics">Key Pair Characteristics</h3>
+<h4 id="public-key">Public Key</h4>
+<ul>
+<li><strong>Purpose</strong>: Can be shared publicly</li>
+<li><strong>Usage</strong>: Encryption, signature verification</li>
+<li><strong>Distribution</strong>: Freely distributed</li>
+<li><strong>Security</strong>: Safe to expose</li>
+</ul>
+<h4 id="private-key">Private Key</h4>
+<ul>
+<li><strong>Purpose</strong>: Must be kept secret</li>
+<li><strong>Usage</strong>: Decryption, signature creation</li>
+<li><strong>Distribution</strong>: Never shared</li>
+<li><strong>Security</strong>: Critical to protect</li>
+</ul>
+<h3 id="advantages-of-asymmetric-cryptography">Advantages of Asymmetric Cryptography</h3>
+<ul>
+<li><strong>Key Distribution</strong>: Public keys can be freely shared</li>
+<li><strong>Digital Signatures</strong>: Provides authentication and non-repudiation</li>
+<li><strong>Scalability</strong>: Easy to manage in large systems</li>
+</ul>
+<h3 id="disadvantages-of-asymmetric-cryptography">Disadvantages of Asymmetric Cryptography</h3>
+<ul>
+<li><strong>Speed</strong>: Slower than symmetric encryption</li>
+<li><strong>Key Size</strong>: Requires larger keys for equivalent security</li>
+<li><strong>Computational Cost</strong>: Higher resource requirements</li>
+</ul>
+<h3 id="common-asymmetric-algorithms">Common Asymmetric Algorithms</h3>
+<h4 id="1-rsa-rivest-shamir-adleman">1. <strong>RSA (Rivest-Shamir-Adleman)</strong></h4>
+<ul>
+<li><strong>Key Sizes</strong>: 2048+ bits recommended</li>
+<li><strong>Security</strong>: Based on integer factorization</li>
+<li><strong>Performance</strong>: Slower than newer algorithms</li>
+<li><strong>Compatibility</strong>: Widely supported</li>
+</ul>
+<h4 id="2-ecc-elliptic-curve-cryptography">2. <strong>ECC (Elliptic Curve Cryptography)</strong></h4>
+<ul>
+<li><strong>Key Sizes</strong>: 256+ bits recommended</li>
+<li><strong>Security</strong>: Based on elliptic curve discrete logarithm</li>
+<li><strong>Performance</strong>: Faster than RSA</li>
+<li><strong>Efficiency</strong>: Smaller keys for equivalent security</li>
+</ul>
+<h4 id="3-ed25519">3. <strong>Ed25519</strong></h4>
+<ul>
+<li><strong>Key Size</strong>: 256 bits</li>
+<li><strong>Security</strong>: High security margin</li>
+<li><strong>Performance</strong>: Excellent performance</li>
+<li><strong>Modern</strong>: Designed for current security needs</li>
+</ul>
+<h2 id="%F0%9F%94%92-hash-functions">🔒 Hash Functions</h2>
+<p>Hash functions are one-way mathematical functions that convert input data into fixed-size output.</p>
+<h3 id="what-are-hash-functions">What are Hash Functions?</h3>
+<p>Hash functions:</p>
+<ul>
+<li><strong>Transform data</strong>: Convert any input to fixed-size output</li>
+<li><strong>One-way</strong>: Cannot reverse to get original input</li>
+<li><strong>Deterministic</strong>: Same input always produces same output</li>
+<li><strong>Collision resistant</strong>: Hard to find different inputs with same output</li>
+</ul>
+<h3 id="hash-function-properties">Hash Function Properties</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Hash Function Properties] --> B[Fixed Output Size]
+    A --> C[One-Way Function]
+    A --> D[Deterministic]
+    A --> E[Collision Resistant]
+    A --> F[Avalanche Effect]
+    
+    B --> B1[Consistent length]
+    B --> B2[Input size independent]
+    B --> B3[Standardized output]
+    
+    C --> C1[Cannot reverse]
+    C --> C2[Preimage resistance]
+    C --> C3[Second preimage resistance]
+    
+    D --> D1[Same input = same output]
+    D --> D2[Reproducible results]
+    D --> D3[Predictable behavior]
+    
+    E --> E1[Hard to find collisions]
+    E --> E2[Different inputs = different outputs]
+    E --> E3[Strong collision resistance]
+    
+    F --> F1[Small input change]
+    F --> F2[Large output change]
+    F --> F3[Unpredictable changes]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+</div></code></pre>
+<h3 id="common-hash-functions">Common Hash Functions</h3>
+<h4 id="1-sha-256-secure-hash-algorithm">1. <strong>SHA-256 (Secure Hash Algorithm)</strong></h4>
+<ul>
+<li><strong>Output Size</strong>: 256 bits (32 bytes)</li>
+<li><strong>Security</strong>: Cryptographically secure</li>
+<li><strong>Performance</strong>: Good performance</li>
+<li><strong>Usage</strong>: Digital signatures, blockchain, file integrity</li>
+</ul>
+<h4 id="2-sha-3-keccak">2. <strong>SHA-3 (Keccak)</strong></h4>
+<ul>
+<li><strong>Output Size</strong>: Variable (224, 256, 384, 512 bits)</li>
+<li><strong>Security</strong>: Based on different mathematical principles</li>
+<li><strong>Performance</strong>: Good performance</li>
+<li><strong>Usage</strong>: Alternative to SHA-2</li>
+</ul>
+<h4 id="3-blake3">3. <strong>BLAKE3</strong></h4>
+<ul>
+<li><strong>Output Size</strong>: Variable (up to 64 bytes)</li>
+<li><strong>Security</strong>: High security margin</li>
+<li><strong>Performance</strong>: Excellent performance</li>
+<li><strong>Usage</strong>: Modern applications requiring speed</li>
+</ul>
+<h2 id="%F0%9F%8F%97%EF%B8%8F-public-key-infrastructure-pki">🏗️ Public Key Infrastructure (PKI)</h2>
+<p>PKI is a framework that manages digital certificates and public key encryption.</p>
+<h3 id="what-is-pki">What is PKI?</h3>
+<p>PKI provides:</p>
+<ul>
+<li><strong>Digital Certificates</strong>: Bind public keys to identities</li>
+<li><strong>Certificate Authorities</strong>: Trusted entities that issue certificates</li>
+<li><strong>Certificate Management</strong>: Lifecycle management of certificates</li>
+<li><strong>Trust Establishment</strong>: Foundation for secure communications</li>
+</ul>
+<h3 id="pki-components">PKI Components</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[PKI Components] --> B[Certificate Authority CA]
+    A --> C[Registration Authority RA]
+    A --> D[Certificate Repository]
+    A --> E[Certificate Revocation]
+    A --> F[End Entities]
+    
+    B --> B1[Issues certificates]
+    B --> B2[Signs certificates]
+    B --> B3[Manages trust]
+    
+    C --> C1[Validates identities]
+    C --> C2[Processes requests]
+    C --> C3[Approves certificates]
+    
+    D --> D1[Stores certificates]
+    D --> D2[Distributes certificates]
+    D --> D3[Public access]
+    
+    E --> E1[Revokes certificates]
+    E --> E2[Maintains CRL]
+    E --> E3[OCSP responses]
+    
+    F --> F1[Users]
+    F --> F2[Servers]
+    F --> F3[Applications]
+    
+    B --> G[Certificate Chain]
+    G --> H[Trust Path]
+    H --> I[Validation]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+    style G fill:#e8f5e8
+    style H fill:#fff3e0
+    style I fill:#fce4ec
+</div></code></pre>
+<h3 id="digital-certificates">Digital Certificates</h3>
+<h4 id="certificate-structure">Certificate Structure</h4>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Digital Certificate] --> B[Certificate Data]
+    A --> C[Public Key]
+    A --> D[CA Signature]
+    
+    B --> B1[Subject name]
+    B --> B2[Issuer name]
+    B --> B3[Validity period]
+    B --> B4[Serial number]
+    
+    C --> C1[Subject's public key]
+    C --> C2[Key algorithm]
+    C --> C3[Key usage]
+    
+    D --> D1[CA signature]
+    D --> D2[Signature algorithm]
+    D --> D3[Certificate authority]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+</div></code></pre>
+<h4 id="certificate-fields">Certificate Fields</h4>
+<ul>
+<li><strong>Subject</strong>: Entity the certificate identifies</li>
+<li><strong>Issuer</strong>: CA that issued the certificate</li>
+<li><strong>Public Key</strong>: Subject's public key</li>
+<li><strong>Validity</strong>: Certificate expiration dates</li>
+<li><strong>Serial Number</strong>: Unique identifier</li>
+<li><strong>Signature</strong>: CA's digital signature</li>
+</ul>
+<h3 id="certificate-lifecycle">Certificate Lifecycle</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Certificate Lifecycle] --> B[Generation]
+    B --> C[Registration]
+    C --> D[Validation]
+    D --> E[Issuance]
+    E --> F[Distribution]
+    F --> G[Usage]
+    G --> H[Renewal/Revocation]
+    
+    B --> B1[Key pair generation]
+    B --> B2[Certificate request]
+    B --> B3[CSR creation]
+    
+    C --> C1[Submit to RA]
+    C --> C2[Identity verification]
+    C --> C3[Request approval]
+    
+    D --> D1[CA validation]
+    D --> D2[Policy compliance]
+    D --> D3[Security checks]
+    
+    E --> E1[Certificate creation]
+    E --> E2[CA signing]
+    E --> E3[Serial assignment]
+    
+    F --> F1[Repository storage]
+    F --> F2[End entity delivery]
+    F --> F3[Public distribution]
+    
+    G --> G1[Authentication]
+    G --> G2[Encryption]
+    G --> G3[Digital signatures]
+    
+    H --> H1[Expiration monitoring]
+    H --> H2[Renewal process]
+    H --> H3[Revocation if needed]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+    style G fill:#fff8e1
+    style H fill:#f3e5f5
+</div></code></pre>
+<h2 id="%F0%9F%94%90-implementing-cryptography-with-openssl">🔐 Implementing Cryptography with OpenSSL</h2>
+<p>OpenSSL is a comprehensive toolkit for implementing cryptographic functions.</p>
+<h3 id="openssl-basics">OpenSSL Basics</h3>
+<h4 id="installation">Installation</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># Ubuntu/Debian</span>
+sudo apt-get install openssl
+
+<span class="hljs-comment"># CentOS/RHEL</span>
+sudo yum install openssl
+
+<span class="hljs-comment"># macOS</span>
+brew install openssl
+</div></code></pre>
+<h4 id="basic-commands">Basic Commands</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># Generate random data</span>
+openssl rand -hex 32
+
+<span class="hljs-comment"># Generate hash</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello World"</span> | openssl sha256
+
+<span class="hljs-comment"># Base64 encoding/decoding</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello World"</span> | openssl base64
+openssl base64 -d &lt;&lt;&lt; <span class="hljs-string">"SGVsbG8gV29ybGQK"</span>
+</div></code></pre>
+<h3 id="symmetric-encryption-with-aes">Symmetric Encryption with AES</h3>
+<h4 id="encrypting-files">Encrypting Files</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># Encrypt file with AES-256</span>
+openssl enc -aes-256-cbc -salt -<span class="hljs-keyword">in</span> plaintext.txt -out encrypted.enc
+
+<span class="hljs-comment"># Decrypt file</span>
+openssl enc -aes-256-cbc -d -<span class="hljs-keyword">in</span> encrypted.enc -out decrypted.txt
+</div></code></pre>
+<h4 id="encrypting-with-password">Encrypting with Password</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># Encrypt with password</span>
+openssl enc -aes-256-cbc -salt -<span class="hljs-keyword">in</span> file.txt -out file.enc -pass pass:mypassword
+
+<span class="hljs-comment"># Decrypt with password</span>
+openssl enc -aes-256-cbc -d -<span class="hljs-keyword">in</span> file.enc -out file.txt -pass pass:mypassword
+</div></code></pre>
+<h3 id="asymmetric-encryption-with-rsa">Asymmetric Encryption with RSA</h3>
+<h4 id="key-generation">Key Generation</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># Generate private key</span>
+openssl genrsa -out private.pem 2048
+
+<span class="hljs-comment"># Extract public key</span>
+openssl rsa -<span class="hljs-keyword">in</span> private.pem -pubout -out public.pem
+
+<span class="hljs-comment"># View key details</span>
+openssl rsa -<span class="hljs-keyword">in</span> private.pem -text -noout
+</div></code></pre>
+<h4 id="encryption-and-decryption">Encryption and Decryption</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># Encrypt with public key</span>
+openssl rsautl -encrypt -inkey public.pem -pubin -<span class="hljs-keyword">in</span> message.txt -out encrypted.bin
+
+<span class="hljs-comment"># Decrypt with private key</span>
+openssl rsautl -decrypt -inkey private.pem -<span class="hljs-keyword">in</span> encrypted.bin -out decrypted.txt
+</div></code></pre>
+<h3 id="digital-signatures">Digital Signatures</h3>
+<h4 id="creating-signatures">Creating Signatures</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># Create signature</span>
+openssl dgst -sha256 -sign private.pem -out signature.sig message.txt
+
+<span class="hljs-comment"># Verify signature</span>
+openssl dgst -sha256 -verify public.pem -signature signature.sig message.txt
+</div></code></pre>
+<h2 id="%F0%9F%8C%90-tlsssl-security">🌐 TLS/SSL Security</h2>
+<p>Transport Layer Security (TLS) provides secure communications over networks.</p>
+<h3 id="what-is-tls">What is TLS?</h3>
+<p>TLS is a protocol that:</p>
+<ul>
+<li><strong>Encrypts communications</strong> between client and server</li>
+<li><strong>Authenticates parties</strong> using digital certificates</li>
+<li><strong>Ensures data integrity</strong> through cryptographic checksums</li>
+<li><strong>Provides forward secrecy</strong> for session keys</li>
+</ul>
+<h3 id="tls-handshake-process">TLS Handshake Process</h3>
+<pre><code class="language-mermaid"><div class="mermaid">sequenceDiagram
+    participant Client
+    participant Server
+    
+    Client->>Server: Client Hello (supported ciphers, random)
+    Server->>Client: Server Hello (chosen cipher, random)
+    Server->>Client: Certificate (server's public key)
+    Server->>Client: Server Key Exchange (if needed)
+    Server->>Client: Server Hello Done
+    
+    Client->>Client: Generate pre-master secret
+    Client->>Server: Client Key Exchange (encrypted pre-master)
+    Client->>Server: Change Cipher Spec
+    Client->>Server: Finished (encrypted)
+    
+    Server->>Server: Generate master secret
+    Server->>Client: Change Cipher Spec
+    Server->>Client: Finished (encrypted)
+    
+    Note over Client,Server: Secure communication begins
+</div></code></pre>
+<h3 id="tls-security-features">TLS Security Features</h3>
+<h4 id="1-cipher-suites">1. <strong>Cipher Suites</strong></h4>
+<ul>
+<li><strong>Key Exchange</strong>: RSA, DHE, ECDHE</li>
+<li><strong>Authentication</strong>: RSA, DSA, ECDSA</li>
+<li><strong>Encryption</strong>: AES, ChaCha20</li>
+<li><strong>Integrity</strong>: SHA-256, SHA-384</li>
+</ul>
+<h4 id="2-perfect-forward-secrecy">2. <strong>Perfect Forward Secrecy</strong></h4>
+<ul>
+<li><strong>Session Keys</strong>: Unique for each session</li>
+<li><strong>Key Compromise</strong>: Previous sessions remain secure</li>
+<li><strong>Implementation</strong>: DHE, ECDHE key exchange</li>
+</ul>
+<h4 id="3-certificate-validation">3. <strong>Certificate Validation</strong></h4>
+<ul>
+<li><strong>Chain Verification</strong>: Validate certificate chain</li>
+<li><strong>Revocation Checking</strong>: Check certificate status</li>
+<li><strong>Hostname Verification</strong>: Verify server identity</li>
+</ul>
+<h3 id="tls-analysis-with-openssl">TLS Analysis with OpenSSL</h3>
+<h4 id="test-tls-connection">Test TLS Connection</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># Test TLS connection</span>
+openssl s_client -connect google.com:443 -servername google.com
+
+<span class="hljs-comment"># Check certificate details</span>
+openssl s_client -connect google.com:443 -servername google.com | openssl x509 -text -noout
+</div></code></pre>
+<h4 id="analyze-cipher-suites">Analyze Cipher Suites</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># List supported ciphers</span>
+openssl ciphers -v
+
+<span class="hljs-comment"># Test specific cipher</span>
+openssl s_client -cipher <span class="hljs-string">'ECDHE-RSA-AES256-GCM-SHA384'</span> -connect example.com:443
+</div></code></pre>
+<h2 id="%F0%9F%93%A7-pgp-pretty-good-privacy">📧 PGP (Pretty Good Privacy)</h2>
+<p>PGP provides end-to-end encryption for email and file security.</p>
+<h3 id="what-is-pgp">What is PGP?</h3>
+<p>PGP is a system that:</p>
+<ul>
+<li><strong>Encrypts messages</strong> end-to-end</li>
+<li><strong>Provides digital signatures</strong> for authentication</li>
+<li><strong>Ensures message integrity</strong> and authenticity</li>
+<li><strong>Works independently</strong> of email providers</li>
+</ul>
+<h3 id="pgp-key-management">PGP Key Management</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[PGP Key Management] --> B[Key Generation]
+    A --> C[Key Distribution]
+    A --> D[Key Verification]
+    A --> E[Key Revocation]
+    
+    B --> B1[Generate key pair]
+    B --> B2[Set passphrase]
+    B --> B3[Export public key]
+    
+    C --> C1[Share public key]
+    C --> C2[Key servers]
+    C --> C3[Direct exchange]
+    
+    D --> D1[Fingerprint verification]
+    D --> D2[Web of trust]
+    D --> D3[Certificate authorities]
+    
+    E --> E1[Revoke compromised keys]
+    E --> E2[Update key servers]
+    E --> E3[Notify contacts]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+</div></code></pre>
+<h3 id="pgp-operations">PGP Operations</h3>
+<h4 id="1-encryption">1. <strong>Encryption</strong></h4>
+<ul>
+<li><strong>Symmetric Encryption</strong>: Fast encryption of message content</li>
+<li><strong>Asymmetric Encryption</strong>: Secure key exchange</li>
+<li><strong>Hybrid Approach</strong>: Combines both methods</li>
+</ul>
+<h4 id="2-digital-signatures">2. <strong>Digital Signatures</strong></h4>
+<ul>
+<li><strong>Message Signing</strong>: Prove message authenticity</li>
+<li><strong>Identity Verification</strong>: Verify sender identity</li>
+<li><strong>Non-repudiation</strong>: Prevent sender denial</li>
+</ul>
+<h4 id="3-key-management">3. <strong>Key Management</strong></h4>
+<ul>
+<li><strong>Key Generation</strong>: Create new key pairs</li>
+<li><strong>Key Distribution</strong>: Share public keys</li>
+<li><strong>Key Verification</strong>: Validate key authenticity</li>
+</ul>
+<h3 id="pgp-implementation">PGP Implementation</h3>
+<h4 id="using-gnupg">Using GnuPG</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># Generate key pair</span>
+gpg --gen-key
+
+<span class="hljs-comment"># List keys</span>
+gpg --list-keys
+
+<span class="hljs-comment"># Export public key</span>
+gpg --<span class="hljs-built_in">export</span> --armor user@example.com &gt; public.key
+
+<span class="hljs-comment"># Import public key</span>
+gpg --import public.key
+
+<span class="hljs-comment"># Encrypt file</span>
+gpg --encrypt --recipient user@example.com file.txt
+
+<span class="hljs-comment"># Decrypt file</span>
+gpg --decrypt file.txt.gpg
+
+<span class="hljs-comment"># Sign file</span>
+gpg --sign file.txt
+
+<span class="hljs-comment"># Verify signature</span>
+gpg --verify file.txt.gpg
+</div></code></pre>
+<h2 id="%F0%9F%9A%A8-cryptographic-attacks-and-countermeasures">🚨 Cryptographic Attacks and Countermeasures</h2>
+<p>Understanding potential attacks helps implement proper security measures.</p>
+<h3 id="common-cryptographic-attacks">Common Cryptographic Attacks</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Cryptographic Attacks] --> B[Brute Force]
+    A --> C[Cryptanalysis]
+    A --> D[Side-Channel]
+    A --> E[Implementation]
+    
+    B --> B1[Exhaustive search]
+    B --> B2[Dictionary attacks]
+    B --> B3[Rainbow tables]
+    
+    C --> C1[Mathematical analysis]
+    C --> C2[Algorithm weaknesses]
+    C --> C3[Cipher vulnerabilities]
+    
+    D --> D1[Timing attacks]
+    D --> D2[Power analysis]
+    D --> D3[Electromagnetic]
+    
+    E --> E1[Buffer overflows]
+    E --> E2[Memory leaks]
+    E --> E3[Random number generation]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+</div></code></pre>
+<h3 id="attack-types-and-countermeasures">Attack Types and Countermeasures</h3>
+<h4 id="1-brute-force-attacks">1. <strong>Brute Force Attacks</strong></h4>
+<p><strong>Description</strong>: Trying all possible keys until the correct one is found</p>
+<p><strong>Countermeasures</strong>:</p>
+<ul>
+<li><strong>Strong Keys</strong>: Use sufficient key length</li>
+<li><strong>Key Derivation</strong>: Use slow hash functions (PBKDF2, Argon2)</li>
+<li><strong>Rate Limiting</strong>: Limit authentication attempts</li>
+<li><strong>Account Lockout</strong>: Temporarily block accounts after failures</li>
+</ul>
+<h4 id="2-cryptanalysis-attacks">2. <strong>Cryptanalysis Attacks</strong></h4>
+<p><strong>Description</strong>: Mathematical analysis to find weaknesses in algorithms</p>
+<p><strong>Countermeasures</strong>:</p>
+<ul>
+<li><strong>Proven Algorithms</strong>: Use well-analyzed cryptographic algorithms</li>
+<li><strong>Regular Updates</strong>: Keep algorithms and implementations current</li>
+<li><strong>Security Reviews</strong>: Conduct regular security assessments</li>
+<li><strong>Multiple Layers</strong>: Implement defense in depth</li>
+</ul>
+<h4 id="3-side-channel-attacks">3. <strong>Side-Channel Attacks</strong></h4>
+<p><strong>Description</strong>: Exploiting information leaked during cryptographic operations</p>
+<p><strong>Countermeasures</strong>:</p>
+<ul>
+<li><strong>Constant-Time</strong>: Implement constant-time algorithms</li>
+<li><strong>Power Analysis</strong>: Use power analysis resistant implementations</li>
+<li><strong>Timing Protection</strong>: Protect against timing attacks</li>
+<li><strong>Physical Security</strong>: Secure hardware and environments</li>
+</ul>
+<h4 id="4-implementation-attacks">4. <strong>Implementation Attacks</strong></h4>
+<p><strong>Description</strong>: Exploiting weaknesses in cryptographic implementations</p>
+<p><strong>Countermeasures</strong>:</p>
+<ul>
+<li><strong>Secure Coding</strong>: Follow secure coding practices</li>
+<li><strong>Code Reviews</strong>: Conduct thorough code reviews</li>
+<li><strong>Testing</strong>: Comprehensive security testing</li>
+<li><strong>Vulnerability Management</strong>: Regular vulnerability assessments</li>
+</ul>
+<h2 id="%F0%9F%A7%AA-hands-on-activities">🧪 Hands-on Activities</h2>
+<h3 id="activity-1-openssl-encryption">Activity 1: OpenSSL Encryption</h3>
+<p><strong>Objective</strong>: Implement symmetric and asymmetric encryption using OpenSSL.</p>
+<p><strong>Materials</strong>: OpenSSL, text files, terminal</p>
+<p><strong>Steps</strong>:</p>
+<ol>
+<li><strong>Install OpenSSL</strong> on your system</li>
+<li><strong>Generate test data</strong> (text files)</li>
+<li><strong>Implement AES encryption</strong> with different key sizes</li>
+<li><strong>Generate RSA key pairs</strong> and encrypt/decrypt data</li>
+<li><strong>Create and verify</strong> digital signatures</li>
+<li><strong>Document results</strong> and security considerations</li>
+</ol>
+<h3 id="activity-2-pki-certificate-management">Activity 2: PKI Certificate Management</h3>
+<p><strong>Objective</strong>: Set up and manage a basic PKI infrastructure.</p>
+<p><strong>Materials</strong>: OpenSSL, test environment</p>
+<p><strong>Steps</strong>:</p>
+<ol>
+<li><strong>Create root CA</strong> with self-signed certificate</li>
+<li><strong>Generate intermediate CA</strong> certificate</li>
+<li><strong>Issue end-entity certificates</strong> for servers/users</li>
+<li><strong>Build certificate chains</strong> and validate</li>
+<li><strong>Implement certificate revocation</strong> procedures</li>
+<li><strong>Test certificate validation</strong> and trust</li>
+</ol>
+<h3 id="activity-3-tls-security-analysis">Activity 3: TLS Security Analysis</h3>
+<p><strong>Objective</strong>: Analyze and secure TLS communications.</p>
+<p><strong>Materials</strong>: OpenSSL, web servers, network access</p>
+<p><strong>Steps</strong>:</p>
+<ol>
+<li><strong>Test TLS connections</strong> to various websites</li>
+<li><strong>Analyze certificate chains</strong> and validation</li>
+<li><strong>Check cipher suite</strong> support and security</li>
+<li><strong>Identify security vulnerabilities</strong> and misconfigurations</li>
+<li><strong>Recommend security improvements</strong> for TLS deployment</li>
+<li><strong>Document findings</strong> and remediation steps</li>
+</ol>
+<h3 id="activity-4-pgp-implementation">Activity 4: PGP Implementation</h3>
+<p><strong>Objective</strong>: Implement PGP for secure communications.</p>
+<p><strong>Materials</strong>: GnuPG, email client, test environment</p>
+<p><strong>Steps</strong>:</p>
+<ol>
+<li><strong>Install and configure</strong> GnuPG</li>
+<li><strong>Generate PGP key pairs</strong> with appropriate settings</li>
+<li><strong>Exchange public keys</strong> with other users</li>
+<li><strong>Encrypt and decrypt</strong> messages and files</li>
+<li><strong>Create and verify</strong> digital signatures</li>
+<li><strong>Implement key management</strong> best practices</li>
+</ol>
+<h2 id="%F0%9F%93%8B-key-takeaways">📋 Key Takeaways</h2>
+<ol>
+<li>
+<p><strong>Cryptography is fundamental</strong> to cybersecurity, providing confidentiality, integrity, and authentication.</p>
+</li>
+<li>
+<p><strong>Symmetric cryptography</strong> is fast and efficient but requires secure key distribution.</p>
+</li>
+<li>
+<p><strong>Asymmetric cryptography</strong> solves key distribution problems but is slower and requires larger keys.</p>
+</li>
+<li>
+<p><strong>Hash functions</strong> provide data integrity and are essential for digital signatures and password security.</p>
+</li>
+<li>
+<p><strong>PKI manages digital certificates</strong> and establishes trust in public key systems.</p>
+</li>
+<li>
+<p><strong>TLS secures network communications</strong> and is essential for web security and privacy.</p>
+</li>
+<li>
+<p><strong>PGP provides end-to-end encryption</strong> for email and file security.</p>
+</li>
+<li>
+<p><strong>Understanding cryptographic attacks</strong> helps implement proper security measures and countermeasures.</p>
+</li>
+</ol>
+<h2 id="%E2%9D%93-review-questions">❓ Review Questions</h2>
+<ol>
+<li>
+<p><strong>What are the main differences</strong> between symmetric and asymmetric cryptography, and when would you use each?</p>
+</li>
+<li>
+<p><strong>How does PKI work</strong>, and what are the key components of a PKI infrastructure?</p>
+</li>
+<li>
+<p><strong>What is the TLS handshake process</strong>, and how does it establish secure communications?</p>
+</li>
+<li>
+<p><strong>How can OpenSSL be used</strong> to implement various cryptographic functions?</p>
+</li>
+<li>
+<p><strong>What are the main types</strong> of cryptographic attacks, and how can they be mitigated?</p>
+</li>
+</ol>
+<h2 id="%F0%9F%93%9A-further-reading">📚 Further Reading</h2>
+<h3 id="books">Books</h3>
+<ul>
+<li>&quot;Applied Cryptography&quot; by Bruce Schneier</li>
+<li>&quot;Cryptography Engineering&quot; by Niels Ferguson, Bruce Schneier, and Tadayoshi Kohno</li>
+<li>&quot;Understanding Cryptography&quot; by Christof Paar and Jan Pelzl</li>
+</ul>
+<h3 id="online-resources">Online Resources</h3>
+<ul>
+<li><a href="https://www.openssl.org/docs/">OpenSSL Documentation</a></li>
+<li><a href="https://www.nist.gov/cryptography">NIST Cryptographic Standards</a></li>
+<li><a href="https://tools.ietf.org/html/rfc5246">RFC 5246 - TLS 1.2</a></li>
+</ul>
+<h3 id="tools-and-software">Tools and Software</h3>
+<ul>
+<li><a href="https://www.openssl.org/">OpenSSL</a> - Cryptographic toolkit</li>
+<li><a href="https://gnupg.org/">GnuPG</a> - PGP implementation</li>
+<li><a href="https://www.wireshark.org/">Wireshark</a> - TLS analysis</li>
+</ul>
+<hr>
+<p><strong>Next Chapter</strong>: <a href="chapter09-penetration-testing.md">Chapter 9: Penetration Testing and Ethical Hacking</a> - Learn about penetration testing methodology, security assessment tools, and ethical hacking principles.</p>
+
+</body>
+</html>

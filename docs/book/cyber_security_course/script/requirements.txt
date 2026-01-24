@@ -1,0 +1,4 @@
+pydub
+ffmpeg
+beautifulsoup4
+edge-tts

@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>chapter03-risk-management.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="chapter-3-risk-management-fundamentals">Chapter 3: Risk Management Fundamentals</h1>
+<h2 id="%F0%9F%8E%AF-learning-objectives">🎯 Learning Objectives</h2>
+<p>By the end of this chapter, you will be able to:</p>
+<ul>
+<li>Define risk management and explain its importance in cybersecurity</li>
+<li>Understand the risk management lifecycle and its key components</li>
+<li>Apply ISO 27005 and NIST 800-37 frameworks for risk assessment</li>
+<li>Identify and categorize different types of cybersecurity risks</li>
+<li>Develop risk treatment strategies and mitigation plans</li>
+<li>Create executive risk reports and communicate risk to stakeholders</li>
+<li>Implement continuous risk monitoring and review processes</li>
+</ul>
+<h2 id="%F0%9F%8E%B2-what-is-risk-management">🎲 What is Risk Management?</h2>
+<p>Risk management is the systematic process of identifying, analyzing, evaluating, and treating risks to minimize their potential impact on an organization's objectives. In cybersecurity, this means protecting information assets while enabling business operations.</p>
+<h3 id="why-risk-management-matters">Why Risk Management Matters</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Risk Management Benefits] --> B[Protect Assets]
+    A --> C[Enable Business]
+    A --> D[Comply with Regulations]
+    A --> E[Build Stakeholder Trust]
+    
+    B --> B1[Information Security]
+    B --> B2[System Availability]
+    B --> B3[Data Integrity]
+    
+    C --> C1[Risk-Informed Decisions]
+    C --> C2[Resource Optimization]
+    C --> C3[Innovation Support]
+    
+    D --> D1[GDPR Compliance]
+    D --> D2[Industry Standards]
+    D --> D3[Legal Requirements]
+    
+    E --> E1[Customer Confidence]
+    E --> E2[Investor Trust]
+    E --> E3[Partner Relationships]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+</div></code></pre>
+<h3 id="the-risk-management-paradox">The Risk Management Paradox</h3>
+<p>Organizations face a fundamental challenge: <strong>too much security can hinder business operations, while too little security creates unacceptable risks</strong>. Risk management provides the framework to find the right balance.</p>
+<p><strong>Example</strong>: A bank needs to allow customers to access their accounts online (business requirement) while protecting against fraud and data theft (security requirement). Risk management helps determine the appropriate security controls.</p>
+<h2 id="%F0%9F%94%84-the-risk-management-lifecycle">🔄 The Risk Management Lifecycle</h2>
+<p>Risk management is not a one-time activity but a continuous process that adapts to changing threats and business conditions.</p>
+<h3 id="continuous-risk-management-process">Continuous Risk Management Process</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Risk Management Lifecycle] --> B[Establish Context]
+    B --> C[Risk Identification]
+    C --> D[Risk Analysis]
+    D --> E[Risk Evaluation]
+    E --> F[Risk Treatment]
+    F --> G[Monitor & Review]
+    G --> B
+    
+    B --> B1[Define scope and criteria]
+    B --> B2[Identify stakeholders]
+    B --> B3[Set risk appetite]
+    
+    C --> C1[Asset inventory]
+    C --> C2[Threat identification]
+    C --> C3[Vulnerability assessment]
+    
+    D --> D1[Likelihood assessment]
+    D --> D2[Impact assessment]
+    D --> D3[Risk calculation]
+    
+    E --> E1[Risk prioritization]
+    E --> E2[Acceptance criteria]
+    E --> E3[Treatment decisions]
+    
+    F --> F1[Control selection]
+    F --> F2[Implementation planning]
+    F --> F3[Resource allocation]
+    
+    G --> G1[Control effectiveness]
+    G --> G2[Risk reassessment]
+    G --> G3[Process improvement]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+    style G fill:#fff8e1
+</div></code></pre>
+<h2 id="%F0%9F%8F%97%EF%B8%8F-iso-27005-information-security-risk-management">🏗️ ISO 27005: Information Security Risk Management</h2>
+<p>ISO 27005 is the international standard that provides guidelines for information security risk management. It's part of the ISO 27000 family of standards and provides a structured approach to managing information security risks.</p>
+<h3 id="iso-27005-framework-overview">ISO 27005 Framework Overview</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[ISO 27005 Framework] --> B[Context Establishment]
+    A --> C[Risk Assessment]
+    A --> D[Risk Treatment]
+    A --> E[Risk Acceptance]
+    A --> F[Risk Communication]
+    A --> G[Risk Monitoring & Review]
+    
+    B --> B1[Risk Management Policy]
+    B --> B2[Risk Management Scope]
+    B --> B3[Risk Criteria]
+    B --> B4[Organization Context]
+    
+    C --> C1[Risk Identification]
+    C --> C2[Risk Analysis]
+    C --> C3[Risk Evaluation]
+    
+    D --> D1[Risk Treatment Options]
+    D --> D2[Risk Treatment Plan]
+    D --> D3[Implementation]
+    
+    E --> E1[Risk Acceptance Criteria]
+    E --> E2[Residual Risk Assessment]
+    E --> E3[Management Approval]
+    
+    F --> F1[Stakeholder Communication]
+    F --> F2[Risk Reporting]
+    F --> F3[Documentation]
+    
+    G --> G1[Control Monitoring]
+    G --> G2[Risk Reassessment]
+    G --> G3[Process Improvement]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+    style G fill:#fff8e1
+</div></code></pre>
+<h3 id="1-context-establishment">1. Context Establishment</h3>
+<p><strong>Purpose</strong>: Define the scope, boundaries, and criteria for risk management activities.</p>
+<p><strong>Key Components</strong>:</p>
+<ul>
+<li><strong>Risk Management Policy</strong>: High-level statement of commitment and approach</li>
+<li><strong>Scope Definition</strong>: What's included and excluded from risk management</li>
+<li><strong>Risk Criteria</strong>: How risks will be evaluated and prioritized</li>
+<li><strong>Stakeholder Identification</strong>: Who has an interest in risk management outcomes</li>
+</ul>
+<p><strong>Example Policy Statement</strong>:</p>
+<blockquote>
+<p>&quot;Our organization is committed to managing information security risks to protect our assets, enable business operations, and maintain stakeholder trust. We will identify, assess, and treat risks in accordance with ISO 27005 guidelines.&quot;</p>
+</blockquote>
+<h3 id="2-risk-assessment">2. Risk Assessment</h3>
+<p>The core of risk management involves three interconnected activities:</p>
+<h4 id="a-risk-identification">A. Risk Identification</h4>
+<p><strong>Purpose</strong>: Find all potential risks that could affect information security.</p>
+<p><strong>Techniques</strong>:</p>
+<ul>
+<li><strong>Asset Inventory</strong>: List all information assets (data, systems, people, processes)</li>
+<li><strong>Threat Modeling</strong>: Identify potential threat sources and attack vectors</li>
+<li><strong>Vulnerability Assessment</strong>: Find weaknesses that threats could exploit</li>
+<li><strong>Scenario Analysis</strong>: Consider &quot;what if&quot; situations</li>
+</ul>
+<p><strong>Asset Classification Example</strong>:</p>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Information Assets] --> B[Data Assets]
+    A --> C[System Assets]
+    A --> D[People Assets]
+    A --> E[Process Assets]
+    
+    B --> B1[Customer PII]
+    B --> B2[Financial Records]
+    B --> B3[Intellectual Property]
+    B --> B4[Operational Data]
+    
+    C --> C1[Web Applications]
+    C --> C2[Database Servers]
+    C --> C3[Network Infrastructure]
+    C --> C4[End User Devices]
+    
+    D --> D1[Employees]
+    D --> D2[Contractors]
+    D --> D3[Partners]
+    D --> D4[Customers]
+    
+    E --> E1[Business Processes]
+    E --> E2[Security Procedures]
+    E --> E3[Change Management]
+    E --> E4[Incident Response]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+</div></code></pre>
+<h4 id="b-risk-analysis">B. Risk Analysis</h4>
+<p><strong>Purpose</strong>: Understand the likelihood and impact of identified risks.</p>
+<p><strong>Risk Calculation Formula</strong>:</p>
+<pre class="hljs"><code><div>Risk = Likelihood × Impact
+</div></code></pre>
+<p><strong>Likelihood Assessment Scale</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Description</th>
+<th>Probability Range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Very Low</td>
+<td>&lt; 5%</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Low</td>
+<td>5-20%</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Medium</td>
+<td>21-50%</td>
+</tr>
+<tr>
+<td>4</td>
+<td>High</td>
+<td>51-80%</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Very High</td>
+<td>&gt; 80%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Impact Assessment Scale</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Description</th>
+<th>Business Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Very Low</td>
+<td>Minimal disruption, &lt; $10K</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Low</td>
+<td>Minor disruption, $10K-$100K</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Medium</td>
+<td>Moderate disruption, $100K-$1M</td>
+</tr>
+<tr>
+<td>4</td>
+<td>High</td>
+<td>Significant disruption, $1M-$10M</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Very High</td>
+<td>Critical disruption, &gt; $10M</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Risk Matrix Example</strong>:</p>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Risk Matrix] --> B[Impact Level]
+    A --> C[Likelihood Level]
+    
+    B --> B1[1 - Very Low]
+    B --> B2[2 - Low]
+    B --> B3[3 - Medium]
+    B --> B4[4 - High]
+    B --> B5[5 - Very High]
+    
+    C --> C1[1 - Very Low]
+    C --> C2[2 - Low]
+    C --> C3[3 - Medium]
+    C --> C4[4 - High]
+    C --> C5[5 - Very High]
+    
+    B1 --> D1[1]
+    B1 --> D2[2]
+    B1 --> D3[3]
+    B1 --> D4[4]
+    B1 --> D5[5]
+    
+    B2 --> E1[2]
+    B2 --> E2[4]
+    B2 --> E3[6]
+    B2 --> E4[8]
+    B2 --> E5[10]
+    
+    B3 --> F1[3]
+    B3 --> F2[6]
+    B3 --> F3[9]
+    B3 --> F4[12]
+    B3 --> F5[15]
+    
+    B4 --> G1[4]
+    B4 --> G2[8]
+    B4 --> G3[12]
+    B4 --> G4[16]
+    B4 --> G5[20]
+    
+    B5 --> H1[5]
+    B5 --> H2[10]
+    B5 --> H3[15]
+    B5 --> H4[20]
+    B5 --> H5[25]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D1 fill:#e8f5e8
+    style D2 fill:#e8f5e8
+    style D3 fill:#fff3e0
+    style D4 fill:#fff3e0
+    style D5 fill:#fce4ec
+    style E1 fill:#e8f5e8
+    style E2 fill:#e8f5e8
+    style E3 fill:#fff3e0
+    style E4 fill:#fce4ec
+    style E5 fill:#fce4ec
+    style F1 fill:#fff3e0
+    style F2 fill:#fff3e0
+    style F3 fill:#fce4ec
+    style F4 fill:#fce4ec
+    style F5 fill:#fce4ec
+    style G1 fill:#fce4ec
+    style G2 fill:#fce4ec
+    style G3 fill:#fce4ec
+    style G4 fill:#fce4ec
+    style G5 fill:#fce4ec
+    style H1 fill:#fce4ec
+    style H2 fill:#fce4ec
+    style H3 fill:#fce4ec
+    style H4 fill:#fce4ec
+    style H5 fill:#fce4ec
+</div></code></pre>
+<p><strong>Risk Levels</strong>:</p>
+<ul>
+<li><strong>Green (1-4)</strong>: Low risk, accept or monitor</li>
+<li><strong>Yellow (6-12)</strong>: Medium risk, treat or transfer</li>
+<li><strong>Red (15-25)</strong>: High risk, treat immediately</li>
+</ul>
+<h4 id="c-risk-evaluation">C. Risk Evaluation</h4>
+<p><strong>Purpose</strong>: Compare calculated risks against risk criteria to determine treatment priorities.</p>
+<p><strong>Evaluation Criteria</strong>:</p>
+<ul>
+<li><strong>Risk Appetite</strong>: Organization's willingness to accept risk</li>
+<li><strong>Risk Tolerance</strong>: Maximum acceptable risk level</li>
+<li><strong>Legal/Regulatory Requirements</strong>: Mandatory risk levels</li>
+<li><strong>Business Impact</strong>: Effect on business objectives</li>
+</ul>
+<h3 id="3-risk-treatment">3. Risk Treatment</h3>
+<p><strong>Purpose</strong>: Select and implement appropriate responses to unacceptable risks.</p>
+<p><strong>Treatment Options</strong>:</p>
+<pre><code class="language-mermaid"><div class="mermaid">graph LR
+    A[Risk Treatment Options] --> B[Risk Avoidance]
+    A --> C[Risk Reduction]
+    A --> D[Risk Transfer]
+    A --> E[Risk Acceptance]
+    
+    B --> B1[Eliminate risk source]
+    B --> B2[Change business process]
+    B --> B3[Discontinue activity]
+    
+    C --> C1[Implement controls]
+    C --> C2[Reduce likelihood]
+    C --> C3[Reduce impact]
+    
+    D --> D1[Insurance]
+    D --> D2[Outsourcing]
+    D --> D3[Contracts]
+    
+    E --> E1[Accept residual risk]
+    E --> E2[Monitor risk]
+    E --> E3[Review periodically]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+</div></code></pre>
+<h2 id="%F0%9F%8F%9B%EF%B8%8F-nist-800-37-risk-management-framework">🏛️ NIST 800-37: Risk Management Framework</h2>
+<p>The NIST Risk Management Framework (RMF) provides a structured approach to managing information security and privacy risks for federal systems. It's widely adopted by government agencies and private organizations.</p>
+<h3 id="nist-rmf-lifecycle">NIST RMF Lifecycle</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[NIST RMF Lifecycle] --> B[Prepare]
+    B --> C[Categorize]
+    C --> D[Select]
+    D --> E[Implement]
+    E --> F[Assess]
+    F --> G[Authorize]
+    G --> H[Monitor]
+    H --> I[Continuous Monitoring]
+    I --> C
+    
+    B --> B1[Risk Management Strategy]
+    B --> B2[Organizational Inputs]
+    B --> B3[System Inventory]
+    
+    C --> C1[System Description]
+    C --> C2[Information Types]
+    C --> C3[Security Categorization]
+    
+    D --> D1[Control Baselines]
+    D --> D2[Control Selection]
+    D --> D3[Control Allocation]
+    
+    E --> E1[Control Implementation]
+    E --> E2[Documentation]
+    E --> E3[Training]
+    
+    F --> F1[Control Assessment]
+    F --> F2[Risk Determination]
+    F --> F3[Assessment Report]
+    
+    G --> G1[Risk Acceptance]
+    G --> G2[Authorization Decision]
+    G --> G3[Authorization Document]
+    
+    H --> H1[System Monitoring]
+    H --> H2[Control Monitoring]
+    H --> H3[Risk Monitoring]
+    
+    I --> I1[Ongoing Assessment]
+    I --> I2[Change Management]
+    I --> I3[Risk Updates]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+    style G fill:#fff8e1
+    style H fill:#f3e5f5
+    style I fill:#e8f5e8
+</div></code></pre>
+<h3 id="key-rmf-steps">Key RMF Steps</h3>
+<h4 id="1-prepare">1. Prepare</h4>
+<ul>
+<li>Establish risk management strategy</li>
+<li>Identify organizational inputs</li>
+<li>Create system inventory</li>
+</ul>
+<h4 id="2-categorize">2. Categorize</h4>
+<ul>
+<li>Determine system security categorization</li>
+<li>Identify information types and sensitivity</li>
+<li>Assign security impact levels</li>
+</ul>
+<h4 id="3-select">3. Select</h4>
+<ul>
+<li>Choose appropriate security controls</li>
+<li>Apply control baselines</li>
+<li>Customize controls for organization</li>
+</ul>
+<h4 id="4-implement">4. Implement</h4>
+<ul>
+<li>Deploy selected controls</li>
+<li>Document control implementation</li>
+<li>Provide user training</li>
+</ul>
+<h4 id="5-assess">5. Assess</h4>
+<ul>
+<li>Evaluate control effectiveness</li>
+<li>Determine residual risk</li>
+<li>Generate assessment report</li>
+</ul>
+<h4 id="6-authorize">6. Authorize</h4>
+<ul>
+<li>Make risk acceptance decision</li>
+<li>Grant system authorization</li>
+<li>Document authorization</li>
+</ul>
+<h4 id="7-monitor">7. Monitor</h4>
+<ul>
+<li>Continuously monitor controls</li>
+<li>Track system changes</li>
+<li>Update risk assessments</li>
+</ul>
+<h2 id="%F0%9F%8E%AF-cis-top-controls">🎯 CIS Top Controls</h2>
+<p>The Center for Internet Security (CIS) Critical Security Controls provide a prioritized set of actions to protect organizations from cyber threats.</p>
+<h3 id="cis-controls-overview">CIS Controls Overview</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[CIS Critical Security Controls] --> B[Basic Controls]
+    A --> C[Foundational Controls]
+    A --> D[Organizational Controls]
+    
+    B --> B1[1. Inventory & Control]
+    B --> B2[2. Data Protection]
+    B --> B3[3. Secure Configurations]
+    B --> B4[4. Access Control]
+    B --> B5[5. Vulnerability Management]
+    B --> B6[6. Log Management]
+    
+    C --> C1[7. Email & Web Protection]
+    C --> C2[8. Malware Defenses]
+    C --> C3[9. Data Recovery]
+    C --> C4[10. Security Training]
+    C --> C5[11. Secure Configurations]
+    C --> C6[12. Boundary Defense]
+    
+    D --> D1[13. Data Protection]
+    D --> D2[14. Access Control]
+    D --> D3[15. Wireless Access Control]
+    D --> D4[16. Account Monitoring]
+    D --> D5[17. Security Skills Assessment]
+    D --> D6[18. Application Security]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+</div></code></pre>
+<h3 id="top-5-cis-controls">Top 5 CIS Controls</h3>
+<h4 id="1-inventory-and-control-of-enterprise-assets">1. <strong>Inventory and Control of Enterprise Assets</strong></h4>
+<ul>
+<li>Maintain inventory of all devices and systems</li>
+<li>Use automated discovery tools</li>
+<li>Establish asset management policies</li>
+</ul>
+<h4 id="2-data-protection">2. <strong>Data Protection</strong></h4>
+<ul>
+<li>Identify and classify sensitive data</li>
+<li>Implement data loss prevention</li>
+<li>Encrypt data in transit and at rest</li>
+</ul>
+<h4 id="3-secure-configurations">3. <strong>Secure Configurations</strong></h4>
+<ul>
+<li>Establish secure baseline configurations</li>
+<li>Use configuration management tools</li>
+<li>Regularly review and update configurations</li>
+</ul>
+<h4 id="4-access-control">4. <strong>Access Control</strong></h4>
+<ul>
+<li>Implement least privilege access</li>
+<li>Use multi-factor authentication</li>
+<li>Monitor and log access attempts</li>
+</ul>
+<h4 id="5-vulnerability-management">5. <strong>Vulnerability Management</strong></h4>
+<ul>
+<li>Regular vulnerability scanning</li>
+<li>Prompt patch management</li>
+<li>Risk-based prioritization</li>
+</ul>
+<h2 id="%F0%9F%93%8A-risk-scoring-and-prioritization">📊 Risk Scoring and Prioritization</h2>
+<p>Effective risk management requires consistent and objective risk scoring methods.</p>
+<h3 id="risk-scoring-matrix">Risk Scoring Matrix</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Risk Score = Likelihood × Impact] --> B[Risk Level]
+    
+    B --> B1[1-4: Low Risk]
+    B --> B2[6-12: Medium Risk]
+    B --> B3[15-25: High Risk]
+    
+    B1 --> C1[Accept or Monitor]
+    B2 --> C2[Treat or Transfer]
+    B3 --> C3[Treat Immediately]
+    
+    C1 --> D1[Document decision]
+    C1 --> D2[Regular review]
+    
+    C2 --> D3[Implement controls]
+    C2 --> D4[Risk transfer options]
+    
+    C3 --> D5[Immediate action]
+    C3 --> D6[Senior management approval]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C1 fill:#e8f5e8
+    style C2 fill:#fff3e0
+    style C3 fill:#fce4ec
+</div></code></pre>
+<h3 id="risk-prioritization-factors">Risk Prioritization Factors</h3>
+<ol>
+<li><strong>Risk Score</strong>: Higher scores get higher priority</li>
+<li><strong>Business Impact</strong>: Critical business functions get priority</li>
+<li><strong>Regulatory Requirements</strong>: Mandatory compliance gets priority</li>
+<li><strong>Resource Availability</strong>: Consider implementation costs and effort</li>
+<li><strong>Time Sensitivity</strong>: Urgent threats get immediate attention</li>
+</ol>
+<h2 id="%F0%9F%93%8B-risk-treatment-planning">📋 Risk Treatment Planning</h2>
+<p>A comprehensive risk treatment plan addresses how each risk will be managed.</p>
+<h3 id="risk-treatment-plan-template">Risk Treatment Plan Template</h3>
+<table>
+<thead>
+<tr>
+<th>Risk ID</th>
+<th>Risk Description</th>
+<th>Risk Score</th>
+<th>Treatment Option</th>
+<th>Controls</th>
+<th>Owner</th>
+<th>Timeline</th>
+<th>Cost</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R001</td>
+<td>Unpatched systems vulnerable to ransomware</td>
+<td>20</td>
+<td>Reduce</td>
+<td>Patch management, vulnerability scanning</td>
+<td>IT Manager</td>
+<td>30 days</td>
+<td>$50K</td>
+<td>In Progress</td>
+</tr>
+<tr>
+<td>R002</td>
+<td>Weak password policies</td>
+<td>15</td>
+<td>Reduce</td>
+<td>MFA, password complexity, training</td>
+<td>Security Team</td>
+<td>60 days</td>
+<td>$25K</td>
+<td>Planned</td>
+</tr>
+<tr>
+<td>R003</td>
+<td>Unencrypted data transmission</td>
+<td>12</td>
+<td>Reduce</td>
+<td>TLS implementation, VPN</td>
+<td>Network Team</td>
+<td>90 days</td>
+<td>$75K</td>
+<td>Planned</td>
+</tr>
+</tbody>
+</table>
+<h3 id="control-selection-criteria">Control Selection Criteria</h3>
+<p>When selecting controls, consider:</p>
+<ol>
+<li><strong>Effectiveness</strong>: How well does it reduce risk?</li>
+<li><strong>Cost</strong>: What's the implementation and maintenance cost?</li>
+<li><strong>Complexity</strong>: How difficult is it to implement?</li>
+<li><strong>Maintenance</strong>: What ongoing effort is required?</li>
+<li><strong>Integration</strong>: How well does it work with existing systems?</li>
+</ol>
+<h2 id="%F0%9F%93%88-executive-risk-reporting">📈 Executive Risk Reporting</h2>
+<p>Effective risk communication to executives requires clear, concise, and actionable information.</p>
+<h3 id="executive-risk-dashboard">Executive Risk Dashboard</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Executive Risk Dashboard] --> B[Risk Summary]
+    A --> C[Top Risks]
+    A --> D[Risk Trends]
+    A --> E[Action Items]
+    
+    B --> B1[Total Risks: 45]
+    B --> B2[High: 8, Medium: 22, Low: 15]
+    B --> B3[Risk Score: 6.2/10]
+    
+    C --> C1[1. Ransomware Threat]
+    C --> C2[2. Data Breach Risk]
+    C --> C3[3. Compliance Gap]
+    
+    D --> D1[Risk Score Trend]
+    D --> D2[New Risks Added]
+    D --> D3[Risks Mitigated]
+    
+    E --> E1[Immediate Actions]
+    E --> E2[Resource Requirements]
+    E --> E3[Timeline Updates]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+</div></code></pre>
+<h3 id="risk-report-components">Risk Report Components</h3>
+<ol>
+<li><strong>Executive Summary</strong>: High-level risk overview</li>
+<li><strong>Risk Metrics</strong>: Key performance indicators</li>
+<li><strong>Top Risks</strong>: Most critical risks requiring attention</li>
+<li><strong>Risk Trends</strong>: Changes over time</li>
+<li><strong>Action Items</strong>: Required decisions and actions</li>
+<li><strong>Resource Requirements</strong>: Budget and personnel needs</li>
+</ol>
+<h2 id="%F0%9F%94%84-continuous-risk-monitoring">🔄 Continuous Risk Monitoring</h2>
+<p>Risk management is not static; it requires ongoing monitoring and updates.</p>
+<h3 id="monitoring-activities">Monitoring Activities</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph LR
+    A[Continuous Monitoring] --> B[Control Monitoring]
+    A --> C[Risk Monitoring]
+    A --> D[Environment Monitoring]
+    A --> E[Performance Monitoring]
+    
+    B --> B1[Control Effectiveness]
+    B --> B2[Control Testing]
+    B --> B3[Control Updates]
+    
+    C --> C1[Risk Changes]
+    C --> C2[New Threats]
+    C --> C3[Risk Reassessment]
+    
+    D --> D1[Business Changes]
+    D --> D2[Technology Changes]
+    D --> D3[Regulatory Changes]
+    
+    E --> E1[Risk Metrics]
+    E --> E2[Process Efficiency]
+    E --> E3[Resource Utilization]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+</div></code></pre>
+<h3 id="key-performance-indicators-kpis">Key Performance Indicators (KPIs)</h3>
+<ol>
+<li><strong>Risk Reduction</strong>: Percentage decrease in risk scores</li>
+<li><strong>Control Effectiveness</strong>: Percentage of controls working as intended</li>
+<li><strong>Response Time</strong>: Time to identify and respond to new risks</li>
+<li><strong>Compliance</strong>: Percentage of regulatory requirements met</li>
+<li><strong>Incident Reduction</strong>: Decrease in security incidents</li>
+</ol>
+<h2 id="%F0%9F%A7%AA-hands-on-activities">🧪 Hands-on Activities</h2>
+<h3 id="activity-1-risk-assessment-workshop">Activity 1: Risk Assessment Workshop</h3>
+<p><strong>Objective</strong>: Conduct a basic risk assessment for a fictional organization.</p>
+<p><strong>Scenario</strong>: A small e-commerce company with 50 employees, handling customer credit card data.</p>
+<p><strong>Steps</strong>:</p>
+<ol>
+<li><strong>Identify Assets</strong>: List key information assets</li>
+<li><strong>Identify Threats</strong>: Consider common cyber threats</li>
+<li><strong>Assess Vulnerabilities</strong>: Identify potential weaknesses</li>
+<li><strong>Calculate Risk Scores</strong>: Use the risk matrix</li>
+<li><strong>Prioritize Risks</strong>: Rank risks by score and business impact</li>
+<li><strong>Develop Treatment Plans</strong>: Suggest control measures</li>
+</ol>
+<p><strong>Assets to Consider</strong>:</p>
+<ul>
+<li>Customer database</li>
+<li>Payment processing system</li>
+<li>Website and e-commerce platform</li>
+<li>Employee workstations</li>
+<li>Network infrastructure</li>
+</ul>
+<h3 id="activity-2-risk-treatment-planning">Activity 2: Risk Treatment Planning</h3>
+<p><strong>Objective</strong>: Create a comprehensive risk treatment plan.</p>
+<p><strong>Steps</strong>:</p>
+<ol>
+<li><strong>Select a High-Risk Scenario</strong> from your assessment</li>
+<li><strong>Identify Treatment Options</strong> (avoid, reduce, transfer, accept)</li>
+<li><strong>Select Specific Controls</strong> for risk reduction</li>
+<li><strong>Estimate Costs and Timeline</strong> for implementation</li>
+<li><strong>Assign Responsibilities</strong> for each control</li>
+<li><strong>Define Success Metrics</strong> for control effectiveness</li>
+</ol>
+<h3 id="activity-3-executive-risk-report">Activity 3: Executive Risk Report</h3>
+<p><strong>Objective</strong>: Create an executive-level risk report.</p>
+<p><strong>Steps</strong>:</p>
+<ol>
+<li><strong>Summarize Risk Assessment</strong> in 2-3 sentences</li>
+<li><strong>Create Risk Dashboard</strong> with key metrics</li>
+<li><strong>Highlight Top 3 Risks</strong> with business impact</li>
+<li><strong>Provide Actionable Recommendations</strong> for executives</li>
+<li><strong>Include Resource Requirements</strong> (budget, personnel, time)</li>
+<li><strong>Set Review Timeline</strong> for follow-up</li>
+</ol>
+<h2 id="%F0%9F%93%8B-key-takeaways">📋 Key Takeaways</h2>
+<ol>
+<li>
+<p><strong>Risk management is systematic</strong> and requires a structured approach following established frameworks like ISO 27005 and NIST RMF.</p>
+</li>
+<li>
+<p><strong>Risk assessment involves</strong> identifying assets, threats, and vulnerabilities to calculate risk scores objectively.</p>
+</li>
+<li>
+<p><strong>Risk treatment options</strong> include avoidance, reduction, transfer, and acceptance, with controls selected based on effectiveness and cost.</p>
+</li>
+<li>
+<p><strong>Continuous monitoring</strong> ensures risk management remains effective as threats and business conditions change.</p>
+</li>
+<li>
+<p><strong>Executive communication</strong> requires clear, concise reporting focused on business impact and actionable recommendations.</p>
+</li>
+<li>
+<p><strong>Frameworks provide guidance</strong> but must be adapted to each organization's specific context and risk appetite.</p>
+</li>
+</ol>
+<h2 id="%E2%9D%93-review-questions">❓ Review Questions</h2>
+<ol>
+<li>
+<p><strong>What are the key components</strong> of the ISO 27005 risk management framework?</p>
+</li>
+<li>
+<p><strong>How does the NIST RMF</strong> differ from ISO 27005, and when would you use each?</p>
+</li>
+<li>
+<p><strong>Explain the risk calculation formula</strong> and how it's used in risk assessment.</p>
+</li>
+<li>
+<p><strong>What are the four risk treatment options</strong>, and how do you choose between them?</p>
+</li>
+<li>
+<p><strong>How can you effectively communicate</strong> risk information to executive stakeholders?</p>
+</li>
+</ol>
+<h2 id="%F0%9F%93%9A-further-reading">📚 Further Reading</h2>
+<h3 id="standards-and-frameworks">Standards and Frameworks</h3>
+<ul>
+<li><a href="https://www.iso.org/standard/75281.html">ISO 27005:2018 Information Security Risk Management</a></li>
+<li><a href="https://csrc.nist.gov/publications/detail/sp/800-37/rev-2/final">NIST SP 800-37 Risk Management Framework</a></li>
+<li><a href="https://www.cisecurity.org/controls/">CIS Critical Security Controls</a></li>
+</ul>
+<h3 id="books">Books</h3>
+<ul>
+<li>&quot;Risk Management for Computer Security&quot; by Andy Jones</li>
+<li>&quot;Information Security Risk Management for ISO 27001/ISO 27002&quot; by Alan Calder</li>
+<li>&quot;The Risk Management Handbook&quot; by David Hillson</li>
+</ul>
+<h3 id="online-resources">Online Resources</h3>
+<ul>
+<li><a href="https://www.nist.gov/cyberframework">NIST Cybersecurity Framework</a></li>
+<li><a href="https://www.iso.org/isoiec-27001-information-security.html">ISO 27000 Family Standards</a></li>
+<li><a href="https://www.cisecurity.org/controls/">CIS Controls Implementation Guide</a></li>
+</ul>
+<hr>
+<p><strong>Next Chapter</strong>: <a href="chapter04-network-security.md">Chapter 4: Network Security Essentials</a> - Learn how to protect networks from attacks and analyze network traffic for security threats.</p>
+
+</body>
+</html>

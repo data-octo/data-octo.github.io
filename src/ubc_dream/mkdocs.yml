@@ -28,6 +28,19 @@ nav:
     - 第九章: novel/chapter-09.md
     - 第十章: novel/chapter-10.md
   - 资源图表: diagrams/mermaid-diagrams.md
+  - English:
+    - Home: en/index.md
+    - Novel:
+      - Chapter 1: en/novel/chapter-01.md
+      - Chapter 2: en/novel/chapter-02.md
+      - Chapter 3: en/novel/chapter-03.md
+      - Chapter 4: en/novel/chapter-04.md
+      - Chapter 5: en/novel/chapter-05.md
+      - Chapter 6: en/novel/chapter-06.md
+      - Chapter 7: en/novel/chapter-07.md
+      - Chapter 8: en/novel/chapter-08.md
+      - Chapter 9: en/novel/chapter-09.md
+      - Chapter 10: en/novel/chapter-10.md
 markdown_extensions:
   - admonition
   - pymdownx.details
