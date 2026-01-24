@@ -1,0 +1,34 @@
+site_name: Data Octo
+site_url: https://data-octo.github.io/
+
+theme:
+  name: material
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - content.code.copy
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - pymdownx.details
+  - pymdownx.tabbed
+
+nav:
+  - Home: index.html
+  - Blog:
+      - Blog Home: blog/index.html
+  - Books:
+      - books/index.html
+  - Portfolio:
+      - portfolio/index.html
+
+
+extra:
+  generator: false
+
+copyright: >
+  © 2026 Data Octo · Enterprise Cloud, Data & AI, Cybersecurity Architecture

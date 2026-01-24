@@ -1,3 +1,5 @@
+site_url: https://data-octo.github.io/
+use_directory_urls: true
 site_name: UBC追梦之路（2026-2030）
 site_description: 五个华裔学生在AI时代的成长故事与人生发展指南
 theme:
