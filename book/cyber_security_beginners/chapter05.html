@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Security Architecture & Threat Models</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="security-architecture--threat-models">Security Architecture &amp; Threat Models</h1>
+<h2 id="overview-and-objectives">Overview and Objectives</h2>
+<p>As an instructor teaching cybersecurity to college students, this module on <strong>Security Architecture &amp; Threat Models</strong> focuses on the foundational principles of designing secure systems. Secure systems don't happen by accident; they require deliberate planning, documentation, and the application of established frameworks to identify, mitigate, and respond to threats. By the end of this module, students will be able to:</p>
+<ul>
+<li>Understand and design <strong>layered architectures</strong> (also known as defense-in-depth) to create multiple barriers against attacks.</li>
+<li>Apply threat modeling frameworks like <strong>STRIDE</strong>, <strong>DREAD</strong>, and <strong>MITRE ATT&amp;CK</strong> to systematically identify and prioritize risks.</li>
+<li>Produce comprehensive <strong>security architecture documentation</strong> that serves as a blueprint for implementation and auditing.</li>
+</ul>
+<p>This module builds on basic cybersecurity concepts (e.g., CIA triad: Confidentiality, Integrity, Availability) and assumes familiarity with networking and system design. Emphasize real-world examples, such as how these principles were applied (or failed) in incidents like the SolarWinds supply chain attack or the Equifax data breach.</p>
+<p><strong>Estimated Time:</strong> 4-6 hours of lecture/discussion, plus hands-on labs (e.g., threat modeling a simple web application).</p>
+<p><strong>Prerequisites:</strong> Introduction to Cybersecurity, Networking Fundamentals.</p>
+<p><strong>Assessment Ideas:</strong></p>
+<ul>
+<li>Quiz on key terms and frameworks.</li>
+<li>Group project: Threat model a hypothetical e-commerce system using STRIDE and document it.</li>
+<li>Essay: Compare STRIDE vs. MITRE ATT&amp;CK in enterprise vs. cloud environments.</li>
+</ul>
+<h2 id="key-concepts-and-explanations">Key Concepts and Explanations</h2>
+<h3 id="1-security-architecture-fundamentals">1. Security Architecture Fundamentals</h3>
+<p>Security architecture refers to the high-level design of a system's security controls, ensuring they align with business goals while protecting against threats. It's like building a fortress: you plan walls, moats, and guards in advance.</p>
+<ul>
+<li>
+<p><strong>Layered Architectures (Defense-in-Depth):</strong> This approach involves stacking multiple security controls so that if one fails, others provide protection. Layers might include physical security, network perimeter defenses, host-based protections, application security, and data encryption. The goal is redundancy and diversity to complicate attacks.</p>
+<ul>
+<li><strong>Why it matters:</strong> Single points of failure (e.g., relying only on a firewall) are risky. Layering reduces the blast radius of breaches.</li>
+<li><strong>Example:</strong> In a cloud environment, layers could be: Edge (CDN with WAF), Network (VPC with subnets), Compute (VM hardening), Application (input validation), and Data (encryption at rest/transit).</li>
+<li><strong>Term to Explain:</strong> <em>Blast Radius</em> – The extent of damage from a security incident; layered designs minimize this by isolating components.</li>
+</ul>
+</li>
+<li>
+<p><strong>Micro-Segmentation:</strong> A technique to divide a network into small, isolated segments (e.g., using software-defined networking like NSX or AWS Security Groups). Each segment has its own access controls, preventing lateral movement by attackers.</p>
+<ul>
+<li><strong>Why it matters:</strong> In flat networks, once an attacker breaches the perimeter, they can roam freely (e.g., WannaCry ransomware spread via unsegmented networks).</li>
+<li><strong>Implementation Tip:</strong> Use zero-trust principles: Assume no segment trusts another by default.</li>
+<li><strong>Term to Explain:</strong> <em>Lateral Movement</em> – An attacker's technique to pivot from one compromised asset to others within a network.</li>
+</ul>
+</li>
+<li>
+<p><strong>Trust Boundaries:</strong> These are logical or physical points where the level of trust changes, such as between a public internet-facing server and an internal database. At these boundaries, you enforce strict controls like authentication and validation.</p>
+<ul>
+<li><strong>Why it matters:</strong> Misplaced trust (e.g., assuming all internal traffic is safe) leads to insider threats or pivoting attacks.</li>
+<li><strong>Example:</strong> In a web app, the boundary between user input (untrusted) and backend processing (trusted) requires sanitization to prevent SQL injection.</li>
+</ul>
+</li>
+<li>
+<p><strong>Resilience Planning:</strong> Designing systems to withstand, recover from, and adapt to disruptions. This includes redundancy (e.g., failover servers), backups, incident response plans, and chaos engineering (intentionally introducing failures to test resilience).</p>
+<ul>
+<li><strong>Why it matters:</strong> Threats aren't just prevented; some will succeed, so focus on minimizing downtime and data loss.</li>
+<li><strong>Term to Explain:</strong> <em>Chaos Engineering</em> – A practice popularized by Netflix, where controlled experiments simulate failures to build more robust systems.</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-threat-modeling-frameworks">2. Threat Modeling Frameworks</h3>
+<p>Threat modeling is the process of identifying potential threats, vulnerabilities, and countermeasures early in the design phase. It's proactive, not reactive.</p>
+<ul>
+<li>
+<p><strong>STRIDE Model:</strong> Developed by Microsoft, this acronym helps categorize threats:</p>
+<ul>
+<li><strong>S</strong>poofing: Impersonating something or someone (e.g., IP spoofing).</li>
+<li><strong>T</strong>ampering: Unauthorized modification of data (e.g., altering database records).</li>
+<li><strong>R</strong>epudiation: Denying actions (e.g., lacking audit logs to prove who did what).</li>
+<li><strong>I</strong>nformation Disclosure: Leaking sensitive data (e.g., unencrypted transmissions).</li>
+<li><strong>D</strong>enial of Service: Overwhelming resources (e.g., DDoS attacks).</li>
+<li><strong>E</strong>levation of Privilege: Gaining higher access than authorized (e.g., privilege escalation exploits).</li>
+<li><strong>Application:</strong> Use in data flow diagrams (DFDs) to map threats to system components.</li>
+<li><strong>Term to Explain:</strong> <em>Data Flow Diagram (DFD)</em> – A visual representation of how data moves through a system, used to identify entry/exit points for threats.</li>
+</ul>
+</li>
+<li>
+<p><strong>DREAD Model:</strong> A risk assessment framework to prioritize threats identified via STRIDE or similar:</p>
+<ul>
+<li><strong>D</strong>amage Potential: How much harm could occur?</li>
+<li><strong>R</strong>eproducibility: How easy is it to repeat the attack?</li>
+<li><strong>E</strong>xploitability: How much effort/skill is needed to exploit?</li>
+<li><strong>A</strong>ffected Users: How many people/systems are impacted?</li>
+<li><strong>D</strong>iscoverability: How easy is the vulnerability to find?</li>
+<li><strong>Scoring:</strong> Rate each on a scale (e.g., 1-10) and average for a risk score. High scores get priority mitigation.</li>
+<li><strong>Why combine with STRIDE?</strong> STRIDE identifies threats; DREAD ranks them.</li>
+</ul>
+</li>
+<li>
+<p><strong>MITRE ATT&amp;CK Framework:</strong> A knowledge base of adversary tactics, techniques, and procedures (TTPs) based on real-world observations. It's matrix-based, covering enterprise, mobile, cloud, and ICS environments.</p>
+<ul>
+<li><strong>Structure:</strong> Tactics (columns, e.g., Initial Access, Execution, Persistence) and Techniques (rows, e.g., Phishing under Initial Access).</li>
+<li><strong>Application:</strong> Map your system's defenses to ATT&amp;CK to find gaps; use for red teaming or threat hunting.</li>
+<li><strong>Updates:</strong> As of 2025, version 14 includes new techniques like AI/ML model evasion.</li>
+<li><strong>Term to Explain:</strong> <em>Tactics, Techniques, and Procedures (TTPs)</em> – Tactics are the &quot;why&quot; (goals), Techniques are the &quot;how&quot; (methods), Procedures are the &quot;what&quot; (specific implementations).</li>
+<li><strong>Example:</strong> In the Colonial Pipeline ransomware attack (2021), attackers used Initial Access (compromised VPN) and Lateral Movement (RDP).</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-producing-security-architecture-documentation">3. Producing Security Architecture Documentation</h3>
+<p>Documentation is the &quot;blueprint&quot; that communicates your design to stakeholders, developers, and auditors. It should be living documents, updated with system changes.</p>
+<ul>
+<li>
+<p><strong>Key Elements to Include:</strong></p>
+<ul>
+<li>System Overview: High-level diagrams (e.g., using UML or Mermaid).</li>
+<li>Threat Models: STRIDE/DREAD analyses, MITRE ATT&amp;CK mappings.</li>
+<li>Controls Catalog: List of defenses per layer (e.g., firewalls, IDS/IPS, encryption standards).</li>
+<li>Assumptions and Constraints: E.g., &quot;Assumes users are trained on phishing.&quot;</li>
+<li>Risk Register: Prioritized threats with mitigations and residual risks.</li>
+<li><strong>Standards:</strong> Follow NIST SP 800-53 or ISO 27001 for structure.</li>
+</ul>
+</li>
+<li>
+<p><strong>Tools for Documentation:</strong> Draw.io for diagrams, Microsoft Threat Modeling Tool, or OWASP Threat Dragon (free/open-source).</p>
+</li>
+<li>
+<p><strong>Best Practices:</strong> Use version control (e.g., Git), make it accessible yet secure, and review annually.</p>
+</li>
+<li>
+<p><strong>Term to Explain:</strong> <em>Residual Risk</em> – The risk that remains after applying controls; aim to reduce it to an acceptable level.</p>
+</li>
+</ul>
+<h2 id="visualizations-using-mermaid-script">Visualizations Using Mermaid Script</h2>
+<p>To enhance understanding, include these diagrams in lectures. Students can recreate them in tools like Mermaid Live (mermaid.live) for practice.</p>
+<h3 id="visualization-1-layered-architecture-defense-in-depth">Visualization 1: Layered Architecture (Defense-in-Depth)</h3>
+<p>This flowchart shows a typical layered design for a web application.</p>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[External User] -->|Internet| B[Perimeter Layer: Firewall/WAF]
+    B --> C[Network Layer: VPC/Micro-Segmentation]
+    C --> D[Host Layer: OS Hardening/IDS]
+    D --> E[Application Layer: Input Validation/Auth]
+    E --> F[Data Layer: Encryption/Access Controls]
+    subgraph "Trust Boundaries"
+    B -.-> C
+    C -.-> D
+    D -.-> E
+    E -.-> F
+    end
+    style A fill:#f9f,stroke:#333
+    style F fill:#bbf,stroke:#333
+</div></code></pre>
+<p><strong>Explanation in Class:</strong> Arrows represent data flow; dashed lines are trust boundaries where inspections occur. Discuss how an attack on B might be stopped at C.</p>
+<h3 id="visualization-2-stride-threat-model-process">Visualization 2: STRIDE Threat Model Process</h3>
+<p>A sequence diagram for applying STRIDE.</p>
+<pre><code class="language-mermaid"><div class="mermaid">sequenceDiagram
+    participant Designer
+    participant System
+    participant ThreatModel
+    Designer->>System: Draw DFD
+    System->>ThreatModel: Identify Elements (Processes, Data Stores)
+    loop For Each Element
+        ThreatModel->>ThreatModel: Apply STRIDE Categories
+        ThreatModel->>Designer: List Threats (e.g., Spoofing on Auth Process)
+    end
+    Designer->>ThreatModel: Prioritize with DREAD
+    ThreatModel->>Designer: Recommend Mitigations
+</div></code></pre>
+<p><strong>Explanation in Class:</strong> This shows the iterative process. Assign students to model a simple app (e.g., login system) following these steps.</p>
+<h3 id="visualization-3-mitre-attck-matrix-snippet">Visualization 3: MITRE ATT&amp;CK Matrix Snippet</h3>
+<p>A simplified graph of tactics and techniques.</p>
+<pre><code class="language-mermaid"><div class="mermaid">graph LR
+    A[Initial Access] --> B[Phishing]
+    A --> C[Exploit Public-Facing App]
+    D[Execution] --> E[Command and Scripting Interpreter]
+    D --> F[User Execution]
+    G[Persistence] --> H[Boot or Logon Autostart]
+    subgraph "MITRE ATT&CK Tactics"
+    A
+    D
+    G
+    end
+    style A fill:#ffcc00,stroke:#333
+    style D fill:#ffcc00,stroke:#333
+    style G fill:#ffcc00,stroke:#333
+</div></code></pre>
+<p><strong>Explanation in Class:</strong> The full matrix has 14 tactics; this is a subset. Use the official MITRE site for interactive exploration. Discuss mapping a recent breach (e.g., Log4j vulnerability under Execution).</p>
+<h2 id="hands-on-activities-and-examples">Hands-On Activities and Examples</h2>
+<ul>
+<li><strong>Lab 1:</strong> Use OWASP Threat Dragon to model threats for a sample IoT system. Apply STRIDE and score with DREAD.</li>
+<li><strong>Case Study:</strong> Analyze the 2023 MOVEit supply chain attack using MITRE ATT&amp;CK (tactics: Initial Access via SQL injection, Exfiltration via data theft).</li>
+<li><strong>Group Discussion:</strong> Debate: &quot;Is zero-trust (extreme micro-segmentation) feasible for small organizations?&quot; Pros: Enhanced security; Cons: Complexity and cost.</li>
+</ul>
+<h2 id="key-skills-development">Key Skills Development</h2>
+<ul>
+<li><strong>MITRE ATT&amp;CK:</strong> Students will learn to navigate the framework, map defenses, and simulate attacks in CTF exercises.</li>
+<li><strong>STRIDE &amp; DREAD:</strong> Practice in workshops; emphasize quantitative risk scoring.</li>
+<li><strong>Layered Design:</strong> Design exercises for cloud (AWS/Azure) architectures.</li>
+<li><strong>Micro-Segmentation:</strong> Demo with tools like Docker Compose for segmented containers.</li>
+<li><strong>Trust Boundaries:</strong> Identify in code reviews (e.g., OWASP Top 10 vulnerabilities).</li>
+<li><strong>Resilience Planning:</strong> Create a basic incident response plan template.</li>
+</ul>
+<h2 id="resources-and-further-reading">Resources and Further Reading</h2>
+<ul>
+<li>Books: &quot;Threat Modeling: Designing for Security&quot; by Adam Shostack.</li>
+<li>Online: MITRE ATT&amp;CK website (attack.mitre.org), Microsoft Security Development Lifecycle.</li>
+<li>Videos: YouTube channels like &quot;LiveOverflow&quot; for threat modeling demos.</li>
+<li>Tools: Free – ThreatModeler Community Edition; Paid – IriusRisk.</li>
+</ul>
+<p>Encourage students to stay updated via sources like Krebs on Security or CVE databases, as threats evolve rapidly (e.g., AI-driven attacks in 2025). End with a Q&amp;A to clarify terms like those highlighted.</p>
+
+</body>
+</html>

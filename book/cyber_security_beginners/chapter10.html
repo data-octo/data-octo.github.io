@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Project Management in IT</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="project-management-in-it-with-a-focus-on-cybersecurity">Project Management in IT with a Focus on Cybersecurity</h1>
+<h2 id="introduction">Introduction</h2>
+<p>As an instructor teaching cybersecurity to college students, this note serves as a comprehensive guide for delivering a module on Project Management in IT, emphasizing security outcomes. Cybersecurity projects are unique due to their need for both rigidity in compliance and flexibility to address evolving threats like ransomware, data breaches, and zero-day vulnerabilities. The course aims to equip students with practical tools to plan, execute, and oversee IT initiatives while prioritizing security. By integrating project management frameworks, students will learn to mitigate risks that could compromise sensitive data, systems, and networks.</p>
+<p>This module draws from established frameworks like those from the Project Management Institute (PMI) and Agile methodologies, tailored to cybersecurity contexts. It is crucial to highlight real-world applications, such as managing a network security upgrade or implementing a vulnerability assessment program. Encourage students to think critically about how poor project management can lead to security failures, as seen in high-profile breaches where delayed patches or unaddressed risks amplified damage.</p>
+<p><strong>Key Terms to Explain Upfront:</strong></p>
+<ul>
+<li><strong>Project Management Institute (PMI)</strong>: A global nonprofit organization that develops standards for project management, including the PMBOK (Project Management Body of Knowledge) Guide, which provides best practices for initiating, planning, executing, monitoring, and closing projects.</li>
+<li><strong>Agile Framework</strong>: An iterative approach to project management that emphasizes flexibility, customer collaboration, and rapid delivery of functional components, contrasting with traditional waterfall methods.</li>
+<li><strong>Scrum</strong>: A specific Agile methodology involving short development cycles called sprints, daily stand-ups, and roles like Product Owner, Scrum Master, and Development Team to foster collaboration and quick adaptations.</li>
+<li><strong>Risk Mitigation</strong>: The process of identifying potential threats, assessing their impact, and implementing strategies to reduce or eliminate them, such as through encryption or access controls in cybersecurity contexts.</li>
+<li><strong>Stakeholder Management</strong>: Involves identifying, engaging, and communicating with individuals or groups affected by the project, ensuring their needs are met and risks are addressed collaboratively.</li>
+<li><strong>IT Project Lifecycle</strong>: The sequential phases a project goes through from conception to completion, typically including initiation, planning, execution, monitoring/control, and closure.</li>
+</ul>
+<h2 id="course-objectives">Course Objectives</h2>
+<p>In this course, students will learn to:</p>
+<ol>
+<li><strong>Apply PMI and Agile Frameworks to Cybersecurity Projects</strong>: Students will explore how PMI's structured approach integrates with Agile's adaptability for tasks like penetration testing or incident response planning. For instance, PMI's risk-based methods can be used to prioritize security controls in compliance-driven projects.</li>
+<li><strong>Manage Timelines, Budgets, and Risks Effectively</strong>: Focus on tools for scheduling, cost estimation, and threat modeling to prevent overruns that could expose vulnerabilities.</li>
+<li><strong>Coordinate Cross-Functional Teams to Deliver Secure IT Solutions</strong>: Emphasize collaboration between IT, security, legal, and business teams to ensure holistic security integration.</li>
+</ol>
+<p>To make this engaging, assign case studies, such as managing a simulated data breach response project, where students apply these objectives.</p>
+<h2 id="detailed-breakdown-of-key-concepts">Detailed Breakdown of Key Concepts</h2>
+<h3 id="1-pmi-frameworks-in-cybersecurity-projects">1. PMI Frameworks in Cybersecurity Projects</h3>
+<p>PMI provides a risk-based approach to project management, which is essential in cybersecurity where threats are dynamic. The PMI Data Security Principles, based on the NIST Cybersecurity Framework, guide the protection of sensitive data in projects like Precision Medicine Initiatives (PMI). Key elements include developing a comprehensive risk-based security plan that outlines roles and responsibilities.</p>
+<p>In practice, integrate cybersecurity into the PMBOK Guide by establishing a Security Review Board to oversee information security throughout the project lifecycle. This ensures compliance with standards like GDPR or HIPAA. Explain to students that PMI helps in identifying risks early, such as through threat modeling in the planning phase.</p>
+<p><strong>Visualization: PMI Risk Management Process in Cybersecurity</strong>
+Use this Mermaid flowchart to illustrate how PMI integrates risk into cybersecurity projects.</p>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart TD
+    A[Identify Risks: Threats like phishing, malware] --> B[Assess Impact: Qualitative/Quantitative Analysis]
+    B --> C[Prioritize: Based on likelihood and severity]
+    C --> D[Mitigate: Implement controls e.g., firewalls, encryption]
+    D --> E[Monitor: Continuous review and adjustment]
+    E --> F[Report: To stakeholders for compliance]
+</div></code></pre>
+<h3 id="2-agile-and-scrum-in-it-security-projects">2. Agile and Scrum in IT Security Projects</h3>
+<p>Agile promotes iterative development, which is ideal for cybersecurity where threats evolve rapidly. Scrum, as an Agile implementation, structures work into sprints (typically 2-4 weeks) for tasks like vulnerability scanning or security patch deployment. However, challenges include rapid release cycles that may overlook security if not integrated properly, leading to concerns like lack of documentation or delayed security sprints.</p>
+<p>In cybersecurity, apply Scrum for network security projects by using daily stand-ups to address emerging threats and retrospectives to refine processes. Best practices include embedding security user stories in sprints and adopting DevSecOps to shift security left in the development process.</p>
+<p><strong>Additional Terms to Explain:</strong></p>
+<ul>
+<li><strong>DevSecOps</strong>: An extension of DevOps that integrates security practices into the software development lifecycle from the start, ensuring automated security testing in Agile environments.</li>
+<li><strong>Sprint</strong>: A time-boxed period in Scrum where a team works to complete a set amount of work, often resulting in a potentially shippable product increment.</li>
+</ul>
+<p><strong>Visualization: Agile Scrum Cycle for Cybersecurity</strong>
+This Mermaid diagram shows the iterative nature of Scrum in a security project.</p>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Sprint Planning: Define security tasks e.g., vulnerability assessment] --> B[Daily Scrum: Quick team sync on threats]
+    B --> C[Sprint Review: Demo secure features]
+    C --> D[Sprint Retrospective: Improve security processes]
+    D --> A
+    subgraph "Product Backlog"
+        E[Prioritized security items]
+    end
+    E --> A
+</div></code></pre>
+<h3 id="3-managing-timelines-budgets-and-risks">3. Managing Timelines, Budgets, and Risks</h3>
+<p>Effective management involves tools like Gantt charts for timelines and earned value management for budgets. In cybersecurity, allocate budgets for tools like threat-hunting software (5-7% of IT budget recommended). Risk mitigation strategies include avoidance, transference (e.g., insurance), and acceptance, aligned with NSA's top ten mitigations like multi-factor authentication.</p>
+<p>For budgeting, assess needs via risk-based planning, including personnel, training, and compliance audits. Scheduling should account for security gates, such as penetration testing before deployment.</p>
+<p><strong>Visualization: Risk Mitigation Decision Tree</strong>
+Use this Mermaid tree to teach decision-making in risks.</p>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Identify Risk: e.g., Data Breach] --> B{Assess Severity?}
+    B -->|High| C[Mitigate: Deploy Encryption]
+    B -->|Medium| D[Transfer: Cyber Insurance]
+    B -->|Low| E[Accept: Monitor Only]
+    C --> F[Review Effectiveness]
+    D --> F
+    E --> F
+</div></code></pre>
+<h3 id="4-coordinating-cross-functional-teams-and-stakeholder-management">4. Coordinating Cross-Functional Teams and Stakeholder Management</h3>
+<p>Cross-functional teams in cybersecurity include developers, analysts, and compliance officers. Stakeholder management ensures alignment by identifying key parties (e.g., executives, regulators) and communicating risks in business terms. Use tools like RACI matrices (Responsible, Accountable, Consulted, Informed) to clarify roles.</p>
+<p>Engage stakeholders through regular updates and training to build support for initiatives.</p>
+<h3 id="5-it-project-lifecycle">5. IT Project Lifecycle</h3>
+<p>The lifecycle consists of five phases: Initiation (define goals), Planning (detail resources), Execution (build and secure), Monitoring/Control (track progress), and Closure (review and document lessons). In cybersecurity, embed security in each phase, e.g., threat modeling in planning.</p>
+<p><strong>Visualization: IT Project Lifecycle</strong>
+This Mermaid sequence diagram outlines the phases.</p>
+<pre><code class="language-mermaid"><div class="mermaid">sequenceDiagram
+    participant Init as Initiation
+    participant Plan as Planning
+    participant Exec as Execution
+    participant Mon as Monitoring/Control
+    participant Close as Closure
+    Init->>Plan: Define security requirements
+    Plan->>Exec: Allocate budget for tools
+    Exec->>Mon: Implement and test controls
+    Mon->>Close: Audit and report outcomes
+    Close->>Init: Lessons for future projects
+</div></code></pre>
+<h2 id="key-skills-and-teaching-tips">Key Skills and Teaching Tips</h2>
+<ul>
+<li><strong>PMI</strong>: Teach via PMBOK excerpts; assign certification prep.</li>
+<li><strong>Agile &amp; Scrum</strong>: Simulate sprints in group activities.</li>
+<li><strong>Risk Mitigation</strong>: Use CISA templates for assessments.</li>
+<li><strong>Budgeting &amp; Scheduling</strong>: Introduce tools like Microsoft Project; discuss 2025 trends like AI-driven budgeting.</li>
+<li><strong>Stakeholder Management</strong>: Role-play scenarios.</li>
+<li><strong>IT Project Lifecycle</strong>: Map to cybersecurity examples.</li>
+</ul>
+<p>Assess via projects, quizzes on terms, and diagram interpretations. Encourage discussions on ethical implications, like balancing speed and security in Agile.</p>
+
+</body>
+</html>

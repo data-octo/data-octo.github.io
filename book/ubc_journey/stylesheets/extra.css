@@ -1,0 +1,202 @@
+/* Extra CSS for UBC Story */
+
+/* Custom colors for UBC theme */
+:root {
+  --ubc-blue: #002D62;
+  --ubc-gold: #FFD700;
+  --ubc-light-blue: #E6F3FF;
+  --ubc-dark-blue: #001A33;
+}
+
+/* Chinese typography improvements */
+.md-typeset {
+  font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  line-height: 1.8;
+}
+
+.md-typeset h1, .md-typeset h2, .md-typeset h3, 
+.md-typeset h4, .md-typeset h5, .md-typeset h6 {
+  font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-weight: 600;
+}
+
+/* Code block improvements */
+.md-typeset .highlight {
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Table improvements */
+.md-typeset table:not([class]) {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.md-typeset table:not([class]) th {
+  background-color: var(--ubc-blue);
+  color: white;
+  font-weight: 600;
+}
+
+/* Admonition improvements */
+.md-typeset .admonition {
+  border-radius: 8px;
+  border-left-width: 4px;
+}
+
+.md-typeset .admonition.tip {
+  border-left-color: var(--ubc-gold);
+}
+
+.md-typeset .admonition.info {
+  border-left-color: var(--ubc-blue);
+}
+
+/* Mermaid diagram improvements */
+.mermaid {
+  background-color: var(--md-default-bg-color);
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Navigation improvements */
+.md-nav__item--active > .md-nav__link {
+  color: var(--ubc-blue);
+  font-weight: 600;
+}
+
+/* Header improvements */
+.md-header {
+  background-color: var(--ubc-blue);
+}
+
+/* Footer improvements */
+.md-footer {
+  background-color: var(--ubc-dark-blue);
+}
+
+/* Tab improvements */
+.md-typeset .tabbed-labels {
+  border-bottom: 2px solid var(--ubc-blue);
+}
+
+.md-typeset .tabbed-label {
+  color: var(--ubc-blue);
+  font-weight: 500;
+}
+
+.md-typeset .tabbed-label.active {
+  color: var(--ubc-dark-blue);
+  font-weight: 600;
+  border-bottom: 2px solid var(--ubc-dark-blue);
+}
+
+/* Button improvements */
+.md-button {
+  background-color: var(--ubc-blue);
+  color: white;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.md-button:hover {
+  background-color: var(--ubc-dark-blue);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.md-button--primary {
+  background-color: var(--ubc-gold);
+  color: var(--ubc-dark-blue);
+}
+
+.md-button--primary:hover {
+  background-color: #FFC700;
+}
+
+/* Card improvements */
+.md-typeset .md-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
+}
+
+.md-typeset .md-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* Quote improvements */
+.md-typeset blockquote {
+  border-left: 4px solid var(--ubc-blue);
+  background-color: var(--ubc-light-blue);
+  padding: 16px;
+  border-radius: 0 8px 8px 0;
+}
+
+/* Link improvements */
+.md-typeset a {
+  color: var(--ubc-blue);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.md-typeset a:hover {
+  color: var(--ubc-dark-blue);
+  text-decoration: underline;
+}
+
+/* Search improvements */
+.md-search__form {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+}
+
+.md-search__input {
+  color: white;
+}
+
+.md-search__input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Mobile improvements */
+@media screen and (max-width: 768px) {
+  .md-typeset {
+    font-size: 0.9rem;
+  }
+  
+  .md-typeset h1 {
+    font-size: 1.8rem;
+  }
+  
+  .md-typeset h2 {
+    font-size: 1.5rem;
+  }
+  
+  .md-typeset h3 {
+    font-size: 1.3rem;
+  }
+}
+
+/* Print improvements */
+@media print {
+  .md-header,
+  .md-sidebar,
+  .md-footer {
+    display: none;
+  }
+  
+  .md-content {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .md-typeset {
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+}
