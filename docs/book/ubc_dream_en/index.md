@@ -33,6 +33,6 @@ This is a story about five Chinese-descended students studying at UBC during the
 
 ---
 
-Start reading: [Chapter 1](en/novel/chapter-01.md)
+Start reading: [Chapter 1](novel/chapter-01.md)
 
 See diagrams: [Career Path Diagram](../diagrams/mermaid-diagrams.md)
