@@ -11,6 +11,7 @@ theme:
   palette:
     primary: blue
     accent: deep orange
+  
 nav:
   - 首页: index.md
   - 小说章节:
@@ -46,3 +47,5 @@ plugins:
       lang: 
         - zh
         - en
+extra_css:
+  - assets/stylesheets/override.css
