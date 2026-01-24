@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>chapter06-security-architecture.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="chapter-6-security-architecture-and-threat-modeling">Chapter 6: Security Architecture and Threat Modeling</h1>
+<h2 id="%F0%9F%8E%AF-learning-objectives">🎯 Learning Objectives</h2>
+<p>By the end of this chapter, you will be able to:</p>
+<ul>
+<li>Understand the principles of secure system design and architecture</li>
+<li>Apply defense-in-depth and layered security approaches</li>
+<li>Use STRIDE methodology for threat identification and analysis</li>
+<li>Implement DREAD framework for risk assessment and prioritization</li>
+<li>Understand and apply the MITRE ATT&amp;CK framework</li>
+<li>Design secure network architectures with proper segmentation</li>
+<li>Implement micro-segmentation and zero-trust principles</li>
+<li>Create comprehensive security architecture documentation</li>
+<li>Apply resilience planning and recovery strategies</li>
+</ul>
+<h2 id="%F0%9F%8F%97%EF%B8%8F-what-is-security-architecture">🏗️ What is Security Architecture?</h2>
+<p>Security architecture is the structured approach to designing, implementing, and maintaining secure systems. It provides a comprehensive framework for protecting information assets while enabling business operations.</p>
+<h3 id="the-security-architecture-challenge">The Security Architecture Challenge</h3>
+<p>Organizations must balance <strong>security requirements with business needs</strong>, ensuring systems are both secure and functional. Security architecture provides the framework to achieve this balance systematically.</p>
+<h3 id="why-security-architecture-matters">Why Security Architecture Matters</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Security Architecture Benefits] --> B[Systematic Protection]
+    A --> C[Risk Reduction]
+    A --> D[Compliance]
+    A --> E[Business Enablement]
+    
+    B --> B1[Comprehensive security coverage]
+    B --> B2[Defense in depth]
+    B --> B3[Threat mitigation]
+    
+    C --> C1[Proactive risk management]
+    C --> C2[Vulnerability reduction]
+    C --> C3[Incident prevention]
+    
+    D --> D1[Regulatory compliance]
+    D --> D2[Industry standards]
+    D --> D3[Audit readiness]
+    
+    E --> E1[Secure innovation]
+    E --> E2[Trust building]
+    E --> E3[Competitive advantage]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+</div></code></pre>
+<h2 id="%F0%9F%9B%A1%EF%B8%8F-security-design-principles">🛡️ Security Design Principles</h2>
+<p>Effective security architecture is built on fundamental principles that guide design decisions and implementation strategies.</p>
+<h3 id="core-security-principles">Core Security Principles</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Security Design Principles] --> B[Defense in Depth]
+    A --> C[Principle of Least Privilege]
+    A --> D[Fail-Safe Defaults]
+    A --> E[Separation of Concerns]
+    A --> F[Economy of Mechanism]
+    A --> G[Open Design]
+    A --> H[Complete Mediation]
+    
+    B --> B1[Multiple security layers]
+    B --> B2[Redundant protections]
+    B --> B3[Attack surface reduction]
+    
+    C --> C1[Minimal access rights]
+    C --> C2[Role-based permissions]
+    C --> C3[Just-in-time access]
+    
+    D --> D1[Secure by default]
+    D --> D2[Explicit permissions]
+    D --> D3[Safe failure modes]
+    
+    E --> E1[Modular design]
+    E --> E2[Independent components]
+    E --> E3[Clear boundaries]
+    
+    F --> F1[Simple solutions]
+    F --> F2[Minimal complexity]
+    F --> F3[Easier verification]
+    
+    G --> G1[Transparent security]
+    G --> G2[Public review]
+    G --> G3[Community validation]
+    
+    H --> H1[Consistent enforcement]
+    H --> H2[No bypass paths]
+    H --> H3[Comprehensive coverage]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+    style G fill:#fff8e1
+    style H fill:#f3e5f5
+</div></code></pre>
+<h3 id="1-defense-in-depth">1. <strong>Defense in Depth</strong></h3>
+<p>Defense in depth implements multiple layers of security controls, ensuring that if one layer fails, others continue to provide protection.</p>
+<p><strong>Example</strong>: A web application might have:</p>
+<ul>
+<li><strong>Network layer</strong>: Firewalls and IDS/IPS</li>
+<li><strong>Application layer</strong>: Input validation and authentication</li>
+<li><strong>Data layer</strong>: Encryption and access controls</li>
+<li><strong>Physical layer</strong>: Data center security and environmental controls</li>
+</ul>
+<h3 id="2-principle-of-least-privilege">2. <strong>Principle of Least Privilege</strong></h3>
+<p>Users and systems should have only the minimum access necessary to perform their functions.</p>
+<p><strong>Implementation</strong>:</p>
+<ul>
+<li><strong>Role-based access control</strong>: Assign permissions based on job functions</li>
+<li><strong>Just-in-time access</strong>: Grant temporary elevated privileges when needed</li>
+<li><strong>Regular access reviews</strong>: Periodically review and adjust permissions</li>
+</ul>
+<h3 id="3-fail-safe-defaults">3. <strong>Fail-Safe Defaults</strong></h3>
+<p>Systems should fail securely, denying access by default rather than granting it.</p>
+<p><strong>Examples</strong>:</p>
+<ul>
+<li><strong>Firewall rules</strong>: Deny all traffic by default, allow specific exceptions</li>
+<li><strong>User permissions</strong>: No access by default, grant specific permissions</li>
+<li><strong>Network segmentation</strong>: Isolated by default, controlled connectivity</li>
+</ul>
+<h2 id="%F0%9F%8F%9B%EF%B8%8F-layered-security-architecture">🏛️ Layered Security Architecture</h2>
+<p>Layered security implements multiple defensive measures at different levels to create comprehensive protection.</p>
+<h3 id="security-layers-overview">Security Layers Overview</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Layered Security Architecture] --> B[Physical Security]
+    A --> C[Network Security]
+    A --> D[Host Security]
+    A --> E[Application Security]
+    A --> F[Data Security]
+    A --> G[User Security]
+    
+    B --> B1[Data center access]
+    B --> B2[Environmental controls]
+    B --> B3[Hardware security]
+    
+    C --> C1[Firewalls and IDS/IPS]
+    C --> C2[Network segmentation]
+    C --> C3[Traffic monitoring]
+    
+    D --> D1[Endpoint protection]
+    D --> D2[System hardening]
+    D --> D3[Patch management]
+    
+    E --> E1[Secure development]
+    E --> E2[Input validation]
+    E --> E3[Authentication/authorization]
+    
+    F --> F1[Encryption at rest]
+    F --> F2[Encryption in transit]
+    F --> F3[Access controls]
+    
+    G --> G1[User training]
+    G --> G2[Access management]
+    G --> G3[Behavioral monitoring]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+    style G fill:#fff8e1
+</div></code></pre>
+<h3 id="layer-implementation-examples">Layer Implementation Examples</h3>
+<h4 id="physical-security-layer">Physical Security Layer</h4>
+<ul>
+<li><strong>Access Control</strong>: Biometric scanners, key cards, security guards</li>
+<li><strong>Environmental Controls</strong>: Fire suppression, climate control, power backup</li>
+<li><strong>Hardware Security</strong>: Tamper-evident seals, secure boot, hardware security modules</li>
+</ul>
+<h4 id="network-security-layer">Network Security Layer</h4>
+<ul>
+<li><strong>Perimeter Defense</strong>: Firewalls, intrusion detection/prevention systems</li>
+<li><strong>Traffic Control</strong>: Network segmentation, VLANs, access control lists</li>
+<li><strong>Monitoring</strong>: Network traffic analysis, anomaly detection, logging</li>
+</ul>
+<h4 id="host-security-layer">Host Security Layer</h4>
+<ul>
+<li><strong>System Hardening</strong>: Security baselines, configuration management</li>
+<li><strong>Endpoint Protection</strong>: Antivirus, host-based firewalls, intrusion detection</li>
+<li><strong>Maintenance</strong>: Regular patching, vulnerability management, system updates</li>
+</ul>
+<h2 id="%F0%9F%8E%AF-threat-modeling-with-stride">🎯 Threat Modeling with STRIDE</h2>
+<p>STRIDE is a methodology for identifying and categorizing security threats during system design and development.</p>
+<h3 id="what-is-stride">What is STRIDE?</h3>
+<p>STRIDE is an acronym representing six categories of security threats:</p>
+<ul>
+<li><strong>S</strong>poofing</li>
+<li><strong>T</strong>ampering</li>
+<li><strong>R</strong>epudiation</li>
+<li><strong>I</strong>nformation Disclosure</li>
+<li><strong>D</strong>enial of Service</li>
+<li><strong>E</strong>levation of Privilege</li>
+</ul>
+<h3 id="stride-threat-categories">STRIDE Threat Categories</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[STRIDE Threat Model] --> B[Spoofing]
+    A --> C[Tampering]
+    A --> D[Repudiation]
+    A --> E[Information Disclosure]
+    A --> F[Denial of Service]
+    A --> G[Elevation of Privilege]
+    
+    B --> B1[Identity spoofing]
+    B --> B2[IP address spoofing]
+    B --> B3[Email spoofing]
+    
+    C --> C1[Data modification]
+    C --> C2[Code injection]
+    C --> C3[Configuration changes]
+    
+    D --> D1[Action denial]
+    D --> D2[Log tampering]
+    D --> D3[Audit bypass]
+    
+    E --> E1[Data exposure]
+    E --> E2[Information leakage]
+    E --> E3[Side-channel attacks]
+    
+    F --> F1[Resource exhaustion]
+    F --> F2[Service disruption]
+    F --> F3[Performance degradation]
+    
+    G --> G1[Privilege escalation]
+    G --> G2[Role manipulation]
+    G --> G3[Access bypass]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+    style G fill:#fff8e1
+</div></code></pre>
+<h3 id="stride-threat-analysis-process">STRIDE Threat Analysis Process</h3>
+<h4 id="1-spoofing-threats">1. <strong>Spoofing Threats</strong></h4>
+<p><strong>Definition</strong>: Impersonating another user or system to gain unauthorized access.</p>
+<p><strong>Examples</strong>:</p>
+<ul>
+<li><strong>Identity Spoofing</strong>: Using stolen credentials or fake identities</li>
+<li><strong>IP Spoofing</strong>: Forging source IP addresses in network packets</li>
+<li><strong>Email Spoofing</strong>: Sending emails that appear to come from legitimate sources</li>
+</ul>
+<p><strong>Mitigation Strategies</strong>:</p>
+<ul>
+<li>Strong authentication (MFA, certificates)</li>
+<li>Network ingress/egress filtering</li>
+<li>Email authentication (SPF, DKIM, DMARC)</li>
+</ul>
+<h4 id="2-tampering-threats">2. <strong>Tampering Threats</strong></h4>
+<p><strong>Definition</strong>: Unauthorized modification of data or code to compromise system integrity.</p>
+<p><strong>Examples</strong>:</p>
+<ul>
+<li><strong>Data Tampering</strong>: Modifying stored or transmitted data</li>
+<li><strong>Code Injection</strong>: Inserting malicious code into applications</li>
+<li><strong>Configuration Tampering</strong>: Changing system settings</li>
+</ul>
+<p><strong>Mitigation Strategies</strong>:</p>
+<ul>
+<li>Data integrity checks (checksums, digital signatures)</li>
+<li>Input validation and sanitization</li>
+<li>Configuration management and monitoring</li>
+</ul>
+<h4 id="3-repudiation-threats">3. <strong>Repudiation Threats</strong></h4>
+<p><strong>Definition</strong>: Users denying that they performed certain actions, making it difficult to hold them accountable.</p>
+<p><strong>Examples</strong>:</p>
+<ul>
+<li><strong>Action Repudiation</strong>: Denying access to systems or data</li>
+<li><strong>Transaction Repudiation</strong>: Denying financial transactions</li>
+<li><strong>Communication Repudiation</strong>: Denying sent messages</li>
+</ul>
+<p><strong>Mitigation Strategies</strong>:</p>
+<ul>
+<li>Comprehensive logging and audit trails</li>
+<li>Digital signatures and non-repudiation</li>
+<li>Secure timestamping and evidence preservation</li>
+</ul>
+<h4 id="4-information-disclosure-threats">4. <strong>Information Disclosure Threats</strong></h4>
+<p><strong>Definition</strong>: Unauthorized exposure of sensitive information to unauthorized parties.</p>
+<p><strong>Examples</strong>:</p>
+<ul>
+<li><strong>Data Exposure</strong>: Unauthorized access to confidential data</li>
+<li><strong>Information Leakage</strong>: Accidental disclosure through error messages</li>
+<li><strong>Side-Channel Attacks</strong>: Information extraction through system behavior</li>
+</ul>
+<p><strong>Mitigation Strategies</strong>:</p>
+<ul>
+<li>Data classification and access controls</li>
+<li>Secure error handling and logging</li>
+<li>Side-channel attack prevention</li>
+</ul>
+<h4 id="5-denial-of-service-threats">5. <strong>Denial of Service Threats</strong></h4>
+<p><strong>Definition</strong>: Attacks that prevent legitimate users from accessing systems or services.</p>
+<p><strong>Examples</strong>:</p>
+<ul>
+<li><strong>Resource Exhaustion</strong>: Consuming system resources (CPU, memory, bandwidth)</li>
+<li><strong>Service Disruption</strong>: Causing system crashes or failures</li>
+<li><strong>Performance Degradation</strong>: Slowing system response times</li>
+</ul>
+<p><strong>Mitigation Strategies</strong>:</p>
+<ul>
+<li>Resource monitoring and limits</li>
+<li>Load balancing and redundancy</li>
+<li>DDoS protection and traffic filtering</li>
+</ul>
+<h4 id="6-elevation-of-privilege-threats">6. <strong>Elevation of Privilege Threats</strong></h4>
+<p><strong>Definition</strong>: Gaining higher levels of access than authorized, potentially compromising the entire system.</p>
+<p><strong>Examples</strong>:</p>
+<ul>
+<li><strong>Privilege Escalation</strong>: Exploiting vulnerabilities to gain admin access</li>
+<li><strong>Role Manipulation</strong>: Changing user roles or permissions</li>
+<li><strong>Access Bypass</strong>: Circumventing access controls</li>
+</ul>
+<p><strong>Mitigation Strategies</strong>:</p>
+<ul>
+<li>Principle of least privilege</li>
+<li>Regular access reviews and audits</li>
+<li>Secure privilege management</li>
+</ul>
+<h3 id="stride-implementation-workflow">STRIDE Implementation Workflow</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[STRIDE Implementation] --> B[System Analysis]
+    B --> C[Threat Identification]
+    C --> D[Threat Categorization]
+    D --> E[Mitigation Design]
+    E --> F[Risk Assessment]
+    F --> G[Documentation]
+    
+    B --> B1[System architecture review]
+    B --> B2[Data flow analysis]
+    B --> B3[Trust boundary identification]
+    
+    C --> C1[Brainstorming sessions]
+    C --> C2[Attack tree analysis]
+    C --> C3[Vulnerability research]
+    
+    D --> D1[STRIDE categorization]
+    D --> D2[Threat mapping]
+    D --> D3[Risk prioritization]
+    
+    E --> E1[Security control selection]
+    E --> E2[Architecture modification]
+    E --> E3[Implementation planning]
+    
+    F --> F1[Residual risk assessment]
+    F --> F2[Cost-benefit analysis]
+    F --> F3[Acceptance criteria]
+    
+    G --> G1[Threat model documentation]
+    G --> G2[Security requirements]
+    G --> G3[Implementation guidelines]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+    style G fill:#fff8e1
+</div></code></pre>
+<h2 id="%F0%9F%93%8A-risk-assessment-with-dread">📊 Risk Assessment with DREAD</h2>
+<p>DREAD is a framework for assessing and prioritizing security risks based on five key factors.</p>
+<h3 id="what-is-dread">What is DREAD?</h3>
+<p>DREAD provides a structured approach to risk assessment by evaluating:</p>
+<ul>
+<li><strong>D</strong>amage potential</li>
+<li><strong>R</strong>eproducibility</li>
+<li><strong>E</strong>xploitability</li>
+<li><strong>A</strong>ffected users</li>
+<li><strong>D</strong>iscoverability</li>
+</ul>
+<h3 id="dread-risk-assessment-matrix">DREAD Risk Assessment Matrix</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[DREAD Risk Assessment] --> B[Damage Potential]
+    A --> C[Reproducibility]
+    A --> D[Exploitability]
+    A --> E[Affected Users]
+    A --> F[Discoverability]
+    
+    B --> B1[0: No damage]
+    B --> B2[1: Individual user data]
+    B --> B3[2: Individual user data + system]
+    B --> B4[3: Multiple users' data]
+    B --> B5[4: Multiple users' data + system]
+    B --> B6[5: Multiple users' data + system + infrastructure]
+    
+    C --> C1[0: Very hard]
+    C --> C2[1: Hard]
+    C --> C3[2: Moderate]
+    C --> C4[3: Easy]
+    C --> C5[4: Very easy]
+    C --> C6[5: Automated tools available]
+    
+    D --> D1[0: Very hard]
+    D --> D2[1: Hard]
+    D --> D3[2[Moderate]
+    D --> D4[3: Easy]
+    D --> D5[4: Very easy]
+    D --> D6[5: Automated tools available]
+    
+    E --> E1[0: No users]
+    E --> E2[1: Very few users]
+    E --> E3[2: Some users]
+    E --> E4[3: Many users]
+    E --> E5[4: Most users]
+    E --> E6[5: All users]
+    
+    F --> F1[0: Very hard]
+    F --> F2[1: Hard]
+    F --> F3[2: Moderate]
+    F --> F4[3: Easy]
+    F --> F5[4: Very easy]
+    F --> F6[5: Publicly available]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+</div></code></pre>
+<h3 id="dread-scoring-system">DREAD Scoring System</h3>
+<h4 id="risk-score-calculation">Risk Score Calculation</h4>
+<pre class="hljs"><code><div>Risk Score = (Damage + Reproducibility + Exploitability + Affected Users + Discoverability) / 5
+</div></code></pre>
+<h4 id="risk-levels">Risk Levels</h4>
+<ul>
+<li><strong>0-1</strong>: <strong>Low Risk</strong> - Minimal impact, difficult to exploit</li>
+<li><strong>2-3</strong>: <strong>Medium Risk</strong> - Moderate impact, some effort required</li>
+<li><strong>4-5</strong>: <strong>High Risk</strong> - Significant impact, easy to exploit</li>
+</ul>
+<h3 id="dread-assessment-example">DREAD Assessment Example</h3>
+<p><strong>Threat</strong>: SQL Injection in web application login form</p>
+<table>
+<thead>
+<tr>
+<th>DREAD Factor</th>
+<th>Score</th>
+<th>Justification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Damage</strong></td>
+<td>4</td>
+<td>Could compromise user database and system access</td>
+</tr>
+<tr>
+<td><strong>Reproducibility</strong></td>
+<td>4</td>
+<td>Easy to reproduce with common tools</td>
+</tr>
+<tr>
+<td><strong>Exploitability</strong></td>
+<td>4</td>
+<td>Well-documented attack technique</td>
+</tr>
+<tr>
+<td><strong>Affected Users</strong></td>
+<td>4</td>
+<td>All users of the application</td>
+</tr>
+<tr>
+<td><strong>Discoverability</strong></td>
+<td>3</td>
+<td>Requires some knowledge but tools available</td>
+</tr>
+<tr>
+<td><strong>Total Score</strong></td>
+<td><strong>3.8</strong></td>
+<td><strong>High Risk</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Mitigation Priority</strong>: High - Immediate attention required</p>
+<h2 id="%F0%9F%8E%AD-mitre-attck-framework">🎭 MITRE ATT&amp;CK Framework</h2>
+<p>MITRE ATT&amp;CK is a comprehensive knowledge base of adversary tactics and techniques used in cyber attacks.</p>
+<h3 id="what-is-mitre-attck">What is MITRE ATT&amp;CK?</h3>
+<p>ATT&amp;CK (Adversarial Tactics, Techniques, and Common Knowledge) provides a structured way to understand and analyze cyber threats, enabling better defense strategies.</p>
+<h3 id="attck-framework-structure">ATT&amp;CK Framework Structure</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[MITRE ATT&CK] --> B[Tactics]
+    A --> C[Techniques]
+    A --> D[Sub-techniques]
+    A --> E[Procedures]
+    
+    B --> B1[Initial Access]
+    B --> B2[Execution]
+    B --> B3[Persistence]
+    B --> B4[Privilege Escalation]
+    B --> B5[Defense Evasion]
+    B --> B6[Credential Access]
+    B --> B7[Discovery]
+    B --> B8[Lateral Movement]
+    B --> B9[Collection]
+    B --> B10[Command & Control]
+    B --> B11[Exfiltration]
+    B --> B12[Impact]
+    
+    C --> C1[Phishing]
+    C --> C2[Malware Execution]
+    C --> C3[Registry Modification]
+    C --> C4[Process Injection]
+    C --> C5[File Deletion]
+    C --> C6[Credential Dumping]
+    C --> C7[Network Scanning]
+    C --> C8[Remote Services]
+    C --> C9[Data Staging]
+    C --> C10[Web Services]
+    C --> C11[Data Transfer]
+    C --> C12[Data Destruction]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+</div></code></pre>
+<h3 id="key-attck-tactics">Key ATT&amp;CK Tactics</h3>
+<h4 id="1-initial-access">1. <strong>Initial Access</strong></h4>
+<p>Techniques used to gain initial foothold in target networks.</p>
+<p><strong>Common Techniques</strong>:</p>
+<ul>
+<li><strong>Phishing</strong>: Social engineering via email</li>
+<li><strong>Drive-by Compromise</strong>: Malicious websites</li>
+<li><strong>External Remote Services</strong>: VPN, RDP exploitation</li>
+<li><strong>Supply Chain Compromise</strong>: Compromised software/hardware</li>
+</ul>
+<h4 id="2-execution">2. <strong>Execution</strong></h4>
+<p>Techniques for running malicious code on target systems.</p>
+<p><strong>Common Techniques</strong>:</p>
+<ul>
+<li><strong>User Execution</strong>: Tricking users to run code</li>
+<li><strong>Scheduled Task/Job</strong>: Using system automation</li>
+<li><strong>Windows Management Instrumentation</strong>: System management tools</li>
+<li><strong>Command and Scripting Interpreter</strong>: PowerShell, bash, etc.</li>
+</ul>
+<h4 id="3-persistence">3. <strong>Persistence</strong></h4>
+<p>Techniques to maintain access across system restarts and credential changes.</p>
+<p><strong>Common Techniques</strong>:</p>
+<ul>
+<li><strong>Registry Run Keys</strong>: Windows startup programs</li>
+<li><strong>Scheduled Tasks</strong>: Automated execution</li>
+<li><strong>Service Installation</strong>: System services</li>
+<li><strong>Browser Extensions</strong>: Browser-based persistence</li>
+</ul>
+<h4 id="4-privilege-escalation">4. <strong>Privilege Escalation</strong></h4>
+<p>Techniques to gain higher-level permissions.</p>
+<p><strong>Common Techniques</strong>:</p>
+<ul>
+<li><strong>Process Injection</strong>: Injecting code into legitimate processes</li>
+<li><strong>Access Token Manipulation</strong>: Modifying security tokens</li>
+<li><strong>Bypass User Account Control</strong>: Circumventing UAC</li>
+<li><strong>Exploitation for Privilege Escalation</strong>: Using vulnerabilities</li>
+</ul>
+<h3 id="using-attck-for-defense">Using ATT&amp;CK for Defense</h3>
+<h4 id="threat-intelligence">Threat Intelligence</h4>
+<ul>
+<li><strong>Identify attack patterns</strong>: Map observed behaviors to ATT&amp;CK techniques</li>
+<li><strong>Assess capabilities</strong>: Understand adversary skill levels</li>
+<li><strong>Prioritize defenses</strong>: Focus on most likely attack vectors</li>
+</ul>
+<h4 id="detection-engineering">Detection Engineering</h4>
+<ul>
+<li><strong>Create detection rules</strong>: Build alerts for specific techniques</li>
+<li><strong>Validate coverage</strong>: Ensure detection across all tactics</li>
+<li><strong>Improve response</strong>: Better understanding of attack progression</li>
+</ul>
+<h4 id="red-team-exercises">Red Team Exercises</h4>
+<ul>
+<li><strong>Simulate attacks</strong>: Use ATT&amp;CK techniques in testing</li>
+<li><strong>Validate defenses</strong>: Test detection and response capabilities</li>
+<li><strong>Improve skills</strong>: Practice against realistic scenarios</li>
+</ul>
+<h2 id="%F0%9F%8C%90-network-security-architecture">🌐 Network Security Architecture</h2>
+<p>Network security architecture provides the foundation for protecting network infrastructure and communications.</p>
+<h3 id="network-security-zones">Network Security Zones</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Network Security Architecture] --> B[Internet]
+    A --> C[DMZ Zone]
+    A --> D[Internal Network]
+    A --> E[Management Network]
+    A --> F[Data Center]
+    
+    B --> B1[External threats]
+    B --> B2[Public services]
+    
+    C --> C1[Web servers]
+    C --> C2[Email servers]
+    C --> C3[DNS servers]
+    C --> C4[Load balancers]
+    
+    D --> D1[User workstations]
+    D --> D2[File servers]
+    D --> D3[Print servers]
+    D --> D4[Application servers]
+    
+    E --> E1[Network devices]
+    E --> E2[Management tools]
+    E --> E3[Monitoring systems]
+    
+    F --> F1[Database servers]
+    F --> F2[Application servers]
+    F --> F3[Storage systems]
+    
+    B -.->|Firewall| C
+    C -.->|Firewall| D
+    D -.->|Firewall| E
+    D -.->|Firewall| F
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+</div></code></pre>
+<h3 id="network-segmentation-strategies">Network Segmentation Strategies</h3>
+<h4 id="1-vlan-segmentation">1. <strong>VLAN Segmentation</strong></h4>
+<ul>
+<li><strong>Purpose</strong>: Logical separation of network traffic</li>
+<li><strong>Benefits</strong>: Improved security, performance, and management</li>
+<li><strong>Implementation</strong>: Switch configuration, routing policies</li>
+</ul>
+<h4 id="2-firewall-segmentation">2. <strong>Firewall Segmentation</strong></h4>
+<ul>
+<li><strong>Purpose</strong>: Control traffic between network segments</li>
+<li><strong>Benefits</strong>: Granular access control, threat isolation</li>
+<li><strong>Implementation</strong>: Firewall rules, access control lists</li>
+</ul>
+<h4 id="3-micro-segmentation">3. <strong>Micro-segmentation</strong></h4>
+<ul>
+<li><strong>Purpose</strong>: Fine-grained network isolation at workload level</li>
+<li><strong>Benefits</strong>: Lateral movement prevention, application-level security</li>
+<li><strong>Implementation</strong>: Software-defined networking, container security</li>
+</ul>
+<h3 id="zero-trust-architecture">Zero Trust Architecture</h3>
+<p>Zero Trust assumes that no user or system should be trusted by default, regardless of location or network.</p>
+<h4 id="zero-trust-principles">Zero Trust Principles</h4>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Zero Trust Principles] --> B[Never Trust, Always Verify]
+    A --> C[Least Privilege Access]
+    A --> D[Assume Breach]
+    A --> E[Verify Every Request]
+    
+    B --> B1[Continuous authentication]
+    B --> B2[Multi-factor verification]
+    B --> B3[Context-aware decisions]
+    
+    C --> C1[Minimal permissions]
+    C --> C2[Just-in-time access]
+    C --> C3[Role-based controls]
+    
+    D --> D1[Assume compromise]
+    D --> D2[Monitor continuously]
+    D --> D3[Respond quickly]
+    
+    E --> E1[Request validation]
+    E --> E2[Device verification]
+    E --> E3[Behavior analysis]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+</div></code></pre>
+<h4 id="zero-trust-implementation">Zero Trust Implementation</h4>
+<ul>
+<li><strong>Identity Verification</strong>: Strong authentication and authorization</li>
+<li><strong>Device Trust</strong>: Device health and compliance validation</li>
+<li><strong>Network Security</strong>: Encrypted communications and segmentation</li>
+<li><strong>Application Security</strong>: Secure application access and monitoring</li>
+<li><strong>Data Protection</strong>: Data classification and encryption</li>
+</ul>
+<h2 id="%F0%9F%94%84-resilience-planning-and-recovery">🔄 Resilience Planning and Recovery</h2>
+<p>Security architecture must include resilience strategies to maintain operations during and after security incidents.</p>
+<h3 id="resilience-framework">Resilience Framework</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Resilience Framework] --> B[Prevention]
+    A --> C[Detection]
+    A --> D[Response]
+    A --> E[Recovery]
+    A --> F[Learning]
+    
+    B --> B1[Security controls]
+    B --> B2[Risk management]
+    B --> B3[Training and awareness]
+    
+    C --> C1[Monitoring systems]
+    C --> C2[Alert mechanisms]
+    C --> C3[Incident identification]
+    
+    D --> D1[Incident response]
+    D --> D2[Containment actions]
+    D --> D3[Communication plans]
+    
+    E --> E1[System restoration]
+    E --> E2[Service recovery]
+    E --> E3[Business continuity]
+    
+    F --> F1[Post-incident review]
+    F --> F2[Process improvement]
+    F --> F3[Lessons learned]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+</div></code></pre>
+<h3 id="recovery-strategies">Recovery Strategies</h3>
+<h4 id="1-backup-and-recovery">1. <strong>Backup and Recovery</strong></h4>
+<ul>
+<li><strong>Regular Backups</strong>: Automated backup schedules</li>
+<li><strong>Offsite Storage</strong>: Geographic separation of backups</li>
+<li><strong>Testing</strong>: Regular recovery testing and validation</li>
+<li><strong>Documentation</strong>: Clear recovery procedures and contacts</li>
+</ul>
+<h4 id="2-redundancy-and-failover">2. <strong>Redundancy and Failover</strong></h4>
+<ul>
+<li><strong>System Redundancy</strong>: Duplicate critical systems</li>
+<li><strong>Network Redundancy</strong>: Multiple network paths</li>
+<li><strong>Data Redundancy</strong>: Replicated data storage</li>
+<li><strong>Geographic Redundancy</strong>: Multiple data center locations</li>
+</ul>
+<h4 id="3-business-continuity">3. <strong>Business Continuity</strong></h4>
+<ul>
+<li><strong>Recovery Time Objectives (RTO)</strong>: Maximum acceptable downtime</li>
+<li><strong>Recovery Point Objectives (RPO)</strong>: Maximum acceptable data loss</li>
+<li><strong>Alternative Work Locations</strong>: Remote work capabilities</li>
+<li><strong>Communication Plans</strong>: Stakeholder notification procedures</li>
+</ul>
+<h2 id="%F0%9F%93%8B-security-architecture-documentation">📋 Security Architecture Documentation</h2>
+<p>Comprehensive documentation is essential for implementing and maintaining security architecture.</p>
+<h3 id="documentation-components">Documentation Components</h3>
+<h4 id="1-architecture-overview">1. <strong>Architecture Overview</strong></h4>
+<ul>
+<li>System boundaries and trust relationships</li>
+<li>Security zones and segmentation</li>
+<li>Data flow and protection requirements</li>
+</ul>
+<h4 id="2-threat-models">2. <strong>Threat Models</strong></h4>
+<ul>
+<li>STRIDE analysis results</li>
+<li>DREAD risk assessments</li>
+<li>Mitigation strategies and controls</li>
+</ul>
+<h4 id="3-security-requirements">3. <strong>Security Requirements</strong></h4>
+<ul>
+<li>Functional security requirements</li>
+<li>Non-functional security requirements</li>
+<li>Compliance and regulatory requirements</li>
+</ul>
+<h4 id="4-implementation-guidelines">4. <strong>Implementation Guidelines</strong></h4>
+<ul>
+<li>Security control specifications</li>
+<li>Configuration standards</li>
+<li>Testing and validation procedures</li>
+</ul>
+<h4 id="5-operational-procedures">5. <strong>Operational Procedures</strong></h4>
+<ul>
+<li>Monitoring and alerting</li>
+<li>Incident response procedures</li>
+<li>Maintenance and updates</li>
+</ul>
+<h2 id="%F0%9F%A7%AA-hands-on-activities">🧪 Hands-on Activities</h2>
+<h3 id="activity-1-stride-threat-modeling">Activity 1: STRIDE Threat Modeling</h3>
+<p><strong>Objective</strong>: Apply STRIDE methodology to analyze a web application.</p>
+<p><strong>Scenario</strong>: E-commerce website with user accounts, payment processing, and order management.</p>
+<p><strong>Steps</strong>:</p>
+<ol>
+<li><strong>Analyze system architecture</strong> and identify components</li>
+<li><strong>Map data flows</strong> and trust boundaries</li>
+<li><strong>Identify threats</strong> for each component using STRIDE</li>
+<li><strong>Categorize threats</strong> by STRIDE category</li>
+<li><strong>Design mitigation strategies</strong> for high-priority threats</li>
+<li><strong>Document threat model</strong> with findings and recommendations</li>
+</ol>
+<h3 id="activity-2-dread-risk-assessment">Activity 2: DREAD Risk Assessment</h3>
+<p><strong>Objective</strong>: Conduct DREAD risk assessment for identified threats.</p>
+<p><strong>Steps</strong>:</p>
+<ol>
+<li><strong>Select high-priority threats</strong> from STRIDE analysis</li>
+<li><strong>Apply DREAD scoring</strong> to each threat</li>
+<li><strong>Calculate risk scores</strong> and prioritize threats</li>
+<li><strong>Design mitigation strategies</strong> based on risk levels</li>
+<li><strong>Create risk treatment plan</strong> with timelines and resources</li>
+</ol>
+<h3 id="activity-3-network-architecture-design">Activity 3: Network Architecture Design</h3>
+<p><strong>Objective</strong>: Design secure network architecture for a small business.</p>
+<p><strong>Requirements</strong>:</p>
+<ul>
+<li>Public web presence</li>
+<li>Internal office network</li>
+<li>Remote worker access</li>
+<li>Payment processing</li>
+<li>Customer data storage</li>
+</ul>
+<p><strong>Steps</strong>:</p>
+<ol>
+<li><strong>Design network topology</strong> with security zones</li>
+<li><strong>Implement network segmentation</strong> strategies</li>
+<li><strong>Configure security controls</strong> for each zone</li>
+<li><strong>Document architecture</strong> and security measures</li>
+<li><strong>Test security controls</strong> and validate design</li>
+</ol>
+<h3 id="activity-4-mitre-attck-mapping">Activity 4: MITRE ATT&amp;CK Mapping</h3>
+<p><strong>Objective</strong>: Map security controls to MITRE ATT&amp;CK framework.</p>
+<p><strong>Steps</strong>:</p>
+<ol>
+<li><strong>Select ATT&amp;CK techniques</strong> relevant to your organization</li>
+<li><strong>Identify existing controls</strong> that address each technique</li>
+<li><strong>Assess coverage gaps</strong> and prioritize improvements</li>
+<li><strong>Design additional controls</strong> for uncovered techniques</li>
+<li><strong>Create detection rules</strong> for key attack patterns</li>
+</ol>
+<h2 id="%F0%9F%93%8B-key-takeaways">📋 Key Takeaways</h2>
+<ol>
+<li>
+<p><strong>Security architecture</strong> provides a systematic approach to protecting systems while enabling business operations.</p>
+</li>
+<li>
+<p><strong>STRIDE methodology</strong> helps identify and categorize security threats during system design.</p>
+</li>
+<li>
+<p><strong>DREAD framework</strong> enables structured risk assessment and prioritization of security threats.</p>
+</li>
+<li>
+<p><strong>MITRE ATT&amp;CK</strong> provides comprehensive understanding of adversary tactics and techniques.</p>
+</li>
+<li>
+<p><strong>Network segmentation</strong> and zero-trust principles improve security through isolation and verification.</p>
+</li>
+<li>
+<p><strong>Resilience planning</strong> ensures systems can recover from security incidents and maintain operations.</p>
+</li>
+<li>
+<p><strong>Comprehensive documentation</strong> is essential for implementing and maintaining security architecture.</p>
+</li>
+</ol>
+<h2 id="%E2%9D%93-review-questions">❓ Review Questions</h2>
+<ol>
+<li>
+<p><strong>What are the core security design principles</strong>, and how do they guide architecture decisions?</p>
+</li>
+<li>
+<p><strong>How does STRIDE methodology</strong> help identify security threats, and what are the six threat categories?</p>
+</li>
+<li>
+<p><strong>Explain the DREAD framework</strong> and how it's used for risk assessment and prioritization.</p>
+</li>
+<li>
+<p><strong>What is the MITRE ATT&amp;CK framework</strong>, and how can it be used to improve security defenses?</p>
+</li>
+<li>
+<p><strong>How do network segmentation</strong> and zero-trust principles improve security architecture?</p>
+</li>
+</ol>
+<h2 id="%F0%9F%93%9A-further-reading">📚 Further Reading</h2>
+<h3 id="books">Books</h3>
+<ul>
+<li>&quot;Security Engineering&quot; by Ross Anderson</li>
+<li>&quot;Threat Modeling: Designing for Security&quot; by Adam Shostack</li>
+<li>&quot;Network Security: Private Communication in a Public World&quot; by Charlie Kaufman</li>
+</ul>
+<h3 id="online-resources">Online Resources</h3>
+<ul>
+<li><a href="https://attack.mitre.org/">MITRE ATT&amp;CK Framework</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/security/develop/threat-modeling-tool-threats">Microsoft STRIDE Threat Modeling</a></li>
+<li><a href="https://owasp.org/www-community/Threat_Modeling">OWASP Threat Modeling</a></li>
+</ul>
+<h3 id="tools-and-frameworks">Tools and Frameworks</h3>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/azure/security/develop/threat-modeling-tool">Microsoft Threat Modeling Tool</a></li>
+<li><a href="https://iriusrisk.com/">IriusRisk</a> - Threat modeling platform</li>
+<li><a href="https://threatdragon.org/">Threat Dragon</a> - Open source threat modeling</li>
+</ul>
+<hr>
+<p><strong>Next Chapter</strong>: <a href="chapter07-ethics-privacy.md">Chapter 7: Ethics, Security, and Privacy</a> - Learn about legal and ethical considerations in cybersecurity, including GDPR and privacy regulations.</p>
+
+</body>
+</html>

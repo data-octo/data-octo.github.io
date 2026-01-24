@@ -1,0 +1,1332 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://data-octo.github.io/book/airline_agentic_ai/4_airline_enterprise_data_architecture_transform/chapters/04_domain_driven/">
+      
+      
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>Chapter 4: Domain-Driven Design for Data Architecture - Data Octo</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.e53b48f4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-4-domain-driven-design-for-data-architecture" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../../.." title="Data Octo" class="md-header__button md-logo" aria-label="Data Octo" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Data Octo
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter 4: Domain-Driven Design for Data Architecture
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Data Octo" class="md-nav__button md-logo" aria-label="Data Octo" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Data Octo
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Blog
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Blog
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../blog/index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Blog Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Books
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Books
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../books/index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    None
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Portfolio
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Portfolio
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../portfolio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    None
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-to-domain-driven-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction to Domain-Driven Design
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#domain-driven-design-in-aviation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Domain-Driven Design in Aviation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-domain-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Domain Analysis
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Domain Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-flight-operations-domain" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Flight Operations Domain
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Flight Operations Domain">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#domain-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Domain Model
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-revenue-management-domain" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Revenue Management Domain
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Revenue Management Domain">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#domain-model_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Domain Model
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bounded-contexts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bounded Contexts
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bounded Contexts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-context-mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Context Mapping
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-integration-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Integration Patterns
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Integration Patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aws-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      AWS Implementation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#azure-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Azure Implementation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#domain-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      Domain Services
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Domain Services">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-flight-operations-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Flight Operations Services
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-revenue-management-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Revenue Management Services
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-storming-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Event Storming Analysis
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Event Storming Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-flight-operations-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Flight Operations Events
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-revenue-management-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Revenue Management Events
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation Patterns
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation Patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-domain-model-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Domain Model Pattern
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-technical-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Technical Implementation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Technical Implementation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aws-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      AWS Stack
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#azure-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      Azure Stack
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-consistency-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Consistency Patterns
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Data Consistency Patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-eventual-consistency" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Eventual Consistency
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-strong-consistency" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Strong Consistency
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing Strategy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Testing Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-domain-model-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Domain Model Testing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-integration-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Integration Testing
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deployment-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deployment Strategy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deployment Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-aws-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. AWS Deployment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-azure-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Azure Deployment
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monitoring-and-observability" class="md-nav__link">
+    <span class="md-ellipsis">
+      Monitoring and Observability
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Monitoring and Observability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-domain-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Domain Metrics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-business-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Business Metrics
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Takeaways
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next Steps
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-4-domain-driven-design-for-data-architecture">Chapter 4: Domain-Driven Design for Data Architecture</h1>
+<h2 id="introduction-to-domain-driven-design">Introduction to Domain-Driven Design</h2>
+<p>Domain-Driven Design (DDD) provides a framework for modeling complex systems that aligns technical implementation with business domains. This chapter explores how DDD principles can be applied to enterprise data architectures.</p>
+<p><img alt="Domain-Driven Design" src="../../domain_driven_design.png" /></p>
+<h2 id="domain-driven-design-in-aviation">Domain-Driven Design in Aviation</h2>
+<p>GlobalAir's implementation of Domain-Driven Design (DDD) provides a strategic framework for organizing data architecture around core business domains. This approach ensures that technology solutions align closely with business objectives, enabling agility and scalability. By structuring data and services around bounded contexts, DDD minimizes dependencies and fosters innovation.</p>
+<div class="highlight"><pre><span></span><code>graph TB
+    subgraph &quot;Strategic Design&quot;
+        A[Core Domains] --&gt; B[Bounded Contexts]
+        B --&gt; C[Context Maps]
+        C --&gt; D[Domain Models]
+
+        %% Add Analytics Layer
+        D --&gt; I[Analytics Layer]
+
+        subgraph &quot;Airline Domains&quot;
+            E[Flight Operations]
+            F[Revenue Management]
+            G[Customer Experience]
+            H[Aircraft Maintenance]
+        end
+
+        subgraph &quot;Analytics Capabilities&quot;
+            J[Domain Reporting]
+            K[Business Dashboards]
+            L[Data Science Models]
+            M[Predictive Forecasting]
+        end
+
+        D --- E
+        D --- F
+        D --- G
+        D --- H
+
+        I --- J
+        I --- K
+        I --- L
+        I --- M
+    end
+
+    style A fill:#f5f5f5,stroke:#333,stroke-width:2px
+    style B fill:#e6f3ff,stroke:#333,stroke-width:2px
+    style C fill:#ffe6e6,stroke:#333,stroke-width:2px
+    style D fill:#e6ffe6,stroke:#333,stroke-width:2px
+    style I fill:#ffd700,stroke:#333,stroke-width:2px
+</code></pre></div>
+<h2 id="core-domain-analysis">Core Domain Analysis</h2>
+<h3 id="1-flight-operations-domain">1. Flight Operations Domain</h3>
+<div class="highlight"><pre><span></span><code>graph TB
+    subgraph &quot;Flight Operations&quot;
+        A[Flight Schedule] --&gt; B[Aircraft Assignment]
+        B --&gt; C[Crew Planning]
+        C --&gt; D[Ground Operations]
+
+        subgraph &quot;Aggregates&quot;
+            E[Flight]
+            F[Aircraft]
+            G[Crew]
+            H[Station]
+        end
+
+        D --- E
+        D --- F
+        D --- G
+        D --- H
+    end
+
+    style A fill:#ff9900
+    style B fill:#ff9900
+    style C fill:#ff9900
+    style D fill:#ff9900
+</code></pre></div>
+<h4 id="domain-model">Domain Model</h4>
+<ul>
+<li><strong>Entities:</strong></li>
+<li>Flight: Represents a scheduled journey between two locations, including details such as departure and arrival times, aircraft type, and route.</li>
+<li>Aircraft: Captures information about the fleet, including registration numbers, capacity, and maintenance schedules.</li>
+<li>Crew: Tracks personnel assignments, qualifications, and availability, ensuring compliance with regulatory requirements.</li>
+<li>Route: Defines the path between origin and destination, including waypoints and alternate airports.</li>
+<li>
+<p>Station: Represents airport-specific operations, such as gate assignments and ground services.</p>
+</li>
+<li>
+<p><strong>Value Objects:</strong></p>
+</li>
+<li>FlightNumber: A unique identifier for each flight, ensuring traceability across systems.</li>
+<li>ScheduleTime: Specifies planned departure and arrival times, supporting punctuality metrics.</li>
+<li>AircraftType: Categorizes aircraft by model and configuration, aiding in capacity planning.</li>
+<li>CrewPosition: Defines roles within the crew, such as pilot, co-pilot, and cabin staff.</li>
+<li>
+<p>RouteSegment: Breaks down routes into manageable sections, facilitating analysis and optimization.</p>
+</li>
+<li>
+<p><strong>Aggregates:</strong></p>
+</li>
+<li>FlightOperation: Encapsulates all aspects of a flight, from scheduling to execution, ensuring consistency.</li>
+<li>CrewAssignment: Manages the allocation of personnel to flights, balancing workload and compliance.</li>
+<li>AircraftSchedule: Coordinates aircraft availability with operational needs, minimizing downtime.</li>
+<li>StationOperation: Oversees airport-specific activities, such as baggage handling and refueling.</li>
+</ul>
+<h3 id="2-revenue-management-domain">2. Revenue Management Domain</h3>
+<div class="highlight"><pre><span></span><code>graph TB
+    subgraph &quot;Revenue Management&quot;
+        A[Inventory] --&gt; B[Pricing]
+        B --&gt; C[Forecasting]
+        C --&gt; D[Optimization]
+
+        subgraph &quot;Aggregates&quot;
+            E[Booking Class]
+            F[Fare]
+            G[Route]
+            H[Season]
+        end
+
+        D --- E
+        D --- F
+        D --- G
+        D --- H
+    end
+
+    style A fill:#0078d4
+    style B fill:#0078d4
+    style C fill:#0078d4
+    style D fill:#0078d4
+</code></pre></div>
+<h4 id="domain-model_1">Domain Model</h4>
+<ul>
+<li><strong>Entities:</strong></li>
+<li>Inventory: Tracks seat availability across flights, enabling dynamic adjustments based on demand.</li>
+<li>Price: Represents fare structures, including base rates, taxes, and surcharges.</li>
+<li>BookingClass: Categorizes seats by service level, such as economy, business, and first class.</li>
+<li>Market: Defines geographic regions and customer segments, guiding marketing strategies.</li>
+<li>
+<p>Season: Captures temporal patterns, such as peak travel periods and off-season trends.</p>
+</li>
+<li>
+<p><strong>Value Objects:</strong></p>
+</li>
+<li>FareAmount: Specifies the cost of a ticket, including discounts and promotions.</li>
+<li>LoadFactor: Measures seat occupancy, providing insights into operational efficiency.</li>
+<li>YieldMetric: Evaluates revenue per available seat mile (RASM), guiding pricing decisions.</li>
+<li>MarketDemand: Predicts customer interest based on historical data and external factors.</li>
+<li>
+<p>SeasonalPattern: Identifies recurring trends, such as holiday surges and weather impacts.</p>
+</li>
+<li>
+<p><strong>Aggregates:</strong></p>
+</li>
+<li>PricingStrategy: Balances competitiveness and profitability, leveraging real-time analytics.</li>
+<li>InventoryControl: Ensures optimal seat allocation, reducing overbooking and underutilization.</li>
+<li>MarketAnalysis: Provides insights into customer behavior, informing route planning and promotions.</li>
+<li>RevenueOptimization: Maximizes financial performance through data-driven decision-making.</li>
+</ul>
+<h2 id="bounded-contexts">Bounded Contexts</h2>
+<h3 id="1-context-mapping">1. Context Mapping</h3>
+<div class="highlight"><pre><span></span><code>graph LR
+    subgraph &quot;Context Relationships&quot;
+        A[Flight Ops] --&gt; B[Revenue]
+        B --&gt; C[Customer]
+        C --&gt; D[Maintenance]
+
+        subgraph &quot;Integration&quot;
+            E[Shared Kernel]
+            F[Customer/Supplier]
+            G[Partnership]
+            H[ACL]
+        end
+
+        A --- E
+        B --- F
+        C --- G
+        D --- H
+    end
+</code></pre></div>
+<ul>
+<li><strong>Integration Patterns:</strong></li>
+<li>Shared Kernel: Facilitates collaboration between closely related contexts, such as flight operations and crew management, by sharing common data models.</li>
+<li>Customer/Supplier: Defines clear contracts between contexts, ensuring that changes in one do not disrupt the other.</li>
+<li>Partnership: Encourages joint development of shared functionality, such as loyalty programs and ancillary services.</li>
+<li>ACL (Anti-Corruption Layer): Translates data between contexts, preserving integrity and minimizing dependencies.</li>
+</ul>
+<h3 id="2-integration-patterns">2. Integration Patterns</h3>
+<h4 id="aws-implementation">AWS Implementation</h4>
+<ul>
+<li><strong>Event Bridge:</strong></li>
+<li>Domain event publishing enables real-time updates across contexts, such as notifying revenue management of flight schedule changes.</li>
+<li>Cross-context communication ensures that data flows seamlessly between systems, reducing silos.</li>
+<li>Event routing directs messages to the appropriate consumers, improving efficiency.</li>
+<li>
+<p>Pattern matching filters events based on criteria, ensuring relevance.</p>
+</li>
+<li>
+<p><strong>Step Functions:</strong></p>
+</li>
+<li>Process orchestration coordinates complex workflows, such as rebooking passengers during disruptions.</li>
+<li>Saga pattern ensures consistency across distributed transactions, handling failures gracefully.</li>
+<li>Compensation handling reverses actions when errors occur, maintaining system integrity.</li>
+<li>Error management provides visibility into issues, enabling rapid resolution.</li>
+</ul>
+<h4 id="azure-implementation">Azure Implementation</h4>
+<ul>
+<li><strong>Service Bus:</strong></li>
+<li>Message queuing decouples producers and consumers, enhancing scalability.</li>
+<li>Topic subscription allows multiple systems to receive relevant updates, such as inventory changes.</li>
+<li>Order handling ensures that messages are processed in sequence, preserving consistency.</li>
+<li>
+<p>Dead letter queuing captures unprocessable messages, supporting troubleshooting.</p>
+</li>
+<li>
+<p><strong>Logic Apps:</strong></p>
+</li>
+<li>Workflow automation streamlines repetitive tasks, such as sending notifications.</li>
+<li>Integration patterns connect disparate systems, enabling end-to-end processes.</li>
+<li>Connector framework simplifies integration with third-party services, such as payment gateways.</li>
+<li>Message transformation adapts data formats, ensuring compatibility.</li>
+</ul>
+<h2 id="domain-services">Domain Services</h2>
+<h3 id="1-flight-operations-services">1. Flight Operations Services</h3>
+<div class="highlight"><pre><span></span><code>graph TB
+    subgraph &quot;Flight Ops Services&quot;
+        A[Schedule Service] --&gt; B[Aircraft Service]
+        B --&gt; C[Crew Service]
+        C --&gt; D[Ground Service]
+
+        subgraph &quot;Infrastructure&quot;
+            E[AWS Lambda]
+            F[DynamoDB]
+            G[API Gateway]
+            H[EventBridge]
+        end
+
+        D --- E
+        D --- F
+        D --- G
+        D --- H
+    end
+</code></pre></div>
+<ul>
+<li><strong>Schedule Service:</strong> Manages flight schedules, including creation, updates, and cancellations.</li>
+<li><strong>Aircraft Service:</strong> Tracks aircraft availability, maintenance status, and assignments.</li>
+<li><strong>Crew Service:</strong> Allocates personnel to flights, ensuring compliance with regulations and contracts.</li>
+<li><strong>Ground Service:</strong> Coordinates airport operations, such as gate assignments and baggage handling.</li>
+</ul>
+<h3 id="2-revenue-management-services">2. Revenue Management Services</h3>
+<div class="highlight"><pre><span></span><code>graph TB
+    subgraph &quot;Revenue Services&quot;
+        A[Pricing Service] --&gt; B[Inventory Service]
+        B --&gt; C[Forecast Service]
+        C --&gt; D[Optimization Service]
+
+        subgraph &quot;Infrastructure&quot;
+            E[Azure Functions]
+            F[Cosmos DB]
+            G[API Management]
+            H[Service Bus]
+        end
+
+        D --- E
+        D --- F
+        D --- G
+        D --- H
+    end
+</code></pre></div>
+<ul>
+<li><strong>Pricing Service:</strong> Adjusts fares dynamically based on demand, competition, and market conditions.</li>
+<li><strong>Inventory Service:</strong> Monitors seat availability, enabling real-time adjustments.</li>
+<li><strong>Forecast Service:</strong> Predicts future trends, such as demand surges and seasonal patterns.</li>
+<li><strong>Optimization Service:</strong> Balances load factors and revenue, maximizing profitability.</li>
+</ul>
+<h2 id="event-storming-analysis">Event Storming Analysis</h2>
+<h3 id="1-flight-operations-events">1. Flight Operations Events</h3>
+<ul>
+<li>FlightScheduled</li>
+<li>AircraftAssigned</li>
+<li>CrewAssigned</li>
+<li>FlightDeparted</li>
+<li>FlightArrived</li>
+<li>DelayRecorded</li>
+<li>WeatherImpact</li>
+</ul>
+<h3 id="2-revenue-management-events">2. Revenue Management Events</h3>
+<ul>
+<li>InventoryUpdated</li>
+<li>PriceChanged</li>
+<li>BookingCreated</li>
+<li>ForecastUpdated</li>
+<li>OptimizationRun</li>
+<li>MarketAnalyzed</li>
+<li>SeasonDefined</li>
+</ul>
+<h2 id="implementation-patterns">Implementation Patterns</h2>
+<h3 id="1-domain-model-pattern">1. Domain Model Pattern</h3>
+<div class="highlight"><pre><span></span><code>graph TB
+    subgraph &quot;DDD Implementation&quot;
+        A[Entity] --&gt; B[Aggregate Root]
+        B --&gt; C[Repository]
+        C --&gt; D[Domain Service]
+
+        subgraph &quot;Patterns&quot;
+            E[Factory]
+            F[Specification]
+            G[Value Object]
+            H[Event]
+        end
+
+        D --- E
+        D --- F
+        D --- G
+        D --- H
+    end
+</code></pre></div>
+<h3 id="2-technical-implementation">2. Technical Implementation</h3>
+<h4 id="aws-stack">AWS Stack</h4>
+<ul>
+<li>Lambda for domain services</li>
+<li>DynamoDB for aggregates</li>
+<li>EventBridge for events</li>
+<li>API Gateway for interfaces</li>
+</ul>
+<h4 id="azure-stack">Azure Stack</h4>
+<ul>
+<li>Functions for domain services</li>
+<li>Cosmos DB for aggregates</li>
+<li>Service Bus for events</li>
+<li>API Management for interfaces</li>
+</ul>
+<h2 id="data-consistency-patterns">Data Consistency Patterns</h2>
+<h3 id="1-eventual-consistency">1. Eventual Consistency</h3>
+<ul>
+<li>Event sourcing</li>
+<li>CQRS pattern</li>
+<li>Saga pattern</li>
+<li>Compensation logic</li>
+</ul>
+<h3 id="2-strong-consistency">2. Strong Consistency</h3>
+<ul>
+<li>Transactional boundaries</li>
+<li>Aggregate roots</li>
+<li>Optimistic locking</li>
+<li>Version control</li>
+</ul>
+<h2 id="testing-strategy">Testing Strategy</h2>
+<h3 id="1-domain-model-testing">1. Domain Model Testing</h3>
+<ul>
+<li>Unit tests</li>
+<li>Aggregate tests</li>
+<li>Event tests</li>
+<li>Service tests</li>
+</ul>
+<h3 id="2-integration-testing">2. Integration Testing</h3>
+<ul>
+<li>Context integration</li>
+<li>Event flow</li>
+<li>Saga execution</li>
+<li>Compensation handling</li>
+</ul>
+<h2 id="deployment-strategy">Deployment Strategy</h2>
+<h3 id="1-aws-deployment">1. AWS Deployment</h3>
+<ul>
+<li>CloudFormation templates</li>
+<li>CodePipeline automation</li>
+<li>Multi-region deployment</li>
+<li>Blue-green updates</li>
+</ul>
+<h3 id="2-azure-deployment">2. Azure Deployment</h3>
+<ul>
+<li>ARM templates</li>
+<li>Azure DevOps</li>
+<li>Geo-replication</li>
+<li>Staged rollout</li>
+</ul>
+<h2 id="monitoring-and-observability">Monitoring and Observability</h2>
+<h3 id="1-domain-metrics">1. Domain Metrics</h3>
+<ul>
+<li>Bounded context health</li>
+<li>Event processing</li>
+<li>Service performance</li>
+<li>Data consistency</li>
+</ul>
+<h3 id="2-business-metrics">2. Business Metrics</h3>
+<ul>
+<li>Domain KPIs</li>
+<li>Process efficiency</li>
+<li>System reliability</li>
+<li>Business impact</li>
+</ul>
+<h2 id="key-takeaways">Key Takeaways</h2>
+<ol>
+<li>DDD aligns technology with business, ensuring that solutions address real-world needs.</li>
+<li>Bounded contexts ensure clean separation, reducing complexity and fostering innovation.</li>
+<li>Event-driven integration enables flexibility, supporting real-time updates and scalability.</li>
+<li>Multi-cloud implementation provides resilience, leveraging the strengths of different platforms.</li>
+<li>Domain-specific deployment ensures control, tailoring solutions to unique requirements.</li>
+</ol>
+<h2 id="next-steps">Next Steps</h2>
+<p>The next chapter will explore how Agentic AI capabilities can be integrated into this domain-driven architecture to enhance decision-making and automation across airline operations.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © 2026 Data Octo · Enterprise Cloud, Data & AI, Cybersecurity Architecture
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../../../..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "content.code.copy"], "search": "../../../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>

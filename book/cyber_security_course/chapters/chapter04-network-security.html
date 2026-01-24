@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>chapter04-network-security.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="chapter-4-network-security-essentials">Chapter 4: Network Security Essentials</h1>
+<h2 id="%F0%9F%8E%AF-learning-objectives">🎯 Learning Objectives</h2>
+<p>By the end of this chapter, you will be able to:</p>
+<ul>
+<li>Understand fundamental network protocols and their security implications</li>
+<li>Identify common network vulnerabilities and attack vectors</li>
+<li>Use Wireshark to analyze network traffic and detect security threats</li>
+<li>Build and secure network topologies using Cisco Packet Tracer</li>
+<li>Implement and configure firewalls, IDS/IPS, and VPNs</li>
+<li>Apply network segmentation and access control strategies</li>
+<li>Develop incident response procedures for network security incidents</li>
+<li>Understand DoS/DDoS attacks and mitigation techniques</li>
+</ul>
+<h2 id="%F0%9F%8C%90-network-fundamentals-and-security">🌐 Network Fundamentals and Security</h2>
+<p>Networks are the backbone of modern computing, enabling communication between devices, systems, and users. Understanding how networks work is essential for protecting them from security threats.</p>
+<h3 id="what-is-a-network">What is a Network?</h3>
+<p>A network is a collection of interconnected devices that can communicate with each other to share resources and information. Networks can be as small as two computers connected by a cable or as large as the global internet.</p>
+<h3 id="network-types-and-security-considerations">Network Types and Security Considerations</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Network Types] --> B[Local Area Network LAN]
+    A --> C[Wide Area Network WAN]
+    A --> D[Wireless Networks]
+    A --> E[Cloud Networks]
+    
+    B --> B1[Office networks]
+    B --> B2[Home networks]
+    B --> B3[Data center networks]
+    
+    C --> C1[Internet connections]
+    C --> C2[Branch office links]
+    C --> C3[Partner connections]
+    
+    D --> D1[Wi-Fi networks]
+    D --> D2[Bluetooth networks]
+    D --> D3[Cellular networks]
+    
+    E --> E1[Public cloud]
+    E --> E2[Private cloud]
+    E --> E3[Hybrid cloud]
+    
+    B1 --> F1[Access control]
+    B2 --> F2[Network segmentation]
+    B3 --> F3[Traffic monitoring]
+    
+    C1 --> F4[Encryption]
+    C2 --> F5[VPN tunnels]
+    C3 --> F6[Firewall rules]
+    
+    D1 --> F7[Authentication]
+    D2 --> F8[Encryption]
+    D3 --> F9[Signal security]
+    
+    E1 --> F10[Identity management]
+    E2 --> F11[Data protection]
+    E3 --> F12[Compliance controls]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F1 fill:#e8f5e8
+    style F2 fill:#e8f5e8
+    style F3 fill:#e8f5e8
+    style F4 fill:#fff3e0
+    style F5 fill:#fff3e0
+    style F6 fill:#fff3e0
+    style F7 fill:#fce4ec
+    style F8 fill:#fce4ec
+    style F9 fill:#fce4ec
+    style F10 fill:#f1f8e9
+    style F11 fill:#f1f8e9
+    style F12 fill:#f1f8e9
+</div></code></pre>
+<h3 id="network-security-principles">Network Security Principles</h3>
+<p>Network security is built on three fundamental principles:</p>
+<ol>
+<li><strong>Defense in Depth</strong>: Multiple layers of security controls</li>
+<li><strong>Principle of Least Privilege</strong>: Only necessary access granted</li>
+<li><strong>Fail-Safe Defaults</strong>: Secure by default configuration</li>
+</ol>
+<h2 id="%F0%9F%94%8D-network-protocols-and-security">🔍 Network Protocols and Security</h2>
+<p>Understanding network protocols is crucial for identifying security vulnerabilities and implementing appropriate controls.</p>
+<h3 id="osi-model-and-security">OSI Model and Security</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[OSI Model Layers] --> B[Application Layer 7]
+    A --> C[Presentation Layer 6]
+    A --> D[Session Layer 5]
+    A --> E[Transport Layer 4]
+    A --> F[Network Layer 3]
+    A --> G[Data Link Layer 2]
+    A --> H[Physical Layer 1]
+    
+    B --> B1[HTTP, FTP, SMTP]
+    B --> B2[Web application attacks]
+    B --> B3[API security]
+    
+    C --> C1[SSL/TLS, encryption]
+    C --> C2[Cryptographic attacks]
+    C --> C3[Certificate management]
+    
+    D --> D1[Session management]
+    D --> D2[Session hijacking]
+    D --> D3[Authentication]
+    
+    E --> E1[TCP, UDP]
+    E --> E2[Port scanning]
+    E --> E3[SYN floods]
+    
+    F --> F1[IP, routing]
+    F --> F2[IP spoofing]
+    F --> F3[Routing attacks]
+    
+    G --> G1[Ethernet, MAC]
+    G --> G2[ARP spoofing]
+    G --> G3[Switch attacks]
+    
+    H --> H1[Cables, signals]
+    H --> H2[Physical access]
+    H --> H3[Signal interception]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+    style G fill:#fff8e1
+    style H fill:#f3e5f5
+</div></code></pre>
+<h3 id="key-protocols-and-security-issues">Key Protocols and Security Issues</h3>
+<h4 id="1-tcpip-protocol-suite">1. <strong>TCP/IP Protocol Suite</strong></h4>
+<ul>
+<li><strong>TCP (Transmission Control Protocol)</strong>: Connection-oriented, reliable</li>
+<li><strong>UDP (User Datagram Protocol)</strong>: Connectionless, fast</li>
+<li><strong>IP (Internet Protocol)</strong>: Addressing and routing</li>
+</ul>
+<p><strong>Security Issues</strong>:</p>
+<ul>
+<li><strong>IP Spoofing</strong>: Forging source IP addresses</li>
+<li><strong>TCP Hijacking</strong>: Taking over established connections</li>
+<li><strong>Port Scanning</strong>: Discovering open network ports</li>
+</ul>
+<h4 id="2-httphttps-web-protocols">2. <strong>HTTP/HTTPS (Web Protocols)</strong></h4>
+<ul>
+<li><strong>HTTP</strong>: Unencrypted web traffic</li>
+<li><strong>HTTPS</strong>: Encrypted web traffic using SSL/TLS</li>
+</ul>
+<p><strong>Security Issues</strong>:</p>
+<ul>
+<li><strong>Man-in-the-Middle Attacks</strong>: Intercepting unencrypted traffic</li>
+<li><strong>Session Hijacking</strong>: Stealing user sessions</li>
+<li><strong>Cross-Site Scripting (XSS)</strong>: Injecting malicious code</li>
+</ul>
+<h4 id="3-dns-domain-name-system">3. <strong>DNS (Domain Name System)</strong></h4>
+<ul>
+<li>Translates domain names to IP addresses</li>
+<li>Critical for internet functionality</li>
+</ul>
+<p><strong>Security Issues</strong>:</p>
+<ul>
+<li><strong>DNS Poisoning</strong>: Redirecting traffic to malicious sites</li>
+<li><strong>DNS Amplification</strong>: Using DNS for DDoS attacks</li>
+<li><strong>DNS Tunneling</strong>: Bypassing security controls</li>
+</ul>
+<h2 id="%F0%9F%9A%A8-common-network-vulnerabilities">🚨 Common Network Vulnerabilities</h2>
+<p>Network vulnerabilities are weaknesses that attackers can exploit to gain unauthorized access or disrupt services.</p>
+<h3 id="vulnerability-categories">Vulnerability Categories</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Network Vulnerabilities] --> B[Configuration Vulnerabilities]
+    A --> C[Protocol Vulnerabilities]
+    A --> D[Physical Vulnerabilities]
+    A --> E[Human Vulnerabilities]
+    
+    B --> B1[Default passwords]
+    B --> B2[Open ports]
+    B --> B3[Weak encryption]
+    B --> B4[Unpatched systems]
+    
+    C --> C1[Protocol flaws]
+    C --> C2[Authentication weaknesses]
+    C --> C3[Session management issues]
+    C --> C4[Buffer overflows]
+    
+    D --> D1[Physical access]
+    D --> D2[Signal interception]
+    D --> D3[Hardware tampering]
+    D --> D4[Environmental threats]
+    
+    E --> E1[Social engineering]
+    E --> E2[Insider threats]
+    E --> E3[Human error]
+    E --> E4[Lack of training]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+</div></code></pre>
+<h3 id="top-network-security-threats">Top Network Security Threats</h3>
+<h4 id="1-denial-of-service-dos-attacks">1. <strong>Denial of Service (DoS) Attacks</strong></h4>
+<ul>
+<li><strong>Purpose</strong>: Overwhelm systems to make them unavailable</li>
+<li><strong>Methods</strong>: Flooding with traffic, exploiting vulnerabilities</li>
+<li><strong>Impact</strong>: Service disruption, financial losses</li>
+</ul>
+<h4 id="2-man-in-the-middle-mitm-attacks">2. <strong>Man-in-the-Middle (MitM) Attacks</strong></h4>
+<ul>
+<li><strong>Purpose</strong>: Intercept and modify communications</li>
+<li><strong>Methods</strong>: ARP spoofing, DNS poisoning, SSL stripping</li>
+<li><strong>Impact</strong>: Data theft, credential compromise</li>
+</ul>
+<h4 id="3-network-reconnaissance">3. <strong>Network Reconnaissance</strong></h4>
+<ul>
+<li><strong>Purpose</strong>: Gather information about network structure</li>
+<li><strong>Methods</strong>: Port scanning, network mapping, service enumeration</li>
+<li><strong>Impact</strong>: Attack planning, vulnerability identification</li>
+</ul>
+<h4 id="4-wireless-network-attacks">4. <strong>Wireless Network Attacks</strong></h4>
+<ul>
+<li><strong>Purpose</strong>: Gain unauthorized network access</li>
+<li><strong>Methods</strong>: WEP cracking, WPA attacks, evil twin attacks</li>
+<li><strong>Impact</strong>: Network compromise, data theft</li>
+</ul>
+<h2 id="%F0%9F%95%B5%EF%B8%8F-wireshark-network-traffic-analysis">🕵️ Wireshark: Network Traffic Analysis</h2>
+<p>Wireshark is a powerful network protocol analyzer that allows security professionals to examine network traffic in real-time and identify security threats.</p>
+<h3 id="what-is-wireshark">What is Wireshark?</h3>
+<p>Wireshark is an open-source packet analyzer that captures and displays network packets in human-readable format. It's essential for:</p>
+<ul>
+<li><strong>Network Troubleshooting</strong>: Identifying connectivity issues</li>
+<li><strong>Security Analysis</strong>: Detecting malicious traffic</li>
+<li><strong>Protocol Analysis</strong>: Understanding network behavior</li>
+<li><strong>Performance Monitoring</strong>: Analyzing network performance</li>
+</ul>
+<h3 id="wireshark-interface-overview">Wireshark Interface Overview</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Wireshark Interface] --> B[Menu Bar]
+    A --> C[Toolbar]
+    A --> D[Filter Bar]
+    A --> E[Packet List]
+    A --> F[Packet Details]
+    A --> G[Packet Bytes]
+    
+    B --> B1[File operations]
+    B --> B2[Capture options]
+    B --> B3[Analysis tools]
+    
+    C --> C1[Start/stop capture]
+    C --> C2[Capture interfaces]
+    C --> C3[Display filters]
+    
+    D --> D1[Protocol filters]
+    D --> D2[IP address filters]
+    D --> D3[Port filters]
+    
+    E --> E1[Packet summary]
+    E --> E2[Source/destination]
+    E --> E3[Protocol information]
+    
+    F --> F1[Protocol details]
+    F --> F2[Header information]
+    F --> F3[Payload data]
+    
+    G --> G1[Hex dump]
+    G --> G2[ASCII representation]
+    G --> G3[Binary analysis]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+    style G fill:#fff8e1
+</div></code></pre>
+<h3 id="essential-wireshark-filters">Essential Wireshark Filters</h3>
+<p>Wireshark filters help focus on specific traffic patterns and security events.</p>
+<h4 id="protocol-filters">Protocol Filters</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># HTTP traffic only</span>
+http
+
+<span class="hljs-comment"># HTTPS traffic only</span>
+ssl or tls
+
+<span class="hljs-comment"># DNS queries</span>
+dns
+
+<span class="hljs-comment"># TCP traffic on specific port</span>
+tcp.port == 80
+</div></code></pre>
+<h4 id="security-related-filters">Security-Related Filters</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># Failed authentication attempts</span>
+http.response.code == 401
+
+<span class="hljs-comment"># Suspicious file downloads</span>
+http.content_type contains <span class="hljs-string">"application/"</span>
+
+<span class="hljs-comment"># Large data transfers</span>
+frame.len &gt; 1000
+
+<span class="hljs-comment"># Unusual port usage</span>
+tcp.port != 80 and tcp.port != 443 and tcp.port != 22
+</div></code></pre>
+<h3 id="analyzing-security-threats-with-wireshark">Analyzing Security Threats with Wireshark</h3>
+<h4 id="1-detecting-port-scanning">1. <strong>Detecting Port Scanning</strong></h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># SYN scans (connection attempts without completion)</span>
+tcp.flags.syn == 1 and tcp.flags.ack == 0
+
+<span class="hljs-comment"># Multiple connection attempts to different ports</span>
+tcp.flags.syn == 1 and tcp.flags.ack == 0
+</div></code></pre>
+<h4 id="2-identifying-ddos-attacks">2. <strong>Identifying DDoS Attacks</strong></h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># High volume of traffic from single source</span>
+ip.src == [suspicious_ip]
+
+<span class="hljs-comment"># SYN flood attacks</span>
+tcp.flags.syn == 1 and tcp.flags.ack == 0
+</div></code></pre>
+<h4 id="3-detecting-data-exfiltration">3. <strong>Detecting Data Exfiltration</strong></h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># Large outbound transfers</span>
+frame.len &gt; 5000 and ip.dst != [internal_network]
+
+<span class="hljs-comment"># Unusual protocols</span>
+tcp.port != 80 and tcp.port != 443 and tcp.port != 22
+</div></code></pre>
+<h3 id="wireshark-security-analysis-workflow">Wireshark Security Analysis Workflow</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Security Analysis Workflow] --> B[Capture Traffic]
+    B --> C[Apply Filters]
+    C --> D[Analyze Patterns]
+    D --> E[Identify Threats]
+    E --> F[Document Findings]
+    F --> G[Take Action]
+    
+    B --> B1[Select interface]
+    B --> B2[Set capture filters]
+    B --> B3[Start capture]
+    
+    C --> C1[Protocol filters]
+    C --> C2[Address filters]
+    C --> C3[Behavioral filters]
+    
+    D --> D1[Traffic volume]
+    D --> D2[Connection patterns]
+    D --> D3[Protocol anomalies]
+    
+    E --> E1[Malicious traffic]
+    E --> E2[Policy violations]
+    E --> E3[Performance issues]
+    
+    F --> F1[Incident report]
+    F --> F2[Evidence collection]
+    F --> F3[Timeline creation]
+    
+    G --> G1[Block threats]
+    G --> G2[Update rules]
+    G --> G3[Alert stakeholders]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+    style G fill:#fff8e1
+</div></code></pre>
+<h2 id="%F0%9F%8F%97%EF%B8%8F-cisco-packet-tracer-network-design-and-security">🏗️ Cisco Packet Tracer: Network Design and Security</h2>
+<p>Cisco Packet Tracer is a network simulation tool that allows students to design, configure, and test network topologies with security controls.</p>
+<h3 id="what-is-cisco-packet-tracer">What is Cisco Packet Tracer?</h3>
+<p>Packet Tracer is a comprehensive network simulation platform that provides:</p>
+<ul>
+<li><strong>Network Design</strong>: Visual network topology creation</li>
+<li><strong>Device Configuration</strong>: Router, switch, and firewall setup</li>
+<li><strong>Protocol Testing</strong>: Verify network functionality</li>
+<li><strong>Security Implementation</strong>: Configure security controls</li>
+<li><strong>Troubleshooting</strong>: Identify and resolve network issues</li>
+</ul>
+<h3 id="basic-network-topology">Basic Network Topology</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Internet] --> B[Firewall]
+    B --> C[DMZ Switch]
+    B --> D[Internal Switch]
+    
+    C --> C1[Web Server]
+    C --> C2[Email Server]
+    C --> C3[DNS Server]
+    
+    D --> D1[User PCs]
+    D --> D2[File Server]
+    D --> D3[Database Server]
+    
+    B --> B1[External Interface]
+    B --> B2[DMZ Interface]
+    B --> B3[Internal Interface]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style C1 fill:#e8f5e8
+    style C2 fill:#e8f5e8
+    style C3 fill:#e8f5e8
+    style D1 fill:#fff3e0
+    style D2 fill:#fff3e0
+    style D3 fill:#fff3e0
+    style B1 fill:#f3e5f5
+    style B2 fill:#f3e5f5
+    style B3 fill:#f3e5f5
+</div></code></pre>
+<h3 id="network-segmentation-strategy">Network Segmentation Strategy</h3>
+<p>Network segmentation divides networks into smaller, more manageable sections to improve security and performance.</p>
+<h4 id="1-dmz-demilitarized-zone">1. <strong>DMZ (Demilitarized Zone)</strong></h4>
+<ul>
+<li><strong>Purpose</strong>: Isolate public-facing services</li>
+<li><strong>Services</strong>: Web servers, email servers, DNS</li>
+<li><strong>Security</strong>: Strict firewall rules, limited access</li>
+</ul>
+<h4 id="2-internal-network">2. <strong>Internal Network</strong></h4>
+<ul>
+<li><strong>Purpose</strong>: Protect sensitive business systems</li>
+<li><strong>Services</strong>: User workstations, file servers, databases</li>
+<li><strong>Security</strong>: Strong access controls, monitoring</li>
+</ul>
+<h4 id="3-management-network">3. <strong>Management Network</strong></h4>
+<ul>
+<li><strong>Purpose</strong>: Secure network administration</li>
+<li><strong>Services</strong>: Network devices, management tools</li>
+<li><strong>Security</strong>: Restricted access, encrypted communications</li>
+</ul>
+<h3 id="security-device-configuration">Security Device Configuration</h3>
+<h4 id="firewall-configuration">Firewall Configuration</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># Basic firewall rules</span>
+access-list 100 permit tcp any any eq 80
+access-list 100 permit tcp any any eq 443
+access-list 100 permit tcp any any eq 22
+access-list 100 deny ip any any
+
+<span class="hljs-comment"># Apply to interface</span>
+interface FastEthernet0/0
+ip access-group 100 <span class="hljs-keyword">in</span>
+</div></code></pre>
+<h4 id="switch-security">Switch Security</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># Enable port security</span>
+interface FastEthernet0/1
+switchport mode access
+switchport port-security
+switchport port-security maximum 1
+switchport port-security violation shutdown
+</div></code></pre>
+<h2 id="%F0%9F%9B%A1%EF%B8%8F-network-security-controls">🛡️ Network Security Controls</h2>
+<p>Network security controls are measures implemented to protect networks from threats and vulnerabilities.</p>
+<h3 id="defense-in-depth-strategy">Defense in Depth Strategy</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Defense in Depth] --> B[Perimeter Security]
+    A --> C[Network Security]
+    A --> D[Host Security]
+    A --> E[Application Security]
+    A --> F[Data Security]
+    
+    B --> B1[Firewalls]
+    B --> B2[Intrusion Detection]
+    B --> B3[Access Control]
+    
+    C --> C1[Network Segmentation]
+    C --> C2[Traffic Monitoring]
+    C --> C3[Encryption]
+    
+    D --> D1[Endpoint Protection]
+    D --> D2[Patch Management]
+    D --> D3[Configuration Control]
+    
+    E --> E1[Secure Development]
+    E --> E2[Input Validation]
+    E --> E3[Session Management]
+    
+    F --> F1[Data Classification]
+    F --> F2[Encryption]
+    F --> F3[Backup & Recovery]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+</div></code></pre>
+<h3 id="1-firewalls">1. <strong>Firewalls</strong></h3>
+<p>Firewalls are network security devices that monitor and control incoming and outgoing network traffic.</p>
+<h4 id="types-of-firewalls">Types of Firewalls</h4>
+<ul>
+<li><strong>Packet Filtering</strong>: Examines packet headers</li>
+<li><strong>Stateful Inspection</strong>: Tracks connection state</li>
+<li><strong>Application Layer</strong>: Analyzes application data</li>
+<li><strong>Next-Generation</strong>: Advanced threat detection</li>
+</ul>
+<h4 id="firewall-rules-example">Firewall Rules Example</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># Allow HTTP traffic</span>
+permit tcp any any eq 80
+
+<span class="hljs-comment"># Allow HTTPS traffic</span>
+permit tcp any any eq 443
+
+<span class="hljs-comment"># Allow SSH from management network</span>
+permit tcp 192.168.1.0/24 any eq 22
+
+<span class="hljs-comment"># Deny all other traffic</span>
+deny ip any any
+</div></code></pre>
+<h3 id="2-intrusion-detectionprevention-systems-idsips">2. <strong>Intrusion Detection/Prevention Systems (IDS/IPS)</strong></h3>
+<p>IDS/IPS systems monitor network traffic for suspicious activity and can automatically respond to threats.</p>
+<h4 id="ids-vs-ips">IDS vs IPS</h4>
+<ul>
+<li><strong>IDS (Detection)</strong>: Monitors and alerts on threats</li>
+<li><strong>IPS (Prevention)</strong>: Monitors and blocks threats</li>
+</ul>
+<h4 id="common-detection-methods">Common Detection Methods</h4>
+<ul>
+<li><strong>Signature-Based</strong>: Matches known attack patterns</li>
+<li><strong>Anomaly-Based</strong>: Detects unusual behavior</li>
+<li><strong>Behavior-Based</strong>: Learns normal patterns</li>
+</ul>
+<h3 id="3-virtual-private-networks-vpns">3. <strong>Virtual Private Networks (VPNs)</strong></h3>
+<p>VPNs create secure, encrypted connections over public networks.</p>
+<h4 id="vpn-types">VPN Types</h4>
+<ul>
+<li><strong>Site-to-Site</strong>: Connects multiple office locations</li>
+<li><strong>Remote Access</strong>: Connects individual users</li>
+<li><strong>Client-to-Site</strong>: Connects clients to corporate network</li>
+</ul>
+<h4 id="vpn-security-features">VPN Security Features</h4>
+<ul>
+<li><strong>Encryption</strong>: Protects data in transit</li>
+<li><strong>Authentication</strong>: Verifies user identity</li>
+<li><strong>Tunneling</strong>: Creates secure communication channels</li>
+</ul>
+<h2 id="%F0%9F%9A%AB-dosddos-attack-mitigation">🚫 DoS/DDoS Attack Mitigation</h2>
+<p>Denial of Service (DoS) and Distributed Denial of Service (DDoS) attacks attempt to make network services unavailable.</p>
+<h3 id="attack-types-and-mitigation">Attack Types and Mitigation</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[DDoS Attack Types] --> B[Volume-Based Attacks]
+    A --> C[Protocol Attacks]
+    A --> D[Application Layer Attacks]
+    
+    B --> B1[UDP Floods]
+    B --> B2[ICMP Floods]
+    B --> B3[Amplification Attacks]
+    
+    C --> C1[SYN Floods]
+    C --> C2[Ping of Death]
+    C --> C3[Smurf Attacks]
+    
+    D --> D1[HTTP Floods]
+    D --> D2[Slowloris Attacks]
+    D --> D3[DNS Query Floods]
+    
+    B1 --> E1[Traffic filtering]
+    B2 --> E2[Rate limiting]
+    B3 --> E3[Source validation]
+    
+    C1 --> E4[Connection tracking]
+    C2 --> E5[Packet validation]
+    C3 --> E6[ICMP filtering]
+    
+    D1 --> E7[Application monitoring]
+    D2 --> E8[Behavioral analysis]
+    D3 --> E9[Query rate limiting]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E1 fill:#e8f5e8
+    style E2 fill:#e8f5e8
+    style E3 fill:#e8f5e8
+    style E4 fill:#fff3e0
+    style E5 fill:#fff3e0
+    style E6 fill:#fff3e0
+    style E7 fill:#fce4ec
+    style E8 fill:#fce4ec
+    style E9 fill:#fce4ec
+</div></code></pre>
+<h3 id="mitigation-strategies">Mitigation Strategies</h3>
+<h4 id="1-traffic-filtering">1. <strong>Traffic Filtering</strong></h4>
+<ul>
+<li><strong>Blacklisting</strong>: Block known malicious sources</li>
+<li><strong>Whitelisting</strong>: Allow only trusted sources</li>
+<li><strong>Rate Limiting</strong>: Restrict traffic volume</li>
+</ul>
+<h4 id="2-traffic-scrubbing">2. <strong>Traffic Scrubbing</strong></h4>
+<ul>
+<li><strong>DDoS Protection Services</strong>: Cloud-based mitigation</li>
+<li><strong>Traffic Analysis</strong>: Identify and filter attack traffic</li>
+<li><strong>Load Balancing</strong>: Distribute traffic across multiple servers</li>
+</ul>
+<h4 id="3-network-hardening">3. <strong>Network Hardening</strong></h4>
+<ul>
+<li><strong>Bandwidth Management</strong>: Reserve capacity for legitimate traffic</li>
+<li><strong>Redundancy</strong>: Multiple network paths and servers</li>
+<li><strong>Monitoring</strong>: Real-time threat detection</li>
+</ul>
+<h2 id="%F0%9F%9A%A8-incident-response-for-network-security">🚨 Incident Response for Network Security</h2>
+<p>Network security incidents require immediate and coordinated response to minimize damage and restore services.</p>
+<h3 id="incident-response-lifecycle">Incident Response Lifecycle</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Incident Response] --> B[Preparation]
+    B --> C[Identification]
+    C --> D[Containment]
+    D --> E[Eradication]
+    E --> F[Recovery]
+    F --> G[Lessons Learned]
+    G --> B
+    
+    B --> B1[Response plan]
+    B --> B2[Team training]
+    B --> B3[Tools and procedures]
+    
+    C --> C1[Detection]
+    C --> C2[Classification]
+    C --> C3[Notification]
+    
+    D --> D1[Short-term containment]
+    D --> D2[Long-term containment]
+    D --> D3[Evidence preservation]
+    
+    E --> E1[Remove threat]
+    E --> E2[Patch vulnerabilities]
+    E --> E3[Update systems]
+    
+    F --> F1[Restore services]
+    F --> F2[Verify security]
+    F --> F3[Monitor systems]
+    
+    G --> G1[Document incident]
+    G --> G2[Update procedures]
+    G --> G3[Improve defenses]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+    style G fill:#fff8e1
+</div></code></pre>
+<h3 id="response-procedures">Response Procedures</h3>
+<h4 id="1-immediate-response">1. <strong>Immediate Response</strong></h4>
+<ul>
+<li><strong>Isolate affected systems</strong>: Prevent threat spread</li>
+<li><strong>Document everything</strong>: Maintain incident timeline</li>
+<li><strong>Notify stakeholders</strong>: Alert management and users</li>
+</ul>
+<h4 id="2-containment-actions">2. <strong>Containment Actions</strong></h4>
+<ul>
+<li><strong>Network segmentation</strong>: Isolate compromised areas</li>
+<li><strong>Access restrictions</strong>: Limit user and system access</li>
+<li><strong>Traffic monitoring</strong>: Watch for additional threats</li>
+</ul>
+<h4 id="3-recovery-steps">3. <strong>Recovery Steps</strong></h4>
+<ul>
+<li><strong>System restoration</strong>: Restore from clean backups</li>
+<li><strong>Security updates</strong>: Patch vulnerabilities</li>
+<li><strong>Configuration review</strong>: Ensure secure settings</li>
+</ul>
+<h2 id="%F0%9F%A7%AA-hands-on-activities">🧪 Hands-on Activities</h2>
+<h3 id="activity-1-wireshark-traffic-analysis">Activity 1: Wireshark Traffic Analysis</h3>
+<p><strong>Objective</strong>: Analyze network traffic to identify security threats.</p>
+<p><strong>Materials</strong>: Wireshark, sample capture files, network access</p>
+<p><strong>Steps</strong>:</p>
+<ol>
+<li><strong>Install Wireshark</strong> on your system</li>
+<li><strong>Capture network traffic</strong> or use sample files</li>
+<li><strong>Apply security filters</strong> to identify threats</li>
+<li><strong>Analyze suspicious traffic</strong> patterns</li>
+<li><strong>Document findings</strong> in a security report</li>
+</ol>
+<p><strong>Filters to Practice</strong>:</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># HTTP traffic analysis</span>
+http
+
+<span class="hljs-comment"># Failed authentication</span>
+http.response.code == 401
+
+<span class="hljs-comment"># Large file transfers</span>
+frame.len &gt; 1000
+
+<span class="hljs-comment"># Unusual ports</span>
+tcp.port != 80 and tcp.port != 443
+</div></code></pre>
+<h3 id="activity-2-network-topology-design">Activity 2: Network Topology Design</h3>
+<p><strong>Objective</strong>: Design a secure network topology using Cisco Packet Tracer.</p>
+<p><strong>Scenario</strong>: Small business with web presence and internal operations</p>
+<p><strong>Requirements</strong>:</p>
+<ul>
+<li>Public web server</li>
+<li>Internal file server</li>
+<li>User workstations</li>
+<li>Secure remote access</li>
+<li>Network monitoring</li>
+</ul>
+<p><strong>Steps</strong>:</p>
+<ol>
+<li><strong>Design network topology</strong> with security zones</li>
+<li><strong>Configure network devices</strong> with security settings</li>
+<li><strong>Implement access controls</strong> and firewall rules</li>
+<li><strong>Test network connectivity</strong> and security</li>
+<li><strong>Document configuration</strong> and security measures</li>
+</ol>
+<h3 id="activity-3-security-incident-simulation">Activity 3: Security Incident Simulation</h3>
+<p><strong>Objective</strong>: Practice responding to network security incidents.</p>
+<p><strong>Scenario</strong>: Detected unusual network activity and potential data exfiltration</p>
+<p><strong>Response Tasks</strong>:</p>
+<ol>
+<li><strong>Assess the situation</strong> using network tools</li>
+<li><strong>Contain the threat</strong> by isolating affected systems</li>
+<li><strong>Investigate the incident</strong> using logs and traffic analysis</li>
+<li><strong>Document the response</strong> actions and findings</li>
+<li><strong>Develop recovery plan</strong> for affected systems</li>
+</ol>
+<h2 id="%F0%9F%93%8B-key-takeaways">📋 Key Takeaways</h2>
+<ol>
+<li>
+<p><strong>Network security requires</strong> understanding of protocols, vulnerabilities, and attack vectors to implement effective defenses.</p>
+</li>
+<li>
+<p><strong>Wireshark is essential</strong> for network traffic analysis and security threat detection in real-time.</p>
+</li>
+<li>
+<p><strong>Network segmentation</strong> improves security by isolating systems and limiting attack surface.</p>
+</li>
+<li>
+<p><strong>Defense in depth</strong> provides multiple layers of security controls to protect against various threats.</p>
+</li>
+<li>
+<p><strong>Incident response</strong> requires preparation, coordination, and systematic approach to minimize damage.</p>
+</li>
+<li>
+<p><strong>Continuous monitoring</strong> and analysis are essential for detecting and responding to network security threats.</p>
+</li>
+</ol>
+<h2 id="%E2%9D%93-review-questions">❓ Review Questions</h2>
+<ol>
+<li>
+<p><strong>What are the key differences</strong> between IDS and IPS systems, and when would you use each?</p>
+</li>
+<li>
+<p><strong>How does network segmentation</strong> improve security, and what are the main security zones?</p>
+</li>
+<li>
+<p><strong>What Wireshark filters</strong> would you use to detect a port scanning attack?</p>
+</li>
+<li>
+<p><strong>How can you mitigate</strong> DDoS attacks using network security controls?</p>
+</li>
+<li>
+<p><strong>What are the essential steps</strong> in responding to a network security incident?</p>
+</li>
+</ol>
+<h2 id="%F0%9F%93%9A-further-reading">📚 Further Reading</h2>
+<h3 id="books">Books</h3>
+<ul>
+<li>&quot;Network Security: Private Communication in a Public World&quot; by Charlie Kaufman</li>
+<li>&quot;The Practice of Network Security Monitoring&quot; by Richard Bejtlich</li>
+<li>&quot;Wireshark Network Analysis&quot; by Laura Chappell</li>
+</ul>
+<h3 id="online-resources">Online Resources</h3>
+<ul>
+<li><a href="https://www.wireshark.org/docs/">Wireshark Documentation</a></li>
+<li><a href="https://www.netacad.com/courses/packet-tracer">Cisco Packet Tracer Learning</a></li>
+<li><a href="https://www.sans.org/network-security/">SANS Network Security Resources</a></li>
+</ul>
+<h3 id="practice-labs">Practice Labs</h3>
+<ul>
+<li><a href="https://tryhackme.com/">TryHackMe Network Security</a></li>
+<li><a href="https://www.cybrary.it/">Cybrary Network Security</a></li>
+<li><a href="https://www.netacad.com/">Cisco Networking Academy</a></li>
+</ul>
+<hr>
+<p><strong>Next Chapter</strong>: <a href="chapter05-iam.md">Chapter 5: Identity and Access Management</a> - Learn how to implement secure identity and access control systems for enterprise environments.</p>
+
+</body>
+</html>

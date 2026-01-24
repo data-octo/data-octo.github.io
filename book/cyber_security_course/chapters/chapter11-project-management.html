@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>chapter11-project-management.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="chapter-11-it-project-management">Chapter 11: IT Project Management</h1>
+<h2 id="%F0%9F%8E%AF-learning-objectives">🎯 Learning Objectives</h2>
+<p>By the end of this chapter, you will be able to:</p>
+<ul>
+<li>Understand project management frameworks and methodologies</li>
+<li>Apply Agile and Scrum practices in IT projects</li>
+<li>Implement risk management and quality assurance processes</li>
+<li>Manage project scope, time, and resources effectively</li>
+<li>Use project management tools and techniques</li>
+<li>Lead and coordinate cross-functional IT teams</li>
+<li>Monitor project progress and handle change management</li>
+</ul>
+<h2 id="%F0%9F%9A%80-what-is-it-project-management">🚀 What is IT Project Management?</h2>
+<p>IT Project Management is the discipline of planning, organizing, and managing resources to successfully complete specific IT project goals and objectives within defined constraints.</p>
+<h3 id="project-management-triangle">Project Management Triangle</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Project Management Triangle] --> B[Scope]
+    A --> C[Time]
+    A --> D[Cost]
+    
+    B --> B1[Features & Requirements]
+    B --> B2[Quality Standards]
+    B --> B3[Deliverables]
+    
+    C --> C1[Project Timeline]
+    C --> C2[Deadlines]
+    C --> C3[Milestones]
+    
+    D --> D1[Budget]
+    D --> D2[Resources]
+    D --> D3[Expenses]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+</div></code></pre>
+<h3 id="key-project-management-principles">Key Project Management Principles</h3>
+<ol>
+<li><strong>Clear Objectives</strong>: Well-defined project goals and success criteria</li>
+<li><strong>Stakeholder Engagement</strong>: Active involvement of all project stakeholders</li>
+<li><strong>Risk Management</strong>: Proactive identification and mitigation of risks</li>
+<li><strong>Quality Focus</strong>: Continuous attention to quality throughout the project</li>
+<li><strong>Communication</strong>: Regular and transparent communication with all parties</li>
+</ol>
+<h2 id="%F0%9F%93%8B-project-management-frameworks">📋 Project Management Frameworks</h2>
+<h3 id="traditional-vs-agile-approaches">Traditional vs. Agile Approaches</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph LR
+    A[Project Management Approaches] --> B[Traditional/Waterfall]
+    A --> C[Agile]
+    A --> D[Hybrid]
+    
+    B --> B1[Sequential phases]
+    B --> B2[Detailed planning]
+    B --> B3[Fixed scope]
+    
+    C --> C1[Iterative development]
+    C --> C2[Adaptive planning]
+    C --> C3[Flexible scope]
+    
+    D --> D1[Combined approaches]
+    D --> D2[Adaptive planning]
+    D --> D3[Risk-based decisions]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+</div></code></pre>
+<h3 id="1-waterfall-methodology">1. <strong>Waterfall Methodology</strong></h3>
+<p><strong>Characteristics</strong>:</p>
+<ul>
+<li>Sequential project phases</li>
+<li>Detailed upfront planning</li>
+<li>Fixed scope and requirements</li>
+<li>Minimal changes during execution</li>
+</ul>
+<p><strong>Phases</strong>:</p>
+<pre><code class="language-mermaid"><div class="mermaid">graph LR
+    A[Requirements] --> B[Design]
+    B --> C[Implementation]
+    C --> D[Testing]
+    D --> E[Deployment]
+    E --> F[Maintenance]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+</div></code></pre>
+<p><strong>Best For</strong>:</p>
+<ul>
+<li>Projects with stable requirements</li>
+<li>Regulatory compliance projects</li>
+<li>Small to medium-sized projects</li>
+<li>Clear deliverables and timelines</li>
+</ul>
+<h3 id="2-agile-methodology">2. <strong>Agile Methodology</strong></h3>
+<p><strong>Core Values</strong>:</p>
+<ul>
+<li>Individuals and interactions over processes and tools</li>
+<li>Working software over comprehensive documentation</li>
+<li>Customer collaboration over contract negotiation</li>
+<li>Responding to change over following a plan</li>
+</ul>
+<p><strong>Agile Principles</strong>:</p>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Agile Principles] --> B[Customer Satisfaction]
+    A --> C[Welcome Change]
+    A --> D[Frequent Delivery]
+    A --> E[Business Collaboration]
+    A --> F[Motivated Teams]
+    A --> G[Face-to-Face Communication]
+    A --> H[Working Software]
+    A --> I[Sustainable Pace]
+    A --> J[Technical Excellence]
+    A --> K[Simplicity]
+    A --> L[Self-Organizing Teams]
+    A --> M[Continuous Improvement]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+    style G fill:#fff8e1
+    style H fill:#f3e5f5
+    style I fill:#e8f5e8
+    style J fill:#fff3e0
+    style K fill:#fce4ec
+    style L fill:#f1f8e9
+    style M fill:#fff8e1
+</div></code></pre>
+<h2 id="%F0%9F%94%84-scrum-framework">🔄 Scrum Framework</h2>
+<p>Scrum is the most popular Agile framework for managing complex work.</p>
+<h3 id="scrum-roles">Scrum Roles</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Scrum Team] --> B[Product Owner]
+    A --> C[Scrum Master]
+    A --> D[Development Team]
+    
+    B --> B1[Maximizes product value]
+    B --> B2[Manages Product Backlog]
+    B --> B3[Prioritizes features]
+    
+    C --> C1[Facilitates Scrum events]
+    C --> C2[Removes impediments]
+    C --> C3[Coaches the team]
+    
+    D --> D1[Self-organizing team]
+    D --> D2[Cross-functional skills]
+    D --> D3[Delivers increments]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+</div></code></pre>
+<h3 id="scrum-events">Scrum Events</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph LR
+    A[Sprint Planning] --> B[Daily Scrum]
+    B --> C[Sprint Review]
+    C --> D[Sprint Retrospective]
+    D --> A
+    
+    A --> A1[Plan sprint work]
+    A --> A2[Set sprint goal]
+    
+    B --> B1[15-minute daily sync]
+    B --> B2[Progress updates]
+    
+    C --> C1[Demo working software]
+    C --> C2[Stakeholder feedback]
+    
+    D --> D1[Team improvement]
+    D --> D2[Process refinement]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+</div></code></pre>
+<h3 id="scrum-artifacts">Scrum Artifacts</h3>
+<h4 id="1-product-backlog">1. <strong>Product Backlog</strong></h4>
+<ul>
+<li>Ordered list of product features</li>
+<li>Continuously refined and prioritized</li>
+<li>Owned by Product Owner</li>
+</ul>
+<h4 id="2-sprint-backlog">2. <strong>Sprint Backlog</strong></h4>
+<ul>
+<li>Selected items for current sprint</li>
+<li>Team's plan for the sprint</li>
+<li>Updated during Daily Scrum</li>
+</ul>
+<h4 id="3-increment">3. <strong>Increment</strong></h4>
+<ul>
+<li>Working software delivered each sprint</li>
+<li>Potentially releasable</li>
+<li>Meets Definition of Done</li>
+</ul>
+<h2 id="%F0%9F%93%8A-project-planning-and-estimation">📊 Project Planning and Estimation</h2>
+<h3 id="work-breakdown-structure-wbs">Work Breakdown Structure (WBS)</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[IT Project] --> B[Planning Phase]
+    A --> C[Development Phase]
+    A --> D[Testing Phase]
+    A --> E[Deployment Phase]
+    
+    B --> B1[Requirements Analysis]
+    B --> B2[System Design]
+    B --> B3[Project Planning]
+    
+    C --> C1[Frontend Development]
+    C --> C2[Backend Development]
+    C --> C3[Database Design]
+    
+    D --> D1[Unit Testing]
+    D --> D2[Integration Testing]
+    D --> D3[User Acceptance Testing]
+    
+    E --> E1[Environment Setup]
+    E --> E2[Data Migration]
+    E --> E3[Go-Live Support]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+</div></code></pre>
+<h3 id="estimation-techniques">Estimation Techniques</h3>
+<h4 id="1-story-points">1. <strong>Story Points</strong></h4>
+<ul>
+<li>Relative size estimation</li>
+<li>Fibonacci sequence (1, 2, 3, 5, 8, 13, 21)</li>
+<li>Team consensus-based</li>
+</ul>
+<h4 id="2-planning-poker">2. <strong>Planning Poker</strong></h4>
+<ul>
+<li>Team members estimate independently</li>
+<li>Reveal estimates simultaneously</li>
+<li>Discuss differences and re-estimate</li>
+</ul>
+<h4 id="3-t-shirt-sizing">3. <strong>T-Shirt Sizing</strong></h4>
+<ul>
+<li>XS, S, M, L, XL, XXL</li>
+<li>Quick high-level estimation</li>
+<li>Good for initial planning</li>
+</ul>
+<h3 id="project-timeline-management">Project Timeline Management</h3>
+<pre><code class="language-mermaid"><div class="mermaid">gantt
+    title IT Project Timeline
+    dateFormat  YYYY-MM-DD
+    section Planning
+    Requirements Analysis    :req, 2024-01-01, 2w
+    System Design          :design, after req, 3w
+    Project Planning       :plan, after design, 1w
+    
+    section Development
+    Frontend Development   :frontend, after plan, 4w
+    Backend Development    :backend, after plan, 4w
+    Database Design        :db, after plan, 2w
+    
+    section Testing
+    Unit Testing          :unit, after frontend, 2w
+    Integration Testing   :integration, after backend, 2w
+    UAT                   :uat, after integration, 2w
+    
+    section Deployment
+    Environment Setup     :env, after uat, 1w
+    Data Migration        :migration, after env, 1w
+    Go-Live              :golive, after migration, 1w
+</div></code></pre>
+<h2 id="%E2%9A%A0%EF%B8%8F-risk-management">⚠️ Risk Management</h2>
+<h3 id="risk-management-process">Risk Management Process</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Risk Management] --> B[Risk Identification]
+    A --> C[Risk Assessment]
+    A --> D[Risk Response]
+    A --> E[Risk Monitoring]
+    
+    B --> B1[Brainstorming]
+    B --> B2[Checklists]
+    B --> B3[Expert judgment]
+    
+    C --> C1[Probability]
+    C --> C2[Impact]
+    C --> C3[Risk Score]
+    
+    D --> D1[Avoid]
+    D --> D2[Transfer]
+    D --> D3[Mitigate]
+    D --> D4[Accept]
+    
+    E --> E1[Track risks]
+    E --> E2[Update status]
+    E --> E3[Report progress]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+</div></code></pre>
+<h3 id="common-it-project-risks">Common IT Project Risks</h3>
+<h4 id="1-technical-risks">1. <strong>Technical Risks</strong></h4>
+<ul>
+<li><strong>Scope Creep</strong>: Uncontrolled changes to project scope</li>
+<li><strong>Technology Changes</strong>: Rapid evolution of technology</li>
+<li><strong>Integration Issues</strong>: Complex system integrations</li>
+<li><strong>Performance Problems</strong>: System performance bottlenecks</li>
+</ul>
+<h4 id="2-resource-risks">2. <strong>Resource Risks</strong></h4>
+<ul>
+<li><strong>Team Availability</strong>: Key team members unavailable</li>
+<li><strong>Skill Gaps</strong>: Missing required technical skills</li>
+<li><strong>Budget Constraints</strong>: Insufficient project funding</li>
+<li><strong>Time Pressure</strong>: Unrealistic deadlines</li>
+</ul>
+<h4 id="3-external-risks">3. <strong>External Risks</strong></h4>
+<ul>
+<li><strong>Vendor Issues</strong>: Third-party vendor problems</li>
+<li><strong>Regulatory Changes</strong>: Compliance requirement updates</li>
+<li><strong>Market Changes</strong>: Business environment shifts</li>
+<li><strong>Stakeholder Changes</strong>: Key stakeholder turnover</li>
+</ul>
+<h3 id="risk-response-strategies">Risk Response Strategies</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Risk Response Strategies] --> B[Avoid]
+    A --> C[Transfer]
+    A --> D[Mitigate]
+    A --> E[Accept]
+    
+    B --> B1[Change project plan]
+    B --> B2[Eliminate risk source]
+    B --> B3[Prevent risk occurrence]
+    
+    C --> C1[Insurance]
+    C --> C2[Outsourcing]
+    C --> C3[Partnerships]
+    
+    D --> D1[Reduce probability]
+    D --> D2[Reduce impact]
+    D --> D3[Contingency plans]
+    
+    E --> E1[Monitor risk]
+    E --> E2[Accept consequences]
+    E --> E3[Contingency reserves]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+</div></code></pre>
+<h2 id="%F0%9F%8E%AF-project-scope-management">🎯 Project Scope Management</h2>
+<h3 id="scope-management-process">Scope Management Process</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Scope Management] --> B[Plan Scope]
+    A --> C[Collect Requirements]
+    A --> D[Define Scope]
+    A --> E[Create WBS]
+    A --> F[Validate Scope]
+    A --> G[Control Scope]
+    
+    B --> B1[Scope management plan]
+    B --> B2[Requirements management plan]
+    
+    C --> C1[Stakeholder interviews]
+    C --> C2[Workshops]
+    C --> C3[Surveys]
+    
+    D --> D1[Project scope statement]
+    D --> D2[Acceptance criteria]
+    
+    E --> E1[Work breakdown structure]
+    E --> E2[Scope baseline]
+    
+    F --> F1[Scope validation]
+    F --> F2[Formal acceptance]
+    
+    G --> G1[Scope monitoring]
+    G --> G2[Change control]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+    style G fill:#fff8e1
+</div></code></pre>
+<h3 id="change-management">Change Management</h3>
+<h4 id="1-change-control-process">1. <strong>Change Control Process</strong></h4>
+<ul>
+<li><strong>Change Request</strong>: Document proposed change</li>
+<li><strong>Impact Analysis</strong>: Assess change impact</li>
+<li><strong>Approval</strong>: Stakeholder approval required</li>
+<li><strong>Implementation</strong>: Execute approved changes</li>
+<li><strong>Documentation</strong>: Update project documentation</li>
+</ul>
+<h4 id="2-change-request-template">2. <strong>Change Request Template</strong></h4>
+<pre class="hljs"><code><div><span class="hljs-strong">**Change Request Form**</span>
+
+<span class="hljs-strong">**Change Description**</span>: [Brief description of the change]
+
+<span class="hljs-strong">**Business Justification**</span>: [Why this change is needed]
+
+<span class="hljs-strong">**Impact Analysis**</span>:
+<span class="hljs-bullet">- </span>Scope: [How scope will be affected]
+<span class="hljs-bullet">- </span>Time: [Schedule impact]
+<span class="hljs-bullet">- </span>Cost: [Budget impact]
+<span class="hljs-bullet">- </span>Resources: [Resource requirements]
+
+<span class="hljs-strong">**Risk Assessment**</span>: [Potential risks and mitigation]
+
+<span class="hljs-strong">**Approval**</span>: [Stakeholder approval required]
+</div></code></pre>
+<h2 id="%F0%9F%93%88-project-monitoring-and-control">📈 Project Monitoring and Control</h2>
+<h3 id="key-performance-indicators-kpis">Key Performance Indicators (KPIs)</h3>
+<h4 id="1-schedule-performance">1. <strong>Schedule Performance</strong></h4>
+<ul>
+<li><strong>Schedule Variance (SV)</strong>: SV = EV - PV</li>
+<li><strong>Schedule Performance Index (SPI)</strong>: SPI = EV / PV</li>
+<li><strong>Critical Path Analysis</strong>: Longest path to completion</li>
+</ul>
+<h4 id="2-cost-performance">2. <strong>Cost Performance</strong></h4>
+<ul>
+<li><strong>Cost Variance (CV)</strong>: CV = EV - AC</li>
+<li><strong>Cost Performance Index (CPI)</strong>: CPI = EV / AC</li>
+<li><strong>Budget at Completion (BAC)</strong>: Total project budget</li>
+</ul>
+<h4 id="3-quality-metrics">3. <strong>Quality Metrics</strong></h4>
+<ul>
+<li><strong>Defect Density</strong>: Defects per unit of work</li>
+<li><strong>Test Coverage</strong>: Percentage of code tested</li>
+<li><strong>Customer Satisfaction</strong>: Stakeholder feedback scores</li>
+</ul>
+<h3 id="earned-value-management-evm">Earned Value Management (EVM)</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Earned Value Management] --> B[Planned Value PV]
+    A --> C[Earned Value EV]
+    A --> D[Actual Cost AC]
+    
+    B --> B1[Budgeted cost of work planned]
+    B --> B2[Baseline cost for scheduled work]
+    
+    C --> C1[Budgeted cost of work performed]
+    C --> C2[Value of completed work]
+    
+    D --> D1[Actual cost of work performed]
+    D --> D2[Real cost incurred]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+</div></code></pre>
+<h2 id="%F0%9F%9B%A0%EF%B8%8F-project-management-tools">🛠️ Project Management Tools</h2>
+<h3 id="popular-project-management-tools">Popular Project Management Tools</h3>
+<h4 id="1-traditional-tools">1. <strong>Traditional Tools</strong></h4>
+<ul>
+<li><strong>Microsoft Project</strong>: Comprehensive project planning</li>
+<li><strong>Primavera</strong>: Enterprise project management</li>
+<li><strong>GanttProject</strong>: Open-source alternative</li>
+</ul>
+<h4 id="2-agile-tools">2. <strong>Agile Tools</strong></h4>
+<ul>
+<li><strong>Jira</strong>: Issue and project tracking</li>
+<li><strong>Azure DevOps</strong>: Microsoft's project management platform</li>
+<li><strong>Trello</strong>: Simple task management</li>
+<li><strong>Asana</strong>: Team collaboration platform</li>
+</ul>
+<h4 id="3-communication-tools">3. <strong>Communication Tools</strong></h4>
+<ul>
+<li><strong>Slack</strong>: Team messaging and collaboration</li>
+<li><strong>Microsoft Teams</strong>: Integrated communication platform</li>
+<li><strong>Zoom</strong>: Video conferencing and meetings</li>
+</ul>
+<h3 id="tool-selection-criteria">Tool Selection Criteria</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Tool Selection Criteria] --> B[Project Size]
+    A --> C[Team Size]
+    A --> D[Methodology]
+    A --> E[Budget]
+    A --> F[Integration Needs]
+    
+    B --> B1[Small: Simple tools]
+    B --> B2[Large: Enterprise tools]
+    
+    C --> C1[Small team: Basic tools]
+    C --> C2[Large team: Advanced features]
+    
+    D --> D1[Waterfall: Traditional tools]
+    D --> D2[Agile: Agile-specific tools]
+    
+    E --> E1[Open source: Free tools]
+    E --> E2[Commercial: Paid solutions]
+    
+    F --> F1[Basic: Standalone tools]
+    F --> F2[Advanced: Integrated platforms]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+</div></code></pre>
+<h2 id="%F0%9F%91%A5-team-management">👥 Team Management</h2>
+<h3 id="team-development-stages">Team Development Stages</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph LR
+    A[Forming] --> B[Storming]
+    B --> C[Norming]
+    C --> D[Performing]
+    D --> E[Adjourning]
+    
+    A --> A1[Team formation]
+    A --> A2[Orientation]
+    
+    B --> B1[Conflict resolution]
+    B --> B2[Role clarification]
+    
+    C --> C1[Team cohesion]
+    C --> C2[Process establishment]
+    
+    D --> D1[High performance]
+    D --> D2[Goal achievement]
+    
+    E --> E1[Project closure]
+    E --> E2[Team disbanding]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+</div></code></pre>
+<h3 id="leadership-styles">Leadership Styles</h3>
+<h4 id="1-autocratic-leadership">1. <strong>Autocratic Leadership</strong></h4>
+<ul>
+<li><strong>Characteristics</strong>: Centralized decision-making</li>
+<li><strong>Best For</strong>: Crisis situations, clear direction needed</li>
+<li><strong>Drawbacks</strong>: Limited team input, reduced creativity</li>
+</ul>
+<h4 id="2-democratic-leadership">2. <strong>Democratic Leadership</strong></h4>
+<ul>
+<li><strong>Characteristics</strong>: Team participation in decisions</li>
+<li><strong>Best For</strong>: Creative projects, team development</li>
+<li><strong>Drawbacks</strong>: Slower decision-making, potential conflicts</li>
+</ul>
+<h4 id="3-servant-leadership">3. <strong>Servant Leadership</strong></h4>
+<ul>
+<li><strong>Characteristics</strong>: Focus on team growth and well-being</li>
+<li><strong>Best For</strong>: Long-term projects, team development</li>
+<li><strong>Benefits</strong>: High team satisfaction, strong relationships</li>
+</ul>
+<h2 id="%F0%9F%93%8A-quality-management">📊 Quality Management</h2>
+<h3 id="quality-management-process">Quality Management Process</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Quality Management] --> B[Plan Quality]
+    A --> C[Manage Quality]
+    A --> D[Control Quality]
+    
+    B --> B1[Quality standards]
+    B --> B2[Quality metrics]
+    B --> B3[Quality policies]
+    
+    C --> C1[Quality assurance]
+    C --> C2[Process improvement]
+    C --> C3[Training and development]
+    
+    D --> D1[Quality control]
+    D --> D2[Defect prevention]
+    D --> D3[Quality reporting]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+</div></code></pre>
+<h3 id="quality-assurance-activities">Quality Assurance Activities</h3>
+<h4 id="1-code-reviews">1. <strong>Code Reviews</strong></h4>
+<ul>
+<li><strong>Peer Reviews</strong>: Team member code review</li>
+<li><strong>Automated Tools</strong>: Static analysis and linting</li>
+<li><strong>Best Practices</strong>: Coding standards enforcement</li>
+</ul>
+<h4 id="2-testing-strategies">2. <strong>Testing Strategies</strong></h4>
+<ul>
+<li><strong>Unit Testing</strong>: Individual component testing</li>
+<li><strong>Integration Testing</strong>: Component interaction testing</li>
+<li><strong>System Testing</strong>: End-to-end system testing</li>
+<li><strong>User Acceptance Testing</strong>: Stakeholder validation</li>
+</ul>
+<h4 id="3-continuous-integration">3. <strong>Continuous Integration</strong></h4>
+<ul>
+<li><strong>Automated Builds</strong>: Regular code compilation</li>
+<li><strong>Automated Testing</strong>: Automated test execution</li>
+<li><strong>Quality Gates</strong>: Automated quality checks</li>
+</ul>
+<h2 id="%F0%9F%A7%AA-hands-on-activities">🧪 Hands-on Activities</h2>
+<h3 id="activity-1-project-planning-exercise">Activity 1: Project Planning Exercise</h3>
+<p><strong>Objective</strong>: Create a project plan for a simple IT project.</p>
+<p><strong>Scenario</strong>: Develop a company website with basic functionality.</p>
+<p><strong>Steps</strong>:</p>
+<ol>
+<li><strong>Project Charter</strong>: Define project objectives and scope</li>
+<li><strong>Work Breakdown Structure</strong>: Break down project into manageable tasks</li>
+<li><strong>Timeline Creation</strong>: Develop project schedule with milestones</li>
+<li><strong>Resource Planning</strong>: Identify required team members and skills</li>
+<li><strong>Risk Assessment</strong>: Identify potential risks and mitigation strategies</li>
+</ol>
+<h3 id="activity-2-agile-sprint-planning">Activity 2: Agile Sprint Planning</h3>
+<p><strong>Objective</strong>: Practice Agile sprint planning and estimation.</p>
+<p><strong>Materials</strong>: User stories, planning poker cards, whiteboard</p>
+<p><strong>Steps</strong>:</p>
+<ol>
+<li><strong>Story Review</strong>: Review and clarify user stories</li>
+<li><strong>Story Point Estimation</strong>: Use planning poker for estimation</li>
+<li><strong>Sprint Planning</strong>: Select stories for the sprint</li>
+<li><strong>Task Breakdown</strong>: Break stories into specific tasks</li>
+<li><strong>Sprint Commitment</strong>: Team commits to sprint goals</li>
+</ol>
+<h3 id="activity-3-risk-management-workshop">Activity 3: Risk Management Workshop</h3>
+<p><strong>Objective</strong>: Identify and analyze project risks.</p>
+<p><strong>Scenario</strong>: IT infrastructure upgrade project.</p>
+<p><strong>Steps</strong>:</p>
+<ol>
+<li><strong>Risk Identification</strong>: Brainstorm potential project risks</li>
+<li><strong>Risk Assessment</strong>: Evaluate probability and impact</li>
+<li><strong>Risk Prioritization</strong>: Rank risks by severity</li>
+<li><strong>Response Planning</strong>: Develop mitigation strategies</li>
+<li><strong>Risk Register</strong>: Document all risks and responses</li>
+</ol>
+<h3 id="activity-4-project-management-tool-evaluation">Activity 4: Project Management Tool Evaluation</h3>
+<p><strong>Objective</strong>: Evaluate and select appropriate project management tools.</p>
+<p><strong>Materials</strong>: Tool evaluation criteria, vendor information</p>
+<p><strong>Steps</strong>:</p>
+<ol>
+<li><strong>Requirements Analysis</strong>: Define tool requirements</li>
+<li><strong>Tool Research</strong>: Research available options</li>
+<li><strong>Evaluation Matrix</strong>: Create evaluation criteria</li>
+<li><strong>Tool Comparison</strong>: Compare tools against criteria</li>
+<li><strong>Recommendation</strong>: Select best tool for the project</li>
+</ol>
+<h2 id="%F0%9F%93%8B-key-takeaways">📋 Key Takeaways</h2>
+<ol>
+<li>
+<p><strong>Project management frameworks</strong> provide structured approaches to managing IT projects effectively.</p>
+</li>
+<li>
+<p><strong>Agile methodologies</strong> emphasize flexibility, collaboration, and continuous improvement.</p>
+</li>
+<li>
+<p><strong>Risk management</strong> is essential for identifying and mitigating project threats and opportunities.</p>
+</li>
+<li>
+<p><strong>Quality management</strong> ensures project deliverables meet stakeholder expectations.</p>
+</li>
+<li>
+<p><strong>Team management</strong> focuses on building effective, motivated project teams.</p>
+</li>
+<li>
+<p><strong>Project monitoring and control</strong> provides visibility into project progress and performance.</p>
+</li>
+<li>
+<p><strong>Change management</strong> helps control project scope and manage stakeholder expectations.</p>
+</li>
+<li>
+<p><strong>Project management tools</strong> support planning, execution, and monitoring activities.</p>
+</li>
+</ol>
+<h2 id="%E2%9D%93-review-questions">❓ Review Questions</h2>
+<ol>
+<li>
+<p><strong>What are the key differences</strong> between traditional and Agile project management approaches?</p>
+</li>
+<li>
+<p><strong>How does Scrum framework</strong> support Agile project delivery?</p>
+</li>
+<li>
+<p><strong>What techniques</strong> can be used for project estimation and planning?</p>
+</li>
+<li>
+<p><strong>How should project risks</strong> be identified, assessed, and managed?</p>
+</li>
+<li>
+<p><strong>What are the essential elements</strong> of effective project monitoring and control?</p>
+</li>
+</ol>
+<h2 id="%F0%9F%93%9A-further-reading">📚 Further Reading</h2>
+<h3 id="books">Books</h3>
+<ul>
+<li>&quot;A Guide to the Project Management Body of Knowledge (PMBOK Guide)&quot; by PMI</li>
+<li>&quot;Scrum: The Art of Doing Twice the Work in Half the Time&quot; by Jeff Sutherland</li>
+<li>&quot;The Phoenix Project&quot; by Gene Kim, Kevin Behr, and George Spafford</li>
+</ul>
+<h3 id="online-resources">Online Resources</h3>
+<ul>
+<li><a href="https://www.pmi.org/">Project Management Institute (PMI)</a></li>
+<li><a href="https://www.scrumalliance.org/">Scrum Alliance</a></li>
+<li><a href="https://www.agilealliance.org/">Agile Alliance</a></li>
+</ul>
+<h3 id="certifications">Certifications</h3>
+<ul>
+<li><strong>PMP</strong>: Project Management Professional</li>
+<li><strong>CSM</strong>: Certified Scrum Master</li>
+<li><strong>PRINCE2</strong>: Projects IN Controlled Environments</li>
+</ul>
+<hr>
+<p><strong>Next Chapter</strong>: <a href="chapter12-security-operations.md">Chapter 12: Security Operations and Incident Response</a> - Learn about security operations centers, incident response procedures, and security monitoring.</p>
+
+</body>
+</html>
