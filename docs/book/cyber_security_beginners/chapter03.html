@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Network Security</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h3 id="network-security">Network Security</h3>
+<p>Research suggests that robust network security, including tools like Wireshark and Cisco Packet Tracer, significantly reduces risks from attacks like DoS, though complete protection requires ongoing updates and layered defenses. It seems likely that implementing firewalls, IDS/IPS, and VPNs enhances data protection in transit, but challenges like configuration errors can introduce vulnerabilities. Evidence leans toward network segmentation and DoS mitigation as essential for limiting breach impacts, yet evolving threats in 2025 demand adaptive strategies.</p>
+<h4 id="why-network-security-matters">Why Network Security Matters</h4>
+<p>Network security protects data as it moves across systems and defends against attacks like eavesdropping or disruptions. For college students, hands-on tools like Wireshark (latest version 4.4.8 as of July 2025) for traffic analysis and Cisco Packet Tracer (version 9.0 in 2025) for simulations build practical skills. This course focuses on real-world applications, such as analyzing captures and implementing defenses, to prepare for roles in IT security.</p>
+<h4 id="core-learning-areas">Core Learning Areas</h4>
+<p>You'll learn traffic analysis, network building, and defenses like firewalls. Key skills include Wireshark for packet inspection, IDS/IPS for threat detection, VPNs for secure tunnels, segmentation to isolate zones, and DoS mitigation to handle floods.</p>
+<h4 id="practical-applications">Practical Applications</h4>
+<p>Use simulated labs to test attacks and defenses, ensuring ethical practices. Resources like official Wireshark tutorials (https://www.wireshark.org/docs/) and Cisco NetAcad (https://www.netacad.com/courses/packet-tracer) provide free access for deeper learning.</p>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 50%; margin-bottom: 20px;">
+<iframe 
+	style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+	src="https://www.youtube.com/embed/S-8MLiIeoc0"
+	title="Network Security"
+	frameborder="0" 
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+	allowfullscreen>
+</iframe>
+</div>
+
+<hr>
+<h3 id="detailed-teacher-notes-network-security-for-college-students">Detailed Teacher Notes: Network Security for College Students</h3>
+<p>This comprehensive teacher note expands on the course description for &quot;Network Security,&quot; providing in-depth explanations, step-by-step guides, practical examples, and visualizations for teaching cybersecurity to college students. It assumes a beginner-to-intermediate level, emphasizing hands-on labs with simulated topologies and real traffic captures. Key terms are bolded and explained inline for clarity. The content integrates established practices from tools like Wireshark (version 4.4.8 as of July 2025), Cisco Packet Tracer (version 9.0 in 2025), and standards from NIST SP 800-53 Rev. 5, drawing from official sources to ensure accuracy and balance. Use these notes to structure lectures, assignments, and labs, incorporating real-world scenarios such as defending against simulated DoS attacks in virtual networks. Encourage students to consider diverse viewpoints, including potential biases in tool implementations (e.g., vendor-specific features in Cisco tools ignoring open-source alternatives).</p>
+<h4 id="introduction-to-the-course">Introduction to the Course</h4>
+<p>Learn to protect data in transit and defend against network attacks. You’ll work with simulated topologies and real traffic captures. <strong>Data in transit</strong> refers to information moving between devices over networks, vulnerable to interception without encryption. In this course, students will learn how to:</p>
+<ul>
+<li>Analyse traffic with Wireshark</li>
+<li>Build networks in Cisco Packet Tracer</li>
+<li>Implement firewalls, IDS/IPS, and VPNs</li>
+</ul>
+<p>Key Skills:</p>
+<ul>
+<li>Wireshark</li>
+<li>Cisco Packet Tracer</li>
+<li>IDS/IPS</li>
+<li>VPNs</li>
+<li>Network Segmentation</li>
+<li>DoS Mitigation</li>
+</ul>
+<p>The curriculum blends theory with practical exercises, preparing students for cybersecurity roles like network analysts or security engineers. Ethical considerations are paramount: Simulate attacks only in controlled labs, adhering to laws like the CFAA. Research indicates that hands-on training with tools like these reduces breach risks by up to 40%, but evolving threats require continuous learning.</p>
+<h4 id="section-1-fundamentals-of-network-security">Section 1: Fundamentals of Network Security</h4>
+<p>Network security involves safeguarding networks from unauthorized access, misuse, or disruption. <strong>Topology</strong> is the layout of network devices; simulated ones allow safe testing. Core threats include eavesdropping (intercepting data), DoS (denying service), and man-in-the-middle attacks.</p>
+<p><strong>Key Concepts:</strong></p>
+<ul>
+<li><strong>Confidentiality</strong>: Ensuring data privacy via encryption.</li>
+<li><strong>Integrity</strong>: Preventing tampering.</li>
+<li><strong>Availability</strong>: Maintaining access despite attacks.</li>
+</ul>
+<p><strong>Hands-On Lab:</strong> Capture real traffic from a local network and identify basic threats.</p>
+<p><strong>Visualization: Network Security Triad (CIA)</strong></p>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Confidentiality: Encryption & Access Controls] --> D[Secure Data in Transit]
+    B[Integrity: Hashing & Digital Signatures] --> D
+    C[Availability: Redundancy & DoS Mitigation] --> D
+    style D fill:#ff9,stroke:#333
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Description</th>
+<th>Example Threat</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Confidentiality</td>
+<td>Protects data from unauthorized viewing</td>
+<td>Eavesdropping with unencrypted Wi-Fi</td>
+</tr>
+<tr>
+<td>Integrity</td>
+<td>Ensures data isn't altered</td>
+<td>Man-in-the-middle altering packets</td>
+</tr>
+<tr>
+<td>Availability</td>
+<td>Keeps resources accessible</td>
+<td>DoS flooding servers</td>
+</tr>
+</tbody>
+</table>
+<p>Sources emphasize the CIA triad as foundational.</p>
+<h4 id="section-2-analyzing-traffic-with-wireshark">Section 2: Analyzing Traffic with Wireshark</h4>
+<p>Wireshark is an open-source packet analyzer for capturing and inspecting network traffic in real-time or from captures (pcap files). <strong>Packet</strong> is a unit of data transmitted over networks. Latest version 4.4.8 (July 2025) includes enhanced security features.</p>
+<p><strong>Installation and Basics:</strong></p>
+<ul>
+<li>Download from https://www.wireshark.org/download.html; supports Windows, macOS, Linux.</li>
+<li>Capture: Select interface (e.g., Ethernet), start capture, stop, save as pcap.</li>
+<li>Filters: Use display filters like &quot;http&quot; or &quot;tcp.port == 80&quot;.</li>
+</ul>
+<p><strong>Security Analysis:</strong></p>
+<ul>
+<li>Identify anomalies: Look for unusual ports or protocols.</li>
+<li>Decrypt traffic: If keys available, analyze encrypted sessions.</li>
+<li>Tutorials: Free YouTube intro course and TCP/IP deep dives.</li>
+</ul>
+<p><strong>Hands-On Lab:</strong> Capture HTTP traffic, filter for suspicious packets, export for reports.</p>
+<p><strong>Visualization: Wireshark Capture Process</strong></p>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart TD
+    A[Select Interface] --> B[Start Capture]
+    B --> C[Apply Filters: e.g., ip.src == 192.168.1.1]
+    C --> D[Analyze Packets: Inspect Headers & Payload]
+    D --> E[Export Objects: Save Files/Reports]
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Use in Security</th>
+<th>Example Command/Filter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Display Filters</td>
+<td>Narrow down traffic</td>
+<td>http.request.method == &quot;POST&quot;</td>
+</tr>
+<tr>
+<td>Statistics</td>
+<td>Summarize flows</td>
+<td>Tools &gt; Statistics &gt; Conversations</td>
+</tr>
+<tr>
+<td>Vulnerabilities</td>
+<td>Check past issues</td>
+<td>Review https://www.wireshark.org/security/</td>
+</tr>
+</tbody>
+</table>
+<p>Wireshark excels in forensic analysis but requires careful handling of sensitive data.</p>
+<h4 id="section-3-building-networks-in-cisco-packet-tracer">Section 3: Building Networks in Cisco Packet Tracer</h4>
+<p>Cisco Packet Tracer is a simulation tool for designing, configuring, and troubleshooting networks virtually. Version 9.0 (2025) supports IoT and cybersecurity simulations. <strong>Simulated topology</strong> mimics real networks without hardware.</p>
+<p><strong>Setup and Usage:</strong></p>
+<ul>
+<li>Download from https://www.netacad.com/courses/packet-tracer (free with account).</li>
+<li>Build: Drag devices (routers, switches), connect with cables, configure IPs via CLI.</li>
+<li>Security Labs: Simulate VLANs, ACLs for access control.</li>
+</ul>
+<p><strong>For Security:</strong></p>
+<ul>
+<li>Test attacks: Ping floods for DoS simulation.</li>
+<li>Implement defenses: Configure firewalls on routers.</li>
+</ul>
+<p><strong>Hands-On Lab:</strong> Build a LAN, add a firewall, test connectivity.</p>
+<p><strong>Visualization: Packet Tracer Network Build Flow</strong></p>
+<pre><code class="language-mermaid"><div class="mermaid">sequenceDiagram
+    participant User
+    participant PT as Packet Tracer
+    User->>PT: Add Devices (Router, Switch, PCs)
+    PT->>User: Connect with Cables
+    User->>PT: Configure IPs & Routes
+    User->>PT: Simulate Traffic & Test Security
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Device</th>
+<th>Configuration Example</th>
+<th>Security Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Router</td>
+<td>ip address 192.168.1.1 255.255.255.0</td>
+<td>Apply ACLs to block traffic</td>
+</tr>
+<tr>
+<td>Switch</td>
+<td>vlan 10</td>
+<td>Segment networks</td>
+</tr>
+<tr>
+<td>Firewall</td>
+<td>access-list 101 deny ip any any</td>
+<td>Block unauthorized access</td>
+</tr>
+</tbody>
+</table>
+<p>Packet Tracer promotes experiential learning for complex setups.</p>
+<h4 id="section-4-implementing-firewalls">Section 4: Implementing Firewalls</h4>
+<p><strong>Firewall</strong> is a barrier that filters traffic based on rules, per NIST SP 800-53 controls like SC-7 (Boundary Protection). Types: Stateful (tracks connections), stateless (rule-based).</p>
+<p><strong>Implementation in Packet Tracer:</strong></p>
+<ul>
+<li>Configure on routers: Use extended ACLs, e.g., access-list 100 permit tcp any host 192.168.1.10 eq 80.</li>
+<li>Test: Simulate attacks, verify blocks.</li>
+</ul>
+<p><strong>Best Practices:</strong> Default deny, log events.</p>
+<p><strong>Hands-On Lab:</strong> Set up a firewall to block external access to internal servers.</p>
+<p><strong>Visualization: Firewall Traffic Flow</strong></p>
+<pre><code class="language-mermaid"><div class="mermaid">graph LR
+    A[External Network] -->|Incoming Traffic| B[Firewall Rules: Permit/Deny]
+    B -->|Allowed| C[Internal Network]
+    B -->|Blocked| D[Log & Alert]
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Pros</th>
+<th>Cons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stateful</td>
+<td>Context-aware</td>
+<td>Resource-intensive</td>
+</tr>
+<tr>
+<td>Stateless</td>
+<td>Fast</td>
+<td>Less secure</td>
+</tr>
+</tbody>
+</table>
+<p>Firewalls form the first line of defense.</p>
+<h4 id="section-5-implementing-idsips">Section 5: Implementing IDS/IPS</h4>
+<p><strong>IDS (Intrusion Detection System)</strong> monitors and alerts on threats (passive); <strong>IPS (Intrusion Prevention System)</strong> blocks them (active). NIST recommends SI-4 for monitoring.</p>
+<p><strong>Differences and Setup:</strong></p>
+<ul>
+<li>IDS: e.g., Snort – rules like alert tcp any any -&gt; any 80 (content:&quot;malware&quot;).</li>
+<li>IPS: Inline mode to drop packets.</li>
+<li>In Packet Tracer: Use generic devices to simulate.</li>
+</ul>
+<p><strong>Hands-On Lab:</strong> Configure Snort rules, analyze alerts in Wireshark.</p>
+<p><strong>Visualization: IDS vs IPS</strong></p>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Network Traffic] --> B[IDS: Monitor & Alert]
+    A --> C[IPS: Monitor, Alert & Block]
+    B --> D[Admin Response]
+    C --> E[Threat Stopped]
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>System</th>
+<th>Mode</th>
+<th>Example Tool</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IDS</td>
+<td>Passive</td>
+<td>Snort</td>
+</tr>
+<tr>
+<td>IPS</td>
+<td>Active</td>
+<td>Suricata</td>
+</tr>
+</tbody>
+</table>
+<p>IPS adds proactive blocking but risks false positives.</p>
+<h4 id="section-6-implementing-vpns">Section 6: Implementing VPNs</h4>
+<p><strong>VPN (Virtual Private Network)</strong> creates secure tunnels for data. Types: Remote Access (user-to-network), Site-to-Site (network-to-network), SSL (browser-based).</p>
+<p><strong>Setup:</strong></p>
+<ul>
+<li>Protocols: OpenVPN (secure), WireGuard (fast).</li>
+<li>In Packet Tracer: Configure GRE tunnels or IPsec.</li>
+<li>Example: crypto ipsec transform-set MYSET esp-aes esp-sha-hmac.</li>
+</ul>
+<p><strong>Hands-On Lab:</strong> Set up a site-to-site VPN, test encrypted traffic with Wireshark.</p>
+<p><strong>Visualization: VPN Tunnel Process</strong></p>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart LR
+    A[User Device] -->|Encrypted Tunnel| B[VPN Server]
+    B -->|Decrypted| C[Internal Resources]
+    A -->|Public Internet| B
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Use Case</th>
+<th>Protocol Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Remote Access</td>
+<td>Mobile users</td>
+<td>IKEv2</td>
+</tr>
+<tr>
+<td>Site-to-Site</td>
+<td>Branch offices</td>
+<td>IPsec</td>
+</tr>
+<tr>
+<td>SSL</td>
+<td>Web access</td>
+<td>OpenVPN</td>
+</tr>
+</tbody>
+</table>
+<p>VPNs ensure confidentiality but require strong keys.</p>
+<h4 id="section-7-network-segmentation">Section 7: Network Segmentation</h4>
+<p><strong>Network segmentation</strong> divides networks into zones to limit breach spread, following least privilege. Best practices in 2025: Monitor continually, avoid over-segmentation, restrict third-party access.</p>
+<p><strong>Implementation:</strong></p>
+<ul>
+<li>Use VLANs, subnets, or micro-segmentation.</li>
+<li>In Packet Tracer: Configure VLANs on switches.</li>
+</ul>
+<p><strong>Hands-On Lab:</strong> Segment a network into DMZ and internal zones, test access.</p>
+<p><strong>Visualization: Segmented Network</strong></p>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Internet] --> B[DMZ: Web Servers]
+    A --> C[Firewall]
+    C --> D[Internal: Databases]
+    B -.->|Restricted| D
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Practice</th>
+<th>Benefit</th>
+<th>Challenge</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Least Privilege</td>
+<td>Reduces lateral movement</td>
+<td>Complex rules</td>
+</tr>
+<tr>
+<td>Monitoring</td>
+<td>Detects anomalies</td>
+<td>Resource use</td>
+</tr>
+</tbody>
+</table>
+<p>Segmentation enhances resilience.</p>
+<h4 id="section-8-dos-mitigation">Section 8: DoS Mitigation</h4>
+<p><strong>DoS (Denial of Service)</strong> overwhelms resources; DDoS uses distributed sources. Techniques in 2025: Multi-layered protection, traffic monitoring, redundancy.</p>
+<p><strong>Strategies:</strong></p>
+<ul>
+<li>Rate limiting, blackholing.</li>
+<li>Tools: Cloudflare for scrubbing.</li>
+<li>In Labs: Simulate with hping3, mitigate via ACLs.</li>
+</ul>
+<p><strong>Hands-On Lab:</strong> Flood a server in Packet Tracer, apply mitigation.</p>
+<p><strong>Visualization: DoS Mitigation Layers</strong></p>
+<pre><code class="language-mermaid"><div class="mermaid">graph LR
+    A[Attack Traffic] --> B[Layer 1: Firewall Rate Limiting]
+    B --> C[Layer 2: IPS Blocking]
+    C --> D[Layer 3: CDN Scrubbing]
+    D --> E[Protected Server]
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Technique</th>
+<th>Description</th>
+<th>Tool/Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rate Limiting</td>
+<td>Caps connections</td>
+<td>iptables -A INPUT -p tcp --dport 80 -m limit --limit 25/minute</td>
+</tr>
+<tr>
+<td>Anycast</td>
+<td>Distributes load</td>
+<td>Cloud services</td>
+</tr>
+<tr>
+<td>AI Detection</td>
+<td>Identifies patterns</td>
+<td>Machine learning in IPS</td>
+</tr>
+</tbody>
+</table>
+<p>Hybrid attacks require advanced mitigation.</p>
+<h4 id="assessment-and-resources">Assessment and Resources</h4>
+<ul>
+<li>Quizzes: On tools and concepts.</li>
+<li>Projects: Build secure network, analyze attack.</li>
+<li>Reading: Wireshark User's Guide, Cisco docs.</li>
+</ul>
+<p>This note provides a thorough foundation for network security amid 2025 threats.</p>
+<h3 id="key-citations">Key Citations</h3>
+<ul>
+<li><a href="https://www.wireshark.org/news/">Wireshark News</a></li>
+<li><a href="https://www.packettracernetwork.com/download/download-packet-tracer.html">Download Cisco Packet Tracer 9.0 &amp; GNS3</a></li>
+<li><a href="https://www.netacad.com/courses/packet-tracer">Cisco Packet Tracer</a></li>
+<li><a href="https://csproidea.pl/wp-content/uploads/2021/12/Network-Security-v1.0-Scope-and-Sequence.pdf">Network Security Scope and Sequence</a></li>
+<li><a href="https://www.nwkings.com/how-to-become-a-network-security-engineer-in-2025-step-by-step-roadmap">How to Become a Network Security Engineer</a></li>
+<li><a href="https://ezexplanation.com/course/network-security-and-analysis">Network Security Analysis</a></li>
+<li><a href="https://ccpe.mietjmu.in/network-security-fundamentals/">Network Security Fundamentals</a></li>
+<li><a href="https://www.pointict.com/tutorial/courses/computer-networking/">Computer Networking &amp; CISCO Packet Tracer</a></li>
+<li><a href="https://www.infosecinstitute.com/resources/network-security-101/network-design-firewall-idsips/">Exploring Firewalls &amp; Intrusion Detection Systems</a></li>
+<li><a href="https://www.upguard.com/blog/network-segmentation-best-practices">Top 8 Network Segmentation Best Practices</a></li>
+<li><a href="https://www.cybermaxx.com/resources/network-segmentation-why-its-a-must-have-for-cybersecurity-in-2025/">Network Segmentation: Why It's a Must-Have</a></li>
+<li><a href="https://heimdalsecurity.com/blog/network-segmentation-best-practices/">Network Segmentation Best Practices</a></li>
+<li><a href="https://www.catonetworks.com/glossary/network-segmentation-best-practices/">10 Network Segmentation Best Practices</a></li>
+<li><a href="https://www.radware.com/cyberpedia/ddos-attacks/top-7-ddos-types-in-2025/">Top 7 DDoS Types in 2025</a></li>
+<li><a href="https://datadome.co/guides/ddos/attack-prevention/">How to Stop DDoS Attacks</a></li>
+<li><a href="https://www.imperva.com/blog/early-2025-ddos-attacks-signal-a-dangerous-trend-in-cybersecurity/">Early 2025 DDoS Attacks</a></li>
+<li><a href="https://www.wireshark.org/docs/">Wireshark Documentation</a></li>
+<li><a href="https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final">SP 800-53 Rev. 5</a></li>
+<li><a href="https://www.okta.com/identity-101/ids-vs-ips/">IDS vs. IPS</a></li>
+<li><a href="https://techimpact.org/news/ips-vs-ids-whats-difference-and-why-it-matters">IPS vs IDS</a></li>
+<li><a href="https://www.trellix.com/security-awareness/network/ids-vs-ips-key-differences-explained/">IDS vs. IPS Key Differences</a></li>
+<li><a href="https://purplesec.us/learn/intrusion-detection-vs-intrusion-prevention-systems/">Intrusion Detection Vs Prevention Systems</a></li>
+<li><a href="https://www.paloaltonetworks.com/cyberpedia/firewall-vs-ids-vs-ips">IPS vs. IDS vs. Firewall</a></li>
+<li><a href="https://www.paloaltonetworks.com/cyberpedia/types-of-vpn">Types of VPN</a></li>
+<li><a href="https://nordlayer.com/learn/vpn/types-and-protocols/">VPN Types and Protocols</a></li>
+<li><a href="https://www.geeksforgeeks.org/computer-networks/types-of-virtual-private-network-vpn-and-its-protocols/">Types of Virtual Private Network</a></li>
+<li><a href="https://learn.microsoft.com/en-us/windows/security/operating-system-security/network-security/vpn/vpn-connection-type">VPN Connection Types</a></li>
+<li><a href="https://www.security.org/vpn/protocols/">Types of VPN Protocols</a></li>
+</ul>
+
+</body>
+</html>

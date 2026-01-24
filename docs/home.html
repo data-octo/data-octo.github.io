@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Data Octo — Portfolio, Books, Blog</title>
+  <meta name="description" content="Data Octo — portfolio, books, and blog. Collections of books, projects, and articles about data and AI." />
+  <meta property="og:title" content="Data Octo — Portfolio, Books, Blog" />
+  <meta property="og:description" content="Collections of books, projects, and articles about data and AI." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="stylesheet" href="/assets/landing.css">
+</head>
+
+<body>
+  <main class="container">
+    <header>
+      <h1>Data Octo</h1>
+      <p class="lead">Ideas, books, and projects about data, AI, and practical engineering.</p>
+
+      <div class="actions">
+        <a class="btn btn-primary" href="/book/">Books</a>
+        <a class="btn btn-secondary" href="/portfolio/">Portfolio</a>
+        <a class="btn btn-secondary" href="/blog/">Blog</a>
+      </div>
+    </header>
+
+    <section aria-label="site-categories">
+      <div class="grid">
+        <article class="card">
+          <h3>📚 Books</h3>
+          <p>Full-length guides and series authored here — practical, structured, and downloadable.</p>
+          <p class="muted">6 series</p>
+          <a class="card-link" href="/book/">Browse books →</a>
+        </article>
+
+        <article class="card">
+          <h3>💼 Portfolio</h3>
+          <p>Personal projects and IP — case studies, demos, and links to live work.</p>
+          <p class="muted">Coming soon</p>
+          <a class="card-link" href="/portfolio/">View portfolio →</a>
+        </article>
+
+        <article class="card">
+          <h3>✍️ Blog</h3>
+          <p>Short articles, tutorials, and notes published periodically.</p>
+          <p class="muted">Coming soon</p>
+          <a class="card-link" href="/blog/">Read the blog →</a>
+        </article>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="year"></span> Data Octo · Content & Projects
+    </footer>
+  </main>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>

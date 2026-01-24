@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Identity and Access Control Management</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h3 id="identity-and-access-management-iam">Identity and Access Management (IAM)</h3>
+<p>Research suggests that credential theft remains a leading cause of breaches in 2025, with over 80% of incidents involving compromised identities, emphasizing the need for robust IAM systems like Active Directory and OpenLDAP to mitigate risks. It seems likely that implementing SSO with tools like OpenAM, alongside federation standards such as SAML and OAuth, enhances security while simplifying user experiences, though integration challenges persist in multi-cloud environments. Evidence leans toward automating access governance, including audits and attestation, as essential for compliance, but debates highlight the balance between automation and human oversight to avoid over-reliance on AI-driven decisions.</p>
+<h4 id="why-iam-matters-in-2025">Why IAM Matters in 2025</h4>
+<p>IAM protects against credential theft by managing who accesses what, when, and how. For college students, mastering IAM builds skills for enterprise security, where trends like Zero Trust and AI integration are transforming defenses (e.g., https://www.sentinelone.com/cybersecurity-101/identity-security/iam-solutions/). This course focuses on practical deployment to prepare for real-world breaches.</p>
+<h4 id="core-learning-areas">Core Learning Areas</h4>
+<p>You'll deploy directory services, configure SSO for seamless access, and automate governance to ensure ongoing compliance. Key skills like RBAC (static roles) versus ABAC (dynamic attributes) allow flexible control, while protocols like OIDC offer modern authentication over traditional SAML.</p>
+<h4 id="practical-applications">Practical Applications</h4>
+<p>Use labs to simulate enterprise setups, such as integrating OpenLDAP with SSO (tutorials at https://www.tecmint.com/install-openldap-and-phpldapadmin-ubuntu/). Automation tools reduce manual errors, aligning with 2025 best practices for auditing access in hybrid environments.</p>
+<hr>
+<h3 id="detailed-teacher-notes-identity-and-access-management-for-college-students">Detailed Teacher Notes: Identity and Access Management for College Students</h3>
+<p>This comprehensive teacher note expands on the course description for &quot;Identity &amp; Access Control Management,&quot; providing in-depth explanations, step-by-step guides, practical examples, and visualizations for teaching cybersecurity to college students. It assumes a beginner-to-intermediate level, emphasizing hands-on labs to address credential theft, a top breach vector in 2025 where 81% of attacks involve identity compromise. Key terms are bolded and explained inline for clarity. The content integrates established practices from standards like NIST SP 800-63 (Digital Identity Guidelines) and ISO 27001, drawing from 2025 trends such as AI-powered IAM, Zero Trust, and passwordless authentication to ensure relevance. Use these notes to structure lectures, assignments, and labs, incorporating real-world scenarios like simulating phishing attacks on IAM systems. Encourage students to consider diverse viewpoints, including potential biases in automation (e.g., AI false positives overlooking nuanced access needs).</p>
+<h4 id="introduction-to-the-course">Introduction to the Course</h4>
+<p>Credential theft is a top breach method. This course covers building and securing enterprise IAM systems. <strong>IAM (Identity and Access Management)</strong> is the framework for managing digital identities and controlling resource access, crucial in 2025 amid rising threats like AI-driven attacks. In this course, students will learn how to:</p>
+<ul>
+<li>Deploy Active Directory and OpenLDAP</li>
+<li>Configure SSO with OpenAM and federation standards</li>
+<li>Audit and automate access governance</li>
+</ul>
+<p>Key Skills:</p>
+<ul>
+<li>Active Directory</li>
+<li>OpenLDAP</li>
+<li>OpenAM</li>
+<li>RBAC &amp; ABAC</li>
+<li>SAML</li>
+<li>OAuth</li>
+<li>OIDC</li>
+<li>Access Attestation</li>
+</ul>
+<p>The curriculum blends theory with practical exercises, preparing students for roles like IAM engineers. Ethical considerations: Always simulate breaches in isolated labs, complying with frameworks like GDPR. Trends show IAM market growth to $34B by 2025, driven by Zero Trust adoption.</p>
+<h4 id="section-1-fundamentals-of-iam-and-credential-theft">Section 1: Fundamentals of IAM and Credential Theft</h4>
+<p><strong>Credential theft</strong> involves stealing login details via phishing or malware, enabling unauthorized access. In 2025, best practices include MFA and Zero Trust to verify every request.</p>
+<p><strong>Core Concepts:</strong></p>
+<ul>
+<li><strong>Identity</strong>: Digital representation (e.g., username).</li>
+<li><strong>Access Control</strong>: Policies dictating permissions.</li>
+<li><strong>Federation</strong>: Sharing identities across systems.</li>
+</ul>
+<p><strong>Hands-On Lab:</strong> Simulate credential theft using tools like Mimikatz, then mitigate with IAM controls.</p>
+<p><strong>Visualization: IAM Process Flow</strong></p>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart TD
+    A[User Authentication] --> B[Identity Verification]
+    B --> C[Access Authorization: RBAC/ABAC]
+    C --> D[Resource Access]
+    D --> E[Audit & Governance]
+    E -->|Feedback| A
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Description</th>
+<th>2025 Trend</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Zero Trust</td>
+<td>Assume no trust, verify always</td>
+<td>AI-enhanced verification</td>
+</tr>
+<tr>
+<td>Passwordless</td>
+<td>Use biometrics/passkeys</td>
+<td>Reduces theft by 99%</td>
+</tr>
+<tr>
+<td>Machine Identities</td>
+<td>For bots/APIs</td>
+<td>Growing focus in multi-cloud</td>
+</tr>
+</tbody>
+</table>
+<p>Sources emphasize proactive governance to combat evolving threats.</p>
+<h4 id="section-2-deploying-active-directory">Section 2: Deploying Active Directory</h4>
+<p><strong>Active Directory (AD)</strong> is Microsoft's directory service for Windows domains, managing users and resources. In 2025, deployment focuses on hybrid setups with Azure AD.</p>
+<p><strong>Deployment Steps (Windows Server 2025):</strong></p>
+<ol>
+<li>Install AD DS role: Server Manager &gt; Add Roles &gt; Active Directory Domain Services.</li>
+<li>Promote to Domain Controller: dcpromo.exe or PowerShell (Install-ADDSForest).</li>
+<li>Configure DNS: Integrate with AD for name resolution.</li>
+<li>Secure: Enable MFA, audit policies.</li>
+</ol>
+<p><strong>Best Practices:</strong> Use least privilege, regular patching.</p>
+<p><strong>Hands-On Lab:</strong> Set up AD in a VM, add users/groups (tutorial: https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/deploy/install-active-directory-domain-services--level-100-).</p>
+<p><strong>Visualization: AD Deployment Workflow</strong></p>
+<pre><code class="language-mermaid"><div class="mermaid">sequenceDiagram
+    participant Admin
+    participant Server
+    Admin->>Server: Install AD DS Role
+    Server->>Admin: Promote to DC
+    Admin->>Server: Configure Users/Groups
+    Server->>Admin: Secure with Policies
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Command/Example</th>
+<th>Security Tip</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Install Role</td>
+<td>Add-WindowsFeature AD-Domain-Services</td>
+<td>Use isolated network</td>
+</tr>
+<tr>
+<td>Promote DC</td>
+<td>Install-ADDSForest -DomainName &quot;example.com&quot;</td>
+<td>Strong passwords</td>
+</tr>
+<tr>
+<td>Add User</td>
+<td>New-ADUser -Name &quot;student&quot;</td>
+<td>Enable auditing</td>
+</tr>
+</tbody>
+</table>
+<p>AD remains foundational, but hybrid models dominate in 2025.</p>
+<h4 id="section-3-deploying-openldap">Section 3: Deploying OpenLDAP</h4>
+<p><strong>OpenLDAP</strong> is an open-source LDAP implementation for directory services, ideal for non-Windows environments. 2025 updates emphasize containerization (e.g., Docker).</p>
+<p><strong>Deployment Steps (Ubuntu/Debian):</strong></p>
+<ol>
+<li>Install: sudo apt install slapd ldap-utils.</li>
+<li>Configure: dpkg-reconfigure slapd (set DN, password).</li>
+<li>Add Schema: ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/ldap/schema/cosine.ldif.</li>
+<li>Secure: Implement TLS, access controls.</li>
+</ol>
+<p><strong>Best Practices:</strong> Use phpLDAPadmin for GUI management.</p>
+<p><strong>Hands-On Lab:</strong> Deploy on Ubuntu, add entries via ldapadd (tutorial: https://www.tecmint.com/install-openldap-and-phpldapadmin-ubuntu/).</p>
+<p><strong>Visualization: OpenLDAP Setup Process</strong></p>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Install Packages] --> B[Reconfigure slapd]
+    B --> C[Add Schemas/Entries]
+    C --> D[Enable TLS & ACLs]
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Command</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Install</td>
+<td>apt install slapd</td>
+<td>Base setup</td>
+</tr>
+<tr>
+<td>Add Entry</td>
+<td>ldapadd -x -D cn=admin,dc=example,dc=com -W -f entry.ldif</td>
+<td>Populate directory</td>
+</tr>
+<tr>
+<td>Secure TLS</td>
+<td>Edit /etc/ldap/ldap.conf</td>
+<td>Encrypt connections</td>
+</tr>
+</tbody>
+</table>
+<p>OpenLDAP offers flexibility but steeper learning than AD.</p>
+<h4 id="section-4-configuring-sso-with-openam-and-federation-standards">Section 4: Configuring SSO with OpenAM and Federation Standards</h4>
+<p><strong>SSO (Single Sign-On)</strong> allows one login for multiple apps. <strong>OpenAM</strong> (now part of Open Identity Platform) handles access management; federation uses standards like SAML for trust.</p>
+<p><strong>Configuration Steps:</strong></p>
+<ol>
+<li>Install OpenAM: Deploy WAR file in Tomcat.</li>
+<li>Set Up SSO: Configure realms, agents.</li>
+<li>Federation: Enable SAML/OAuth modules.</li>
+<li>Test: Integrate with apps like WordPress.</li>
+</ol>
+<p><strong>Standards Comparison:</strong></p>
+<ul>
+<li><strong>SAML</strong>: XML-based for enterprise auth.</li>
+<li><strong>OAuth</strong>: Token-based for authorization.</li>
+<li><strong>OIDC</strong>: Builds on OAuth for modern apps.</li>
+</ul>
+<p><strong>Hands-On Lab:</strong> Configure OpenAM as IDP for SAML SSO (tutorial: https://plugins.miniorange.com/saml-single-sign-on-sso-wordpress-using-openam).</p>
+<p><strong>Visualization: SSO Federation Flow</strong></p>
+<pre><code class="language-mermaid"><div class="mermaid">sequenceDiagram
+    User->>App: Login Request
+    App->>OpenAM: Redirect for Auth
+    OpenAM->>User: Credentials
+    User->>OpenAM: Submit
+    OpenAM->>App: Token (SAML/OAuth/OIDC)
+    App->>User: Access Granted
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Protocol</th>
+<th>Use Case</th>
+<th>Pros/Cons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SAML</td>
+<td>Enterprise SSO</td>
+<td>Secure but verbose</td>
+</tr>
+<tr>
+<td>OAuth</td>
+<td>API Access</td>
+<td>Flexible, not for auth alone</td>
+</tr>
+<tr>
+<td>OIDC</td>
+<td>Modern Web/Mobile</td>
+<td>Lightweight, JSON-based</td>
+</tr>
+</tbody>
+</table>
+<p>OIDC gains traction in 2025 for mobile.</p>
+<h4 id="section-5-rbac--abac-in-iam">Section 5: RBAC &amp; ABAC in IAM</h4>
+<p><strong>RBAC (Role-Based Access Control)</strong> assigns permissions via roles; <strong>ABAC (Attribute-Based Access Control)</strong> uses attributes (e.g., time, location) for dynamic access.</p>
+<p><strong>Comparison:</strong></p>
+<ul>
+<li>RBAC: Simple, static (e.g., &quot;admin&quot; role).</li>
+<li>ABAC: Granular, context-aware.</li>
+</ul>
+<p><strong>Implementation:</strong> In AD/OpenLDAP, define roles/attributes.</p>
+<p><strong>Hands-On Lab:</strong> Implement RBAC in AD, ABAC in policy engine.</p>
+<p><strong>Visualization: RBAC vs ABAC</strong></p>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[User] -->|Role| B[RBAC: Fixed Permissions]
+    A -->|Attributes (e.g., Location)| C[ABAC: Dynamic Check]
+    B --> D[Access Decision]
+    C --> D
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Strengths</th>
+<th>Weaknesses</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RBAC</td>
+<td>Easy management</td>
+<td>Less flexible</td>
+</tr>
+<tr>
+<td>ABAC</td>
+<td>Contextual</td>
+<td>Complex setup</td>
+</tr>
+</tbody>
+</table>
+<p>Hybrid RBAC+ABAC recommended for 2025.</p>
+<h4 id="section-6-auditing-and-automating-access-governance">Section 6: Auditing and Automating Access Governance</h4>
+<p><strong>Access governance</strong> ensures compliant access; <strong>audit</strong> reviews logs, <strong>automation</strong> uses tools for provisioning.</p>
+<p><strong>Access Attestation</strong>: Periodic review/certification of access rights.</p>
+<p><strong>Automation Steps:</strong></p>
+<ol>
+<li>Use scripts/tools (e.g., PowerShell for AD audits).</li>
+<li>Implement workflows for attestation.</li>
+<li>Monitor with SIEM.</li>
+</ol>
+<p><strong>Best Practices:</strong> Regular reviews, least privilege.</p>
+<p><strong>Hands-On Lab:</strong> Automate user provisioning in OpenLDAP, run attestation simulation.</p>
+<p><strong>Visualization: Governance Cycle</strong></p>
+<pre><code class="language-mermaid"><div class="mermaid">graph LR
+    A[Provision Access] --> B[Monitor Usage]
+    B --> C[Audit Logs]
+    C --> D[Attestation Review]
+    D -->|Revoke/Approve| A
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Practice</th>
+<th>Tool/Example</th>
+<th>Benefit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Automated Reviews</td>
+<td>SafePaaS</td>
+<td>Efficiency</td>
+</tr>
+<tr>
+<td>Attestation</td>
+<td>Oracle Access Governance</td>
+<td>Compliance</td>
+</tr>
+<tr>
+<td>Auditing</td>
+<td>Netwrix</td>
+<td>Risk reduction</td>
+</tr>
+</tbody>
+</table>
+<p>Automation aligns with 2025 priorities like multi-cloud.</p>
+<h4 id="assessment-and-resources">Assessment and Resources</h4>
+<ul>
+<li>Quizzes: On protocols, deployments.</li>
+<li>Projects: Build IAM system, automate audit.</li>
+<li>Reading: AWS IAM docs, NIST guidelines.</li>
+</ul>
+<p>This note equips students for IAM in an AI-era landscape.</p>
+<h3 id="key-citations">Key Citations</h3>
+<ul>
+<li><a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html">Security best practices in IAM - AWS Identity and Access Management</a></li>
+<li><a href="https://www.sentinelone.com/cybersecurity-101/identity-security/iam-solutions/">Top 7 IAM Solutions for 2025 - SentinelOne</a></li>
+<li><a href="https://www.idsalliance.org/blog/identity-and-access-management-in-the-ai-era-2025-guide/">Identity and Access Management in the AI Era: 2025 Guide</a></li>
+<li><a href="https://identitymanagementinstitute.org/iam-market-report-2025/">IAM MARKET REPORT 2025 - Identity Management Institute®</a></li>
+<li><a href="https://www.apono.io/blog/8-identity-access-management-iam-best-practices-to-implement-today/">8 Identity &amp; Access Management (IAM) Best Practices to Implement ...</a></li>
+<li><a href="https://www.rippling.com/blog/iam-best-practices">Key Identity and Access Management (IAM) Best Practices in 2025</a></li>
+<li><a href="https://www.okta.com/identity-101/identity-and-access-management-best-practices-for-enhanced-security/">Identity and access management best practices for enhanced security</a></li>
+<li><a href="https://aws.amazon.com/blogs/security/building-identity-first-security-a-guide-to-the-identity-and-access-management-track-at-aws-reinforce-2025/">Building identity-first security: A guide to the Identity and Access ...</a></li>
+<li><a href="https://www.reco.ai/learn/iam-best-practices">15 Identity and Access Management (IAM) Best Practices - Reco AI</a></li>
+<li><a href="https://securityscorecard.com/blog/iam-in-2025-identity-and-access-management-best-practices/">IAM in 2025: Identity and Access Management Best Practices</a></li>
+<li><a href="https://cloudsecurityalliance.org/blog/2024/10/30/top-iam-priorities-for-2025-addressing-multi-cloud-identity-management-challenges">Priorities for Identity Management in 2025 - Cloud Security Alliance</a></li>
+<li><a href="https://learn.microsoft.com/en-us/security/zero-trust/develop/identity-iam-development-best-practices">Zero Trust identity and access management best practices</a></li>
+<li><a href="https://airiam.com/blog/access-management-best-practices/">Access Management: 9 IAM Best Practices in 2025 (and Beyond)</a></li>
+<li><a href="https://cpl.thalesgroup.com/blog/access-management/iam-predictions-for-2025">IAM Predictions for 2025: Identity as the Linchpin of Business ...</a></li>
+<li><a href="https://www.veritis.com/blog/identity-and-access-management-trends/">Identity and Access Management Trends for 2025 - Veritis</a></li>
+<li><a href="https://www.nudgesecurity.com/post/identity-and-access-management">A 2025 Guide to SaaS Identity Access Management (IAM)</a></li>
+<li><a href="https://www.miniorange.com/blog/iam-best-practices/">10 IAM Best Practices for the Security of Every Enterprise 2025</a></li>
+<li><a href="https://www.cloudeagle.ai/blogs/access-management-best-practices">8 Access Management Best Practices For 2025 | CloudEagle.ai</a></li>
+<li><a href="https://www.cerbos.dev/blog/identity-and-access-management-tools">Top 5 Identity &amp; Access Management (IAM) Tools for 2025 - Cerbos</a></li>
+<li><a href="https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/deploy/install-active-directory-domain-services--level-100-">Install Active Directory Domain Services on Windows Server</a></li>
+<li><a href="https://www.cayosoft.com/active-directory-setup/">Active Directory Setup Guide: Key Steps for 2025 - Cayosoft</a></li>
+<li><a href="https://cloudspinx.com/install-windows-server-active-directory-services/">Complete Guide to Installing Active Directory Services on Windows ...</a></li>
+<li><a href="https://albusbit.com/blog/what-is-active-directory/">Active Directory Explained: Complete Guide for IT Professionals [2025]</a></li>
+<li><a href="https://anthonyconstant.co.uk/blog/f/set-up-active-directory-on-windows-server-2025-step-by-step?blogcategory=Systems">Set Up Active Directory on Windows Server 2025 (Step-by-Step)</a></li>
+<li><a href="https://documentation.ubuntu.com/server/how-to/openldap/install-openldap/">Install and configure LDAP - Ubuntu Server documentation</a></li>
+<li><a href="https://www.tecmint.com/install-openldap-and-phpldapadmin-ubuntu/">How to Install OpenLDAP and phpLDAPadmin in Ubuntu - Tecmint</a></li>
+<li><a href="https://docs.digital.ai/deploy/docs/how-to/setup-and-configuration-ldap-with-deploy">Set up and configure LDAP with Deploy - Digital.ai</a></li>
+<li><a href="https://shape.host/resources/how-to-install-openldap-on-debian-12">How to Install OpenLDAP on Debian 12 - Shapehost</a></li>
+<li><a href="https://doc.openidentityplatform.org/openam/admin-guide/chap-sso">Configuring Single Sign-On Within One Domain</a></li>
+<li><a href="https://plugins.miniorange.com/saml-single-sign-on-sso-wordpress-using-openam">Guide to Configure OpenAM as IDP and WordPress as SP</a></li>
+<li><a href="https://www.drupal.org/docs/contributed-modules/saml-sp-single-sign-on-sso-saml-service-provider-by-miniorange/set-up-sso-with-openam">Set up SSO with OpenAM | SAML SP Single Sign On (SSO) - Drupal</a></li>
+<li><a href="https://www.openidentityplatform.org/blog/2023-02-22-how-openam-works-simple-explanation">How OpenAM Works Simple Explanation - Open Identity Platform</a></li>
+<li><a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/saas-multitenant-api-access-authorization/access-control-types.html">Types of access control - AWS Prescriptive Guidance</a></li>
+<li><a href="https://www.okta.com/identity-101/role-based-access-control-vs-attribute-based-access-control/">RBAC vs. ABAC: Definitions &amp; When to Use - Okta</a></li>
+<li><a href="https://www.trek10.com/blog/abac-vs-rbac-for-access-control-in-aws">ABAC vs RBAC for Access Control in AWS - Trek10</a></li>
+<li><a href="https://goteleport.com/blog/rbac-and-abac-with-aws-iam/">RBAC and ABAC with AWS IAM - Teleport</a></li>
+<li><a href="https://www.onelogin.com/learn/rbac-vs-abac">RBAC vs ABAC: Make the Right Call - OneLogin</a></li>
+<li><a href="https://www.okta.com/identity-101/whats-the-difference-between-oauth-openid-connect-and-saml/">What's the Difference Between OAuth, OpenID Connect, and SAML?</a></li>
+<li><a href="https://www.beyondidentity.com/resource/oidc-vs-saml-understanding-the-differences">OIDC vs. SAML - Beyond Identity</a></li>
+<li><a href="https://www.strongdm.com/blog/oidc-vs-saml">The Difference Between SAML vs OIDC - StrongDM</a></li>
+<li><a href="https://www.okta.com/identity-101/saml-vs-oauth/">What are SAML, OAuth, and OIDC? - Okta</a></li>
+<li><a href="https://www.rippling.com/blog/oidc-vs-saml">OIDC vs. SAML: Key Differences &amp; How to Choose - Rippling</a></li>
+<li><a href="https://www.scalekit.com/blog/saml-vs-oidc">SAML vs. OIDC: Deepdive into the standard authentication protocols</a></li>
+<li><a href="https://www.tools4ever.com/blog/attestation-reconciliation/">Attestation and reconciliation in IAM - Tools4ever</a></li>
+<li><a href="https://hoop.dev/blog/mastering-access-attestation-in-identity-access-management-an-introduction-for-technology-managers/">Mastering Access Attestation in Identity Access Management</a></li>
+<li><a href="https://www.openiam.com/access-certification">What is Access Certification? - OpenIAM</a></li>
+<li><a href="https://hoop.dev/blog/mastering-access-attestation-in-iam-a-guide-for-tech-managers/">Mastering Access Attestation in IAM: A Guide for Tech Managers</a></li>
+<li><a href="https://docs.oracle.com/en/cloud/paas/access-governance/nrcnp/index.html">Oracle Access Governance - Access Reviews</a></li>
+<li><a href="https://pathlock.com/learn/access-governance-benefits-solutions-and-best-practices/">Access Governance: Benefits, Solutions, and Best Practices - Pathlock</a></li>
+<li><a href="https://www.zluri.com/blog/access-governance">Access Governance - 101 Guide - Zluri</a></li>
+<li><a href="https://www.netwrix.com/Data_Access_Governance_Best_Practice_Guide.html">Data Access Governance Best Practice Guide - Netwrix</a></li>
+<li><a href="https://www.safepaas.com/articles/access-governance-compliance-and-audit/">Access Governance, Compliance, and Audit - SafePaaS</a></li>
+<li><a href="https://omadaidentity.com/resources/blog/access-governance-vs-access-management/">Access Governance vs Access Management - Omada Identity</a></li>
+</ul>
+
+</body>
+</html>
