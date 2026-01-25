@@ -6,4 +6,4 @@ Seasoned IT executive with expertise in enterprise architecture, software engine
 
 ## Portfolio
 
-- **IT Leader** - [IT Leader Portfolio](index.html)
+- **IT Leader** - [IT Leader Portfolio](IT-leader-portfolio.html)
