@@ -1,5 +1,5 @@
 ---
-title: UBC Dreams: Five Students' Journey in the AI Era (2026–2030)
+title: "UBC Dreams: Five Students' Journey in the AI Era (2026–2030)"
 ---
 
 # UBC Dreams: Five Students' Journey in the AI Era (2026–2030)

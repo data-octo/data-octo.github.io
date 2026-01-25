@@ -5,6 +5,9 @@ site/
 # OS
 .DS_Store
 
+.cache/
+Thumbs.db
+
 # Python
 __pycache__/
 *.py[cod]

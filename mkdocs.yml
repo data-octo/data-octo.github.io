@@ -38,13 +38,15 @@ plugins:
         - zh
         - en
   - mermaid2
+  - social
+      # cards_layout: obsidian
 
 extra:
   generator: false
 
-extra_javascript:
-  - https://unpkg.com/mermaid@10/dist/mermaid.min.js
-  - assets/javascripts/mermaid-init.js
+# extra_javascript:
+#   - https://unpkg.com/mermaid@10/dist/mermaid.min.js
+#   - assets/javascripts/mermaid-init.js
 
 copyright: >
   © 2026 Data Octo · Enterprise Cloud, Data & AI, Cybersecurity Architecture
