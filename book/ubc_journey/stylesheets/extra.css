@@ -200,3 +200,8 @@
     line-height: 1.5;
   }
 }
+
+/* Hide footer social icons site-wide for this book */
+.md-footer .md-social {
+  display: none !important;
+}
