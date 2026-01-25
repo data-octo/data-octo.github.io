@@ -6,8 +6,8 @@ Central documentation and portfolio for Data Octo — a collection of guides, pr
 
 ## Quick links
 
-- [Book](book/index.md)
 - [Blog](blog/index.md)
+- [Book](book/index.md)
 - [Portfolio](portfolio/index.md)
 
 ---
