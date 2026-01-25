@@ -5,7 +5,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
-<link href="https://data-octo.github.io/blog/2026-01-zero-trust/" rel="canonical"/>
+<link href="https://data-octo.github.io/blog/2026-01-23-zero-trust/" rel="canonical"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-9.6.20" name="generator"/>
 <title>Zero Trust Is Not a Product - Data Octo</title>
@@ -222,6 +222,83 @@
 </ul>
 </nav>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#core-principles">
+<span class="md-ellipsis">
+      Core Principles
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#practical-architecture-patterns">
+<span class="md-ellipsis">
+      Practical Architecture Patterns
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementation-roadmap-practical-steps">
+<span class="md-ellipsis">
+      Implementation Roadmap (practical steps)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#example-access-decision-flow">
+<span class="md-ellipsis">
+      Example: Access Decision Flow
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#checklist-for-teams">
+<span class="md-ellipsis">
+      Checklist for Teams
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#metrics-to-track">
+<span class="md-ellipsis">
+      Metrics to Track
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#common-pitfalls">
+<span class="md-ellipsis">
+      Common Pitfalls
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#short-example-policy-pseudo">
+<span class="md-ellipsis">
+      Short Example Policy (pseudo)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-architecture">
+<span class="md-ellipsis">
+      Security architecture
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#conclusion">
+<span class="md-ellipsis">
+      Conclusion
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#further-reading-references">
+<span class="md-ellipsis">
+      Further reading &amp; references
+    </span>
+</a>
+</li>
 </ul>
 </nav>
 </div>
@@ -230,23 +307,166 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1 id="zero-trust-is-not-a-product">Zero Trust Is Not a Product</h1>
-<p><strong>Date:</strong> 2026-01-24<br/>
+<p><strong>Date:</strong> 2026-01-23<br/>
 <strong>Tags:</strong> zero-trust, security-architecture</p>
-<p>Most organizations talk about Zero Trust as a tool.
+<p>Most organizations talk about Zero Trust as a tool.<br/>
 That’s the first mistake.</p>
 <h2 id="what-zero-trust-actually-means">What Zero Trust Actually Means</h2>
-<p>Zero Trust is a design principle, not a SKU.</p>
+<p>Zero Trust is a design principle, not a SKU. It reframes security from "trust by location or network" to "verify every request, continuously." The goal is to minimize blast radius, reduce implicit trust, and make security decisions based on context and risk rather than binary network boundaries.</p>
 <h3 id="common-misconception">Common misconception</h3>
 <ul>
-<li>❌ Buy a firewall</li>
-<li>❌ Deploy ZTNA</li>
+<li>❌ Buy a firewall  </li>
+<li>❌ Deploy ZTNA  </li>
 <li>❌ Call it Zero Trust</li>
 </ul>
 <h3 id="reality">Reality</h3>
 <ul>
-<li>Identity is the new perimeter</li>
-<li>Authorization is continuous</li>
+<li>Identity is the new perimeter  </li>
+<li>Authorization is continuous  </li>
 <li>Assume breach</li>
+</ul>
+<h2 id="core-principles">Core Principles</h2>
+<ul>
+<li>Least privilege: grant the minimum access needed for the minimum time. Apply to users, services, and workloads.</li>
+<li>Continuous verification: authenticate and authorize per request, re-evaluate on change (device state, location, session risk).</li>
+<li>Micro-segmentation: break networks and workloads into smaller trust zones to constrain lateral movement.</li>
+<li>Strong identity and telemetry: rely on identity (human or machine), device posture, behavior analytics, and real-time signals.</li>
+<li>Default deny: deny first, allow with explicit, context-aware policy.</li>
+</ul>
+<h2 id="practical-architecture-patterns">Practical Architecture Patterns</h2>
+<ol>
+<li>Identity-first access</li>
+<li>Use a central identity provider (IdP) for SSO and strong auth (MFA, phishing-resistant methods).</li>
+<li>
+<p>Treat machine identities (service accounts, workloads, k8s service accounts) with the same rigor as human identities.</p>
+</li>
+<li>
+<p>Policy as code</p>
+</li>
+<li>Express access decisions in code (e.g., OPA/Rego, authorization middleware) so policies are reviewable, testable, and auditable.</li>
+<li>
+<p>Keep policies close to the resources they govern.</p>
+</li>
+<li>
+<p>Short-lived credentials and automated rotation</p>
+</li>
+<li>
+<p>Replace long-lived secrets with ephemeral tokens, certificate rotation, workload identity, or short TTL credentials.</p>
+</li>
+<li>
+<p>Network and workload segmentation</p>
+</li>
+<li>
+<p>Apply segmentation using enforced policies at the workload or service mesh layer rather than relying solely on perimeter devices.</p>
+</li>
+<li>
+<p>Telemetry and detection</p>
+</li>
+<li>Centralize logs, metrics, and traces. Use telemetry to detect anomalies and trigger policy re-evaluation or automated containment.</li>
+</ol>
+<h2 id="implementation-roadmap-practical-steps">Implementation Roadmap (practical steps)</h2>
+<ol>
+<li>Inventory &amp; classification</li>
+<li>
+<p>List users, services, data stores, and their current access patterns. Classify data by sensitivity.</p>
+</li>
+<li>
+<p>Identity consolidation</p>
+</li>
+<li>
+<p>Consolidate identity sources; adopt MFA and device posture checks. Enforce unique identities and avoid shared accounts.</p>
+</li>
+<li>
+<p>Pilot: high-value micro-segmentation</p>
+</li>
+<li>
+<p>Start with a single application or environment. Implement least privilege, short-lived creds, and continuous authorization.</p>
+</li>
+<li>
+<p>Policy automation</p>
+</li>
+<li>
+<p>Move ACLs into policy-as-code and CI pipelines. Automate testing and canary rollout of policy changes.</p>
+</li>
+<li>
+<p>Expand and harden</p>
+</li>
+<li>
+<p>Roll out to additional apps, add behavioral detection, refine policies with feedback loops.</p>
+</li>
+<li>
+<p>Measure and iterate</p>
+</li>
+<li>Use key metrics (see below) to validate the program and address gaps.</li>
+</ol>
+<h2 id="example-access-decision-flow">Example: Access Decision Flow</h2>
+<ol>
+<li>Request arrives (user or service).</li>
+<li>Authenticate identity with IdP (MFA + device posture).</li>
+<li>Gather contextual signals (time, location, device health, behavior baseline).</li>
+<li>Evaluate policy (policy engine + resource rules).</li>
+<li>Issue short-lived allowance or deny; log decision and telemetry.</li>
+<li>Continuously monitor session; revoke if risk increases.</li>
+</ol>
+<h2 id="checklist-for-teams">Checklist for Teams</h2>
+<ul>
+<li>[ ] Unique identities for humans and services</li>
+<li>[ ] MFA and device posture checks enabled</li>
+<li>[ ] Policies expressed as code and in CI</li>
+<li>[ ] Short-lived credentials in use</li>
+<li>[ ] Micro-segmentation applied to critical workloads</li>
+<li>[ ] Centralized telemetry and retention policy</li>
+<li>[ ] Automated response playbooks for compromise</li>
+<li>[ ] Regular access reviews and audit logs</li>
+</ul>
+<h2 id="metrics-to-track">Metrics to Track</h2>
+<ul>
+<li>Mean time to detect (MTTD) anomalous access</li>
+<li>Mean time to revoke (MTTR) compromised sessions/keys</li>
+<li>Percentage of access controlled by policy-as-code</li>
+<li>Number of resources using short-lived credentials</li>
+<li>Reduction in blast radius measured by lateral movement attempts blocked</li>
+</ul>
+<h2 id="common-pitfalls">Common Pitfalls</h2>
+<ul>
+<li>Treating Zero Trust as a single product or bolt-on service.</li>
+<li>Ignoring service-to-service (machine) identity and focusing only on humans.</li>
+<li>Overloading policies without telemetry—policy decisions must be observable and testable.</li>
+<li>Skipping phased rollouts: disruptive, high-risk changes without pilots lead to outages and pushback.</li>
+</ul>
+<h2 id="short-example-policy-pseudo">Short Example Policy (pseudo)</h2>
+<ul>
+<li>Allow read access to payroll service only if:</li>
+<li>identity in payroll-admin group</li>
+<li>device compliant AND</li>
+<li>request originates from approved application instance</li>
+<li>session token age &lt; 15 minutes</li>
+</ul>
+<h2 id="security-architecture">Security architecture</h2>
+<p>The diagram below illustrates core Zero Trust components and the continuous verification flow.</p>
+<pre class="mermaid"><code>graph TB
+  User["User / Identity"] --&gt;|"Authenticate (MFA)"| IdP[Identity Provider]
+  Device[Device Posture] --&gt;|Attest| IdP
+  IdP --&gt;|"Issue short-lived token/cert"| Token[Ephemeral Credential]
+  User --&gt;|Request| Gateway["ZTNA / Network Gateway"]
+  Gateway --&gt;|Forward with context| PolicyEngine["Policy Engine (OPA, AuthZ)"]
+  Token --&gt;|Presented| PolicyEngine
+  PolicyEngine --&gt;|"Allow / Deny / Step-up"| App["Application / Service"]
+  App --&gt;|"Sidecar / Mesh"| ServiceMesh[Service Mesh]
+  ServiceMesh --&gt;|Enforce micro-segmentation| PolicyEngine
+  App --&gt; Telemetry["Logs / Metrics / Traces (SIEM)"]
+  Telemetry --&gt;|Feed signals| PolicyEngine
+  Telemetry --&gt;|Trigger| Response["Automated Response / Orchestration"]
+  Response --&gt;|"Revoke / Quarantine"| Token
+  Response --&gt;|Isolate| ServiceMesh
+
+  classDef infra fill:#f3f4f6,stroke:#333,stroke-width:1px;
+  class IdP,PolicyEngine,ServiceMesh,Telemetry,Response,Gateway infra;</code></pre>
+<h2 id="conclusion">Conclusion</h2>
+<p>Zero Trust is an organizational change: people, processes, and architecture must align. The technical components (IdP, ZTNA, service mesh, CASBs, etc.) are enablers, not a substitute for design. Success comes from measurable, iterative improvements: start with identity, codify policy, instrument everything, and assume you'll need to respond rapidly when breaches occur.</p>
+<h2 id="further-reading-references">Further reading &amp; references</h2>
+<ul>
+<li>Recommend reading materials and standards: NIST SP 800-207, vendor-neutral blogs on identity and policy-as-code, research on micro-segmentation best practices and telemetry-driven response.</li>
 </ul>
 </article>
 </div>
