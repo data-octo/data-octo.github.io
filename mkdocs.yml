@@ -1,0 +1,53 @@
+site_name: Data Octo
+site_url: https://data-octo.github.io/
+use_directory_urls: true
+
+theme:
+  name: material
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - content.code.copy
+
+nav:
+  - Home: index.html
+  - Blog:
+      - Blog Home: blog/index.html
+  - Books:
+      - books/index.html
+  - Portfolio:
+      - portfolio/index.html
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed
+  - codehilite
+
+plugins:
+  - search:
+      lang: 
+        - zh
+        - en
+  - mermaid2
+  - social
+      # cards_layout: obsidian
+
+extra:
+  generator: false
+
+# extra_javascript:
+#   - https://unpkg.com/mermaid@10/dist/mermaid.min.js
+#   - assets/javascripts/mermaid-init.js
+
+copyright: >
+  © 2026 Data Octo · Enterprise Cloud, Data & AI, Cybersecurity Architecture

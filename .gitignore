@@ -5,6 +5,8 @@
 # But keep this .gitignore file
 !.gitignore
 
+!mkdocs.yml
+
 # Only track the docs directory and its contents
 !/docs/
 !/docs/**
