@@ -1,0 +1,1687 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<link href="https://data-octo.github.io/book/cyber_security_course/chapter06-security-architecture/" rel="canonical"/>
+<link href="../../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.6.20" name="generator"/>
+<title>Chapter 6: Security Architecture and Threat Modeling - Data Octo</title>
+<link href="../../../assets/stylesheets/main.e53b48f4.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<meta content="website" property="og:type"/>
+<meta content="Chapter 6: Security Architecture and Threat Modeling - Data Octo" property="og:title"/>
+<meta content="None" property="og:description"/>
+<meta content="https://data-octo.github.io/assets/images/social/book/cyber_security_course/chapter06-security-architecture.png" property="og:image"/>
+<meta content="image/png" property="og:image:type"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="https://data-octo.github.io/book/cyber_security_course/chapter06-security-architecture/" property="og:url"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Chapter 6: Security Architecture and Threat Modeling - Data Octo" name="twitter:title"/>
+<meta content="None" name="twitter:description"/>
+<meta content="https://data-octo.github.io/assets/images/social/book/cyber_security_course/chapter06-security-architecture.png" name="twitter:image"/>
+</head>
+<body dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#chapter-6-security-architecture-and-threat-modeling">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Data Octo" class="md-header__button md-logo" data-md-component="logo" href="../../.." title="Data Octo">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Data Octo
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Chapter 6: Security Architecture and Threat Modeling
+            
+          </span>
+</div>
+</div>
+</div>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Data Octo" class="md-nav__button md-logo" data-md-component="logo" href="../../.." title="Data Octo">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    Data Octo
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../index.html">
+<span class="md-ellipsis">
+    Home
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    Blog
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            Blog
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../blog/index.html">
+<span class="md-ellipsis">
+    Blog Home
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+<span class="md-ellipsis">
+    Books
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            Books
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../books/index.html">
+<span class="md-ellipsis">
+    None
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+<span class="md-ellipsis">
+    Portfolio
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            Portfolio
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../portfolio/index.html">
+<span class="md-ellipsis">
+    None
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#learning-objectives">
+<span class="md-ellipsis">
+      🎯 Learning Objectives
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#what-is-security-architecture">
+<span class="md-ellipsis">
+      🏗️ What is Security Architecture?
+    </span>
+</a>
+<nav aria-label="🏗️ What is Security Architecture?" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-security-architecture-challenge">
+<span class="md-ellipsis">
+      The Security Architecture Challenge
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#why-security-architecture-matters">
+<span class="md-ellipsis">
+      Why Security Architecture Matters
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-design-principles">
+<span class="md-ellipsis">
+      🛡️ Security Design Principles
+    </span>
+</a>
+<nav aria-label="🛡️ Security Design Principles" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#core-security-principles">
+<span class="md-ellipsis">
+      Core Security Principles
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-defense-in-depth">
+<span class="md-ellipsis">
+      1. Defense in Depth
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-principle-of-least-privilege">
+<span class="md-ellipsis">
+      2. Principle of Least Privilege
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-fail-safe-defaults">
+<span class="md-ellipsis">
+      3. Fail-Safe Defaults
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#layered-security-architecture">
+<span class="md-ellipsis">
+      🏛️ Layered Security Architecture
+    </span>
+</a>
+<nav aria-label="🏛️ Layered Security Architecture" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-layers-overview">
+<span class="md-ellipsis">
+      Security Layers Overview
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#layer-implementation-examples">
+<span class="md-ellipsis">
+      Layer Implementation Examples
+    </span>
+</a>
+<nav aria-label="Layer Implementation Examples" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#physical-security-layer">
+<span class="md-ellipsis">
+      Physical Security Layer
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#network-security-layer">
+<span class="md-ellipsis">
+      Network Security Layer
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#host-security-layer">
+<span class="md-ellipsis">
+      Host Security Layer
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#threat-modeling-with-stride">
+<span class="md-ellipsis">
+      🎯 Threat Modeling with STRIDE
+    </span>
+</a>
+<nav aria-label="🎯 Threat Modeling with STRIDE" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#what-is-stride">
+<span class="md-ellipsis">
+      What is STRIDE?
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#stride-threat-categories">
+<span class="md-ellipsis">
+      STRIDE Threat Categories
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#stride-threat-analysis-process">
+<span class="md-ellipsis">
+      STRIDE Threat Analysis Process
+    </span>
+</a>
+<nav aria-label="STRIDE Threat Analysis Process" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-spoofing-threats">
+<span class="md-ellipsis">
+      1. Spoofing Threats
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-tampering-threats">
+<span class="md-ellipsis">
+      2. Tampering Threats
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-repudiation-threats">
+<span class="md-ellipsis">
+      3. Repudiation Threats
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#4-information-disclosure-threats">
+<span class="md-ellipsis">
+      4. Information Disclosure Threats
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#5-denial-of-service-threats">
+<span class="md-ellipsis">
+      5. Denial of Service Threats
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#6-elevation-of-privilege-threats">
+<span class="md-ellipsis">
+      6. Elevation of Privilege Threats
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#stride-implementation-workflow">
+<span class="md-ellipsis">
+      STRIDE Implementation Workflow
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#risk-assessment-with-dread">
+<span class="md-ellipsis">
+      📊 Risk Assessment with DREAD
+    </span>
+</a>
+<nav aria-label="📊 Risk Assessment with DREAD" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#what-is-dread">
+<span class="md-ellipsis">
+      What is DREAD?
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dread-risk-assessment-matrix">
+<span class="md-ellipsis">
+      DREAD Risk Assessment Matrix
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dread-scoring-system">
+<span class="md-ellipsis">
+      DREAD Scoring System
+    </span>
+</a>
+<nav aria-label="DREAD Scoring System" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#risk-score-calculation">
+<span class="md-ellipsis">
+      Risk Score Calculation
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#risk-levels">
+<span class="md-ellipsis">
+      Risk Levels
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dread-assessment-example">
+<span class="md-ellipsis">
+      DREAD Assessment Example
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#mitre-attck-framework">
+<span class="md-ellipsis">
+      🎭 MITRE ATT&amp;CK Framework
+    </span>
+</a>
+<nav aria-label="🎭 MITRE ATT&amp;CK Framework" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#what-is-mitre-attck">
+<span class="md-ellipsis">
+      What is MITRE ATT&amp;CK?
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#attck-framework-structure">
+<span class="md-ellipsis">
+      ATT&amp;CK Framework Structure
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#key-attck-tactics">
+<span class="md-ellipsis">
+      Key ATT&amp;CK Tactics
+    </span>
+</a>
+<nav aria-label="Key ATT&amp;CK Tactics" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-initial-access">
+<span class="md-ellipsis">
+      1. Initial Access
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-execution">
+<span class="md-ellipsis">
+      2. Execution
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-persistence">
+<span class="md-ellipsis">
+      3. Persistence
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#4-privilege-escalation">
+<span class="md-ellipsis">
+      4. Privilege Escalation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#using-attck-for-defense">
+<span class="md-ellipsis">
+      Using ATT&amp;CK for Defense
+    </span>
+</a>
+<nav aria-label="Using ATT&amp;CK for Defense" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#threat-intelligence">
+<span class="md-ellipsis">
+      Threat Intelligence
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#detection-engineering">
+<span class="md-ellipsis">
+      Detection Engineering
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#red-team-exercises">
+<span class="md-ellipsis">
+      Red Team Exercises
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#network-security-architecture">
+<span class="md-ellipsis">
+      🌐 Network Security Architecture
+    </span>
+</a>
+<nav aria-label="🌐 Network Security Architecture" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#network-security-zones">
+<span class="md-ellipsis">
+      Network Security Zones
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#network-segmentation-strategies">
+<span class="md-ellipsis">
+      Network Segmentation Strategies
+    </span>
+</a>
+<nav aria-label="Network Segmentation Strategies" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-vlan-segmentation">
+<span class="md-ellipsis">
+      1. VLAN Segmentation
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-firewall-segmentation">
+<span class="md-ellipsis">
+      2. Firewall Segmentation
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-micro-segmentation">
+<span class="md-ellipsis">
+      3. Micro-segmentation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#zero-trust-architecture">
+<span class="md-ellipsis">
+      Zero Trust Architecture
+    </span>
+</a>
+<nav aria-label="Zero Trust Architecture" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#zero-trust-principles">
+<span class="md-ellipsis">
+      Zero Trust Principles
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#zero-trust-implementation">
+<span class="md-ellipsis">
+      Zero Trust Implementation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#resilience-planning-and-recovery">
+<span class="md-ellipsis">
+      🔄 Resilience Planning and Recovery
+    </span>
+</a>
+<nav aria-label="🔄 Resilience Planning and Recovery" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#resilience-framework">
+<span class="md-ellipsis">
+      Resilience Framework
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#recovery-strategies">
+<span class="md-ellipsis">
+      Recovery Strategies
+    </span>
+</a>
+<nav aria-label="Recovery Strategies" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-backup-and-recovery">
+<span class="md-ellipsis">
+      1. Backup and Recovery
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-redundancy-and-failover">
+<span class="md-ellipsis">
+      2. Redundancy and Failover
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-business-continuity">
+<span class="md-ellipsis">
+      3. Business Continuity
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-architecture-documentation">
+<span class="md-ellipsis">
+      📋 Security Architecture Documentation
+    </span>
+</a>
+<nav aria-label="📋 Security Architecture Documentation" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#documentation-components">
+<span class="md-ellipsis">
+      Documentation Components
+    </span>
+</a>
+<nav aria-label="Documentation Components" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-architecture-overview">
+<span class="md-ellipsis">
+      1. Architecture Overview
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-threat-models">
+<span class="md-ellipsis">
+      2. Threat Models
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-security-requirements">
+<span class="md-ellipsis">
+      3. Security Requirements
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#4-implementation-guidelines">
+<span class="md-ellipsis">
+      4. Implementation Guidelines
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#5-operational-procedures">
+<span class="md-ellipsis">
+      5. Operational Procedures
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hands-on-activities">
+<span class="md-ellipsis">
+      🧪 Hands-on Activities
+    </span>
+</a>
+<nav aria-label="🧪 Hands-on Activities" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#activity-1-stride-threat-modeling">
+<span class="md-ellipsis">
+      Activity 1: STRIDE Threat Modeling
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#activity-2-dread-risk-assessment">
+<span class="md-ellipsis">
+      Activity 2: DREAD Risk Assessment
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#activity-3-network-architecture-design">
+<span class="md-ellipsis">
+      Activity 3: Network Architecture Design
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#activity-4-mitre-attck-mapping">
+<span class="md-ellipsis">
+      Activity 4: MITRE ATT&amp;CK Mapping
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#key-takeaways">
+<span class="md-ellipsis">
+      📋 Key Takeaways
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#review-questions">
+<span class="md-ellipsis">
+      ❓ Review Questions
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#further-reading">
+<span class="md-ellipsis">
+      📚 Further Reading
+    </span>
+</a>
+<nav aria-label="📚 Further Reading" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#books">
+<span class="md-ellipsis">
+      Books
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#online-resources">
+<span class="md-ellipsis">
+      Online Resources
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tools-and-frameworks">
+<span class="md-ellipsis">
+      Tools and Frameworks
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="chapter-6-security-architecture-and-threat-modeling">Chapter 6: Security Architecture and Threat Modeling</h1>
+<h2 id="learning-objectives">🎯 Learning Objectives</h2>
+<p>By the end of this chapter, you will be able to:
+- Understand the principles of secure system design and architecture
+- Apply defense-in-depth and layered security approaches
+- Use STRIDE methodology for threat identification and analysis
+- Implement DREAD framework for risk assessment and prioritization
+- Understand and apply the MITRE ATT&amp;CK framework
+- Design secure network architectures with proper segmentation
+- Implement micro-segmentation and zero-trust principles
+- Create comprehensive security architecture documentation
+- Apply resilience planning and recovery strategies</p>
+<h2 id="what-is-security-architecture">🏗️ What is Security Architecture?</h2>
+<p>Security architecture is the structured approach to designing, implementing, and maintaining secure systems. It provides a comprehensive framework for protecting information assets while enabling business operations.</p>
+<h3 id="the-security-architecture-challenge">The Security Architecture Challenge</h3>
+<p>Organizations must balance <strong>security requirements with business needs</strong>, ensuring systems are both secure and functional. Security architecture provides the framework to achieve this balance systematically.</p>
+<h3 id="why-security-architecture-matters">Why Security Architecture Matters</h3>
+<pre class="mermaid"><code>graph TD
+    A[Security Architecture Benefits] --&gt; B[Systematic Protection]
+    A --&gt; C[Risk Reduction]
+    A --&gt; D[Compliance]
+    A --&gt; E[Business Enablement]
+
+    B --&gt; B1[Comprehensive security coverage]
+    B --&gt; B2[Defense in depth]
+    B --&gt; B3[Threat mitigation]
+
+    C --&gt; C1[Proactive risk management]
+    C --&gt; C2[Vulnerability reduction]
+    C --&gt; C3[Incident prevention]
+
+    D --&gt; D1[Regulatory compliance]
+    D --&gt; D2[Industry standards]
+    D --&gt; D3[Audit readiness]
+
+    E --&gt; E1[Secure innovation]
+    E --&gt; E2[Trust building]
+    E --&gt; E3[Competitive advantage]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec</code></pre>
+<h2 id="security-design-principles">🛡️ Security Design Principles</h2>
+<p>Effective security architecture is built on fundamental principles that guide design decisions and implementation strategies.</p>
+<h3 id="core-security-principles">Core Security Principles</h3>
+<pre class="mermaid"><code>graph TD
+    A[Security Design Principles] --&gt; B[Defense in Depth]
+    A --&gt; C[Principle of Least Privilege]
+    A --&gt; D[Fail-Safe Defaults]
+    A --&gt; E[Separation of Concerns]
+    A --&gt; F[Economy of Mechanism]
+    A --&gt; G[Open Design]
+    A --&gt; H[Complete Mediation]
+
+    B --&gt; B1[Multiple security layers]
+    B --&gt; B2[Redundant protections]
+    B --&gt; B3[Attack surface reduction]
+
+    C --&gt; C1[Minimal access rights]
+    C --&gt; C2[Role-based permissions]
+    C --&gt; C3[Just-in-time access]
+
+    D --&gt; D1[Secure by default]
+    D --&gt; D2[Explicit permissions]
+    D --&gt; D3[Safe failure modes]
+
+    E --&gt; E1[Modular design]
+    E --&gt; E2[Independent components]
+    E --&gt; E3[Clear boundaries]
+
+    F --&gt; F1[Simple solutions]
+    F --&gt; F2[Minimal complexity]
+    F --&gt; F3[Easier verification]
+
+    G --&gt; G1[Transparent security]
+    G --&gt; G2[Public review]
+    G --&gt; G3[Community validation]
+
+    H --&gt; H1[Consistent enforcement]
+    H --&gt; H2[No bypass paths]
+    H --&gt; H3[Comprehensive coverage]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+    style G fill:#fff8e1
+    style H fill:#f3e5f5</code></pre>
+<h3 id="1-defense-in-depth">1. <strong>Defense in Depth</strong></h3>
+<p>Defense in depth implements multiple layers of security controls, ensuring that if one layer fails, others continue to provide protection.</p>
+<p><strong>Example</strong>: A web application might have:
+- <strong>Network layer</strong>: Firewalls and IDS/IPS
+- <strong>Application layer</strong>: Input validation and authentication
+- <strong>Data layer</strong>: Encryption and access controls
+- <strong>Physical layer</strong>: Data center security and environmental controls</p>
+<h3 id="2-principle-of-least-privilege">2. <strong>Principle of Least Privilege</strong></h3>
+<p>Users and systems should have only the minimum access necessary to perform their functions.</p>
+<p><strong>Implementation</strong>:
+- <strong>Role-based access control</strong>: Assign permissions based on job functions
+- <strong>Just-in-time access</strong>: Grant temporary elevated privileges when needed
+- <strong>Regular access reviews</strong>: Periodically review and adjust permissions</p>
+<h3 id="3-fail-safe-defaults">3. <strong>Fail-Safe Defaults</strong></h3>
+<p>Systems should fail securely, denying access by default rather than granting it.</p>
+<p><strong>Examples</strong>:
+- <strong>Firewall rules</strong>: Deny all traffic by default, allow specific exceptions
+- <strong>User permissions</strong>: No access by default, grant specific permissions
+- <strong>Network segmentation</strong>: Isolated by default, controlled connectivity</p>
+<h2 id="layered-security-architecture">🏛️ Layered Security Architecture</h2>
+<p>Layered security implements multiple defensive measures at different levels to create comprehensive protection.</p>
+<h3 id="security-layers-overview">Security Layers Overview</h3>
+<pre class="mermaid"><code>graph TD
+    A[Layered Security Architecture] --&gt; B[Physical Security]
+    A --&gt; C[Network Security]
+    A --&gt; D[Host Security]
+    A --&gt; E[Application Security]
+    A --&gt; F[Data Security]
+    A --&gt; G[User Security]
+
+    B --&gt; B1[Data center access]
+    B --&gt; B2[Environmental controls]
+    B --&gt; B3[Hardware security]
+
+    C --&gt; C1[Firewalls and IDS/IPS]
+    C --&gt; C2[Network segmentation]
+    C --&gt; C3[Traffic monitoring]
+
+    D --&gt; D1[Endpoint protection]
+    D --&gt; D2[System hardening]
+    D --&gt; D3[Patch management]
+
+    E --&gt; E1[Secure development]
+    E --&gt; E2[Input validation]
+    E --&gt; E3[Authentication/authorization]
+
+    F --&gt; F1[Encryption at rest]
+    F --&gt; F2[Encryption in transit]
+    F --&gt; F3[Access controls]
+
+    G --&gt; G1[User training]
+    G --&gt; G2[Access management]
+    G --&gt; G3[Behavioral monitoring]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+    style G fill:#fff8e1</code></pre>
+<h3 id="layer-implementation-examples">Layer Implementation Examples</h3>
+<h4 id="physical-security-layer">Physical Security Layer</h4>
+<ul>
+<li><strong>Access Control</strong>: Biometric scanners, key cards, security guards</li>
+<li><strong>Environmental Controls</strong>: Fire suppression, climate control, power backup</li>
+<li><strong>Hardware Security</strong>: Tamper-evident seals, secure boot, hardware security modules</li>
+</ul>
+<h4 id="network-security-layer">Network Security Layer</h4>
+<ul>
+<li><strong>Perimeter Defense</strong>: Firewalls, intrusion detection/prevention systems</li>
+<li><strong>Traffic Control</strong>: Network segmentation, VLANs, access control lists</li>
+<li><strong>Monitoring</strong>: Network traffic analysis, anomaly detection, logging</li>
+</ul>
+<h4 id="host-security-layer">Host Security Layer</h4>
+<ul>
+<li><strong>System Hardening</strong>: Security baselines, configuration management</li>
+<li><strong>Endpoint Protection</strong>: Antivirus, host-based firewalls, intrusion detection</li>
+<li><strong>Maintenance</strong>: Regular patching, vulnerability management, system updates</li>
+</ul>
+<h2 id="threat-modeling-with-stride">🎯 Threat Modeling with STRIDE</h2>
+<p>STRIDE is a methodology for identifying and categorizing security threats during system design and development.</p>
+<h3 id="what-is-stride">What is STRIDE?</h3>
+<p>STRIDE is an acronym representing six categories of security threats:
+- <strong>S</strong>poofing
+- <strong>T</strong>ampering
+- <strong>R</strong>epudiation
+- <strong>I</strong>nformation Disclosure
+- <strong>D</strong>enial of Service
+- <strong>E</strong>levation of Privilege</p>
+<h3 id="stride-threat-categories">STRIDE Threat Categories</h3>
+<pre class="mermaid"><code>graph TD
+    A[STRIDE Threat Model] --&gt; B[Spoofing]
+    A --&gt; C[Tampering]
+    A --&gt; D[Repudiation]
+    A --&gt; E[Information Disclosure]
+    A --&gt; F[Denial of Service]
+    A --&gt; G[Elevation of Privilege]
+
+    B --&gt; B1[Identity spoofing]
+    B --&gt; B2[IP address spoofing]
+    B --&gt; B3[Email spoofing]
+
+    C --&gt; C1[Data modification]
+    C --&gt; C2[Code injection]
+    C --&gt; C3[Configuration changes]
+
+    D --&gt; D1[Action denial]
+    D --&gt; D2[Log tampering]
+    D --&gt; D3[Audit bypass]
+
+    E --&gt; E1[Data exposure]
+    E --&gt; E2[Information leakage]
+    E --&gt; E3[Side-channel attacks]
+
+    F --&gt; F1[Resource exhaustion]
+    F --&gt; F2[Service disruption]
+    F --&gt; F3[Performance degradation]
+
+    G --&gt; G1[Privilege escalation]
+    G --&gt; G2[Role manipulation]
+    G --&gt; G3[Access bypass]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+    style G fill:#fff8e1</code></pre>
+<h3 id="stride-threat-analysis-process">STRIDE Threat Analysis Process</h3>
+<h4 id="1-spoofing-threats">1. <strong>Spoofing Threats</strong></h4>
+<p><strong>Definition</strong>: Impersonating another user or system to gain unauthorized access.</p>
+<p><strong>Examples</strong>:
+- <strong>Identity Spoofing</strong>: Using stolen credentials or fake identities
+- <strong>IP Spoofing</strong>: Forging source IP addresses in network packets
+- <strong>Email Spoofing</strong>: Sending emails that appear to come from legitimate sources</p>
+<p><strong>Mitigation Strategies</strong>:
+- Strong authentication (MFA, certificates)
+- Network ingress/egress filtering
+- Email authentication (SPF, DKIM, DMARC)</p>
+<h4 id="2-tampering-threats">2. <strong>Tampering Threats</strong></h4>
+<p><strong>Definition</strong>: Unauthorized modification of data or code to compromise system integrity.</p>
+<p><strong>Examples</strong>:
+- <strong>Data Tampering</strong>: Modifying stored or transmitted data
+- <strong>Code Injection</strong>: Inserting malicious code into applications
+- <strong>Configuration Tampering</strong>: Changing system settings</p>
+<p><strong>Mitigation Strategies</strong>:
+- Data integrity checks (checksums, digital signatures)
+- Input validation and sanitization
+- Configuration management and monitoring</p>
+<h4 id="3-repudiation-threats">3. <strong>Repudiation Threats</strong></h4>
+<p><strong>Definition</strong>: Users denying that they performed certain actions, making it difficult to hold them accountable.</p>
+<p><strong>Examples</strong>:
+- <strong>Action Repudiation</strong>: Denying access to systems or data
+- <strong>Transaction Repudiation</strong>: Denying financial transactions
+- <strong>Communication Repudiation</strong>: Denying sent messages</p>
+<p><strong>Mitigation Strategies</strong>:
+- Comprehensive logging and audit trails
+- Digital signatures and non-repudiation
+- Secure timestamping and evidence preservation</p>
+<h4 id="4-information-disclosure-threats">4. <strong>Information Disclosure Threats</strong></h4>
+<p><strong>Definition</strong>: Unauthorized exposure of sensitive information to unauthorized parties.</p>
+<p><strong>Examples</strong>:
+- <strong>Data Exposure</strong>: Unauthorized access to confidential data
+- <strong>Information Leakage</strong>: Accidental disclosure through error messages
+- <strong>Side-Channel Attacks</strong>: Information extraction through system behavior</p>
+<p><strong>Mitigation Strategies</strong>:
+- Data classification and access controls
+- Secure error handling and logging
+- Side-channel attack prevention</p>
+<h4 id="5-denial-of-service-threats">5. <strong>Denial of Service Threats</strong></h4>
+<p><strong>Definition</strong>: Attacks that prevent legitimate users from accessing systems or services.</p>
+<p><strong>Examples</strong>:
+- <strong>Resource Exhaustion</strong>: Consuming system resources (CPU, memory, bandwidth)
+- <strong>Service Disruption</strong>: Causing system crashes or failures
+- <strong>Performance Degradation</strong>: Slowing system response times</p>
+<p><strong>Mitigation Strategies</strong>:
+- Resource monitoring and limits
+- Load balancing and redundancy
+- DDoS protection and traffic filtering</p>
+<h4 id="6-elevation-of-privilege-threats">6. <strong>Elevation of Privilege Threats</strong></h4>
+<p><strong>Definition</strong>: Gaining higher levels of access than authorized, potentially compromising the entire system.</p>
+<p><strong>Examples</strong>:
+- <strong>Privilege Escalation</strong>: Exploiting vulnerabilities to gain admin access
+- <strong>Role Manipulation</strong>: Changing user roles or permissions
+- <strong>Access Bypass</strong>: Circumventing access controls</p>
+<p><strong>Mitigation Strategies</strong>:
+- Principle of least privilege
+- Regular access reviews and audits
+- Secure privilege management</p>
+<h3 id="stride-implementation-workflow">STRIDE Implementation Workflow</h3>
+<pre class="mermaid"><code>graph TD
+    A[STRIDE Implementation] --&gt; B[System Analysis]
+    B --&gt; C[Threat Identification]
+    C --&gt; D[Threat Categorization]
+    D --&gt; E[Mitigation Design]
+    E --&gt; F[Risk Assessment]
+    F --&gt; G[Documentation]
+
+    B --&gt; B1[System architecture review]
+    B --&gt; B2[Data flow analysis]
+    B --&gt; B3[Trust boundary identification]
+
+    C --&gt; C1[Brainstorming sessions]
+    C --&gt; C2[Attack tree analysis]
+    C --&gt; C3[Vulnerability research]
+
+    D --&gt; D1[STRIDE categorization]
+    D --&gt; D2[Threat mapping]
+    D --&gt; D3[Risk prioritization]
+
+    E --&gt; E1[Security control selection]
+    E --&gt; E2[Architecture modification]
+    E --&gt; E3[Implementation planning]
+
+    F --&gt; F1[Residual risk assessment]
+    F --&gt; F2[Cost-benefit analysis]
+    F --&gt; F3[Acceptance criteria]
+
+    G --&gt; G1[Threat model documentation]
+    G --&gt; G2[Security requirements]
+    G --&gt; G3[Implementation guidelines]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+    style G fill:#fff8e1</code></pre>
+<h2 id="risk-assessment-with-dread">📊 Risk Assessment with DREAD</h2>
+<p>DREAD is a framework for assessing and prioritizing security risks based on five key factors.</p>
+<h3 id="what-is-dread">What is DREAD?</h3>
+<p>DREAD provides a structured approach to risk assessment by evaluating:
+- <strong>D</strong>amage potential
+- <strong>R</strong>eproducibility
+- <strong>E</strong>xploitability
+- <strong>A</strong>ffected users
+- <strong>D</strong>iscoverability</p>
+<h3 id="dread-risk-assessment-matrix">DREAD Risk Assessment Matrix</h3>
+<pre class="mermaid"><code>graph TD
+    A[DREAD Risk Assessment] --&gt; B[Damage Potential]
+    A --&gt; C[Reproducibility]
+    A --&gt; D[Exploitability]
+    A --&gt; E[Affected Users]
+    A --&gt; F[Discoverability]
+
+    B --&gt; B1[0: No damage]
+    B --&gt; B2[1: Individual user data]
+    B --&gt; B3[2: Individual user data + system]
+    B --&gt; B4[3: Multiple users' data]
+    B --&gt; B5[4: Multiple users' data + system]
+    B --&gt; B6[5: Multiple users' data + system + infrastructure]
+
+    C --&gt; C1[0: Very hard]
+    C --&gt; C2[1: Hard]
+    C --&gt; C3[2: Moderate]
+    C --&gt; C4[3: Easy]
+    C --&gt; C5[4: Very easy]
+    C --&gt; C6[5: Automated tools available]
+
+    D --&gt; D1[0: Very hard]
+    D --&gt; D2[1: Hard]
+    D --&gt; D3[2[Moderate]
+    D --&gt; D4[3: Easy]
+    D --&gt; D5[4: Very easy]
+    D --&gt; D6[5: Automated tools available]
+
+    E --&gt; E1[0: No users]
+    E --&gt; E2[1: Very few users]
+    E --&gt; E3[2: Some users]
+    E --&gt; E4[3: Many users]
+    E --&gt; E5[4: Most users]
+    E --&gt; E6[5: All users]
+
+    F --&gt; F1[0: Very hard]
+    F --&gt; F2[1: Hard]
+    F --&gt; F3[2: Moderate]
+    F --&gt; F4[3: Easy]
+    F --&gt; F5[4: Very easy]
+    F --&gt; F6[5: Publicly available]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9</code></pre>
+<h3 id="dread-scoring-system">DREAD Scoring System</h3>
+<h4 id="risk-score-calculation">Risk Score Calculation</h4>
+<div class="highlight"><pre><span></span><code>Risk Score = (Damage + Reproducibility + Exploitability + Affected Users + Discoverability) / 5
+</code></pre></div>
+<h4 id="risk-levels">Risk Levels</h4>
+<ul>
+<li><strong>0-1</strong>: <strong>Low Risk</strong> - Minimal impact, difficult to exploit</li>
+<li><strong>2-3</strong>: <strong>Medium Risk</strong> - Moderate impact, some effort required</li>
+<li><strong>4-5</strong>: <strong>High Risk</strong> - Significant impact, easy to exploit</li>
+</ul>
+<h3 id="dread-assessment-example">DREAD Assessment Example</h3>
+<p><strong>Threat</strong>: SQL Injection in web application login form</p>
+<table>
+<thead>
+<tr>
+<th>DREAD Factor</th>
+<th>Score</th>
+<th>Justification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Damage</strong></td>
+<td>4</td>
+<td>Could compromise user database and system access</td>
+</tr>
+<tr>
+<td><strong>Reproducibility</strong></td>
+<td>4</td>
+<td>Easy to reproduce with common tools</td>
+</tr>
+<tr>
+<td><strong>Exploitability</strong></td>
+<td>4</td>
+<td>Well-documented attack technique</td>
+</tr>
+<tr>
+<td><strong>Affected Users</strong></td>
+<td>4</td>
+<td>All users of the application</td>
+</tr>
+<tr>
+<td><strong>Discoverability</strong></td>
+<td>3</td>
+<td>Requires some knowledge but tools available</td>
+</tr>
+<tr>
+<td><strong>Total Score</strong></td>
+<td><strong>3.8</strong></td>
+<td><strong>High Risk</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Mitigation Priority</strong>: High - Immediate attention required</p>
+<h2 id="mitre-attck-framework">🎭 MITRE ATT&amp;CK Framework</h2>
+<p>MITRE ATT&amp;CK is a comprehensive knowledge base of adversary tactics and techniques used in cyber attacks.</p>
+<h3 id="what-is-mitre-attck">What is MITRE ATT&amp;CK?</h3>
+<p>ATT&amp;CK (Adversarial Tactics, Techniques, and Common Knowledge) provides a structured way to understand and analyze cyber threats, enabling better defense strategies.</p>
+<h3 id="attck-framework-structure">ATT&amp;CK Framework Structure</h3>
+<pre class="mermaid"><code>graph TD
+    A[MITRE ATT&amp;CK] --&gt; B[Tactics]
+    A --&gt; C[Techniques]
+    A --&gt; D[Sub-techniques]
+    A --&gt; E[Procedures]
+
+    B --&gt; B1[Initial Access]
+    B --&gt; B2[Execution]
+    B --&gt; B3[Persistence]
+    B --&gt; B4[Privilege Escalation]
+    B --&gt; B5[Defense Evasion]
+    B --&gt; B6[Credential Access]
+    B --&gt; B7[Discovery]
+    B --&gt; B8[Lateral Movement]
+    B --&gt; B9[Collection]
+    B --&gt; B10[Command &amp; Control]
+    B --&gt; B11[Exfiltration]
+    B --&gt; B12[Impact]
+
+    C --&gt; C1[Phishing]
+    C --&gt; C2[Malware Execution]
+    C --&gt; C3[Registry Modification]
+    C --&gt; C4[Process Injection]
+    C --&gt; C5[File Deletion]
+    C --&gt; C6[Credential Dumping]
+    C --&gt; C7[Network Scanning]
+    C --&gt; C8[Remote Services]
+    C --&gt; C9[Data Staging]
+    C --&gt; C10[Web Services]
+    C --&gt; C11[Data Transfer]
+    C --&gt; C12[Data Destruction]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec</code></pre>
+<h3 id="key-attck-tactics">Key ATT&amp;CK Tactics</h3>
+<h4 id="1-initial-access">1. <strong>Initial Access</strong></h4>
+<p>Techniques used to gain initial foothold in target networks.</p>
+<p><strong>Common Techniques</strong>:
+- <strong>Phishing</strong>: Social engineering via email
+- <strong>Drive-by Compromise</strong>: Malicious websites
+- <strong>External Remote Services</strong>: VPN, RDP exploitation
+- <strong>Supply Chain Compromise</strong>: Compromised software/hardware</p>
+<h4 id="2-execution">2. <strong>Execution</strong></h4>
+<p>Techniques for running malicious code on target systems.</p>
+<p><strong>Common Techniques</strong>:
+- <strong>User Execution</strong>: Tricking users to run code
+- <strong>Scheduled Task/Job</strong>: Using system automation
+- <strong>Windows Management Instrumentation</strong>: System management tools
+- <strong>Command and Scripting Interpreter</strong>: PowerShell, bash, etc.</p>
+<h4 id="3-persistence">3. <strong>Persistence</strong></h4>
+<p>Techniques to maintain access across system restarts and credential changes.</p>
+<p><strong>Common Techniques</strong>:
+- <strong>Registry Run Keys</strong>: Windows startup programs
+- <strong>Scheduled Tasks</strong>: Automated execution
+- <strong>Service Installation</strong>: System services
+- <strong>Browser Extensions</strong>: Browser-based persistence</p>
+<h4 id="4-privilege-escalation">4. <strong>Privilege Escalation</strong></h4>
+<p>Techniques to gain higher-level permissions.</p>
+<p><strong>Common Techniques</strong>:
+- <strong>Process Injection</strong>: Injecting code into legitimate processes
+- <strong>Access Token Manipulation</strong>: Modifying security tokens
+- <strong>Bypass User Account Control</strong>: Circumventing UAC
+- <strong>Exploitation for Privilege Escalation</strong>: Using vulnerabilities</p>
+<h3 id="using-attck-for-defense">Using ATT&amp;CK for Defense</h3>
+<h4 id="threat-intelligence">Threat Intelligence</h4>
+<ul>
+<li><strong>Identify attack patterns</strong>: Map observed behaviors to ATT&amp;CK techniques</li>
+<li><strong>Assess capabilities</strong>: Understand adversary skill levels</li>
+<li><strong>Prioritize defenses</strong>: Focus on most likely attack vectors</li>
+</ul>
+<h4 id="detection-engineering">Detection Engineering</h4>
+<ul>
+<li><strong>Create detection rules</strong>: Build alerts for specific techniques</li>
+<li><strong>Validate coverage</strong>: Ensure detection across all tactics</li>
+<li><strong>Improve response</strong>: Better understanding of attack progression</li>
+</ul>
+<h4 id="red-team-exercises">Red Team Exercises</h4>
+<ul>
+<li><strong>Simulate attacks</strong>: Use ATT&amp;CK techniques in testing</li>
+<li><strong>Validate defenses</strong>: Test detection and response capabilities</li>
+<li><strong>Improve skills</strong>: Practice against realistic scenarios</li>
+</ul>
+<h2 id="network-security-architecture">🌐 Network Security Architecture</h2>
+<p>Network security architecture provides the foundation for protecting network infrastructure and communications.</p>
+<h3 id="network-security-zones">Network Security Zones</h3>
+<pre class="mermaid"><code>graph TD
+    A[Network Security Architecture] --&gt; B[Internet]
+    A --&gt; C[DMZ Zone]
+    A --&gt; D[Internal Network]
+    A --&gt; E[Management Network]
+    A --&gt; F[Data Center]
+
+    B --&gt; B1[External threats]
+    B --&gt; B2[Public services]
+
+    C --&gt; C1[Web servers]
+    C --&gt; C2[Email servers]
+    C --&gt; C3[DNS servers]
+    C --&gt; C4[Load balancers]
+
+    D --&gt; D1[User workstations]
+    D --&gt; D2[File servers]
+    D --&gt; D3[Print servers]
+    D --&gt; D4[Application servers]
+
+    E --&gt; E1[Network devices]
+    E --&gt; E2[Management tools]
+    E --&gt; E3[Monitoring systems]
+
+    F --&gt; F1[Database servers]
+    F --&gt; F2[Application servers]
+    F --&gt; F3[Storage systems]
+
+    B -.-&gt;|Firewall| C
+    C -.-&gt;|Firewall| D
+    D -.-&gt;|Firewall| E
+    D -.-&gt;|Firewall| F
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9</code></pre>
+<h3 id="network-segmentation-strategies">Network Segmentation Strategies</h3>
+<h4 id="1-vlan-segmentation">1. <strong>VLAN Segmentation</strong></h4>
+<ul>
+<li><strong>Purpose</strong>: Logical separation of network traffic</li>
+<li><strong>Benefits</strong>: Improved security, performance, and management</li>
+<li><strong>Implementation</strong>: Switch configuration, routing policies</li>
+</ul>
+<h4 id="2-firewall-segmentation">2. <strong>Firewall Segmentation</strong></h4>
+<ul>
+<li><strong>Purpose</strong>: Control traffic between network segments</li>
+<li><strong>Benefits</strong>: Granular access control, threat isolation</li>
+<li><strong>Implementation</strong>: Firewall rules, access control lists</li>
+</ul>
+<h4 id="3-micro-segmentation">3. <strong>Micro-segmentation</strong></h4>
+<ul>
+<li><strong>Purpose</strong>: Fine-grained network isolation at workload level</li>
+<li><strong>Benefits</strong>: Lateral movement prevention, application-level security</li>
+<li><strong>Implementation</strong>: Software-defined networking, container security</li>
+</ul>
+<h3 id="zero-trust-architecture">Zero Trust Architecture</h3>
+<p>Zero Trust assumes that no user or system should be trusted by default, regardless of location or network.</p>
+<h4 id="zero-trust-principles">Zero Trust Principles</h4>
+<pre class="mermaid"><code>graph TD
+    A[Zero Trust Principles] --&gt; B[Never Trust, Always Verify]
+    A --&gt; C[Least Privilege Access]
+    A --&gt; D[Assume Breach]
+    A --&gt; E[Verify Every Request]
+
+    B --&gt; B1[Continuous authentication]
+    B --&gt; B2[Multi-factor verification]
+    B --&gt; B3[Context-aware decisions]
+
+    C --&gt; C1[Minimal permissions]
+    C --&gt; C2[Just-in-time access]
+    C --&gt; C3[Role-based controls]
+
+    D --&gt; D1[Assume compromise]
+    D --&gt; D2[Monitor continuously]
+    D --&gt; D3[Respond quickly]
+
+    E --&gt; E1[Request validation]
+    E --&gt; E2[Device verification]
+    E --&gt; E3[Behavior analysis]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec</code></pre>
+<h4 id="zero-trust-implementation">Zero Trust Implementation</h4>
+<ul>
+<li><strong>Identity Verification</strong>: Strong authentication and authorization</li>
+<li><strong>Device Trust</strong>: Device health and compliance validation</li>
+<li><strong>Network Security</strong>: Encrypted communications and segmentation</li>
+<li><strong>Application Security</strong>: Secure application access and monitoring</li>
+<li><strong>Data Protection</strong>: Data classification and encryption</li>
+</ul>
+<h2 id="resilience-planning-and-recovery">🔄 Resilience Planning and Recovery</h2>
+<p>Security architecture must include resilience strategies to maintain operations during and after security incidents.</p>
+<h3 id="resilience-framework">Resilience Framework</h3>
+<pre class="mermaid"><code>graph TD
+    A[Resilience Framework] --&gt; B[Prevention]
+    A --&gt; C[Detection]
+    A --&gt; D[Response]
+    A --&gt; E[Recovery]
+    A --&gt; F[Learning]
+
+    B --&gt; B1[Security controls]
+    B --&gt; B2[Risk management]
+    B --&gt; B3[Training and awareness]
+
+    C --&gt; C1[Monitoring systems]
+    C --&gt; C2[Alert mechanisms]
+    C --&gt; C3[Incident identification]
+
+    D --&gt; D1[Incident response]
+    D --&gt; D2[Containment actions]
+    D --&gt; D3[Communication plans]
+
+    E --&gt; E1[System restoration]
+    E --&gt; E2[Service recovery]
+    E --&gt; E3[Business continuity]
+
+    F --&gt; F1[Post-incident review]
+    F --&gt; F2[Process improvement]
+    F --&gt; F3[Lessons learned]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9</code></pre>
+<h3 id="recovery-strategies">Recovery Strategies</h3>
+<h4 id="1-backup-and-recovery">1. <strong>Backup and Recovery</strong></h4>
+<ul>
+<li><strong>Regular Backups</strong>: Automated backup schedules</li>
+<li><strong>Offsite Storage</strong>: Geographic separation of backups</li>
+<li><strong>Testing</strong>: Regular recovery testing and validation</li>
+<li><strong>Documentation</strong>: Clear recovery procedures and contacts</li>
+</ul>
+<h4 id="2-redundancy-and-failover">2. <strong>Redundancy and Failover</strong></h4>
+<ul>
+<li><strong>System Redundancy</strong>: Duplicate critical systems</li>
+<li><strong>Network Redundancy</strong>: Multiple network paths</li>
+<li><strong>Data Redundancy</strong>: Replicated data storage</li>
+<li><strong>Geographic Redundancy</strong>: Multiple data center locations</li>
+</ul>
+<h4 id="3-business-continuity">3. <strong>Business Continuity</strong></h4>
+<ul>
+<li><strong>Recovery Time Objectives (RTO)</strong>: Maximum acceptable downtime</li>
+<li><strong>Recovery Point Objectives (RPO)</strong>: Maximum acceptable data loss</li>
+<li><strong>Alternative Work Locations</strong>: Remote work capabilities</li>
+<li><strong>Communication Plans</strong>: Stakeholder notification procedures</li>
+</ul>
+<h2 id="security-architecture-documentation">📋 Security Architecture Documentation</h2>
+<p>Comprehensive documentation is essential for implementing and maintaining security architecture.</p>
+<h3 id="documentation-components">Documentation Components</h3>
+<h4 id="1-architecture-overview">1. <strong>Architecture Overview</strong></h4>
+<ul>
+<li>System boundaries and trust relationships</li>
+<li>Security zones and segmentation</li>
+<li>Data flow and protection requirements</li>
+</ul>
+<h4 id="2-threat-models">2. <strong>Threat Models</strong></h4>
+<ul>
+<li>STRIDE analysis results</li>
+<li>DREAD risk assessments</li>
+<li>Mitigation strategies and controls</li>
+</ul>
+<h4 id="3-security-requirements">3. <strong>Security Requirements</strong></h4>
+<ul>
+<li>Functional security requirements</li>
+<li>Non-functional security requirements</li>
+<li>Compliance and regulatory requirements</li>
+</ul>
+<h4 id="4-implementation-guidelines">4. <strong>Implementation Guidelines</strong></h4>
+<ul>
+<li>Security control specifications</li>
+<li>Configuration standards</li>
+<li>Testing and validation procedures</li>
+</ul>
+<h4 id="5-operational-procedures">5. <strong>Operational Procedures</strong></h4>
+<ul>
+<li>Monitoring and alerting</li>
+<li>Incident response procedures</li>
+<li>Maintenance and updates</li>
+</ul>
+<h2 id="hands-on-activities">🧪 Hands-on Activities</h2>
+<h3 id="activity-1-stride-threat-modeling">Activity 1: STRIDE Threat Modeling</h3>
+<p><strong>Objective</strong>: Apply STRIDE methodology to analyze a web application.</p>
+<p><strong>Scenario</strong>: E-commerce website with user accounts, payment processing, and order management.</p>
+<p><strong>Steps</strong>:
+1. <strong>Analyze system architecture</strong> and identify components
+2. <strong>Map data flows</strong> and trust boundaries
+3. <strong>Identify threats</strong> for each component using STRIDE
+4. <strong>Categorize threats</strong> by STRIDE category
+5. <strong>Design mitigation strategies</strong> for high-priority threats
+6. <strong>Document threat model</strong> with findings and recommendations</p>
+<h3 id="activity-2-dread-risk-assessment">Activity 2: DREAD Risk Assessment</h3>
+<p><strong>Objective</strong>: Conduct DREAD risk assessment for identified threats.</p>
+<p><strong>Steps</strong>:
+1. <strong>Select high-priority threats</strong> from STRIDE analysis
+2. <strong>Apply DREAD scoring</strong> to each threat
+3. <strong>Calculate risk scores</strong> and prioritize threats
+4. <strong>Design mitigation strategies</strong> based on risk levels
+5. <strong>Create risk treatment plan</strong> with timelines and resources</p>
+<h3 id="activity-3-network-architecture-design">Activity 3: Network Architecture Design</h3>
+<p><strong>Objective</strong>: Design secure network architecture for a small business.</p>
+<p><strong>Requirements</strong>:
+- Public web presence
+- Internal office network
+- Remote worker access
+- Payment processing
+- Customer data storage</p>
+<p><strong>Steps</strong>:
+1. <strong>Design network topology</strong> with security zones
+2. <strong>Implement network segmentation</strong> strategies
+3. <strong>Configure security controls</strong> for each zone
+4. <strong>Document architecture</strong> and security measures
+5. <strong>Test security controls</strong> and validate design</p>
+<h3 id="activity-4-mitre-attck-mapping">Activity 4: MITRE ATT&amp;CK Mapping</h3>
+<p><strong>Objective</strong>: Map security controls to MITRE ATT&amp;CK framework.</p>
+<p><strong>Steps</strong>:
+1. <strong>Select ATT&amp;CK techniques</strong> relevant to your organization
+2. <strong>Identify existing controls</strong> that address each technique
+3. <strong>Assess coverage gaps</strong> and prioritize improvements
+4. <strong>Design additional controls</strong> for uncovered techniques
+5. <strong>Create detection rules</strong> for key attack patterns</p>
+<h2 id="key-takeaways">📋 Key Takeaways</h2>
+<ol>
+<li>
+<p><strong>Security architecture</strong> provides a systematic approach to protecting systems while enabling business operations.</p>
+</li>
+<li>
+<p><strong>STRIDE methodology</strong> helps identify and categorize security threats during system design.</p>
+</li>
+<li>
+<p><strong>DREAD framework</strong> enables structured risk assessment and prioritization of security threats.</p>
+</li>
+<li>
+<p><strong>MITRE ATT&amp;CK</strong> provides comprehensive understanding of adversary tactics and techniques.</p>
+</li>
+<li>
+<p><strong>Network segmentation</strong> and zero-trust principles improve security through isolation and verification.</p>
+</li>
+<li>
+<p><strong>Resilience planning</strong> ensures systems can recover from security incidents and maintain operations.</p>
+</li>
+<li>
+<p><strong>Comprehensive documentation</strong> is essential for implementing and maintaining security architecture.</p>
+</li>
+</ol>
+<h2 id="review-questions">❓ Review Questions</h2>
+<ol>
+<li>
+<p><strong>What are the core security design principles</strong>, and how do they guide architecture decisions?</p>
+</li>
+<li>
+<p><strong>How does STRIDE methodology</strong> help identify security threats, and what are the six threat categories?</p>
+</li>
+<li>
+<p><strong>Explain the DREAD framework</strong> and how it's used for risk assessment and prioritization.</p>
+</li>
+<li>
+<p><strong>What is the MITRE ATT&amp;CK framework</strong>, and how can it be used to improve security defenses?</p>
+</li>
+<li>
+<p><strong>How do network segmentation</strong> and zero-trust principles improve security architecture?</p>
+</li>
+</ol>
+<h2 id="further-reading">📚 Further Reading</h2>
+<h3 id="books">Books</h3>
+<ul>
+<li>"Security Engineering" by Ross Anderson</li>
+<li>"Threat Modeling: Designing for Security" by Adam Shostack</li>
+<li>"Network Security: Private Communication in a Public World" by Charlie Kaufman</li>
+</ul>
+<h3 id="online-resources">Online Resources</h3>
+<ul>
+<li><a href="https://attack.mitre.org/">MITRE ATT&amp;CK Framework</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/security/develop/threat-modeling-tool-threats">Microsoft STRIDE Threat Modeling</a></li>
+<li><a href="https://owasp.org/www-community/Threat_Modeling">OWASP Threat Modeling</a></li>
+</ul>
+<h3 id="tools-and-frameworks">Tools and Frameworks</h3>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/azure/security/develop/threat-modeling-tool">Microsoft Threat Modeling Tool</a></li>
+<li><a href="https://iriusrisk.com/">IriusRisk</a> - Threat modeling platform</li>
+<li><a href="https://threatdragon.org/">Threat Dragon</a> - Open source threat modeling</li>
+</ul>
+<hr/>
+<p><strong>Next Chapter</strong>: <a href="../chapter07-ethics-privacy/">Chapter 7: Ethics, Security, and Privacy</a> - Learn about legal and ethical considerations in cybersecurity, including GDPR and privacy regulations.</p>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      © 2026 Data Octo · Enterprise Cloud, Data &amp; AI, Cybersecurity Architecture
+    </div>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tracking", "navigation.sections", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+</body>
+</html>

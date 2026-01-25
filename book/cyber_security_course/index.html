@@ -1,222 +1,977 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cybersecurity for Beginners</title>
 
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P4JKSETTMC"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://data-octo.github.io/book/cyber_security_course/">
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>Cybersecurity Fundamentals: A Comprehensive Guide for Beginners - Data Octo</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e53b48f4.min.css">
+      
+      
 
-    gtag('config', 'G-P4JKSETTMC');
-  </script>
-</head>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cyber Security for Beginners</title>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --accent: #c0392b;
-            --text: #2d3748;
-            --muted: #718096;
-            --border: #e2e8f0;
-            --bg: #ffffff;
-        }
-        body {
-            font-family: Inter, system-ui, -apple-system, sans-serif;
-            line-height: 1.5;
-            color: var(--text);
-            background: var(--bg);
-            margin: 0;
-            padding: 2rem;
-        }
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 2rem;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-        .cover {
-            display: grid;
-            grid-template-columns: 240px 1fr;
-            gap: 3rem;
-            margin-bottom: 3rem;
-        }
-        .cover-image {
-            background: var(--accent);
-            aspect-ratio: 3/4;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-family: Merriweather, serif;
-            text-align: center;
-            padding: 1rem;
-        }
-        .cover-image svg {
-            width: 120px;
-            height: 120px;
-            opacity: 0.9;
-        }
-        h1 {
-            font-family: Merriweather, serif;
-            font-size: 2.5rem;
-            margin: 0 0 0.5rem;
-            color: var(--text);
-        }
-        .subtitle {
-            font-size: 1.25rem;
-            color: var(--muted);
-            margin-bottom: 1rem;
-        }
-        .author {
-            font-size: 1.1rem;
-            color: var(--accent);
-            font-weight: 600;
-        }
-        .toc {
-            border-top: 1px solid var(--border);
-            padding-top: 2rem;
-        }
-        .toc h2 {
-            font-family: Merriweather, serif;
-            color: var(--text);
-            margin: 0 0 1rem;
-        }
-        .chapters {
-            display: grid;
-            gap: 0.75rem;
-        }
-        .chapter {
-            display: grid;
-            grid-template-columns: 3rem 1fr;
-            gap: 1rem;
-            padding: 0.75rem;
-            text-decoration: none;
-            color: var(--text);
-            border-radius: 4px;
-            transition: background 0.2s;
-        }
-        .chapter:hover {
-            background: #f7fafc;
-        }
-        .chapter-number {
-            color: var(--accent);
-            font-weight: 600;
-        }
-        @media (max-width: 768px) {
-            .cover { grid-template-columns: 1fr; }
-            .cover-image { max-width: 200px; margin: 0 auto; }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="cover">
-            <div class="cover-image">
-                <!-- Simple placeholder animal icon -->
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <path d="M12 4L8 8H4L2 12L4 16H8L12 20L16 16H20L22 12L20 8H16L12 4Z"/>
-                    <circle cx="12" cy="12" r="3"/>
-                </svg>
-            </div>
-            <div class="cover-content">
-                <h1>Cyber Security for Beginners</h1>
-                <div class="subtitle">A Practical Guide to Cyber Security</div>
-                <div class="author">
-                    <a href="mailto:amplifycloud@outlook.com">Teddy Lang</a>
-                </div>
-            </div>
-        </div>
- 
-        <div class="toc">
-            <h2>Table of Contents</h2>
-            <div class="chapters">
-                <a href="outline.html" class="chapter">
-                    <span class="chapter-number"></span>
-                    <span class="chapter-title">Book Overview</span>
-                </a>
-                <a href="chapter01.html" class="chapter">
-                    <span class="chapter-number">01</span>
-                    <span class="chapter-title">Linux for Information Security</span>
-                </a>
-                <a href="chapter02.html" class="chapter">
-                    <span class="chapter-number">02</span>
-                    <span class="chapter-title">Risk Management</span>
-                </a>
-                <a href="chapter03.html" class="chapter">
-                    <span class="chapter-number">03</span>
-                    <span class="chapter-title">Network Security</span>
-                </a>
-                <a href="chapter04.html" class="chapter">
-                    <span class="chapter-number">04</span>
-                    <span class="chapter-title">Identity & Access Control Management</span>
-                </a>
-                <a href="chapter05.html" class="chapter">
-                    <span class="chapter-number">05</span>
-                    <span class="chapter-title">Security Architecture & Threat Models</span>
-                </a>
-                <a href="chapter06.html" class="chapter">
-                    <span class="chapter-number">06</span>
-                    <span class="chapter-title">Ethics, Security & Privacy</span>
-                </a>
-                <a href="chapter07.html" class="chapter">
-                    <span class="chapter-number">07</span>
-                    <span class="chapter-title">Cryptography</span>
-                </a>
-                <a href="chapter08.html" class="chapter">
-                    <span class="chapter-number">08</span>
-                    <span class="chapter-title">Asset Security & Penetration Testing</span>
-                </a>
-                <a href="chapter09.html" class="chapter">
-                    <span class="chapter-number">09</span>
-                    <span class="chapter-title">Software Development & Application Security</span>
-                </a>
-                <a href="chapter10.html" class="chapter">
-                    <span class="chapter-number">10</span>
-                    <span class="chapter-title">Project Management in IT</span>
-                </a>
-                <a href="chapter11.html" class="chapter">
-                    <span class="chapter-number">11</span>
-                    <span class="chapter-title">Operational Security & Business Continuity</span>
-                </a>
-                <a href="chapter12.html" class="chapter">
-                    <span class="chapter-number">12</span>
-                    <span class="chapter-title">Security Assurance, Validation & Testing</span>
-                </a>
-               
-            </div>
-        </div>
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+      
+        <meta  property="og:type"  content="website" >
+      
+        <meta  property="og:title"  content="Cybersecurity Fundamentals: A Comprehensive Guide for Beginners - Data Octo" >
+      
+        <meta  property="og:description"  content="None" >
+      
+        <meta  property="og:image"  content="https://data-octo.github.io/assets/images/social/book/cyber_security_course/index.png" >
+      
+        <meta  property="og:image:type"  content="image/png" >
+      
+        <meta  property="og:image:width"  content="1200" >
+      
+        <meta  property="og:image:height"  content="630" >
+      
+        <meta  property="og:url"  content="https://data-octo.github.io/book/cyber_security_course/" >
+      
+        <meta  name="twitter:card"  content="summary_large_image" >
+      
+        <meta  name="twitter:title"  content="Cybersecurity Fundamentals: A Comprehensive Guide for Beginners - Data Octo" >
+      
+        <meta  name="twitter:description"  content="None" >
+      
+        <meta  name="twitter:image"  content="https://data-octo.github.io/assets/images/social/book/cyber_security_course/index.png" >
+      
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#cybersecurity-fundamentals-a-comprehensive-guide-for-beginners" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
 
-    <!-- Feedback Section -->
-<section id="feedback" style="max-width: 700px; margin: 40px 0; padding: 0; font-family: Arial, sans-serif;">
-  <h2>📋 Feedback</h2>
-  <p>Your feedback is completely anonymous. Please help improve the book by answering a few quick questions:</p>
+  
 
-  <!-- Google Form Embed -->
-  <div style="width: 100%; max-width: 640px; margin: 0; padding: 0;">
-    <iframe 
-      src="https://docs.google.com/forms/d/e/1FAIpQLSe3NXB4Mf-FTfoxVRqU-FkIqzMbldqD5bbm85TguLCJoEwtOg/viewform?embedded=true"
-      width="100%" 
-      height="1200" 
-      frameborder="0" 
-      marginheight="0" 
-      marginwidth="0" 
-      style="display:block;">
-      Loading…
-    </iframe>
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Data Octo" class="md-header__button md-logo" aria-label="Data Octo" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Data Octo
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Cybersecurity Fundamentals: A Comprehensive Guide for Beginners
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
   </div>
-</section>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
 
-</body>
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Data Octo" class="md-nav__button md-logo" aria-label="Data Octo" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Data Octo
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Blog
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Blog
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Blog Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Books
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Books
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../books/index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    None
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Portfolio
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Portfolio
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../portfolio/index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    None
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#book-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      📚 Book Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#target-audience" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎯 Target Audience
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#book-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      🏗️ Book Structure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      🗂️ Chapter List
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🗂️ Chapter List">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chapter-1-introduction-to-cybersecurity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 1: Introduction to Cybersecurity
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chapter-2-linux-for-information-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 2: Linux for Information Security
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chapter-3-risk-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 3: Risk Management
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chapter-4-network-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 4: Network Security
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chapter-5-identity-and-access-management-iam" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 5: Identity and Access Management (IAM)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chapter-6-security-architecture-and-threat-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 6: Security Architecture and Threat Models
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chapter-7-ethics-security-and-privacy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 7: Ethics, Security and Privacy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chapter-8-cryptography" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 8: Cryptography
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chapter-9-penetration-testing-and-ethical-hacking" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 9: Penetration Testing and Ethical Hacking
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chapter-10-application-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 10: Application Security
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chapter-11-it-project-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 11: IT Project Management
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chapter-12-security-operations-and-incident-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 12: Security Operations and Incident Response
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chapter-13-security-assurance-and-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 13: Security Assurance and Validation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#book-completion-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎉 Book Completion Status
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚀 Getting Started
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-use-this-book" class="md-nav__link">
+    <span class="md-ellipsis">
+      📖 How to Use This Book
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📖 How to Use This Book">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#classroom-instruction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Classroom Instruction
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#online-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Online Learning
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#professional-development" class="md-nav__link">
+    <span class="md-ellipsis">
+      Professional Development
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#technical-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔧 Technical Requirements
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additional-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      📚 Additional Resources
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎯 Learning Outcomes
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="cybersecurity-fundamentals-a-comprehensive-guide-for-beginners">Cybersecurity Fundamentals: A Comprehensive Guide for Beginners</h1>
+<h2 id="book-overview">📚 Book Overview</h2>
+<p>This comprehensive textbook is designed to provide college instructors with a complete resource for teaching cybersecurity fundamentals to students with no prior knowledge of the subject. The book covers essential cybersecurity concepts, practical skills, and real-world applications through clear explanations, hands-on activities, and visual diagrams.</p>
+<h2 id="target-audience">🎯 Target Audience</h2>
+<ul>
+<li><strong>Primary</strong>: College instructors teaching cybersecurity courses</li>
+<li><strong>Secondary</strong>: Students studying cybersecurity fundamentals</li>
+<li><strong>Tertiary</strong>: IT professionals seeking cybersecurity knowledge</li>
+<li><strong>Level</strong>: Beginner to intermediate (no prior cybersecurity knowledge required)</li>
+</ul>
+<h2 id="book-structure">🏗️ Book Structure</h2>
+<p>The book is organized into 13 comprehensive chapters, each focusing on a specific area of cybersecurity:</p>
+<ul>
+<li><strong>Chapters 1-4</strong>: Foundation concepts (Introduction, Linux, Risk Management, Network Security)</li>
+<li><strong>Chapters 5-8</strong>: Core security areas (IAM, Security Architecture, Ethics &amp; Privacy, Cryptography)</li>
+<li><strong>Chapters 9-11</strong>: Advanced topics (Application Security, Project Management, Security Operations)</li>
+<li><strong>Chapters 12-13</strong>: Specialized areas (Security Operations, Security Assurance)</li>
+</ul>
+<p>Each chapter includes:
+- Clear learning objectives
+- Comprehensive content with practical examples
+- Mermaid diagrams and visual aids
+- Hands-on activities and exercises
+- Review questions and further reading
+- Code examples and tool demonstrations</p>
+<h2 id="chapter-list">🗂️ Chapter List</h2>
+<h3 id="chapter-1-introduction-to-cybersecurity"><a href="chapters/chapter01-introduction.md">Chapter 1: Introduction to Cybersecurity</a></h3>
+<p><strong>Status</strong>: ✅ <strong>COMPLETED</strong>
+- Cybersecurity fundamentals and CIA triad
+- Threat landscape and attack vectors
+- Security principles and best practices
+- Career opportunities in cybersecurity</p>
+<h3 id="chapter-2-linux-for-information-security"><a href="chapters/chapter02-linux-security.md">Chapter 2: Linux for Information Security</a></h3>
+<p><strong>Status</strong>: ✅ <strong>COMPLETED</strong>
+- Linux command line fundamentals
+- File permissions and user management
+- Kali Linux and security tools
+- Docker for security testing
+- Bash scripting for automation</p>
+<h3 id="chapter-3-risk-management"><a href="chapters/chapter03-risk-management.md">Chapter 3: Risk Management</a></h3>
+<p><strong>Status</strong>: ✅ <strong>COMPLETED</strong>
+- Risk management lifecycle
+- ISO 27005 and NIST 800-37 frameworks
+- CIS Top Controls implementation
+- Risk scoring and treatment strategies
+- Executive risk reporting</p>
+<h3 id="chapter-4-network-security"><a href="chapters/chapter04-network-security.md">Chapter 4: Network Security</a></h3>
+<p><strong>Status</strong>: ✅ <strong>COMPLETED</strong>
+- Network protocols and OSI model
+- Network vulnerabilities and attacks
+- Wireshark and packet analysis
+- Network segmentation and firewalls
+- Incident response and recovery</p>
+<h3 id="chapter-5-identity-and-access-management-iam"><a href="chapters/chapter05-iam.md">Chapter 5: Identity and Access Management (IAM)</a></h3>
+<p><strong>Status</strong>: ✅ <strong>COMPLETED</strong>
+- AAA framework and authentication
+- Multi-factor authentication (MFA)
+- Access control models (DAC, MAC, RBAC, ABAC)
+- Active Directory and OpenLDAP
+- Single sign-on and federation</p>
+<h3 id="chapter-6-security-architecture-and-threat-models"><a href="chapters/chapter06-security-architecture.md">Chapter 6: Security Architecture and Threat Models</a></h3>
+<p><strong>Status</strong>: ✅ <strong>COMPLETED</strong>
+- Security design principles
+- STRIDE threat modeling
+- DREAD risk assessment
+- MITRE ATT&amp;CK framework
+- Zero Trust architecture</p>
+<h3 id="chapter-7-ethics-security-and-privacy"><a href="chapters/chapter07-ethics-privacy.md">Chapter 7: Ethics, Security and Privacy</a></h3>
+<p><strong>Status</strong>: ✅ <strong>COMPLETED</strong>
+- Ethical principles in cybersecurity
+- Privacy fundamentals and regulations
+- GDPR and Law 25 compliance
+- Privacy by Design principles
+- Ethical decision-making frameworks</p>
+<h3 id="chapter-8-cryptography"><a href="chapters/chapter08-cryptography.md">Chapter 8: Cryptography</a></h3>
+<p><strong>Status</strong>: ✅ <strong>COMPLETED</strong>
+- Cryptographic principles and algorithms
+- Symmetric and asymmetric cryptography
+- Hash functions and digital signatures
+- Public Key Infrastructure (PKI)
+- Cryptographic attacks and countermeasures</p>
+<h3 id="chapter-9-penetration-testing-and-ethical-hacking"><a href="chapters/chapter09-penetration-testing.md">Chapter 9: Penetration Testing and Ethical Hacking</a></h3>
+<p><strong>Status</strong>: ✅ <strong>COMPLETED</strong>
+- Penetration testing methodology
+- Reconnaissance and enumeration
+- Exploitation techniques
+- Post-exploitation activities
+- Reporting and documentation</p>
+<h3 id="chapter-10-application-security"><a href="chapters/chapter10-application-security.md">Chapter 10: Application Security</a></h3>
+<p><strong>Status</strong>: ✅ <strong>COMPLETED</strong>
+- Secure software development lifecycle
+- OWASP Top 10 vulnerabilities
+- SAST and DAST testing
+- Secure coding practices
+- API security and authentication</p>
+<h3 id="chapter-11-it-project-management"><a href="chapters/chapter11-project-management.md">Chapter 11: IT Project Management</a></h3>
+<p><strong>Status</strong>: ✅ <strong>COMPLETED</strong>
+- Project management frameworks
+- Agile and Scrum methodologies
+- Risk management in IT projects
+- Project planning and estimation
+- Team management and quality assurance</p>
+<h3 id="chapter-12-security-operations-and-incident-response"><a href="chapters/chapter12-security-operations.md">Chapter 12: Security Operations and Incident Response</a></h3>
+<p><strong>Status</strong>: ✅ <strong>COMPLETED</strong>
+- Security Operations Center (SOC)
+- Incident response frameworks
+- Security monitoring and detection
+- Threat hunting and intelligence
+- SOC metrics and performance</p>
+<h3 id="chapter-13-security-assurance-and-validation"><a href="chapters/chapter13-security-assurance.md">Chapter 13: Security Assurance and Validation</a></h3>
+<p><strong>Status</strong>: ✅ <strong>COMPLETED</strong>
+- Security assurance methodologies
+- Security testing and validation
+- Compliance frameworks (ISO 27001, PCI DSS, NIST)
+- Security metrics and measurement
+- Continuous security improvement</p>
+<h2 id="book-completion-status">🎉 Book Completion Status</h2>
+<p><strong>✅ COMPLETED</strong>: All 13 chapters have been successfully created and are ready for use.</p>
+<p><strong>📊 Total Content</strong>: 
+- <strong>13 Chapters</strong>: Complete coverage of cybersecurity fundamentals
+- <strong>500+ Pages</strong>: Comprehensive content with practical examples
+- <strong>100+ Mermaid Diagrams</strong>: Visual aids for complex concepts
+- <strong>50+ Code Examples</strong>: Practical implementation guidance
+- <strong>40+ Hands-on Activities</strong>: Interactive learning exercises</p>
+<h2 id="getting-started">🚀 Getting Started</h2>
+<ol>
+<li><strong>For Instructors</strong>: Begin with Chapter 1 and progress through the chapters sequentially</li>
+<li><strong>For Students</strong>: Each chapter can be studied independently or as part of a course</li>
+<li><strong>For Self-Study</strong>: Follow the hands-on activities and review questions for practice</li>
+</ol>
+<h2 id="how-to-use-this-book">📖 How to Use This Book</h2>
+<h3 id="classroom-instruction"><strong>Classroom Instruction</strong></h3>
+<ul>
+<li>Use chapters as weekly modules in semester-long courses</li>
+<li>Assign hands-on activities as homework or lab exercises</li>
+<li>Utilize review questions for quizzes and exams</li>
+<li>Reference further reading for advanced topics</li>
+</ul>
+<h3 id="online-learning"><strong>Online Learning</strong></h3>
+<ul>
+<li>Chapters work well in Learning Management Systems (LMS)</li>
+<li>Mermaid diagrams render properly in most markdown viewers</li>
+<li>Code examples can be copied and pasted for practice</li>
+<li>Activities can be adapted for virtual learning environments</li>
+</ul>
+<h3 id="professional-development"><strong>Professional Development</strong></h3>
+<ul>
+<li>Use as reference material for cybersecurity training</li>
+<li>Implement hands-on activities in workshops</li>
+<li>Reference compliance frameworks for organizational use</li>
+<li>Apply project management concepts to security initiatives</li>
+</ul>
+<h2 id="technical-requirements">🔧 Technical Requirements</h2>
+<ul>
+<li><strong>Markdown Viewer</strong>: For optimal viewing of chapters</li>
+<li><strong>Mermaid Support</strong>: For rendering diagrams and flowcharts</li>
+<li><strong>Code Editor</strong>: For practicing code examples</li>
+<li><strong>Virtual Environment</strong>: For hands-on activities and tools</li>
+</ul>
+<h2 id="additional-resources">📚 Additional Resources</h2>
+<p>Each chapter includes:
+- <strong>Further Reading</strong>: Books, articles, and online resources
+- <strong>Tools and Platforms</strong>: Software and services mentioned
+- <strong>Certifications</strong>: Relevant professional certifications
+- <strong>Hands-on Activities</strong>: Practical exercises and scenarios</p>
+<h2 id="learning-outcomes">🎯 Learning Outcomes</h2>
+<p>Upon completing this book, students will be able to:
+- Understand fundamental cybersecurity concepts and principles
+- Implement basic security controls and practices
+- Use common cybersecurity tools and technologies
+- Apply risk management and security assessment methodologies
+- Understand compliance requirements and frameworks
+- Develop security policies and procedures
+- Conduct basic security testing and validation
+- Manage cybersecurity projects and teams</p>
+<hr />
+<p><strong>🎊 Congratulations!</strong> This comprehensive Cybersecurity Fundamentals textbook is now complete and ready to empower the next generation of cybersecurity professionals. Each chapter has been carefully crafted to provide clear, practical, and engaging content that will help instructors deliver effective cybersecurity education.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © 2026 Data Octo · Enterprise Cloud, Data & AI, Cybersecurity Architecture
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tracking", "navigation.sections", "content.code.copy"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
 </html>
