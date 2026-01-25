@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://data-octo.github.io/intro/</loc>
+         <loc>https://data-octo.github.io/</loc>
          <lastmod>2026-01-25</lastmod>
     </url>
     <url>
@@ -14,6 +14,14 @@
     </url>
     <url>
          <loc>https://data-octo.github.io/blog/2026-01-25-entra-sso/</loc>
+         <lastmod>2026-01-25</lastmod>
+    </url>
+    <url>
+         <loc>https://data-octo.github.io/blog/2026-01-25-rec-center-sound-productivity/</loc>
+         <lastmod>2026-01-25</lastmod>
+    </url>
+    <url>
+         <loc>https://data-octo.github.io/book/</loc>
          <lastmod>2026-01-25</lastmod>
     </url>
     <url>
@@ -193,6 +201,10 @@
          <lastmod>2026-01-25</lastmod>
     </url>
     <url>
+         <loc>https://data-octo.github.io/book/cs_in_ai_era/</loc>
+         <lastmod>2026-01-25</lastmod>
+    </url>
+    <url>
          <loc>https://data-octo.github.io/book/cs_in_ai_era/chapter_1_introduction/</loc>
          <lastmod>2026-01-25</lastmod>
     </url>
@@ -318,6 +330,10 @@
     </url>
     <url>
          <loc>https://data-octo.github.io/book/ubc_dream_en/novel/chapter-10/</loc>
+         <lastmod>2026-01-25</lastmod>
+    </url>
+    <url>
+         <loc>https://data-octo.github.io/portfolio/</loc>
          <lastmod>2026-01-25</lastmod>
     </url>
 </urlset>

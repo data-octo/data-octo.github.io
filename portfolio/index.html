@@ -1,392 +1,570 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Technology Leader Portfolio</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-        }
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://data-octo.github.io/portfolio/">
+      
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>Professional Portfolio - Data Octo</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.e53b48f4.min.css">
+      
+      
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
 
-        header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 30px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
 
-        .hero-title {
-            font-size: 3em;
-            font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
-        }
-
-        .hero-subtitle {
-            font-size: 1.3em;
-            color: #666;
-            margin-bottom: 20px;
-        }
-
-        .contact-info {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #555;
-        }
-
-        .section {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 30px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .section-title {
-            font-size: 2.2em;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 25px;
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 10px;
-        }
-
-        .timeline {
-            position: relative;
-            padding-left: 30px;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 30px;
-            padding-left: 30px;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -39px;
-            top: 5px;
-            width: 15px;
-            height: 15px;
-            border-radius: 50%;
-            background: #667eea;
-            border: 3px solid #fff;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
-        }
-
-        .timeline-title {
-            font-size: 1.4em;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 5px;
-        }
-
-        .timeline-company {
-            font-size: 1.2em;
-            color: #667eea;
-            font-weight: 500;
-            margin-bottom: 10px;
-        }
-
-        .timeline-period {
-            font-size: 0.9em;
-            color: #888;
-            margin-bottom: 15px;
-        }
-
-        .timeline-description {
-            color: #555;
-            line-height: 1.6;
-        }
-
-        .achievements-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 25px;
-        }
-
-        .achievement-card {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .achievement-title {
-            font-size: 1.3em;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 15px;
-        }
-
-        .achievement-description {
-            color: #555;
-            line-height: 1.6;
-        }
-
-        .skills-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 25px;
-        }
-
-        .skill-tag {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 25px;
-            font-weight: 500;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-        }
-
-        .highlight-box {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            padding: 30px;
-            border-radius: 15px;
-            margin: 25px 0;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .highlight-title {
-            font-size: 1.5em;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 15px;
-        }
-
-        .highlight-content {
-            color: #555;
-            line-height: 1.6;
-        }
-
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2em;
-            }
-            
-            .section {
-                padding: 25px;
-            }
-            
-            .timeline {
-                padding-left: 20px;
-            }
-            
-            .timeline-item {
-                padding-left: 20px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1 class="hero-title">IT Leader of Enterprise Architecture, AI and Analytics, and Cybersecurity</h1>
-            <p class="hero-subtitle">Driving Digital Transformation & Innovation Across Global Markets</p>
-           
-        </header>
-
-        <section class="section">
-            <h2 class="section-title">Executive Summary</h2>
-            <p>Seasoned technology leader with 20+ years of experience driving digital transformation, building enterprise-scale solutions, and leading high-performance teams across banking, telecommunications, and aviation industries. Proven track record in architecting mission-critical systems, establishing DevOps foundations, and implementing data strategies that enable real-time analytics and AI-driven operations.</p>
-            
-            <div class="highlight-box">
-                <h3 class="highlight-title">Key Leadership Highlights</h3>
-                <div class="highlight-content">
-                    <ul>
-                        <li>Led teams of 20+ architects at OCBC Bank to drive architecture modernization initiatives for banking digital transformation in Singapore, Malaysia, and China</li>
-                        <li>Led teams of 10+ architects at Huawei to design and build reporting solutions for telco customers and participated in building research centers in Ireland, Canada, and US</li>
-                        <li>Managed 20 senior members at IBM China for key customer support like China Life and China UnionPay</li>
-                        <li>Built and led development teams of 10+ at ICBC Shenzhen to design and build consumer internet banking platform and online stock trading platform</li>
-                        <li>Extensive hiring experience across 6 countries and multiple time zones</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <section class="section">
-            <h2 class="section-title">Professional Experience</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <h3 class="timeline-title">Enterprise Data Architect</h3>
-                    <div class="timeline-company">Cathay Pacific</div>
-                    <div class="timeline-period">Recent</div>
-                    <div class="timeline-description">
-                        Driving data strategy and architecture to enable real-time analytics, self-service BI, and agentic AI for flight operations. Established enterprise-wide data governance frameworks and implemented modern data platforms supporting mission-critical aviation operations.
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <h3 class="timeline-title">VP of Group Transformation and Technology Architecture</h3>
-                    <div class="timeline-company">OCBC Bank</div>
-                    <div class="timeline-period">Previous</div>
-                    <div class="timeline-description">
-                        Led team of 20+ architects defining microservice design patterns and DevOps pipeline foundations for bank digital transformation. Established agile development practices and cloud-native architecture principles across the organization.
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <h3 class="timeline-title">Chief BI Architect</h3>
-                    <div class="timeline-company">Huawei</div>
-                    <div class="timeline-period">Previous</div>
-                    <div class="timeline-description">
-                        Led architect team of 10+ designing and building reporting solutions for telco customers. Participated in building research centers in Ireland, Canada, and US. Drove innovation in telecommunications infrastructure and enterprise solutions.
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <h3 class="timeline-title">Technical Support Manager</h3>
-                    <div class="timeline-company">IBM</div>
-                    <div class="timeline-period">Previous</div>
-                    <div class="timeline-description">
-                        Managed 20 senior member team providing critical support for key customers in China and Canada. Resolved complex issues at China Life and China UnionPay using IBM Cognos BI. Established enterprise-level support frameworks and service delivery models.
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <h3 class="timeline-title">Head of Consumer Internet Banking Development</h3>
-                    <div class="timeline-company">Industrial and Commercial Bank of China</div>
-                    <div class="timeline-period">Early Career</div>
-                    <div class="timeline-description">
-                        Led development team of 10+ to build the first-generation internet banking platform for ICBC Shenzhen. Designed and implemented consumer banking features including virtual accounts. Established foundation for digital banking in one of China's largest financial institutions.
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section">
-            <h2 class="section-title">Major Achievements</h2>
-            <div class="achievements-grid">
-                <div class="achievement-card">
-                    <h3 class="achievement-title">🏦 Internet Banking Pioneer</h3>
-                    <p class="achievement-description">Led the build of ICBC Shenzhen's first-generation internet banking platform, revolutionizing digital banking services and establishing new standards for financial technology in China.</p>
-                </div>
-
-                <div class="achievement-card">
-                    <h3 class="achievement-title">🔄 Digital Transformation</h3>
-                    <p class="achievement-description">Defined microservice architecture blueprint and implemented DevOps pipelines at OCBC Bank, enabling agile development and deployment foundations for enterprise-scale banking operations.</p>
-                </div>
-
-                <div class="achievement-card">
-                    <h3 class="achievement-title">📊 Data Strategy Leadership</h3>
-                    <p class="achievement-description">At Cathay Pacific, drove enterprise data strategy enabling real-time analytics, self-service BI, and agentic AI for critical flight operations, enhancing operational efficiency and decision-making.</p>
-                </div>
-
-                <div class="achievement-card">
-                    <h3 class="achievement-title">🌐 Global Research Centers</h3>
-                    <p class="achievement-description">Participated in building Huawei research centers across Ireland, Canada, and US, establishing international innovation hubs and driving technological advancement in telecommunications.</p>
-                </div>
-
-                <div class="achievement-card">
-                    <h3 class="achievement-title">🔧 Critical Issue Resolution</h3>
-                    <p class="achievement-description">Solved complex BI challenges at China Life and China UnionPay using IBM Cognos, ensuring business continuity and enhancing analytical capabilities for major financial institutions.</p>
-                </div>
-
-                <div class="achievement-card">
-                    <h3 class="achievement-title">👥 Global Team Building</h3>
-                    <p class="achievement-description">Built and led high-performance teams across 6 countries, hiring and mentoring talent in China, Singapore, Hong Kong, Ireland, Canada, and US, establishing diverse and capable technical organizations.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="section">
-            <h2 class="section-title">Technical Expertise</h2>
-            <div class="skills-container">
-                <div class="skill-tag">IT Management</div>
-                <div class="skill-tag">Enterprise Architecture</div>
-                <div class="skill-tag">Data Strategy</div>
-                <div class="skill-tag">Real-time Analytics</div>
-                <div class="skill-tag">Cloud Computing</div>
-                <div class="skill-tag">Digital Banking</div>
-                <div class="skill-tag">Agile Leadership</div>
-                <div class="skill-tag">AI & Machine Learning</div>
-                <div class="skill-tag">Business Intelligence</div>
-                <div class="skill-tag">Business Analysis</div>
-                <div class="skill-tag">Solution Design</div>
-                <div class="skill-tag">Microservices Design</div>
-                <div class="skill-tag">DevOps & CI/CD</div>
-                <div class="skill-tag">System Integration</div>
-                <div class="skill-tag">Cybersecurity</div>
-                <div class="skill-tag">Project Management</div>
-                <div class="skill-tag">Change Management</div>
-                <div class="skill-tag">Risk Management</div>
-                <div class="skill-tag">Stakeholder Engagement</div>
-                <div class="skill-tag">Vendor Management</div>
-                <div class="skill-tag">Team Building</div>
-                <div class="skill-tag">Cross-cultural Leadership</div>
-                <div class="skill-tag">Technical Support</div>
-                <div class="skill-tag">Problem Solving</div>
-            </div>
-        </section>
-
-        <section class="section">
-            <h2 class="section-title">Industry Impact</h2>
-            <div class="highlight-box">
-                <h3 class="highlight-title">Banking & Aviation Services</h3>
-                <div class="highlight-content">
-                    Pioneered internet banking at ICBC Shenzhen, led digital transformation at OCBC Bank, and established data-driven operations at Cathay Pacific. Influenced banking technology adoption across Asia Pacific region.
-                </div>
-            </div>
-
-            <div class="highlight-box">
-                <h3 class="highlight-title">Telecommunications & Research</h3>
-                <div class="highlight-content">
-                    At Huawei, designed enterprise reporting solutions for telco customers and contributed to global research initiatives, establishing innovation centers across multiple continents and driving telecommunications advancement.
-                </div>
-            </div>
-
-            <div class="highlight-box">
-                <h3 class="highlight-title">Global Talent Development</h3>
-                <div class="highlight-content">
-                    Extensive experience hiring and building technical teams across diverse cultural contexts. Mentored numerous architects and developers who now lead technology initiatives at major organizations worldwide.
-                </div>
-            </div>
-        </section>
+    
+    
+      
+        <meta  property="og:type"  content="website" >
+      
+        <meta  property="og:title"  content="Professional Portfolio - Data Octo" >
+      
+        <meta  property="og:description"  content="None" >
+      
+        <meta  property="og:image"  content="https://data-octo.github.io/assets/images/social/portfolio/index.png" >
+      
+        <meta  property="og:image:type"  content="image/png" >
+      
+        <meta  property="og:image:width"  content="1200" >
+      
+        <meta  property="og:image:height"  content="630" >
+      
+        <meta  property="og:url"  content="https://data-octo.github.io/portfolio/" >
+      
+        <meta  name="twitter:card"  content="summary_large_image" >
+      
+        <meta  name="twitter:title"  content="Professional Portfolio - Data Octo" >
+      
+        <meta  name="twitter:description"  content="None" >
+      
+        <meta  name="twitter:image"  content="https://data-octo.github.io/assets/images/social/portfolio/index.png" >
+      
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#professional-portfolio" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
-</body>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Data Octo" class="md-header__button md-logo" aria-label="Data Octo" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Data Octo
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Professional Portfolio
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Data Octo" class="md-nav__button md-logo" aria-label="Data Octo" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Data Octo
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Blog
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Blog
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../blog/index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Blog Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Books
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Books
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../books/index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    None
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Portfolio
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Portfolio
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    None
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#portfolio" class="md-nav__link">
+    <span class="md-ellipsis">
+      Portfolio
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="professional-portfolio">Professional Portfolio</h1>
+<p>Seasoned IT executive with expertise in enterprise architecture, software engineering, operations, and security &amp; compliance. Proven track record delivering scalable, business-focused technology solutions across Asia, North America, and Europe, with a constant emphasis on innovation.</p>
+<hr />
+<h2 id="portfolio">Portfolio</h2>
+<ul>
+<li><strong>IT Leader</strong> - <a href="index.html">IT Leader Portfolio</a></li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © 2026 Data Octo · Enterprise Cloud, Data & AI, Cybersecurity Architecture
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tracking", "navigation.sections", "content.code.copy"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
 </html>
