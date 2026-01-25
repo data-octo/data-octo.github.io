@@ -1,5 +1,6 @@
 # Ignore MkDocs built site
 /site/
+site/
 
 # OS
 .DS_Store

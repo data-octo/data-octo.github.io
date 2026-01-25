@@ -9,14 +9,6 @@ theme:
     - navigation.sections
     - content.code.copy
 
-markdown_extensions:
-  - admonition
-  - codehilite
-  - pymdownx.superfences
-  - pymdownx.highlight
-  - pymdownx.details
-  - pymdownx.tabbed
-
 nav:
   - Home: index.html
   - Blog:
@@ -26,9 +18,33 @@ nav:
   - Portfolio:
       - portfolio/index.html
 
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed
+  - codehilite
+
+plugins:
+  - search:
+      lang: 
+        - zh
+        - en
+  - mermaid2
 
 extra:
   generator: false
+
+extra_javascript:
+  - https://unpkg.com/mermaid@10/dist/mermaid.min.js
+  - assets/javascripts/mermaid-init.js
 
 copyright: >
   © 2026 Data Octo · Enterprise Cloud, Data & AI, Cybersecurity Architecture

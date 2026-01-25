@@ -81,4 +81,4 @@
 
 **开始阅读**：[第一章](novel/chapter-01.md)
 
-**查看资源图表**：[职业发展路径图](diagrams/mermaid-diagrams.md)
+**查看资源图表**：[职业发展路径图](diagrams/mermaid-diagrams.html)
