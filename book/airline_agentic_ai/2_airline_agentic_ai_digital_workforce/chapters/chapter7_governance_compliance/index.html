@@ -1,0 +1,482 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<link href="https://data-octo.github.io/book/airline_agentic_ai/2_airline_agentic_ai_digital_workforce/chapters/chapter7_governance_compliance/" rel="canonical"/>
+<link href="../../../../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.6.20" name="generator"/>
+<title>Chapter 7: Governance and Compliance for Agentic AI - Data Octo</title>
+<link href="../../../../../assets/stylesheets/main.e53b48f4.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#chapter-7-governance-and-compliance-for-agentic-ai">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Data Octo" class="md-header__button md-logo" data-md-component="logo" href="../../../../.." title="Data Octo">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Data Octo
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Chapter 7: Governance and Compliance for Agentic AI
+            
+          </span>
+</div>
+</div>
+</div>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Data Octo" class="md-nav__button md-logo" data-md-component="logo" href="../../../../.." title="Data Octo">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    Data Octo
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../../..">
+<span class="md-ellipsis">
+    Home
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    Blog
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            Blog
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../../../blog/index.html">
+<span class="md-ellipsis">
+    Blog Home
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+<span class="md-ellipsis">
+    Books
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            Books
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../../../books/index.html">
+<span class="md-ellipsis">
+    None
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+<span class="md-ellipsis">
+    Portfolio
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            Portfolio
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../../../portfolio/">
+<span class="md-ellipsis">
+    None
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#71-importance-of-governance-and-compliance">
+<span class="md-ellipsis">
+      7.1 Importance of Governance and Compliance
+    </span>
+</a>
+<nav aria-label="7.1 Importance of Governance and Compliance" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#key-objectives">
+<span class="md-ellipsis">
+      Key Objectives
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#72-governance-framework">
+<span class="md-ellipsis">
+      7.2 Governance Framework
+    </span>
+</a>
+<nav aria-label="7.2 Governance Framework" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#721-organizational-structure">
+<span class="md-ellipsis">
+      7.2.1 Organizational Structure
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#722-key-roles-and-responsibilities">
+<span class="md-ellipsis">
+      7.2.2 Key Roles and Responsibilities
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#73-compliance-requirements">
+<span class="md-ellipsis">
+      7.3 Compliance Requirements
+    </span>
+</a>
+<nav aria-label="7.3 Compliance Requirements" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#731-regulatory-standards">
+<span class="md-ellipsis">
+      7.3.1 Regulatory Standards
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#732-industry-guidelines">
+<span class="md-ellipsis">
+      7.3.2 Industry Guidelines
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#74-risk-management">
+<span class="md-ellipsis">
+      7.4 Risk Management
+    </span>
+</a>
+<nav aria-label="7.4 Risk Management" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#741-risk-categories">
+<span class="md-ellipsis">
+      7.4.1 Risk Categories
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#742-mitigation-strategies">
+<span class="md-ellipsis">
+      7.4.2 Mitigation Strategies
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#75-ethical-considerations">
+<span class="md-ellipsis">
+      7.5 Ethical Considerations
+    </span>
+</a>
+<nav aria-label="7.5 Ethical Considerations" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#751-principles-of-ethical-ai">
+<span class="md-ellipsis">
+      7.5.1 Principles of Ethical AI
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#752-implementation-guidelines">
+<span class="md-ellipsis">
+      7.5.2 Implementation Guidelines
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#76-audit-and-monitoring">
+<span class="md-ellipsis">
+      7.6 Audit and Monitoring
+    </span>
+</a>
+<nav aria-label="7.6 Audit and Monitoring" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#761-audit-framework">
+<span class="md-ellipsis">
+      7.6.1 Audit Framework
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#762-monitoring-tools">
+<span class="md-ellipsis">
+      7.6.2 Monitoring Tools
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#77-key-takeaways">
+<span class="md-ellipsis">
+      7.7 Key Takeaways
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="chapter-7-governance-and-compliance-for-agentic-ai">Chapter 7: Governance and Compliance for Agentic AI</h1>
+<h2 id="71-importance-of-governance-and-compliance">7.1 Importance of Governance and Compliance</h2>
+<p>Governance and compliance are critical for ensuring that Agentic AI systems operate ethically, securely, and in alignment with regulatory requirements. These practices not only minimize risks but also build trust among stakeholders, including customers, employees, and regulatory bodies. By establishing a robust governance framework, organizations can ensure that their AI initiatives deliver value while adhering to ethical and legal standards.</p>
+<h3 id="key-objectives">Key Objectives</h3>
+<ul>
+<li><strong>Ethical AI</strong>: Ensure fairness, transparency, and accountability in AI decision-making processes. Ethical AI fosters trust and prevents unintended consequences, such as bias or discrimination.</li>
+<li><strong>Regulatory Compliance</strong>: Adhere to industry standards and legal requirements, such as data privacy laws and safety regulations. Compliance reduces the risk of penalties and reputational damage.</li>
+<li><strong>Risk Management</strong>: Identify and mitigate potential risks associated with AI systems, including technical, operational, and strategic risks.</li>
+<li><strong>Operational Integrity</strong>: Maintain system reliability and performance to ensure that AI solutions consistently meet organizational goals and user expectations.</li>
+</ul>
+<h2 id="72-governance-framework">7.2 Governance Framework</h2>
+<h3 id="721-organizational-structure">7.2.1 Organizational Structure</h3>
+<pre class="mermaid"><code>graph TD
+    subgraph "Governance Structure"
+    A[Governance Board] --&gt; B[Ethics Committee]
+    A --&gt; C[Compliance Team]
+    A --&gt; D[Risk Management Group]
+    B --&gt; E[AI Ethics Officers]
+    C --&gt; F[Regulatory Specialists]
+    D --&gt; G[Risk Analysts]
+    end</code></pre>
+<p>A well-defined governance structure is essential for overseeing the implementation and operation of Agentic AI systems. This structure ensures that all aspects of governance, from ethics to compliance and risk management, are addressed effectively.</p>
+<h3 id="722-key-roles-and-responsibilities">7.2.2 Key Roles and Responsibilities</h3>
+<ol>
+<li><strong>Governance Board</strong>: Define policies, set strategic direction, and oversee the implementation of governance practices.</li>
+<li><strong>Ethics Committee</strong>: Ensure that AI systems align with ethical principles, such as fairness, transparency, and accountability.</li>
+<li><strong>Compliance Team</strong>: Monitor adherence to regulations and standards, ensuring that the organization meets its legal obligations.</li>
+<li><strong>Risk Management Group</strong>: Identify potential risks, develop mitigation strategies, and monitor their effectiveness.</li>
+</ol>
+<h2 id="73-compliance-requirements">7.3 Compliance Requirements</h2>
+<h3 id="731-regulatory-standards">7.3.1 Regulatory Standards</h3>
+<ul>
+<li><strong>GDPR</strong>: Ensures data privacy and protection, requiring organizations to handle personal data responsibly.</li>
+<li><strong>FAA Regulations</strong>: Focus on safety and operational compliance in the aviation industry, ensuring that AI systems meet stringent safety standards.</li>
+<li><strong>ISO Standards</strong>: Provide guidelines for quality management and information security, helping organizations maintain high standards of operation.</li>
+</ul>
+<h3 id="732-industry-guidelines">7.3.2 Industry Guidelines</h3>
+<ul>
+<li><strong>IATA Standards</strong>: Offer aviation-specific best practices for implementing AI solutions.</li>
+<li><strong>AI Ethics Frameworks</strong>: Provide guidelines for responsible AI development, ensuring that systems are designed and deployed ethically.</li>
+</ul>
+<h2 id="74-risk-management">7.4 Risk Management</h2>
+<h3 id="741-risk-categories">7.4.1 Risk Categories</h3>
+<pre class="mermaid"><code>mindmap
+  root((Risk Categories))
+    Technical
+      System Failures
+      Data Breaches
+      Model Bias
+    Operational
+      Process Disruptions
+      Skill Gaps
+      Change Resistance
+    Strategic
+      Regulatory Changes
+      Market Competition
+      Reputational Risks</code></pre>
+<p>Effective risk management involves identifying and addressing risks across technical, operational, and strategic domains. This ensures that AI systems remain reliable, secure, and aligned with organizational goals.</p>
+<h3 id="742-mitigation-strategies">7.4.2 Mitigation Strategies</h3>
+<ol>
+<li><strong>Technical Risks</strong>: Conduct regular audits, implement robust security measures, and monitor system performance to prevent failures and breaches.</li>
+<li><strong>Operational Risks</strong>: Provide training programs to address skill gaps, automate processes to reduce human error, and establish clear workflows to minimize disruptions.</li>
+<li><strong>Strategic Risks</strong>: Stay updated on regulatory changes, conduct market analysis to remain competitive, and maintain transparency to build trust with stakeholders.</li>
+</ol>
+<h2 id="75-ethical-considerations">7.5 Ethical Considerations</h2>
+<h3 id="751-principles-of-ethical-ai">7.5.1 Principles of Ethical AI</h3>
+<ul>
+<li><strong>Fairness</strong>: Avoid bias in decision-making to ensure equitable outcomes for all users.</li>
+<li><strong>Transparency</strong>: Ensure that AI systems are explainable, allowing stakeholders to understand how decisions are made.</li>
+<li><strong>Accountability</strong>: Assign responsibility for AI outcomes, ensuring that there is a clear chain of accountability.</li>
+<li><strong>Privacy</strong>: Protect user data and ensure confidentiality, adhering to data protection laws and ethical standards.</li>
+</ul>
+<h3 id="752-implementation-guidelines">7.5.2 Implementation Guidelines</h3>
+<pre class="mermaid"><code>graph TD
+    A[Define Ethical Standards] --&gt; B[Develop Policies]
+    B --&gt; C[Train Employees]
+    C --&gt; D[Monitor Compliance]
+    D --&gt; E[Report Violations]</code></pre>
+<p>Implementing ethical AI requires defining clear standards, developing policies to enforce them, training employees to understand their responsibilities, and monitoring compliance to ensure adherence.</p>
+<h2 id="76-audit-and-monitoring">7.6 Audit and Monitoring</h2>
+<h3 id="761-audit-framework">7.6.1 Audit Framework</h3>
+<pre class="mermaid"><code>graph TD
+    A[Audit Planning] --&gt; B[Execution]
+    B --&gt; C[Findings Documentation]
+    C --&gt; D[Remediation]
+    D --&gt; E[Follow-Up]</code></pre>
+<p>Regular audits are essential for evaluating the effectiveness of governance and compliance practices. An audit framework ensures that issues are identified, documented, and addressed promptly.</p>
+<h3 id="762-monitoring-tools">7.6.2 Monitoring Tools</h3>
+<ul>
+<li><strong>Performance Dashboards</strong>: Track system metrics and KPIs to ensure that AI systems operate as intended.</li>
+<li><strong>Compliance Checklists</strong>: Verify adherence to regulatory standards and organizational policies.</li>
+<li><strong>Incident Reporting Systems</strong>: Log and address issues promptly, ensuring that risks are mitigated effectively.</li>
+</ul>
+<h2 id="77-key-takeaways">7.7 Key Takeaways</h2>
+<ul>
+<li>Governance and compliance are essential for the success of Agentic AI, ensuring that systems operate ethically, securely, and reliably.</li>
+<li>A robust governance framework provides the structure needed to address ethical, regulatory, and risk management challenges.</li>
+<li>Regular audits and monitoring drive continuous improvement, ensuring that AI systems remain effective and aligned with organizational goals.</li>
+<li>Aligning with regulations builds trust among stakeholders and mitigates risks, enabling organizations to achieve their strategic objectives.</li>
+</ul>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      © 2026 Data Octo · Enterprise Cloud, Data &amp; AI, Cybersecurity Architecture
+    </div>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../../../../..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "content.code.copy"], "search": "../../../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../../../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+<script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
+<script src="../../../../../assets/javascripts/mermaid-init.js"></script>
+</body>
+</html>

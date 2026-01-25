@@ -1,0 +1,1944 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<link href="https://data-octo.github.io/book/cyber_security_course/chapters/chapter10-application-security/" rel="canonical"/>
+<link href="../../../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.6.20" name="generator"/>
+<title>Chapter 10: Application Security - Data Octo</title>
+<link href="../../../../assets/stylesheets/main.e53b48f4.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#chapter-10-application-security">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Data Octo" class="md-header__button md-logo" data-md-component="logo" href="../../../.." title="Data Octo">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Data Octo
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Chapter 10: Application Security
+            
+          </span>
+</div>
+</div>
+</div>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Data Octo" class="md-nav__button md-logo" data-md-component="logo" href="../../../.." title="Data Octo">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    Data Octo
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../..">
+<span class="md-ellipsis">
+    Home
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    Blog
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            Blog
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../../blog/index.html">
+<span class="md-ellipsis">
+    Blog Home
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+<span class="md-ellipsis">
+    Books
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            Books
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../../books/index.html">
+<span class="md-ellipsis">
+    None
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+<span class="md-ellipsis">
+    Portfolio
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            Portfolio
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../../portfolio/">
+<span class="md-ellipsis">
+    None
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#learning-objectives">
+<span class="md-ellipsis">
+      🎯 Learning Objectives
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#what-is-application-security">
+<span class="md-ellipsis">
+      🛡️ What is Application Security?
+    </span>
+</a>
+<nav aria-label="🛡️ What is Application Security?" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-application-security-challenge">
+<span class="md-ellipsis">
+      The Application Security Challenge
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#why-application-security-matters">
+<span class="md-ellipsis">
+      Why Application Security Matters
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#secure-software-development-lifecycle-ssdlc">
+<span class="md-ellipsis">
+      🔒 Secure Software Development Lifecycle (SSDLC)
+    </span>
+</a>
+<nav aria-label="🔒 Secure Software Development Lifecycle (SSDLC)" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ssdlc-phases">
+<span class="md-ellipsis">
+      SSDLC Phases
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#phase-1-requirements-and-planning">
+<span class="md-ellipsis">
+      Phase 1: Requirements and Planning
+    </span>
+</a>
+<nav aria-label="Phase 1: Requirements and Planning" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-security-requirements">
+<span class="md-ellipsis">
+      1. Security Requirements
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-threat-modeling">
+<span class="md-ellipsis">
+      2. Threat Modeling
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#phase-2-secure-design">
+<span class="md-ellipsis">
+      Phase 2: Secure Design
+    </span>
+</a>
+<nav aria-label="Phase 2: Secure Design" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-security-architecture-principles">
+<span class="md-ellipsis">
+      1. Security Architecture Principles
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-security-design-patterns">
+<span class="md-ellipsis">
+      2. Security Design Patterns
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#phase-3-secure-implementation">
+<span class="md-ellipsis">
+      Phase 3: Secure Implementation
+    </span>
+</a>
+<nav aria-label="Phase 3: Secure Implementation" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-secure-coding-practices">
+<span class="md-ellipsis">
+      1. Secure Coding Practices
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-code-review-process">
+<span class="md-ellipsis">
+      2. Code Review Process
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#owasp-top-10-web-application-vulnerabilities">
+<span class="md-ellipsis">
+      🚨 OWASP Top 10 Web Application Vulnerabilities
+    </span>
+</a>
+<nav aria-label="🚨 OWASP Top 10 Web Application Vulnerabilities" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#owasp-top-10-2021">
+<span class="md-ellipsis">
+      OWASP Top 10 2021
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#critical-vulnerabilities-and-mitigations">
+<span class="md-ellipsis">
+      Critical Vulnerabilities and Mitigations
+    </span>
+</a>
+<nav aria-label="Critical Vulnerabilities and Mitigations" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-a012021-broken-access-control">
+<span class="md-ellipsis">
+      1. A01:2021 - Broken Access Control
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-a022021-cryptographic-failures">
+<span class="md-ellipsis">
+      2. A02:2021 - Cryptographic Failures
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-a032021-injection">
+<span class="md-ellipsis">
+      3. A03:2021 - Injection
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#4-a042021-insecure-design">
+<span class="md-ellipsis">
+      4. A04:2021 - Insecure Design
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#5-a052021-security-misconfiguration">
+<span class="md-ellipsis">
+      5. A05:2021 - Security Misconfiguration
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-testing-methodologies">
+<span class="md-ellipsis">
+      🔍 Security Testing Methodologies
+    </span>
+</a>
+<nav aria-label="🔍 Security Testing Methodologies" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#types-of-security-testing">
+<span class="md-ellipsis">
+      Types of Security Testing
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-static-application-security-testing-sast">
+<span class="md-ellipsis">
+      1. Static Application Security Testing (SAST)
+    </span>
+</a>
+<nav aria-label="1. Static Application Security Testing (SAST)" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sast-tools">
+<span class="md-ellipsis">
+      SAST Tools
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sast-implementation">
+<span class="md-ellipsis">
+      SAST Implementation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-dynamic-application-security-testing-dast">
+<span class="md-ellipsis">
+      2. Dynamic Application Security Testing (DAST)
+    </span>
+</a>
+<nav aria-label="2. Dynamic Application Security Testing (DAST)" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dast-tools">
+<span class="md-ellipsis">
+      DAST Tools
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dast-implementation">
+<span class="md-ellipsis">
+      DAST Implementation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-interactive-application-security-testing-iast">
+<span class="md-ellipsis">
+      3. Interactive Application Security Testing (IAST)
+    </span>
+</a>
+<nav aria-label="3. Interactive Application Security Testing (IAST)" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#iast-benefits">
+<span class="md-ellipsis">
+      IAST Benefits
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#iast-tools">
+<span class="md-ellipsis">
+      IAST Tools
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#secure-coding-practices">
+<span class="md-ellipsis">
+      🔐 Secure Coding Practices
+    </span>
+</a>
+<nav aria-label="🔐 Secure Coding Practices" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#input-validation-and-sanitization">
+<span class="md-ellipsis">
+      Input Validation and Sanitization
+    </span>
+</a>
+<nav aria-label="Input Validation and Sanitization" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-input-validation-principles">
+<span class="md-ellipsis">
+      1. Input Validation Principles
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-input-validation-examples">
+<span class="md-ellipsis">
+      2. Input Validation Examples
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-sql-injection-prevention">
+<span class="md-ellipsis">
+      3. SQL Injection Prevention
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#output-encoding-and-xss-prevention">
+<span class="md-ellipsis">
+      Output Encoding and XSS Prevention
+    </span>
+</a>
+<nav aria-label="Output Encoding and XSS Prevention" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-xss-prevention-strategies">
+<span class="md-ellipsis">
+      1. XSS Prevention Strategies
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-output-encoding-examples">
+<span class="md-ellipsis">
+      2. Output Encoding Examples
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-content-security-policy">
+<span class="md-ellipsis">
+      3. Content Security Policy
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#authentication-and-session-management">
+<span class="md-ellipsis">
+      🔑 Authentication and Session Management
+    </span>
+</a>
+<nav aria-label="🔑 Authentication and Session Management" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#secure-authentication-implementation">
+<span class="md-ellipsis">
+      Secure Authentication Implementation
+    </span>
+</a>
+<nav aria-label="Secure Authentication Implementation" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-password-security">
+<span class="md-ellipsis">
+      1. Password Security
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-multi-factor-authentication">
+<span class="md-ellipsis">
+      2. Multi-Factor Authentication
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#session-management-security">
+<span class="md-ellipsis">
+      Session Management Security
+    </span>
+</a>
+<nav aria-label="Session Management Security" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-secure-session-implementation">
+<span class="md-ellipsis">
+      1. Secure Session Implementation
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-session-security-best-practices">
+<span class="md-ellipsis">
+      2. Session Security Best Practices
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#api-security">
+<span class="md-ellipsis">
+      🌐 API Security
+    </span>
+</a>
+<nav aria-label="🌐 API Security" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#api-security-principles">
+<span class="md-ellipsis">
+      API Security Principles
+    </span>
+</a>
+<nav aria-label="API Security Principles" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-authentication-and-authorization">
+<span class="md-ellipsis">
+      1. Authentication and Authorization
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-rate-limiting">
+<span class="md-ellipsis">
+      2. Rate Limiting
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-input-validation-for-apis">
+<span class="md-ellipsis">
+      3. Input Validation for APIs
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-testing-in-cicd">
+<span class="md-ellipsis">
+      🧪 Security Testing in CI/CD
+    </span>
+</a>
+<nav aria-label="🧪 Security Testing in CI/CD" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#integrating-security-testing">
+<span class="md-ellipsis">
+      Integrating Security Testing
+    </span>
+</a>
+<nav aria-label="Integrating Security Testing" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-automated-security-pipeline">
+<span class="md-ellipsis">
+      1. Automated Security Pipeline
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-security-gates">
+<span class="md-ellipsis">
+      2. Security Gates
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-testing-tools-integration">
+<span class="md-ellipsis">
+      Security Testing Tools Integration
+    </span>
+</a>
+<nav aria-label="Security Testing Tools Integration" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-sast-tools">
+<span class="md-ellipsis">
+      1. SAST Tools
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-dast-tools">
+<span class="md-ellipsis">
+      2. DAST Tools
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-dependency-scanning">
+<span class="md-ellipsis">
+      3. Dependency Scanning
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-code-review">
+<span class="md-ellipsis">
+      📋 Security Code Review
+    </span>
+</a>
+<nav aria-label="📋 Security Code Review" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#code-review-checklist">
+<span class="md-ellipsis">
+      Code Review Checklist
+    </span>
+</a>
+<nav aria-label="Code Review Checklist" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-authentication-and-authorization_1">
+<span class="md-ellipsis">
+      1. Authentication and Authorization
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-data-protection">
+<span class="md-ellipsis">
+      2. Data Protection
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-injection-prevention">
+<span class="md-ellipsis">
+      3. Injection Prevention
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#4-configuration-security">
+<span class="md-ellipsis">
+      4. Configuration Security
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#code-review-process">
+<span class="md-ellipsis">
+      Code Review Process
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hands-on-activities">
+<span class="md-ellipsis">
+      🧪 Hands-on Activities
+    </span>
+</a>
+<nav aria-label="🧪 Hands-on Activities" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#activity-1-owasp-top-10-analysis">
+<span class="md-ellipsis">
+      Activity 1: OWASP Top 10 Analysis
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#activity-2-secure-code-implementation">
+<span class="md-ellipsis">
+      Activity 2: Secure Code Implementation
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#activity-3-security-testing-integration">
+<span class="md-ellipsis">
+      Activity 3: Security Testing Integration
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#activity-4-api-security-assessment">
+<span class="md-ellipsis">
+      Activity 4: API Security Assessment
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#key-takeaways">
+<span class="md-ellipsis">
+      📋 Key Takeaways
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#review-questions">
+<span class="md-ellipsis">
+      ❓ Review Questions
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#further-reading">
+<span class="md-ellipsis">
+      📚 Further Reading
+    </span>
+</a>
+<nav aria-label="📚 Further Reading" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#books">
+<span class="md-ellipsis">
+      Books
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#online-resources">
+<span class="md-ellipsis">
+      Online Resources
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tools-and-platforms">
+<span class="md-ellipsis">
+      Tools and Platforms
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="chapter-10-application-security">Chapter 10: Application Security</h1>
+<h2 id="learning-objectives">🎯 Learning Objectives</h2>
+<p>By the end of this chapter, you will be able to:
+- Understand the principles of secure software development
+- Identify and mitigate OWASP Top 10 web application vulnerabilities
+- Implement SAST and DAST tools in CI/CD pipelines
+- Apply secure coding practices and input validation
+- Understand API security and authentication mechanisms
+- Implement secure session management and access controls
+- Conduct application security testing and code reviews
+- Apply the Secure Software Development Lifecycle (SSDLC)</p>
+<h2 id="what-is-application-security">🛡️ What is Application Security?</h2>
+<p>Application security encompasses the measures and practices used to protect software applications from security threats and vulnerabilities throughout their lifecycle.</p>
+<h3 id="the-application-security-challenge">The Application Security Challenge</h3>
+<p>Modern applications face numerous security challenges:
+- <strong>Complex Architectures</strong>: Microservices, APIs, and distributed systems
+- <strong>Rapid Development</strong>: Agile methodologies and continuous deployment
+- <strong>Diverse Technologies</strong>: Multiple programming languages and frameworks
+- <strong>External Dependencies</strong>: Third-party libraries and components
+- <strong>User Input</strong>: Uncontrolled data from various sources</p>
+<h3 id="why-application-security-matters">Why Application Security Matters</h3>
+<pre class="mermaid"><code>graph TD
+    A[Application Security Benefits] --&gt; B[Data Protection]
+    A --&gt; C[Business Continuity]
+    A --&gt; D[Compliance]
+    A --&gt; E[Customer Trust]
+    A --&gt; F[Cost Reduction]
+
+    B --&gt; B1[Prevent data breaches]
+    B --&gt; B2[Protect user privacy]
+    B --&gt; B3[Secure transactions]
+
+    C --&gt; C1[Maintain operations]
+    C --&gt; C2[Prevent downtime]
+    C --&gt; C3[Protect revenue]
+
+    D --&gt; D1[Meet regulations]
+    D --&gt; D2[Industry standards]
+    D --&gt; D3[Audit compliance]
+
+    E --&gt; E1[Build confidence]
+    E --&gt; E2[Protect reputation]
+    E --&gt; E3[Competitive advantage]
+
+    F --&gt; F1[Reduce incident costs]
+    F --&gt; F2[Lower remediation]
+    F --&gt; F3[Prevent legal issues]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9</code></pre>
+<h2 id="secure-software-development-lifecycle-ssdlc">🔒 Secure Software Development Lifecycle (SSDLC)</h2>
+<p>The Secure Software Development Lifecycle integrates security practices into every phase of software development.</p>
+<h3 id="ssdlc-phases">SSDLC Phases</h3>
+<pre class="mermaid"><code>graph TD
+    A[Secure SDLC] --&gt; B[Requirements]
+    A --&gt; C[Design]
+    A --&gt; D[Implementation]
+    A --&gt; E[Testing]
+    A --&gt; F[Deployment]
+    A --&gt; G[Maintenance]
+
+    B --&gt; B1[Security requirements]
+    B --&gt; B2[Threat modeling]
+    B --&gt; B3[Risk assessment]
+
+    C --&gt; C1[Security architecture]
+    C --&gt; C2[Design reviews]
+    C --&gt; C3[Security patterns]
+
+    D --&gt; D1[Secure coding]
+    D --&gt; D2[Code reviews]
+    D --&gt; D3[Static analysis]
+
+    E --&gt; E1[Security testing]
+    E --&gt; E2[Penetration testing]
+    E --&gt; E3[Vulnerability assessment]
+
+    F --&gt; F1[Secure deployment]
+    F --&gt; F2[Configuration management]
+    F --&gt; F3[Environment security]
+
+    G --&gt; G1[Security monitoring]
+    G --&gt; G2[Patch management]
+    G --&gt; G3[Incident response]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+    style G fill:#fff8e1</code></pre>
+<h3 id="phase-1-requirements-and-planning">Phase 1: Requirements and Planning</h3>
+<h4 id="1-security-requirements">1. <strong>Security Requirements</strong></h4>
+<ul>
+<li><strong>Functional Security</strong>: Authentication, authorization, encryption</li>
+<li><strong>Non-Functional Security</strong>: Performance, availability, compliance</li>
+<li><strong>Compliance Requirements</strong>: GDPR, HIPAA, PCI DSS, SOX</li>
+<li><strong>Industry Standards</strong>: OWASP, NIST, ISO 27001</li>
+</ul>
+<h4 id="2-threat-modeling">2. <strong>Threat Modeling</strong></h4>
+<p><strong>Purpose</strong>: Identify and analyze potential security threats.</p>
+<p><strong>Methodologies</strong>:
+- <strong>STRIDE</strong>: Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege
+- <strong>PASTA</strong>: Process for Attack Simulation and Threat Analysis
+- <strong>VAST</strong>: Visual, Agile, and Simple Threat modeling</p>
+<p><strong>Threat Model Example</strong>:
+<pre class="mermaid"><code>graph TD
+    A[Web Application] --&gt; B[User Authentication]
+    A --&gt; C[Data Processing]
+    A --&gt; D[Database Access]
+
+    B --&gt; B1[Brute force attacks]
+    B --&gt; B2[Session hijacking]
+    B --&gt; B3[Credential stuffing]
+
+    C --&gt; C1[Input validation]
+    C --&gt; C2[Code injection]
+    C --&gt; C3[Cross-site scripting]
+
+    D --&gt; D1[SQL injection]
+    D --&gt; D2[Unauthorized access]
+    D --&gt; D3[Data exfiltration]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0</code></pre></p>
+<h3 id="phase-2-secure-design">Phase 2: Secure Design</h3>
+<h4 id="1-security-architecture-principles">1. <strong>Security Architecture Principles</strong></h4>
+<ul>
+<li><strong>Defense in Depth</strong>: Multiple security layers</li>
+<li><strong>Principle of Least Privilege</strong>: Minimal access rights</li>
+<li><strong>Fail-Safe Defaults</strong>: Secure by default</li>
+<li><strong>Separation of Concerns</strong>: Modular security design</li>
+<li><strong>Economy of Mechanism</strong>: Simple security solutions</li>
+</ul>
+<h4 id="2-security-design-patterns">2. <strong>Security Design Patterns</strong></h4>
+<ul>
+<li><strong>Authentication Patterns</strong>: Multi-factor, single sign-on, federated</li>
+<li><strong>Authorization Patterns</strong>: Role-based, attribute-based, policy-based</li>
+<li><strong>Data Protection Patterns</strong>: Encryption, hashing, tokenization</li>
+<li><strong>Session Management Patterns</strong>: Secure session handling, timeout, invalidation</li>
+</ul>
+<h3 id="phase-3-secure-implementation">Phase 3: Secure Implementation</h3>
+<h4 id="1-secure-coding-practices">1. <strong>Secure Coding Practices</strong></h4>
+<ul>
+<li><strong>Input Validation</strong>: Validate and sanitize all inputs</li>
+<li><strong>Output Encoding</strong>: Prevent injection attacks</li>
+<li><strong>Error Handling</strong>: Secure error messages and logging</li>
+<li><strong>Memory Management</strong>: Prevent buffer overflows and memory leaks</li>
+</ul>
+<h4 id="2-code-review-process">2. <strong>Code Review Process</strong></h4>
+<ul>
+<li><strong>Automated Tools</strong>: Static analysis and linting</li>
+<li><strong>Manual Review</strong>: Peer code review with security focus</li>
+<li><strong>Checklists</strong>: Security coding standards and guidelines</li>
+<li><strong>Training</strong>: Regular security awareness and skill development</li>
+</ul>
+<h2 id="owasp-top-10-web-application-vulnerabilities">🚨 OWASP Top 10 Web Application Vulnerabilities</h2>
+<p>The OWASP Top 10 represents the most critical web application security risks.</p>
+<h3 id="owasp-top-10-2021">OWASP Top 10 2021</h3>
+<pre class="mermaid"><code>graph TD
+    A[OWASP Top 10 2021] --&gt; B[A01:2021 - Broken Access Control]
+    A --&gt; C[A02:2021 - Cryptographic Failures]
+    A --&gt; D[A03:2021 - Injection]
+    A --&gt; E[A04:2021 - Insecure Design]
+    A --&gt; F[A05:2021 - Security Misconfiguration]
+    A --&gt; G[A06:2021 - Vulnerable Components]
+    A --&gt; H[A07:2021 - Authentication Failures]
+    A --&gt; I[A08:2021 - Software and Data Integrity Failures]
+    A --&gt; J[A09:2021 - Security Logging Failures]
+    A --&gt; K[A10:2021 - Server-Side Request Forgery]
+
+    B --&gt; B1[Horizontal privilege escalation]
+    B --&gt; B2[Vertical privilege escalation]
+    B --&gt; B3[Unauthorized access]
+
+    C --&gt; C1[Weak encryption]
+    C --&gt; C2[Insecure key management]
+    C --&gt; C3[Cryptographic vulnerabilities]
+
+    D --&gt; D1[SQL injection]
+    D --&gt; D2[NoSQL injection]
+    D --&gt; D3[Command injection]
+
+    E --&gt; E1[Design flaws]
+    E --&gt; E2[Architecture weaknesses]
+    E --&gt; E3[Missing security controls]
+
+    F --&gt; F1[Default configurations]
+    F --&gt; F2[Unnecessary features]
+    F --&gt; F3[Insecure settings]
+
+    G --&gt; G1[Outdated components]
+    G --&gt; G2[Known vulnerabilities]
+    G --&gt; G3[Unsupported software]
+
+    H --&gt; H1[Weak authentication]
+    H --&gt; H2[Session management]
+    H --&gt; H3[Credential stuffing]
+
+    I --&gt; I1[Supply chain attacks]
+    I --&gt; I2[Code tampering]
+    I --&gt; I3[Data integrity]
+
+    J --&gt; J1[Insufficient logging]
+    J --&gt; J2[Log injection]
+    J --&gt; J3[Audit trail gaps]
+
+    K --&gt; K1[Internal service access]
+    K --&gt; K2[Cloud metadata access]
+    K --&gt; K3[Network reconnaissance]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+    style G fill:#fff8e1
+    style H fill:#f3e5f5
+    style I fill:#e8f5e8
+    style J fill:#fff3e0
+    style K fill:#fce4ec</code></pre>
+<h3 id="critical-vulnerabilities-and-mitigations">Critical Vulnerabilities and Mitigations</h3>
+<h4 id="1-a012021-broken-access-control">1. <strong>A01:2021 - Broken Access Control</strong></h4>
+<p><strong>Description</strong>: Restrictions on what authenticated users can access are not properly enforced.</p>
+<p><strong>Examples</strong>:
+- <strong>Horizontal Privilege Escalation</strong>: Accessing other users' data
+- <strong>Vertical Privilege Escalation</strong>: Gaining administrative privileges
+- <strong>Direct Object References</strong>: Accessing unauthorized resources</p>
+<p><strong>Mitigation</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># Secure access control example</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_user_data</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">current_user</span><span class="p">):</span>
+    <span class="c1"># Check if user can access this data</span>
+    <span class="k">if</span> <span class="n">current_user</span><span class="o">.</span><span class="n">id</span> <span class="o">!=</span> <span class="n">user_id</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">current_user</span><span class="o">.</span><span class="n">is_admin</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">AccessDenied</span><span class="p">(</span><span class="s2">"Unauthorized access"</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">user_id</span><span class="p">)</span>
+</code></pre></div></p>
+<h4 id="2-a022021-cryptographic-failures">2. <strong>A02:2021 - Cryptographic Failures</strong></h4>
+<p><strong>Description</strong>: Failures related to cryptography which often lead to sensitive data exposure.</p>
+<p><strong>Examples</strong>:
+- <strong>Weak Encryption</strong>: Using outdated algorithms
+- <strong>Key Management</strong>: Poor key storage and rotation
+- <strong>Data in Transit</strong>: Unencrypted communications</p>
+<p><strong>Mitigation</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># Secure encryption example</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cryptography.fernet</span><span class="w"> </span><span class="kn">import</span> <span class="n">Fernet</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="c1"># Generate secure key</span>
+<span class="n">key</span> <span class="o">=</span> <span class="n">Fernet</span><span class="o">.</span><span class="n">generate_key</span><span class="p">()</span>
+<span class="n">cipher</span> <span class="o">=</span> <span class="n">Fernet</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+<span class="c1"># Encrypt sensitive data</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">encrypt_data</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">cipher</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+
+<span class="c1"># Decrypt data</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">decrypt_data</span><span class="p">(</span><span class="n">encrypted_data</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">cipher</span><span class="o">.</span><span class="n">decrypt</span><span class="p">(</span><span class="n">encrypted_data</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+</code></pre></div></p>
+<h4 id="3-a032021-injection">3. <strong>A03:2021 - Injection</strong></h4>
+<p><strong>Description</strong>: Untrusted data is sent to an interpreter as part of a command or query.</p>
+<p><strong>Types</strong>:
+- <strong>SQL Injection</strong>: Database query manipulation
+- <strong>NoSQL Injection</strong>: Document database attacks
+- <strong>Command Injection</strong>: System command execution
+- <strong>LDAP Injection</strong>: Directory service attacks</p>
+<p><strong>Mitigation</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># SQL injection prevention with parameterized queries</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sqlite3</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_user_safe</span><span class="p">(</span><span class="n">username</span><span class="p">):</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'database.db'</span><span class="p">)</span>
+    <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+    <span class="c1"># Use parameterized query</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM users WHERE username = ?"</span><span class="p">,</span> <span class="p">(</span><span class="n">username</span><span class="p">,))</span>
+    <span class="k">return</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+
+<span class="c1"># Instead of vulnerable string concatenation:</span>
+<span class="c1"># cursor.execute("SELECT * FROM users WHERE username = '" + username + "'")</span>
+</code></pre></div></p>
+<h4 id="4-a042021-insecure-design">4. <strong>A04:2021 - Insecure Design</strong></h4>
+<p><strong>Description</strong>: Flaws in design and architecture that cannot be fixed by proper implementation.</p>
+<p><strong>Examples</strong>:
+- <strong>Missing Security Controls</strong>: No authentication or authorization
+- <strong>Weak Architecture</strong>: Single points of failure
+- <strong>Insecure Defaults</strong>: Permissive default configurations</p>
+<p><strong>Mitigation</strong>:
+- <strong>Security by Design</strong>: Integrate security from the start
+- <strong>Threat Modeling</strong>: Identify and address design risks
+- <strong>Security Patterns</strong>: Use proven security architectures
+- <strong>Code Reviews</strong>: Regular security-focused reviews</p>
+<h4 id="5-a052021-security-misconfiguration">5. <strong>A05:2021 - Security Misconfiguration</strong></h4>
+<p><strong>Description</strong>: Incorrectly configured security settings in applications, frameworks, and servers.</p>
+<p><strong>Examples</strong>:
+- <strong>Default Credentials</strong>: Unchanged default passwords
+- <strong>Unnecessary Features</strong>: Enabled debugging or admin interfaces
+- <strong>Weak Headers</strong>: Missing security headers
+- <strong>Open Permissions</strong>: Overly permissive file permissions</p>
+<p><strong>Mitigation</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># Security headers example (Flask)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">flask</span><span class="w"> </span><span class="kn">import</span> <span class="n">Flask</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">flask_talisman</span><span class="w"> </span><span class="kn">import</span> <span class="n">Talisman</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1"># Configure security headers</span>
+<span class="n">Talisman</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> 
+    <span class="n">content_security_policy</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">'default-src'</span><span class="p">:</span> <span class="s2">"'self'"</span><span class="p">,</span>
+        <span class="s1">'script-src'</span><span class="p">:</span> <span class="s2">"'self' 'unsafe-inline'"</span><span class="p">,</span>
+        <span class="s1">'style-src'</span><span class="p">:</span> <span class="s2">"'self' 'unsafe-inline'"</span>
+    <span class="p">},</span>
+    <span class="n">force_https</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+</code></pre></div></p>
+<h2 id="security-testing-methodologies">🔍 Security Testing Methodologies</h2>
+<h3 id="types-of-security-testing">Types of Security Testing</h3>
+<pre class="mermaid"><code>graph TD
+    A[Security Testing Types] --&gt; B[Static Analysis]
+    A --&gt; C[Dynamic Analysis]
+    A --&gt; D[Interactive Testing]
+    A --&gt; E[Manual Testing]
+
+    B --&gt; B1[SAST - Source code analysis]
+    B --&gt; B2[Binary analysis]
+    B --&gt; B3[Dependency scanning]
+
+    C --&gt; C1[DAST - Runtime testing]
+    C --&gt; C2[API testing]
+    C --&gt; C3[Network scanning]
+
+    D --&gt; D1[IAST - Runtime instrumentation]
+    D --&gt; D2[Real-time analysis]
+    D --&gt; D3[Context-aware testing]
+
+    E --&gt; E1[Code review]
+    E --&gt; E2[Penetration testing]
+    E --&gt; E3[Security audit]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec</code></pre>
+<h3 id="1-static-application-security-testing-sast">1. <strong>Static Application Security Testing (SAST)</strong></h3>
+<p>SAST analyzes source code, bytecode, or binary code without executing the application.</p>
+<h4 id="sast-tools">SAST Tools</h4>
+<ul>
+<li><strong>SonarQube</strong>: Multi-language code quality and security</li>
+<li><strong>Checkmarx</strong>: Source code analysis platform</li>
+<li><strong>Veracode</strong>: Static analysis and security testing</li>
+<li><strong>Semgrep</strong>: Fast, lightweight static analysis</li>
+</ul>
+<h4 id="sast-implementation">SAST Implementation</h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># GitHub Actions SAST example</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Security Scan</span>
+<span class="nt">on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">push</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">pull_request</span><span class="p p-Indicator">]</span>
+
+<span class="nt">jobs</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">security</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v2</span>
+
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run Semgrep</span>
+<span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">returntocorp/semgrep-action@v1</span>
+<span class="w">        </span><span class="nt">with</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">config</span><span class="p">:</span><span class="w"> </span><span class="s">"p/security-audit"</span>
+
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run Bandit (Python)</span>
+<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">          </span><span class="no">pip install bandit</span>
+<span class="w">          </span><span class="no">bandit -r . -f json -o bandit-report.json</span>
+
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Upload results</span>
+<span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/upload-artifact@v2</span>
+<span class="w">        </span><span class="nt">with</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">security-scan-results</span>
+<span class="w">          </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">            </span><span class="no">semgrep-report.json</span>
+<span class="w">            </span><span class="no">bandit-report.json</span>
+</code></pre></div>
+<h3 id="2-dynamic-application-security-testing-dast">2. <strong>Dynamic Application Security Testing (DAST)</strong></h3>
+<p>DAST tests running applications to identify runtime vulnerabilities.</p>
+<h4 id="dast-tools">DAST Tools</h4>
+<ul>
+<li><strong>OWASP ZAP</strong>: Open-source web application scanner</li>
+<li><strong>Burp Suite</strong>: Professional web application testing</li>
+<li><strong>Acunetix</strong>: Automated vulnerability scanner</li>
+<li><strong>AppScan</strong>: IBM security testing platform</li>
+</ul>
+<h4 id="dast-implementation">DAST Implementation</h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># DAST scanning in CI/CD</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OWASP ZAP Scan</span>
+<span class="w">  </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">    </span><span class="no"># Start ZAP daemon</span>
+<span class="w">    </span><span class="no">zap.sh -daemon -port 8080 -host 0.0.0.0</span>
+
+<span class="w">    </span><span class="no"># Run baseline scan</span>
+<span class="w">    </span><span class="no">zap-baseline.py -t http://localhost:3000 -J zap-report.json</span>
+
+<span class="w">    </span><span class="no"># Generate HTML report</span>
+<span class="w">    </span><span class="no">zap-cli report -o zap-report.html -f html</span>
+</code></pre></div>
+<h3 id="3-interactive-application-security-testing-iast">3. <strong>Interactive Application Security Testing (IAST)</strong></h3>
+<p>IAST combines static and dynamic analysis by instrumenting running applications.</p>
+<h4 id="iast-benefits">IAST Benefits</h4>
+<ul>
+<li><strong>Real-time Analysis</strong>: Immediate vulnerability detection</li>
+<li><strong>Context Awareness</strong>: Understanding of application flow</li>
+<li><strong>Low False Positives</strong>: Accurate vulnerability identification</li>
+<li><strong>Integration</strong>: Works with existing development tools</li>
+</ul>
+<h4 id="iast-tools">IAST Tools</h4>
+<ul>
+<li><strong>Contrast Security</strong>: Runtime application security</li>
+<li><strong>Hdiv</strong>: Interactive security testing</li>
+<li><strong>Seeker</strong>: IAST security testing platform</li>
+</ul>
+<h2 id="secure-coding-practices">🔐 Secure Coding Practices</h2>
+<h3 id="input-validation-and-sanitization">Input Validation and Sanitization</h3>
+<h4 id="1-input-validation-principles">1. <strong>Input Validation Principles</strong></h4>
+<ul>
+<li><strong>Validate All Inputs</strong>: Check type, length, format, and range</li>
+<li><strong>Whitelist Approach</strong>: Allow only known good input</li>
+<li><strong>Server-Side Validation</strong>: Never trust client-side validation</li>
+<li><strong>Context-Aware Validation</strong>: Validate based on intended use</li>
+</ul>
+<h4 id="2-input-validation-examples">2. <strong>Input Validation Examples</strong></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Python input validation example</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">validate_email</span><span class="p">(</span><span class="n">email</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Validate email format and return sanitized version."""</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">email</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="c1"># Email regex pattern</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'</span>
+
+    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">email</span><span class="p">):</span>
+        <span class="c1"># Sanitize by removing potentially dangerous characters</span>
+        <span class="n">sanitized</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">'[&lt;&gt;"</span><span class="se">\'</span><span class="s1">]'</span><span class="p">,</span> <span class="s1">''</span><span class="p">,</span> <span class="n">email</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sanitized</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="kc">None</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">validate_username</span><span class="p">(</span><span class="n">username</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Validate username format."""</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">username</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="c1"># Username requirements: 3-20 characters, alphanumeric and underscore</span>
+    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">'^[a-zA-Z0-9_]{3,20}$'</span><span class="p">,</span> <span class="n">username</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">username</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="kc">None</span>
+</code></pre></div>
+<h4 id="3-sql-injection-prevention">3. <strong>SQL Injection Prevention</strong></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Secure database operations</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sqlite3</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">UserRepository</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db_path</span> <span class="o">=</span> <span class="n">db_path</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_user_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Get user by ID using parameterized query."""</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+                <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+                <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+                    <span class="s2">"SELECT id, username, email FROM users WHERE id = ?"</span><span class="p">,</span>
+                    <span class="p">(</span><span class="n">user_id</span><span class="p">,)</span>
+                <span class="p">)</span>
+                <span class="n">row</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">row</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="p">{</span>
+                        <span class="s1">'id'</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                        <span class="s1">'username'</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                        <span class="s1">'email'</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                    <span class="p">}</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">except</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="c1"># Log error securely (no sensitive data)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Database error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">email</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Create new user with validation."""</span>
+        <span class="c1"># Validate inputs</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">validate_username</span><span class="p">(</span><span class="n">username</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">validate_email</span><span class="p">(</span><span class="n">email</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+                <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+                <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+                    <span class="s2">"INSERT INTO users (username, email) VALUES (?, ?)"</span><span class="p">,</span>
+                    <span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">email</span><span class="p">)</span>
+                <span class="p">)</span>
+                <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+                <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="k">except</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Database error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+</code></pre></div>
+<h3 id="output-encoding-and-xss-prevention">Output Encoding and XSS Prevention</h3>
+<h4 id="1-xss-prevention-strategies">1. <strong>XSS Prevention Strategies</strong></h4>
+<ul>
+<li><strong>Output Encoding</strong>: Encode all dynamic content</li>
+<li><strong>Content Security Policy</strong>: Restrict script execution</li>
+<li><strong>Input Sanitization</strong>: Remove dangerous HTML/JavaScript</li>
+<li><strong>HttpOnly Cookies</strong>: Prevent XSS cookie theft</li>
+</ul>
+<h4 id="2-output-encoding-examples">2. <strong>Output Encoding Examples</strong></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># HTML output encoding</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">html</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">safe_html_output</span><span class="p">(</span><span class="n">user_input</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Safely output user input in HTML context."""</span>
+    <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">user_input</span><span class="p">)</span>
+
+<span class="c1"># JavaScript output encoding</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">safe_js_output</span><span class="p">(</span><span class="n">user_input</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Safely output user input in JavaScript context."""</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">user_input</span><span class="p">)</span>
+
+<span class="c1"># URL output encoding</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">urllib.parse</span><span class="w"> </span><span class="kn">import</span> <span class="n">quote</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">safe_url_output</span><span class="p">(</span><span class="n">user_input</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Safely output user input in URL context."""</span>
+    <span class="k">return</span> <span class="n">quote</span><span class="p">(</span><span class="n">user_input</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="3-content-security-policy">3. <strong>Content Security Policy</strong></h4>
+<div class="highlight"><pre><span></span><code><span class="cm">&lt;!-- HTML CSP header --&gt;</span>
+<span class="p">&lt;</span><span class="nt">meta</span> <span class="na">http-equiv</span><span class="o">=</span><span class="s">"Content-Security-Policy"</span> 
+      <span class="na">content</span><span class="o">=</span><span class="s">"default-src 'self'; </span>
+<span class="s">               script-src 'self' 'unsafe-inline'; </span>
+<span class="s">               style-src 'self' 'unsafe-inline'; </span>
+<span class="s">               img-src 'self' data: https:;"</span><span class="p">&gt;</span>
+
+<span class="cm">&lt;!-- HTTP Response Header --&gt;</span>
+Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'
+</code></pre></div>
+<h2 id="authentication-and-session-management">🔑 Authentication and Session Management</h2>
+<h3 id="secure-authentication-implementation">Secure Authentication Implementation</h3>
+<h4 id="1-password-security">1. <strong>Password Security</strong></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Secure password hashing</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">bcrypt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">secrets</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">hash_password</span><span class="p">(</span><span class="n">password</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Hash password using bcrypt."""</span>
+    <span class="c1"># Generate salt and hash</span>
+    <span class="n">salt</span> <span class="o">=</span> <span class="n">bcrypt</span><span class="o">.</span><span class="n">gensalt</span><span class="p">(</span><span class="n">rounds</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+    <span class="n">hashed</span> <span class="o">=</span> <span class="n">bcrypt</span><span class="o">.</span><span class="n">hashpw</span><span class="p">(</span><span class="n">password</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">'utf-8'</span><span class="p">),</span> <span class="n">salt</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">hashed</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">'utf-8'</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">verify_password</span><span class="p">(</span><span class="n">password</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">hashed</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Verify password against hash."""</span>
+    <span class="k">return</span> <span class="n">bcrypt</span><span class="o">.</span><span class="n">checkpw</span><span class="p">(</span><span class="n">password</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">'utf-8'</span><span class="p">),</span> <span class="n">hashed</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">'utf-8'</span><span class="p">))</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_secure_token</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Generate cryptographically secure token."""</span>
+    <span class="k">return</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_urlsafe</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="2-multi-factor-authentication">2. <strong>Multi-Factor Authentication</strong></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># MFA implementation example</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pyotp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">qrcode</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MFAService</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">secret_key</span> <span class="o">=</span> <span class="n">pyotp</span><span class="o">.</span><span class="n">random_base32</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_qr_code</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Generate QR code for TOTP setup."""</span>
+        <span class="n">totp</span> <span class="o">=</span> <span class="n">pyotp</span><span class="o">.</span><span class="n">TOTP</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">secret_key</span><span class="p">)</span>
+        <span class="n">provisioning_uri</span> <span class="o">=</span> <span class="n">totp</span><span class="o">.</span><span class="n">provisioning_uri</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">username</span><span class="p">,</span>
+            <span class="n">issuer_name</span><span class="o">=</span><span class="s2">"MyApp"</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">provisioning_uri</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">verify_totp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Verify TOTP token."""</span>
+        <span class="n">totp</span> <span class="o">=</span> <span class="n">pyotp</span><span class="o">.</span><span class="n">TOTP</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">secret_key</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">totp</span><span class="o">.</span><span class="n">verify</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_current_totp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Get current TOTP value."""</span>
+        <span class="n">totp</span> <span class="o">=</span> <span class="n">pyotp</span><span class="o">.</span><span class="n">TOTP</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">secret_key</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">totp</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="session-management-security">Session Management Security</h3>
+<h4 id="1-secure-session-implementation">1. <strong>Secure Session Implementation</strong></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Flask session management example</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">flask</span><span class="w"> </span><span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">request</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">flask_session</span><span class="w"> </span><span class="kn">import</span> <span class="n">Session</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">secrets</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1"># Secure session configuration</span>
+<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+    <span class="n">SECRET_KEY</span><span class="o">=</span><span class="n">secrets</span><span class="o">.</span><span class="n">token_hex</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span>
+    <span class="n">SESSION_TYPE</span><span class="o">=</span><span class="s1">'filesystem'</span><span class="p">,</span>
+    <span class="n">SESSION_FILE_DIR</span><span class="o">=</span><span class="s1">'/tmp/flask_session'</span><span class="p">,</span>
+    <span class="n">SESSION_COOKIE_SECURE</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">SESSION_COOKIE_HTTPONLY</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">SESSION_COOKIE_SAMESITE</span><span class="o">=</span><span class="s1">'Lax'</span><span class="p">,</span>
+    <span class="n">PERMANENT_SESSION_LIFETIME</span><span class="o">=</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">Session</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">before_request</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">before_request</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""Security checks before each request."""</span>
+    <span class="c1"># Regenerate session ID on login</span>
+    <span class="k">if</span> <span class="s1">'user_id'</span> <span class="ow">in</span> <span class="n">session</span> <span class="ow">and</span> <span class="s1">'session_regenerated'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">session</span><span class="p">:</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">regenerate</span><span class="p">()</span>
+        <span class="n">session</span><span class="p">[</span><span class="s1">'session_regenerated'</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="c1"># Check session timeout</span>
+    <span class="k">if</span> <span class="s1">'last_activity'</span> <span class="ow">in</span> <span class="n">session</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span> <span class="o">-</span> <span class="n">session</span><span class="p">[</span><span class="s1">'last_activity'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+            <span class="n">session</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s1">'login'</span><span class="p">))</span>
+
+    <span class="n">session</span><span class="p">[</span><span class="s1">'last_activity'</span><span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">'/login'</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">'POST'</span><span class="p">])</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">login</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""Secure login endpoint."""</span>
+    <span class="n">username</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'username'</span><span class="p">)</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'password'</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">verify_credentials</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="c1"># Clear any existing session</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+        <span class="c1"># Set new session data</span>
+        <span class="n">session</span><span class="p">[</span><span class="s1">'user_id'</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_user_id</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
+        <span class="n">session</span><span class="p">[</span><span class="s1">'username'</span><span class="p">]</span> <span class="o">=</span> <span class="n">username</span>
+        <span class="n">session</span><span class="p">[</span><span class="s1">'login_time'</span><span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s1">'dashboard'</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="s1">'Invalid credentials'</span><span class="p">,</span> <span class="mi">401</span>
+</code></pre></div>
+<h4 id="2-session-security-best-practices">2. <strong>Session Security Best Practices</strong></h4>
+<ul>
+<li><strong>Secure Cookies</strong>: Use HttpOnly, Secure, and SameSite flags</li>
+<li><strong>Session Timeout</strong>: Implement automatic session expiration</li>
+<li><strong>Session Regeneration</strong>: Change session ID after login</li>
+<li><strong>Concurrent Session Control</strong>: Limit active sessions per user</li>
+<li><strong>Session Invalidation</strong>: Proper logout and session cleanup</li>
+</ul>
+<h2 id="api-security">🌐 API Security</h2>
+<h3 id="api-security-principles">API Security Principles</h3>
+<h4 id="1-authentication-and-authorization">1. <strong>Authentication and Authorization</strong></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># JWT-based API authentication</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jwt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">wraps</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">flask</span><span class="w"> </span><span class="kn">import</span> <span class="n">request</span><span class="p">,</span> <span class="n">jsonify</span>
+
+<span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s1">'your-secret-key'</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_token</span><span class="p">(</span><span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">username</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Generate JWT token."""</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">'user_id'</span><span class="p">:</span> <span class="n">user_id</span><span class="p">,</span>
+        <span class="s1">'username'</span><span class="p">:</span> <span class="n">username</span><span class="p">,</span>
+        <span class="s1">'exp'</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">jwt</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span> <span class="n">SECRET_KEY</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">'HS256'</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">verify_token</span><span class="p">(</span><span class="n">token</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Verify JWT token."""</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">SECRET_KEY</span><span class="p">,</span> <span class="n">algorithms</span><span class="o">=</span><span class="p">[</span><span class="s1">'HS256'</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">payload</span>
+    <span class="k">except</span> <span class="n">jwt</span><span class="o">.</span><span class="n">ExpiredSignatureError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">'Token expired'</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">jwt</span><span class="o">.</span><span class="n">InvalidTokenError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">'Invalid token'</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">require_auth</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Decorator to require authentication."""</span>
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">decorated</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">token</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'Authorization'</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">token</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s1">'message'</span><span class="p">:</span> <span class="s1">'Missing token'</span><span class="p">}),</span> <span class="mi">401</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Remove 'Bearer ' prefix</span>
+            <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'Bearer '</span><span class="p">):</span>
+                <span class="n">token</span> <span class="o">=</span> <span class="n">token</span><span class="p">[</span><span class="mi">7</span><span class="p">:]</span>
+
+            <span class="n">payload</span> <span class="o">=</span> <span class="n">verify_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">payload</span>
+            <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s1">'message'</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)}),</span> <span class="mi">401</span>
+
+    <span class="k">return</span> <span class="n">decorated</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">'/api/protected'</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">'GET'</span><span class="p">])</span>
+<span class="nd">@require_auth</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">protected_endpoint</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""Protected API endpoint."""</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span>
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span>
+        <span class="s1">'message'</span><span class="p">:</span> <span class="s1">'Access granted'</span><span class="p">,</span>
+        <span class="s1">'user_id'</span><span class="p">:</span> <span class="n">user</span><span class="p">[</span><span class="s1">'user_id'</span><span class="p">],</span>
+        <span class="s1">'username'</span><span class="p">:</span> <span class="n">user</span><span class="p">[</span><span class="s1">'username'</span><span class="p">]</span>
+    <span class="p">})</span>
+</code></pre></div>
+<h4 id="2-rate-limiting">2. <strong>Rate Limiting</strong></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># API rate limiting implementation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">flask_limiter</span><span class="w"> </span><span class="kn">import</span> <span class="n">Limiter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">flask_limiter.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_remote_address</span>
+
+<span class="n">limiter</span> <span class="o">=</span> <span class="n">Limiter</span><span class="p">(</span>
+    <span class="n">app</span><span class="p">,</span>
+    <span class="n">key_func</span><span class="o">=</span><span class="n">get_remote_address</span><span class="p">,</span>
+    <span class="n">default_limits</span><span class="o">=</span><span class="p">[</span><span class="s2">"200 per day"</span><span class="p">,</span> <span class="s2">"50 per hour"</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">'/api/login'</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">'POST'</span><span class="p">])</span>
+<span class="nd">@limiter</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="s2">"5 per minute"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">api_login</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""Rate-limited login endpoint."""</span>
+    <span class="c1"># Login logic here</span>
+    <span class="k">pass</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">'/api/data'</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">'GET'</span><span class="p">])</span>
+<span class="nd">@limiter</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="s2">"100 per hour"</span><span class="p">)</span>
+<span class="nd">@require_auth</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_data</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""Rate-limited data endpoint."""</span>
+    <span class="c1"># Data retrieval logic here</span>
+    <span class="k">pass</span>
+</code></pre></div>
+<h4 id="3-input-validation-for-apis">3. <strong>Input Validation for APIs</strong></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># API input validation with marshmallow</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">marshmallow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Schema</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">validate</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">UserSchema</span><span class="p">(</span><span class="n">Schema</span><span class="p">):</span>
+    <span class="n">username</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Str</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="n">validate</span><span class="o">.</span><span class="n">Length</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">20</span><span class="p">))</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Email</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Int</span><span class="p">(</span><span class="n">validate</span><span class="o">=</span><span class="n">validate</span><span class="o">.</span><span class="n">Range</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">120</span><span class="p">))</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">UserAPI</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">schema</span> <span class="o">=</span> <span class="n">UserSchema</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Create user with validation."""</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Validate input data</span>
+            <span class="n">validated_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+            <span class="c1"># Process validated data</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">process_user_creation</span><span class="p">(</span><span class="n">validated_data</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="n">ValidationError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s1">'errors'</span><span class="p">:</span> <span class="n">e</span><span class="o">.</span><span class="n">messages</span><span class="p">},</span> <span class="mi">400</span>
+</code></pre></div>
+<h2 id="security-testing-in-cicd">🧪 Security Testing in CI/CD</h2>
+<h3 id="integrating-security-testing">Integrating Security Testing</h3>
+<h4 id="1-automated-security-pipeline">1. <strong>Automated Security Pipeline</strong></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># GitHub Actions security pipeline</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Security Pipeline</span>
+<span class="nt">on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">push</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">pull_request</span><span class="p p-Indicator">]</span>
+
+<span class="nt">jobs</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">security-scan</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v2</span>
+
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run SAST</span>
+<span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">github/codeql-action/init@v2</span>
+<span class="w">        </span><span class="nt">with</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">languages</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python, javascript</span>
+
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Perform CodeQL Analysis</span>
+<span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">github/codeql-action/analyze@v2</span>
+
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run dependency scan</span>
+<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">          </span><span class="no">pip install safety</span>
+<span class="w">          </span><span class="no">safety check --json --output safety-report.json</span>
+
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run OWASP ZAP</span>
+<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">          </span><span class="no"># Start application</span>
+<span class="w">          </span><span class="no">npm start &amp;</span>
+
+<span class="w">          </span><span class="no"># Wait for app to start</span>
+<span class="w">          </span><span class="no">sleep 30</span>
+
+<span class="w">          </span><span class="no"># Run ZAP scan</span>
+<span class="w">          </span><span class="no">zap-baseline.py -t http://localhost:3000 -J zap-report.json</span>
+
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Upload security reports</span>
+<span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/upload-artifact@v2</span>
+<span class="w">        </span><span class="nt">with</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">security-reports</span>
+<span class="w">          </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">            </span><span class="no">codeql-report.sarif</span>
+<span class="w">            </span><span class="no">safety-report.json</span>
+<span class="w">            </span><span class="no">zap-report.json</span>
+</code></pre></div>
+<h4 id="2-security-gates">2. <strong>Security Gates</strong></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Security quality gates</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Check security thresholds</span>
+<span class="w">  </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">    </span><span class="no"># Parse security reports</span>
+<span class="w">    </span><span class="no">python parse_security_reports.py</span>
+
+<span class="w">    </span><span class="no"># Check if vulnerabilities exceed thresholds</span>
+<span class="w">    </span><span class="no">if [ $CRITICAL_VULNS -gt 0 ]; then</span>
+<span class="w">      </span><span class="no">echo "Critical vulnerabilities found. Build failed."</span>
+<span class="w">      </span><span class="no">exit 1</span>
+<span class="w">    </span><span class="no">fi</span>
+
+<span class="w">    </span><span class="no">if [ $HIGH_VULNS -gt 5 ]; then</span>
+<span class="w">      </span><span class="no">echo "Too many high vulnerabilities. Build failed."</span>
+<span class="w">      </span><span class="no">exit 1</span>
+<span class="w">    </span><span class="no">fi</span>
+
+<span class="w">    </span><span class="no">echo "Security checks passed."</span>
+</code></pre></div>
+<h3 id="security-testing-tools-integration">Security Testing Tools Integration</h3>
+<h4 id="1-sast-tools">1. <strong>SAST Tools</strong></h4>
+<ul>
+<li><strong>SonarQube</strong>: Quality gates and security rules</li>
+<li><strong>CodeQL</strong>: GitHub's semantic code analysis</li>
+<li><strong>Semgrep</strong>: Fast, lightweight static analysis</li>
+<li><strong>Bandit</strong>: Python security linter</li>
+</ul>
+<h4 id="2-dast-tools">2. <strong>DAST Tools</strong></h4>
+<ul>
+<li><strong>OWASP ZAP</strong>: Automated web application scanning</li>
+<li><strong>Burp Suite</strong>: Professional security testing</li>
+<li><strong>Acunetix</strong>: Comprehensive vulnerability scanning</li>
+</ul>
+<h4 id="3-dependency-scanning">3. <strong>Dependency Scanning</strong></h4>
+<ul>
+<li><strong>Snyk</strong>: Vulnerability scanning for dependencies</li>
+<li><strong>Safety</strong>: Python dependency security checker</li>
+<li><strong>npm audit</strong>: Node.js security auditing</li>
+<li><strong>OWASP Dependency Check</strong>: Multi-language dependency scanner</li>
+</ul>
+<h2 id="security-code-review">📋 Security Code Review</h2>
+<h3 id="code-review-checklist">Code Review Checklist</h3>
+<h4 id="1-authentication-and-authorization_1">1. <strong>Authentication and Authorization</strong></h4>
+<ul>
+<li>[ ] <strong>Input Validation</strong>: All inputs are properly validated</li>
+<li>[ ] <strong>Authentication</strong>: Secure authentication mechanisms</li>
+<li>[ ] <strong>Authorization</strong>: Proper access control checks</li>
+<li>[ ] <strong>Session Management</strong>: Secure session handling</li>
+<li>[ ] <strong>Password Security</strong>: Strong password policies</li>
+</ul>
+<h4 id="2-data-protection">2. <strong>Data Protection</strong></h4>
+<ul>
+<li>[ ] <strong>Encryption</strong>: Sensitive data is encrypted</li>
+<li>[ ] <strong>Data Handling</strong>: Secure data processing and storage</li>
+<li>[ ] <strong>Error Handling</strong>: No sensitive information in error messages</li>
+<li>[ ] <strong>Logging</strong>: Secure logging practices</li>
+<li>[ ] <strong>Data Disposal</strong>: Proper data cleanup</li>
+</ul>
+<h4 id="3-injection-prevention">3. <strong>Injection Prevention</strong></h4>
+<ul>
+<li>[ ] <strong>SQL Injection</strong>: Parameterized queries used</li>
+<li>[ ] <strong>XSS Prevention</strong>: Output encoding implemented</li>
+<li>[ ] <strong>Command Injection</strong>: No shell command execution</li>
+<li>[ ] <strong>LDAP Injection</strong>: Secure directory queries</li>
+<li>[ ] <strong>NoSQL Injection</strong>: Secure document queries</li>
+</ul>
+<h4 id="4-configuration-security">4. <strong>Configuration Security</strong></h4>
+<ul>
+<li>[ ] <strong>Default Settings</strong>: Secure default configurations</li>
+<li>[ ] <strong>Environment Variables</strong>: Secure configuration management</li>
+<li>[ ] <strong>Secrets Management</strong>: Secure handling of secrets</li>
+<li>[ ] <strong>HTTPS</strong>: Secure communication protocols</li>
+<li>[ ] <strong>Security Headers</strong>: Proper security headers configured</li>
+</ul>
+<h3 id="code-review-process">Code Review Process</h3>
+<pre class="mermaid"><code>graph TD
+    A[Code Review Process] --&gt; B[Automated Checks]
+    A --&gt; C[Manual Review]
+    A --&gt; D[Security Focus]
+    A --&gt; E[Approval Process]
+
+    B --&gt; B1[Static analysis]
+    B --&gt; B2[Linting]
+    B --&gt; B3[Security scanning]
+
+    C --&gt; C1[Peer review]
+    C --&gt; C2[Security expert review]
+    C --&gt; C3[Architecture review]
+
+    D --&gt; D1[Vulnerability check]
+    D --&gt; D2[Security best practices]
+    D --&gt; D3[Threat analysis]
+
+    E --&gt; E1[Security approval]
+    E --&gt; E2[Quality approval]
+    E --&gt; E3[Merge approval]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec</code></pre>
+<h2 id="hands-on-activities">🧪 Hands-on Activities</h2>
+<h3 id="activity-1-owasp-top-10-analysis">Activity 1: OWASP Top 10 Analysis</h3>
+<p><strong>Objective</strong>: Analyze and understand OWASP Top 10 vulnerabilities.</p>
+<p><strong>Scenario</strong>: Review a vulnerable web application for security issues.</p>
+<p><strong>Steps</strong>:
+1. <strong>Vulnerability Identification</strong>: Find examples of each OWASP Top 10 category
+2. <strong>Risk Assessment</strong>: Evaluate the severity and impact of each vulnerability
+3. <strong>Mitigation Planning</strong>: Develop remediation strategies for each finding
+4. <strong>Documentation</strong>: Create a comprehensive security assessment report</p>
+<h3 id="activity-2-secure-code-implementation">Activity 2: Secure Code Implementation</h3>
+<p><strong>Objective</strong>: Implement secure coding practices in a sample application.</p>
+<p><strong>Materials</strong>: Development environment, sample vulnerable code</p>
+<p><strong>Steps</strong>:
+1. <strong>Code Review</strong>: Identify security vulnerabilities in sample code
+2. <strong>Secure Implementation</strong>: Rewrite vulnerable code with security best practices
+3. <strong>Testing</strong>: Verify that security vulnerabilities are mitigated
+4. <strong>Documentation</strong>: Document security improvements and lessons learned</p>
+<h3 id="activity-3-security-testing-integration">Activity 3: Security Testing Integration</h3>
+<p><strong>Objective</strong>: Integrate security testing tools into a CI/CD pipeline.</p>
+<p><strong>Materials</strong>: CI/CD platform, security testing tools</p>
+<p><strong>Steps</strong>:
+1. <strong>Tool Selection</strong>: Choose appropriate SAST and DAST tools
+2. <strong>Pipeline Configuration</strong>: Configure security testing in CI/CD
+3. <strong>Quality Gates</strong>: Implement security thresholds and gates
+4. <strong>Monitoring</strong>: Set up security testing monitoring and reporting</p>
+<h3 id="activity-4-api-security-assessment">Activity 4: API Security Assessment</h3>
+<p><strong>Objective</strong>: Assess and secure a REST API application.</p>
+<p><strong>Scenario</strong>: Security review of a company's public API.</p>
+<p><strong>Steps</strong>:
+1. <strong>API Mapping</strong>: Identify all API endpoints and functionality
+2. <strong>Security Testing</strong>: Test for common API vulnerabilities
+3. <strong>Authentication Review</strong>: Assess authentication and authorization mechanisms
+4. <strong>Security Hardening</strong>: Implement security improvements
+5. <strong>Documentation</strong>: Create API security guidelines and best practices</p>
+<h2 id="key-takeaways">📋 Key Takeaways</h2>
+<ol>
+<li>
+<p><strong>Application security</strong> is essential for protecting software from various threats and vulnerabilities.</p>
+</li>
+<li>
+<p><strong>Secure SDLC</strong> integrates security practices throughout the development lifecycle.</p>
+</li>
+<li>
+<p><strong>OWASP Top 10</strong> identifies the most critical web application security risks.</p>
+</li>
+<li>
+<p><strong>Security testing</strong> includes SAST, DAST, and IAST approaches for comprehensive coverage.</p>
+</li>
+<li>
+<p><strong>Secure coding practices</strong> prevent common vulnerabilities like injection and XSS attacks.</p>
+</li>
+<li>
+<p><strong>Authentication and session management</strong> are critical for maintaining application security.</p>
+</li>
+<li>
+<p><strong>API security</strong> requires special attention to authentication, authorization, and input validation.</p>
+</li>
+<li>
+<p><strong>CI/CD integration</strong> ensures security testing is automated and consistent.</p>
+</li>
+</ol>
+<h2 id="review-questions">❓ Review Questions</h2>
+<ol>
+<li>
+<p><strong>What are the key phases</strong> of the Secure Software Development Lifecycle?</p>
+</li>
+<li>
+<p><strong>How can you prevent</strong> SQL injection and XSS vulnerabilities in web applications?</p>
+</li>
+<li>
+<p><strong>What tools and techniques</strong> are used for SAST and DAST security testing?</p>
+</li>
+<li>
+<p><strong>How should authentication</strong> and session management be implemented securely?</p>
+</li>
+<li>
+<p><strong>What are the main considerations</strong> for securing REST APIs?</p>
+</li>
+</ol>
+<h2 id="further-reading">📚 Further Reading</h2>
+<h3 id="books">Books</h3>
+<ul>
+<li>"The Web Application Hacker's Handbook" by Dafydd Stuttard and Marcus Pinto</li>
+<li>"Secure Coding: Principles and Practices" by Mark G. Graff and Kenneth R. van Wyk</li>
+<li>"Building Secure Software" by John Viega and Gary McGraw</li>
+</ul>
+<h3 id="online-resources">Online Resources</h3>
+<ul>
+<li><a href="https://owasp.org/Top10/">OWASP Top 10</a></li>
+<li><a href="https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/">OWASP Secure Coding Practices</a></li>
+<li><a href="https://owasp.org/www-project-application-security-verification-standard/">OWASP Application Security Verification Standard</a></li>
+</ul>
+<h3 id="tools-and-platforms">Tools and Platforms</h3>
+<ul>
+<li><a href="https://owasp.org/www-project-zap/">OWASP ZAP</a> - Web application security scanner</li>
+<li><a href="https://www.sonarqube.org/">SonarQube</a> - Code quality and security platform</li>
+<li><a href="https://semgrep.dev/">Semgrep</a> - Static analysis tool</li>
+</ul>
+<hr/>
+<p><strong>Next Chapter</strong>: <a href="../chapter11-project-management/">Chapter 11: IT Project Management</a> - Learn about project management frameworks, Agile methodologies, and risk management in IT projects.</p>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      © 2026 Data Octo · Enterprise Cloud, Data &amp; AI, Cybersecurity Architecture
+    </div>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "content.code.copy"], "search": "../../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+<script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
+<script src="../../../../assets/javascripts/mermaid-init.js"></script>
+</body>
+</html>

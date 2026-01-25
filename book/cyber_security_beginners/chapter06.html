@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Ethics, Security & Privacy</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="ethics-security--privacy">Ethics, Security &amp; Privacy</h1>
+<h2 id="overview-and-objectives">Overview and Objectives</h2>
+<p>This module on <strong>Ethics, Security &amp; Privacy</strong> emphasizes that cybersecurity extends beyond technical defenses to safeguarding human rights, dignity, and societal trust. In an era where data is a valuable asset, ethical considerations and legal compliance are crucial to prevent misuse, discrimination, and harm. Students will explore how laws and ethical frameworks guide security practices, ensuring systems respect privacy while balancing security needs. By the end of this module, students will be able to:</p>
+<ul>
+<li>Interpret key privacy laws like <strong>GDPR</strong> (General Data Protection Regulation) and <strong>Quebec's Law 25</strong> (also known as Bill 64), applying them to real-world scenarios.</li>
+<li>Build <strong>privacy-by-design</strong> strategies to embed privacy protections from the outset of system development.</li>
+<li>Manage <strong>PII</strong> (Personally Identifiable Information) securely, including classification, storage, and disposal.</li>
+</ul>
+<p>This module integrates ethical reasoning with practical compliance, drawing on case studies like the Cambridge Analytica scandal or recent AI privacy breaches. As of August 2025, with ongoing GDPR simplifications for SMEs and full enforcement of Law 25, emphasize adaptability to evolving regulations.</p>
+<p><strong>Estimated Time:</strong> 4-6 hours of lecture/discussion, plus case studies and policy drafting exercises.</p>
+<p><strong>Prerequisites:</strong> Introduction to Cybersecurity, Basic Data Management.</p>
+<p><strong>Assessment Ideas:</strong></p>
+<ul>
+<li>Quiz on legal requirements and ethical dilemmas.</li>
+<li>Project: Conduct a Privacy Impact Assessment for a hypothetical app.</li>
+<li>Debate: &quot;Should ethical hacking prioritize societal good over legal boundaries?&quot;</li>
+</ul>
+<h2 id="key-concepts-and-explanations">Key Concepts and Explanations</h2>
+<h3 id="1-ethics-in-cybersecurity">1. Ethics in Cybersecurity</h3>
+<p>Ethics involves moral principles guiding decisions in security practices, such as balancing surveillance for safety against privacy invasion. Frameworks like utilitarianism (greatest good for the greatest number) or deontology (duty-based rules) help navigate dilemmas.</p>
+<ul>
+<li>
+<p><strong>Ethical Decision-Making:</strong> A structured process to evaluate actions' impacts. Steps include identifying stakeholders, assessing risks, considering alternatives, and justifying choices. In cybersec, this applies to issues like vulnerability disclosure (e.g., responsible disclosure vs. full disclosure).</p>
+<ul>
+<li><strong>Why it matters:</strong> Poor ethics can lead to reputational damage, legal penalties, or societal harm (e.g., biased AI in facial recognition).</li>
+<li><strong>Term to Explain:</strong> <em>Responsible Disclosure</em> – A practice where security researchers notify vendors of vulnerabilities privately before public release, allowing time for patches.</li>
+</ul>
+</li>
+<li>
+<p><strong>Policy Drafting:</strong> Creating formal documents outlining organizational rules for security and privacy. Policies should be clear, enforceable, and aligned with laws, covering topics like data handling, access controls, and incident response.</p>
+<ul>
+<li><strong>Best Practices:</strong> Use templates from NIST or ISO 27701; involve stakeholders; review annually.</li>
+<li><strong>Example:</strong> A data retention policy specifying how long PII is kept and when it's deleted.</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-privacy-laws-gdpr-and-law-25">2. Privacy Laws: GDPR and Law 25</h3>
+<p>These laws protect individuals' data rights and impose obligations on organizations.</p>
+<ul>
+<li>
+<p><strong>GDPR (General Data Protection Regulation):</strong> EU law effective since 2018, applying to any entity processing EU residents' data. Key principles: Lawfulness, fairness, transparency, purpose limitation, data minimization, accuracy, storage limitation, integrity/confidentiality, accountability.</p>
+<ul>
+<li><strong>Interpretation:</strong> Controllers must obtain consent, appoint Data Protection Officers (DPOs) for large-scale processing, and conduct Data Protection Impact Assessments (DPIAs) for high-risk activities.</li>
+<li><strong>2025 Updates:</strong> The European Commission adopted simplifications in May 2025, reducing record-keeping for SMEs. The EU Data Act, effective September 12, 2025, enhances data sharing rules for connected devices. Enforcement trends focus on cross-border transfers and AI compliance.</li>
+<li><strong>Fines:</strong> Up to 4% of global annual turnover.</li>
+<li><strong>Term to Explain:</strong> <em>Data Controller vs. Processor</em> – Controller determines the purpose/means of processing (e.g., a company collecting user data); Processor handles data on behalf of the controller (e.g., a cloud provider).</li>
+</ul>
+</li>
+<li>
+<p><strong>Quebec's Law 25 (Bill 64):</strong> Modernizes Quebec's privacy framework, fully effective by September 2024. Modeled after GDPR, it applies to organizations handling Quebec residents' personal information.</p>
+<ul>
+<li><strong>Interpretation:</strong> Requires privacy governance, impact assessments, explicit consent for sensitive data, and automated decision-making transparency. Introduces rights like portability and de-indexing (right to be forgotten).</li>
+<li><strong>2025 Status:</strong> Post-implementation, enhancements include stronger individual rights and accountability for public/private sectors. Businesses must appoint a Privacy Officer and report breaches within 72 hours.</li>
+<li><strong>Fines:</strong> Up to CAD 25 million or 4% of worldwide turnover.</li>
+<li><strong>Comparison to GDPR:</strong> Similar but tailored to Canadian context; Law 25 mandates privacy-by-default in tech design.</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-privacy-by-design-strategies">3. Privacy-by-Design Strategies</h3>
+<p>A proactive approach to integrate privacy into systems from inception, based on 7 foundational principles by Ann Cavoukian: Proactive not reactive; Privacy as default; Embedded into design; Full functionality; End-to-end security; Visibility/transparency; Respect for user privacy.</p>
+<ul>
+<li><strong>Building Strategies:</strong> Start with data mapping, minimize collection, use pseudonymization/anonymization, and implement access controls. In software dev, apply during SDLC (Software Development Life Cycle).
+<ul>
+<li><strong>Why it matters:</strong> Prevents costly retrofits; complies with GDPR/Law 25.</li>
+<li><strong>Example:</strong> Designing an app with opt-in consent and automatic data deletion after purpose fulfillment.</li>
+<li><strong>Term to Explain:</strong> <em>Pseudonymization</em> – Replacing identifiable data with pseudonyms (reversible), vs. <em>Anonymization</em> (irreversible, removing identifiability).</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-managing-pii-securely">4. Managing PII Securely</h3>
+<p>PII includes any data identifying an individual (e.g., name, email, SSN, biometrics).</p>
+<ul>
+<li>
+<p><strong>Secure Management:</strong> Classify PII (sensitive vs. non-sensitive), encrypt in transit/rest, use secure storage (e.g., hashed passwords), and limit access via RBAC (Role-Based Access Control).</p>
+<ul>
+<li><strong>Challenges:</strong> Insider threats, third-party risks, emerging tech like AI processing PII.</li>
+<li><strong>Term to Explain:</strong> <em>Sensitive PII</em> – Data revealing racial/ethnic origin, political opinions, health, etc., requiring extra protections under GDPR/Law 25.</li>
+</ul>
+</li>
+<li>
+<p><strong>Privacy Impact Assessment (PIA/DPIA):</strong> A systematic process to evaluate privacy risks in projects. Mandatory under GDPR for high-risk processing; recommended in Law 25.</p>
+<ul>
+<li><strong>Steps:</strong> Describe processing, assess necessity/proportionality, identify risks, propose mitigations.</li>
+</ul>
+</li>
+<li>
+<p><strong>Breach Notification:</strong> Reporting data breaches to authorities and affected individuals.</p>
+<ul>
+<li><strong>GDPR:</strong> Notify supervisory authority within 72 hours; individuals if high risk.</li>
+<li><strong>Law 25:</strong> Similar 72-hour timeline to Quebec's Commission d'accès à l'information.</li>
+<li><strong>Process:</strong> Detect, contain, assess, notify, document.</li>
+</ul>
+</li>
+</ul>
+<h2 id="visualizations-using-mermaid-script">Visualizations Using Mermaid Script</h2>
+<p>Use these in slides; students can practice recreating them.</p>
+<h3 id="visualization-1-breach-notification-process">Visualization 1: Breach Notification Process</h3>
+<p>Flowchart for GDPR/Law 25 breach response.</p>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart TD
+    A[Breach Detected] --> B{Assess Risk?}
+    B -->|Low Risk| C[Document Internally]
+    B -->|High Risk| D[Notify Authority <72 hrs]
+    D --> E{Impacts Individuals?}
+    E -->|Yes| F[Notify Affected Persons Without Delay]
+    E -->|No| G[Document & Mitigate]
+    F --> G
+    subgraph "Key Steps"
+    D
+    F
+    end
+    style A fill:#f66,stroke:#333
+    style G fill:#6f6,stroke:#333
+</div></code></pre>
+<p><strong>Explanation in Class:</strong> Discuss timelines and what constitutes &quot;high risk&quot; (e.g., identity theft potential).</p>
+<h3 id="visualization-2-privacy-by-design-principles">Visualization 2: Privacy-by-Design Principles</h3>
+<p>Mind map of the 7 principles.</p>
+<pre><code class="language-mermaid"><div class="mermaid">mindmap
+  root((Privacy-by-Design))
+    Proactive["Proactive not Reactive"]
+    Default["Privacy as Default Setting"]
+    Embedded["Privacy Embedded into Design"]
+    PositiveSum["Full Functionality (Positive-Sum)"]
+    Lifecycle["End-to-End Security Lifecycle"]
+    Transparency["Visibility & Transparency"]
+    Respect["User-Centric Respect"]
+</div></code></pre>
+<p><strong>Explanation in Class:</strong> Link each to examples, like &quot;Default&quot; meaning opt-out not required for privacy features.</p>
+<h3 id="visualization-3-ethical-decision-making-framework">Visualization 3: Ethical Decision-Making Framework</h3>
+<p>Sequence for resolving dilemmas.</p>
+<pre><code class="language-mermaid"><div class="mermaid">sequenceDiagram
+    participant SecurityPro as Security Professional
+    participant Stakeholders
+    SecurityPro->>SecurityPro: Identify Ethical Issue
+    SecurityPro->>Stakeholders: Gather Facts & Perspectives
+    Stakeholders->>SecurityPro: Input on Impacts
+    SecurityPro->>SecurityPro: Evaluate Options (Utilitarian/Deontological)
+    SecurityPro->>SecurityPro: Decide & Justify
+    SecurityPro->>Stakeholders: Implement & Monitor
+</div></code></pre>
+<p><strong>Explanation in Class:</strong> Apply to a scenario like deciding to report a zero-day vulnerability.</p>
+<h2 id="hands-on-activities-and-examples">Hands-On Activities and Examples</h2>
+<ul>
+<li><strong>Lab 1:</strong> Draft a privacy policy for a fictional e-health app, incorporating GDPR/Law 25 requirements.</li>
+<li><strong>Case Study:</strong> Analyze the 2023 Meta GDPR fine (1.2 billion EUR) for data transfers; discuss ethical implications.</li>
+<li><strong>Group Exercise:</strong> Perform a PIA on a university database; identify PII risks and mitigations.</li>
+<li><strong>Simulation:</strong> Role-play a breach notification scenario, timing the 72-hour response.</li>
+</ul>
+<h2 id="key-skills-development">Key Skills Development</h2>
+<ul>
+<li><strong>GDPR &amp; Law 25:</strong> Interpret via compliance checklists; compare in tables.</li>
+<li><strong>Privacy Impact Assessment:</strong> Conduct mock assessments using ENISA templates.</li>
+<li><strong>Breach Notification:</strong> Practice reporting formats.</li>
+<li><strong>Ethical Decision-Making:</strong> Use frameworks in debates.</li>
+<li><strong>Policy Drafting:</strong> Create and peer-review policies.</li>
+</ul>
+<h2 id="resources-and-further-reading">Resources and Further Reading</h2>
+<ul>
+<li>Books: &quot;Privacy is Power&quot; by Carissa Véliz; &quot;The Ethics of Cybersecurity&quot; by Markus Christen et al.</li>
+<li>Online: GDPR.eu; Quebec's Commission d'accès à l'information site; OWASP Privacy Risks.</li>
+<li>Videos: TED Talks on data ethics; Coursera courses on GDPR compliance.</li>
+<li>Tools: Free PIA templates from CNIL (France) or IAPP.</li>
+</ul>
+<p>Stay current with sources like the EDPB website or privacy newsletters, as laws like the EU Data Act evolve. End with discussions on emerging issues like AI ethics in 2025.</p>
+
+</body>
+</html>

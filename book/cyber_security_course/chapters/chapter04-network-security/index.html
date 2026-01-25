@@ -1,0 +1,1570 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<link href="https://data-octo.github.io/book/cyber_security_course/chapters/chapter04-network-security/" rel="canonical"/>
+<link href="../../../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.6.20" name="generator"/>
+<title>Chapter 4: Network Security Essentials - Data Octo</title>
+<link href="../../../../assets/stylesheets/main.e53b48f4.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#chapter-4-network-security-essentials">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Data Octo" class="md-header__button md-logo" data-md-component="logo" href="../../../.." title="Data Octo">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Data Octo
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Chapter 4: Network Security Essentials
+            
+          </span>
+</div>
+</div>
+</div>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Data Octo" class="md-nav__button md-logo" data-md-component="logo" href="../../../.." title="Data Octo">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    Data Octo
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../..">
+<span class="md-ellipsis">
+    Home
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    Blog
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            Blog
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../../blog/index.html">
+<span class="md-ellipsis">
+    Blog Home
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+<span class="md-ellipsis">
+    Books
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            Books
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../../books/index.html">
+<span class="md-ellipsis">
+    None
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+<span class="md-ellipsis">
+    Portfolio
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            Portfolio
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../../portfolio/">
+<span class="md-ellipsis">
+    None
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#learning-objectives">
+<span class="md-ellipsis">
+      🎯 Learning Objectives
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#network-fundamentals-and-security">
+<span class="md-ellipsis">
+      🌐 Network Fundamentals and Security
+    </span>
+</a>
+<nav aria-label="🌐 Network Fundamentals and Security" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#what-is-a-network">
+<span class="md-ellipsis">
+      What is a Network?
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#network-types-and-security-considerations">
+<span class="md-ellipsis">
+      Network Types and Security Considerations
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#network-security-principles">
+<span class="md-ellipsis">
+      Network Security Principles
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#network-protocols-and-security">
+<span class="md-ellipsis">
+      🔍 Network Protocols and Security
+    </span>
+</a>
+<nav aria-label="🔍 Network Protocols and Security" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#osi-model-and-security">
+<span class="md-ellipsis">
+      OSI Model and Security
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#key-protocols-and-security-issues">
+<span class="md-ellipsis">
+      Key Protocols and Security Issues
+    </span>
+</a>
+<nav aria-label="Key Protocols and Security Issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-tcpip-protocol-suite">
+<span class="md-ellipsis">
+      1. TCP/IP Protocol Suite
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-httphttps-web-protocols">
+<span class="md-ellipsis">
+      2. HTTP/HTTPS (Web Protocols)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-dns-domain-name-system">
+<span class="md-ellipsis">
+      3. DNS (Domain Name System)
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#common-network-vulnerabilities">
+<span class="md-ellipsis">
+      🚨 Common Network Vulnerabilities
+    </span>
+</a>
+<nav aria-label="🚨 Common Network Vulnerabilities" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#vulnerability-categories">
+<span class="md-ellipsis">
+      Vulnerability Categories
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#top-network-security-threats">
+<span class="md-ellipsis">
+      Top Network Security Threats
+    </span>
+</a>
+<nav aria-label="Top Network Security Threats" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-denial-of-service-dos-attacks">
+<span class="md-ellipsis">
+      1. Denial of Service (DoS) Attacks
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-man-in-the-middle-mitm-attacks">
+<span class="md-ellipsis">
+      2. Man-in-the-Middle (MitM) Attacks
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-network-reconnaissance">
+<span class="md-ellipsis">
+      3. Network Reconnaissance
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#4-wireless-network-attacks">
+<span class="md-ellipsis">
+      4. Wireless Network Attacks
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#wireshark-network-traffic-analysis">
+<span class="md-ellipsis">
+      🕵️ Wireshark: Network Traffic Analysis
+    </span>
+</a>
+<nav aria-label="🕵️ Wireshark: Network Traffic Analysis" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#what-is-wireshark">
+<span class="md-ellipsis">
+      What is Wireshark?
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#wireshark-interface-overview">
+<span class="md-ellipsis">
+      Wireshark Interface Overview
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#essential-wireshark-filters">
+<span class="md-ellipsis">
+      Essential Wireshark Filters
+    </span>
+</a>
+<nav aria-label="Essential Wireshark Filters" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#protocol-filters">
+<span class="md-ellipsis">
+      Protocol Filters
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-related-filters">
+<span class="md-ellipsis">
+      Security-Related Filters
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#analyzing-security-threats-with-wireshark">
+<span class="md-ellipsis">
+      Analyzing Security Threats with Wireshark
+    </span>
+</a>
+<nav aria-label="Analyzing Security Threats with Wireshark" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-detecting-port-scanning">
+<span class="md-ellipsis">
+      1. Detecting Port Scanning
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-identifying-ddos-attacks">
+<span class="md-ellipsis">
+      2. Identifying DDoS Attacks
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-detecting-data-exfiltration">
+<span class="md-ellipsis">
+      3. Detecting Data Exfiltration
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#wireshark-security-analysis-workflow">
+<span class="md-ellipsis">
+      Wireshark Security Analysis Workflow
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cisco-packet-tracer-network-design-and-security">
+<span class="md-ellipsis">
+      🏗️ Cisco Packet Tracer: Network Design and Security
+    </span>
+</a>
+<nav aria-label="🏗️ Cisco Packet Tracer: Network Design and Security" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#what-is-cisco-packet-tracer">
+<span class="md-ellipsis">
+      What is Cisco Packet Tracer?
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#basic-network-topology">
+<span class="md-ellipsis">
+      Basic Network Topology
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#network-segmentation-strategy">
+<span class="md-ellipsis">
+      Network Segmentation Strategy
+    </span>
+</a>
+<nav aria-label="Network Segmentation Strategy" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-dmz-demilitarized-zone">
+<span class="md-ellipsis">
+      1. DMZ (Demilitarized Zone)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-internal-network">
+<span class="md-ellipsis">
+      2. Internal Network
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-management-network">
+<span class="md-ellipsis">
+      3. Management Network
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-device-configuration">
+<span class="md-ellipsis">
+      Security Device Configuration
+    </span>
+</a>
+<nav aria-label="Security Device Configuration" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#firewall-configuration">
+<span class="md-ellipsis">
+      Firewall Configuration
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#switch-security">
+<span class="md-ellipsis">
+      Switch Security
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#network-security-controls">
+<span class="md-ellipsis">
+      🛡️ Network Security Controls
+    </span>
+</a>
+<nav aria-label="🛡️ Network Security Controls" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#defense-in-depth-strategy">
+<span class="md-ellipsis">
+      Defense in Depth Strategy
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-firewalls">
+<span class="md-ellipsis">
+      1. Firewalls
+    </span>
+</a>
+<nav aria-label="1. Firewalls" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#types-of-firewalls">
+<span class="md-ellipsis">
+      Types of Firewalls
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#firewall-rules-example">
+<span class="md-ellipsis">
+      Firewall Rules Example
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-intrusion-detectionprevention-systems-idsips">
+<span class="md-ellipsis">
+      2. Intrusion Detection/Prevention Systems (IDS/IPS)
+    </span>
+</a>
+<nav aria-label="2. Intrusion Detection/Prevention Systems (IDS/IPS)" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ids-vs-ips">
+<span class="md-ellipsis">
+      IDS vs IPS
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#common-detection-methods">
+<span class="md-ellipsis">
+      Common Detection Methods
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-virtual-private-networks-vpns">
+<span class="md-ellipsis">
+      3. Virtual Private Networks (VPNs)
+    </span>
+</a>
+<nav aria-label="3. Virtual Private Networks (VPNs)" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#vpn-types">
+<span class="md-ellipsis">
+      VPN Types
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#vpn-security-features">
+<span class="md-ellipsis">
+      VPN Security Features
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dosddos-attack-mitigation">
+<span class="md-ellipsis">
+      🚫 DoS/DDoS Attack Mitigation
+    </span>
+</a>
+<nav aria-label="🚫 DoS/DDoS Attack Mitigation" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#attack-types-and-mitigation">
+<span class="md-ellipsis">
+      Attack Types and Mitigation
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#mitigation-strategies">
+<span class="md-ellipsis">
+      Mitigation Strategies
+    </span>
+</a>
+<nav aria-label="Mitigation Strategies" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-traffic-filtering">
+<span class="md-ellipsis">
+      1. Traffic Filtering
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-traffic-scrubbing">
+<span class="md-ellipsis">
+      2. Traffic Scrubbing
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-network-hardening">
+<span class="md-ellipsis">
+      3. Network Hardening
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#incident-response-for-network-security">
+<span class="md-ellipsis">
+      🚨 Incident Response for Network Security
+    </span>
+</a>
+<nav aria-label="🚨 Incident Response for Network Security" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#incident-response-lifecycle">
+<span class="md-ellipsis">
+      Incident Response Lifecycle
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#response-procedures">
+<span class="md-ellipsis">
+      Response Procedures
+    </span>
+</a>
+<nav aria-label="Response Procedures" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-immediate-response">
+<span class="md-ellipsis">
+      1. Immediate Response
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-containment-actions">
+<span class="md-ellipsis">
+      2. Containment Actions
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-recovery-steps">
+<span class="md-ellipsis">
+      3. Recovery Steps
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hands-on-activities">
+<span class="md-ellipsis">
+      🧪 Hands-on Activities
+    </span>
+</a>
+<nav aria-label="🧪 Hands-on Activities" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#activity-1-wireshark-traffic-analysis">
+<span class="md-ellipsis">
+      Activity 1: Wireshark Traffic Analysis
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#activity-2-network-topology-design">
+<span class="md-ellipsis">
+      Activity 2: Network Topology Design
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#activity-3-security-incident-simulation">
+<span class="md-ellipsis">
+      Activity 3: Security Incident Simulation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#key-takeaways">
+<span class="md-ellipsis">
+      📋 Key Takeaways
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#review-questions">
+<span class="md-ellipsis">
+      ❓ Review Questions
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#further-reading">
+<span class="md-ellipsis">
+      📚 Further Reading
+    </span>
+</a>
+<nav aria-label="📚 Further Reading" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#books">
+<span class="md-ellipsis">
+      Books
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#online-resources">
+<span class="md-ellipsis">
+      Online Resources
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#practice-labs">
+<span class="md-ellipsis">
+      Practice Labs
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="chapter-4-network-security-essentials">Chapter 4: Network Security Essentials</h1>
+<h2 id="learning-objectives">🎯 Learning Objectives</h2>
+<p>By the end of this chapter, you will be able to:
+- Understand fundamental network protocols and their security implications
+- Identify common network vulnerabilities and attack vectors
+- Use Wireshark to analyze network traffic and detect security threats
+- Build and secure network topologies using Cisco Packet Tracer
+- Implement and configure firewalls, IDS/IPS, and VPNs
+- Apply network segmentation and access control strategies
+- Develop incident response procedures for network security incidents
+- Understand DoS/DDoS attacks and mitigation techniques</p>
+<h2 id="network-fundamentals-and-security">🌐 Network Fundamentals and Security</h2>
+<p>Networks are the backbone of modern computing, enabling communication between devices, systems, and users. Understanding how networks work is essential for protecting them from security threats.</p>
+<h3 id="what-is-a-network">What is a Network?</h3>
+<p>A network is a collection of interconnected devices that can communicate with each other to share resources and information. Networks can be as small as two computers connected by a cable or as large as the global internet.</p>
+<h3 id="network-types-and-security-considerations">Network Types and Security Considerations</h3>
+<pre class="mermaid"><code>graph TD
+    A[Network Types] --&gt; B[Local Area Network LAN]
+    A --&gt; C[Wide Area Network WAN]
+    A --&gt; D[Wireless Networks]
+    A --&gt; E[Cloud Networks]
+
+    B --&gt; B1[Office networks]
+    B --&gt; B2[Home networks]
+    B --&gt; B3[Data center networks]
+
+    C --&gt; C1[Internet connections]
+    C --&gt; C2[Branch office links]
+    C --&gt; C3[Partner connections]
+
+    D --&gt; D1[Wi-Fi networks]
+    D --&gt; D2[Bluetooth networks]
+    D --&gt; D3[Cellular networks]
+
+    E --&gt; E1[Public cloud]
+    E --&gt; E2[Private cloud]
+    E --&gt; E3[Hybrid cloud]
+
+    B1 --&gt; F1[Access control]
+    B2 --&gt; F2[Network segmentation]
+    B3 --&gt; F3[Traffic monitoring]
+
+    C1 --&gt; F4[Encryption]
+    C2 --&gt; F5[VPN tunnels]
+    C3 --&gt; F6[Firewall rules]
+
+    D1 --&gt; F7[Authentication]
+    D2 --&gt; F8[Encryption]
+    D3 --&gt; F9[Signal security]
+
+    E1 --&gt; F10[Identity management]
+    E2 --&gt; F11[Data protection]
+    E3 --&gt; F12[Compliance controls]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F1 fill:#e8f5e8
+    style F2 fill:#e8f5e8
+    style F3 fill:#e8f5e8
+    style F4 fill:#fff3e0
+    style F5 fill:#fff3e0
+    style F6 fill:#fff3e0
+    style F7 fill:#fce4ec
+    style F8 fill:#fce4ec
+    style F9 fill:#fce4ec
+    style F10 fill:#f1f8e9
+    style F11 fill:#f1f8e9
+    style F12 fill:#f1f8e9</code></pre>
+<h3 id="network-security-principles">Network Security Principles</h3>
+<p>Network security is built on three fundamental principles:</p>
+<ol>
+<li><strong>Defense in Depth</strong>: Multiple layers of security controls</li>
+<li><strong>Principle of Least Privilege</strong>: Only necessary access granted</li>
+<li><strong>Fail-Safe Defaults</strong>: Secure by default configuration</li>
+</ol>
+<h2 id="network-protocols-and-security">🔍 Network Protocols and Security</h2>
+<p>Understanding network protocols is crucial for identifying security vulnerabilities and implementing appropriate controls.</p>
+<h3 id="osi-model-and-security">OSI Model and Security</h3>
+<pre class="mermaid"><code>graph TD
+    A[OSI Model Layers] --&gt; B[Application Layer 7]
+    A --&gt; C[Presentation Layer 6]
+    A --&gt; D[Session Layer 5]
+    A --&gt; E[Transport Layer 4]
+    A --&gt; F[Network Layer 3]
+    A --&gt; G[Data Link Layer 2]
+    A --&gt; H[Physical Layer 1]
+
+    B --&gt; B1[HTTP, FTP, SMTP]
+    B --&gt; B2[Web application attacks]
+    B --&gt; B3[API security]
+
+    C --&gt; C1[SSL/TLS, encryption]
+    C --&gt; C2[Cryptographic attacks]
+    C --&gt; C3[Certificate management]
+
+    D --&gt; D1[Session management]
+    D --&gt; D2[Session hijacking]
+    D --&gt; D3[Authentication]
+
+    E --&gt; E1[TCP, UDP]
+    E --&gt; E2[Port scanning]
+    E --&gt; E3[SYN floods]
+
+    F --&gt; F1[IP, routing]
+    F --&gt; F2[IP spoofing]
+    F --&gt; F3[Routing attacks]
+
+    G --&gt; G1[Ethernet, MAC]
+    G --&gt; G2[ARP spoofing]
+    G --&gt; G3[Switch attacks]
+
+    H --&gt; H1[Cables, signals]
+    H --&gt; H2[Physical access]
+    H --&gt; H3[Signal interception]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+    style G fill:#fff8e1
+    style H fill:#f3e5f5</code></pre>
+<h3 id="key-protocols-and-security-issues">Key Protocols and Security Issues</h3>
+<h4 id="1-tcpip-protocol-suite">1. <strong>TCP/IP Protocol Suite</strong></h4>
+<ul>
+<li><strong>TCP (Transmission Control Protocol)</strong>: Connection-oriented, reliable</li>
+<li><strong>UDP (User Datagram Protocol)</strong>: Connectionless, fast</li>
+<li><strong>IP (Internet Protocol)</strong>: Addressing and routing</li>
+</ul>
+<p><strong>Security Issues</strong>:
+- <strong>IP Spoofing</strong>: Forging source IP addresses
+- <strong>TCP Hijacking</strong>: Taking over established connections
+- <strong>Port Scanning</strong>: Discovering open network ports</p>
+<h4 id="2-httphttps-web-protocols">2. <strong>HTTP/HTTPS (Web Protocols)</strong></h4>
+<ul>
+<li><strong>HTTP</strong>: Unencrypted web traffic</li>
+<li><strong>HTTPS</strong>: Encrypted web traffic using SSL/TLS</li>
+</ul>
+<p><strong>Security Issues</strong>:
+- <strong>Man-in-the-Middle Attacks</strong>: Intercepting unencrypted traffic
+- <strong>Session Hijacking</strong>: Stealing user sessions
+- <strong>Cross-Site Scripting (XSS)</strong>: Injecting malicious code</p>
+<h4 id="3-dns-domain-name-system">3. <strong>DNS (Domain Name System)</strong></h4>
+<ul>
+<li>Translates domain names to IP addresses</li>
+<li>Critical for internet functionality</li>
+</ul>
+<p><strong>Security Issues</strong>:
+- <strong>DNS Poisoning</strong>: Redirecting traffic to malicious sites
+- <strong>DNS Amplification</strong>: Using DNS for DDoS attacks
+- <strong>DNS Tunneling</strong>: Bypassing security controls</p>
+<h2 id="common-network-vulnerabilities">🚨 Common Network Vulnerabilities</h2>
+<p>Network vulnerabilities are weaknesses that attackers can exploit to gain unauthorized access or disrupt services.</p>
+<h3 id="vulnerability-categories">Vulnerability Categories</h3>
+<pre class="mermaid"><code>graph TD
+    A[Network Vulnerabilities] --&gt; B[Configuration Vulnerabilities]
+    A --&gt; C[Protocol Vulnerabilities]
+    A --&gt; D[Physical Vulnerabilities]
+    A --&gt; E[Human Vulnerabilities]
+
+    B --&gt; B1[Default passwords]
+    B --&gt; B2[Open ports]
+    B --&gt; B3[Weak encryption]
+    B --&gt; B4[Unpatched systems]
+
+    C --&gt; C1[Protocol flaws]
+    C --&gt; C2[Authentication weaknesses]
+    C --&gt; C3[Session management issues]
+    C --&gt; C4[Buffer overflows]
+
+    D --&gt; D1[Physical access]
+    D --&gt; D2[Signal interception]
+    D --&gt; D3[Hardware tampering]
+    D --&gt; D4[Environmental threats]
+
+    E --&gt; E1[Social engineering]
+    E --&gt; E2[Insider threats]
+    E --&gt; E3[Human error]
+    E --&gt; E4[Lack of training]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec</code></pre>
+<h3 id="top-network-security-threats">Top Network Security Threats</h3>
+<h4 id="1-denial-of-service-dos-attacks">1. <strong>Denial of Service (DoS) Attacks</strong></h4>
+<ul>
+<li><strong>Purpose</strong>: Overwhelm systems to make them unavailable</li>
+<li><strong>Methods</strong>: Flooding with traffic, exploiting vulnerabilities</li>
+<li><strong>Impact</strong>: Service disruption, financial losses</li>
+</ul>
+<h4 id="2-man-in-the-middle-mitm-attacks">2. <strong>Man-in-the-Middle (MitM) Attacks</strong></h4>
+<ul>
+<li><strong>Purpose</strong>: Intercept and modify communications</li>
+<li><strong>Methods</strong>: ARP spoofing, DNS poisoning, SSL stripping</li>
+<li><strong>Impact</strong>: Data theft, credential compromise</li>
+</ul>
+<h4 id="3-network-reconnaissance">3. <strong>Network Reconnaissance</strong></h4>
+<ul>
+<li><strong>Purpose</strong>: Gather information about network structure</li>
+<li><strong>Methods</strong>: Port scanning, network mapping, service enumeration</li>
+<li><strong>Impact</strong>: Attack planning, vulnerability identification</li>
+</ul>
+<h4 id="4-wireless-network-attacks">4. <strong>Wireless Network Attacks</strong></h4>
+<ul>
+<li><strong>Purpose</strong>: Gain unauthorized network access</li>
+<li><strong>Methods</strong>: WEP cracking, WPA attacks, evil twin attacks</li>
+<li><strong>Impact</strong>: Network compromise, data theft</li>
+</ul>
+<h2 id="wireshark-network-traffic-analysis">🕵️ Wireshark: Network Traffic Analysis</h2>
+<p>Wireshark is a powerful network protocol analyzer that allows security professionals to examine network traffic in real-time and identify security threats.</p>
+<h3 id="what-is-wireshark">What is Wireshark?</h3>
+<p>Wireshark is an open-source packet analyzer that captures and displays network packets in human-readable format. It's essential for:
+- <strong>Network Troubleshooting</strong>: Identifying connectivity issues
+- <strong>Security Analysis</strong>: Detecting malicious traffic
+- <strong>Protocol Analysis</strong>: Understanding network behavior
+- <strong>Performance Monitoring</strong>: Analyzing network performance</p>
+<h3 id="wireshark-interface-overview">Wireshark Interface Overview</h3>
+<pre class="mermaid"><code>graph TD
+    A[Wireshark Interface] --&gt; B[Menu Bar]
+    A --&gt; C[Toolbar]
+    A --&gt; D[Filter Bar]
+    A --&gt; E[Packet List]
+    A --&gt; F[Packet Details]
+    A --&gt; G[Packet Bytes]
+
+    B --&gt; B1[File operations]
+    B --&gt; B2[Capture options]
+    B --&gt; B3[Analysis tools]
+
+    C --&gt; C1[Start/stop capture]
+    C --&gt; C2[Capture interfaces]
+    C --&gt; C3[Display filters]
+
+    D --&gt; D1[Protocol filters]
+    D --&gt; D2[IP address filters]
+    D --&gt; D3[Port filters]
+
+    E --&gt; E1[Packet summary]
+    E --&gt; E2[Source/destination]
+    E --&gt; E3[Protocol information]
+
+    F --&gt; F1[Protocol details]
+    F --&gt; F2[Header information]
+    F --&gt; F3[Payload data]
+
+    G --&gt; G1[Hex dump]
+    G --&gt; G2[ASCII representation]
+    G --&gt; G3[Binary analysis]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+    style G fill:#fff8e1</code></pre>
+<h3 id="essential-wireshark-filters">Essential Wireshark Filters</h3>
+<p>Wireshark filters help focus on specific traffic patterns and security events.</p>
+<h4 id="protocol-filters">Protocol Filters</h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># HTTP traffic only</span>
+http
+
+<span class="c1"># HTTPS traffic only</span>
+ssl<span class="w"> </span>or<span class="w"> </span>tls
+
+<span class="c1"># DNS queries</span>
+dns
+
+<span class="c1"># TCP traffic on specific port</span>
+tcp.port<span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">80</span>
+</code></pre></div>
+<h4 id="security-related-filters">Security-Related Filters</h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Failed authentication attempts</span>
+http.response.code<span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">401</span>
+
+<span class="c1"># Suspicious file downloads</span>
+http.content_type<span class="w"> </span>contains<span class="w"> </span><span class="s2">"application/"</span>
+
+<span class="c1"># Large data transfers</span>
+frame.len<span class="w"> </span>&gt;<span class="w"> </span><span class="m">1000</span>
+
+<span class="c1"># Unusual port usage</span>
+tcp.port<span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="m">80</span><span class="w"> </span>and<span class="w"> </span>tcp.port<span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="m">443</span><span class="w"> </span>and<span class="w"> </span>tcp.port<span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="m">22</span>
+</code></pre></div>
+<h3 id="analyzing-security-threats-with-wireshark">Analyzing Security Threats with Wireshark</h3>
+<h4 id="1-detecting-port-scanning">1. <strong>Detecting Port Scanning</strong></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># SYN scans (connection attempts without completion)</span>
+tcp.flags.syn<span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="w"> </span>and<span class="w"> </span>tcp.flags.ack<span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span>
+
+<span class="c1"># Multiple connection attempts to different ports</span>
+tcp.flags.syn<span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="w"> </span>and<span class="w"> </span>tcp.flags.ack<span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span>
+</code></pre></div>
+<h4 id="2-identifying-ddos-attacks">2. <strong>Identifying DDoS Attacks</strong></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># High volume of traffic from single source</span>
+ip.src<span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">[</span>suspicious_ip<span class="o">]</span>
+
+<span class="c1"># SYN flood attacks</span>
+tcp.flags.syn<span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="w"> </span>and<span class="w"> </span>tcp.flags.ack<span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span>
+</code></pre></div>
+<h4 id="3-detecting-data-exfiltration">3. <strong>Detecting Data Exfiltration</strong></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Large outbound transfers</span>
+frame.len<span class="w"> </span>&gt;<span class="w"> </span><span class="m">5000</span><span class="w"> </span>and<span class="w"> </span>ip.dst<span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="o">[</span>internal_network<span class="o">]</span>
+
+<span class="c1"># Unusual protocols</span>
+tcp.port<span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="m">80</span><span class="w"> </span>and<span class="w"> </span>tcp.port<span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="m">443</span><span class="w"> </span>and<span class="w"> </span>tcp.port<span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="m">22</span>
+</code></pre></div>
+<h3 id="wireshark-security-analysis-workflow">Wireshark Security Analysis Workflow</h3>
+<pre class="mermaid"><code>graph TD
+    A[Security Analysis Workflow] --&gt; B[Capture Traffic]
+    B --&gt; C[Apply Filters]
+    C --&gt; D[Analyze Patterns]
+    D --&gt; E[Identify Threats]
+    E --&gt; F[Document Findings]
+    F --&gt; G[Take Action]
+
+    B --&gt; B1[Select interface]
+    B --&gt; B2[Set capture filters]
+    B --&gt; B3[Start capture]
+
+    C --&gt; C1[Protocol filters]
+    C --&gt; C2[Address filters]
+    C --&gt; C3[Behavioral filters]
+
+    D --&gt; D1[Traffic volume]
+    D --&gt; D2[Connection patterns]
+    D --&gt; D3[Protocol anomalies]
+
+    E --&gt; E1[Malicious traffic]
+    E --&gt; E2[Policy violations]
+    E --&gt; E3[Performance issues]
+
+    F --&gt; F1[Incident report]
+    F --&gt; F2[Evidence collection]
+    F --&gt; F3[Timeline creation]
+
+    G --&gt; G1[Block threats]
+    G --&gt; G2[Update rules]
+    G --&gt; G3[Alert stakeholders]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+    style G fill:#fff8e1</code></pre>
+<h2 id="cisco-packet-tracer-network-design-and-security">🏗️ Cisco Packet Tracer: Network Design and Security</h2>
+<p>Cisco Packet Tracer is a network simulation tool that allows students to design, configure, and test network topologies with security controls.</p>
+<h3 id="what-is-cisco-packet-tracer">What is Cisco Packet Tracer?</h3>
+<p>Packet Tracer is a comprehensive network simulation platform that provides:
+- <strong>Network Design</strong>: Visual network topology creation
+- <strong>Device Configuration</strong>: Router, switch, and firewall setup
+- <strong>Protocol Testing</strong>: Verify network functionality
+- <strong>Security Implementation</strong>: Configure security controls
+- <strong>Troubleshooting</strong>: Identify and resolve network issues</p>
+<h3 id="basic-network-topology">Basic Network Topology</h3>
+<pre class="mermaid"><code>graph TD
+    A[Internet] --&gt; B[Firewall]
+    B --&gt; C[DMZ Switch]
+    B --&gt; D[Internal Switch]
+
+    C --&gt; C1[Web Server]
+    C --&gt; C2[Email Server]
+    C --&gt; C3[DNS Server]
+
+    D --&gt; D1[User PCs]
+    D --&gt; D2[File Server]
+    D --&gt; D3[Database Server]
+
+    B --&gt; B1[External Interface]
+    B --&gt; B2[DMZ Interface]
+    B --&gt; B3[Internal Interface]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style C1 fill:#e8f5e8
+    style C2 fill:#e8f5e8
+    style C3 fill:#e8f5e8
+    style D1 fill:#fff3e0
+    style D2 fill:#fff3e0
+    style D3 fill:#fff3e0
+    style B1 fill:#f3e5f5
+    style B2 fill:#f3e5f5
+    style B3 fill:#f3e5f5</code></pre>
+<h3 id="network-segmentation-strategy">Network Segmentation Strategy</h3>
+<p>Network segmentation divides networks into smaller, more manageable sections to improve security and performance.</p>
+<h4 id="1-dmz-demilitarized-zone">1. <strong>DMZ (Demilitarized Zone)</strong></h4>
+<ul>
+<li><strong>Purpose</strong>: Isolate public-facing services</li>
+<li><strong>Services</strong>: Web servers, email servers, DNS</li>
+<li><strong>Security</strong>: Strict firewall rules, limited access</li>
+</ul>
+<h4 id="2-internal-network">2. <strong>Internal Network</strong></h4>
+<ul>
+<li><strong>Purpose</strong>: Protect sensitive business systems</li>
+<li><strong>Services</strong>: User workstations, file servers, databases</li>
+<li><strong>Security</strong>: Strong access controls, monitoring</li>
+</ul>
+<h4 id="3-management-network">3. <strong>Management Network</strong></h4>
+<ul>
+<li><strong>Purpose</strong>: Secure network administration</li>
+<li><strong>Services</strong>: Network devices, management tools</li>
+<li><strong>Security</strong>: Restricted access, encrypted communications</li>
+</ul>
+<h3 id="security-device-configuration">Security Device Configuration</h3>
+<h4 id="firewall-configuration">Firewall Configuration</h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Basic firewall rules</span>
+access-list<span class="w"> </span><span class="m">100</span><span class="w"> </span>permit<span class="w"> </span>tcp<span class="w"> </span>any<span class="w"> </span>any<span class="w"> </span>eq<span class="w"> </span><span class="m">80</span>
+access-list<span class="w"> </span><span class="m">100</span><span class="w"> </span>permit<span class="w"> </span>tcp<span class="w"> </span>any<span class="w"> </span>any<span class="w"> </span>eq<span class="w"> </span><span class="m">443</span>
+access-list<span class="w"> </span><span class="m">100</span><span class="w"> </span>permit<span class="w"> </span>tcp<span class="w"> </span>any<span class="w"> </span>any<span class="w"> </span>eq<span class="w"> </span><span class="m">22</span>
+access-list<span class="w"> </span><span class="m">100</span><span class="w"> </span>deny<span class="w"> </span>ip<span class="w"> </span>any<span class="w"> </span>any
+
+<span class="c1"># Apply to interface</span>
+interface<span class="w"> </span>FastEthernet0/0
+ip<span class="w"> </span>access-group<span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="k">in</span>
+</code></pre></div>
+<h4 id="switch-security">Switch Security</h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Enable port security</span>
+interface<span class="w"> </span>FastEthernet0/1
+switchport<span class="w"> </span>mode<span class="w"> </span>access
+switchport<span class="w"> </span>port-security
+switchport<span class="w"> </span>port-security<span class="w"> </span>maximum<span class="w"> </span><span class="m">1</span>
+switchport<span class="w"> </span>port-security<span class="w"> </span>violation<span class="w"> </span>shutdown
+</code></pre></div>
+<h2 id="network-security-controls">🛡️ Network Security Controls</h2>
+<p>Network security controls are measures implemented to protect networks from threats and vulnerabilities.</p>
+<h3 id="defense-in-depth-strategy">Defense in Depth Strategy</h3>
+<pre class="mermaid"><code>graph TD
+    A[Defense in Depth] --&gt; B[Perimeter Security]
+    A --&gt; C[Network Security]
+    A --&gt; D[Host Security]
+    A --&gt; E[Application Security]
+    A --&gt; F[Data Security]
+
+    B --&gt; B1[Firewalls]
+    B --&gt; B2[Intrusion Detection]
+    B --&gt; B3[Access Control]
+
+    C --&gt; C1[Network Segmentation]
+    C --&gt; C2[Traffic Monitoring]
+    C --&gt; C3[Encryption]
+
+    D --&gt; D1[Endpoint Protection]
+    D --&gt; D2[Patch Management]
+    D --&gt; D3[Configuration Control]
+
+    E --&gt; E1[Secure Development]
+    E --&gt; E2[Input Validation]
+    E --&gt; E3[Session Management]
+
+    F --&gt; F1[Data Classification]
+    F --&gt; F2[Encryption]
+    F --&gt; F3[Backup &amp; Recovery]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9</code></pre>
+<h3 id="1-firewalls">1. <strong>Firewalls</strong></h3>
+<p>Firewalls are network security devices that monitor and control incoming and outgoing network traffic.</p>
+<h4 id="types-of-firewalls">Types of Firewalls</h4>
+<ul>
+<li><strong>Packet Filtering</strong>: Examines packet headers</li>
+<li><strong>Stateful Inspection</strong>: Tracks connection state</li>
+<li><strong>Application Layer</strong>: Analyzes application data</li>
+<li><strong>Next-Generation</strong>: Advanced threat detection</li>
+</ul>
+<h4 id="firewall-rules-example">Firewall Rules Example</h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Allow HTTP traffic</span>
+permit<span class="w"> </span>tcp<span class="w"> </span>any<span class="w"> </span>any<span class="w"> </span>eq<span class="w"> </span><span class="m">80</span>
+
+<span class="c1"># Allow HTTPS traffic</span>
+permit<span class="w"> </span>tcp<span class="w"> </span>any<span class="w"> </span>any<span class="w"> </span>eq<span class="w"> </span><span class="m">443</span>
+
+<span class="c1"># Allow SSH from management network</span>
+permit<span class="w"> </span>tcp<span class="w"> </span><span class="m">192</span>.168.1.0/24<span class="w"> </span>any<span class="w"> </span>eq<span class="w"> </span><span class="m">22</span>
+
+<span class="c1"># Deny all other traffic</span>
+deny<span class="w"> </span>ip<span class="w"> </span>any<span class="w"> </span>any
+</code></pre></div>
+<h3 id="2-intrusion-detectionprevention-systems-idsips">2. <strong>Intrusion Detection/Prevention Systems (IDS/IPS)</strong></h3>
+<p>IDS/IPS systems monitor network traffic for suspicious activity and can automatically respond to threats.</p>
+<h4 id="ids-vs-ips">IDS vs IPS</h4>
+<ul>
+<li><strong>IDS (Detection)</strong>: Monitors and alerts on threats</li>
+<li><strong>IPS (Prevention)</strong>: Monitors and blocks threats</li>
+</ul>
+<h4 id="common-detection-methods">Common Detection Methods</h4>
+<ul>
+<li><strong>Signature-Based</strong>: Matches known attack patterns</li>
+<li><strong>Anomaly-Based</strong>: Detects unusual behavior</li>
+<li><strong>Behavior-Based</strong>: Learns normal patterns</li>
+</ul>
+<h3 id="3-virtual-private-networks-vpns">3. <strong>Virtual Private Networks (VPNs)</strong></h3>
+<p>VPNs create secure, encrypted connections over public networks.</p>
+<h4 id="vpn-types">VPN Types</h4>
+<ul>
+<li><strong>Site-to-Site</strong>: Connects multiple office locations</li>
+<li><strong>Remote Access</strong>: Connects individual users</li>
+<li><strong>Client-to-Site</strong>: Connects clients to corporate network</li>
+</ul>
+<h4 id="vpn-security-features">VPN Security Features</h4>
+<ul>
+<li><strong>Encryption</strong>: Protects data in transit</li>
+<li><strong>Authentication</strong>: Verifies user identity</li>
+<li><strong>Tunneling</strong>: Creates secure communication channels</li>
+</ul>
+<h2 id="dosddos-attack-mitigation">🚫 DoS/DDoS Attack Mitigation</h2>
+<p>Denial of Service (DoS) and Distributed Denial of Service (DDoS) attacks attempt to make network services unavailable.</p>
+<h3 id="attack-types-and-mitigation">Attack Types and Mitigation</h3>
+<pre class="mermaid"><code>graph TD
+    A[DDoS Attack Types] --&gt; B[Volume-Based Attacks]
+    A --&gt; C[Protocol Attacks]
+    A --&gt; D[Application Layer Attacks]
+
+    B --&gt; B1[UDP Floods]
+    B --&gt; B2[ICMP Floods]
+    B --&gt; B3[Amplification Attacks]
+
+    C --&gt; C1[SYN Floods]
+    C --&gt; C2[Ping of Death]
+    C --&gt; C3[Smurf Attacks]
+
+    D --&gt; D1[HTTP Floods]
+    D --&gt; D2[Slowloris Attacks]
+    D --&gt; D3[DNS Query Floods]
+
+    B1 --&gt; E1[Traffic filtering]
+    B2 --&gt; E2[Rate limiting]
+    B3 --&gt; E3[Source validation]
+
+    C1 --&gt; E4[Connection tracking]
+    C2 --&gt; E5[Packet validation]
+    C3 --&gt; E6[ICMP filtering]
+
+    D1 --&gt; E7[Application monitoring]
+    D2 --&gt; E8[Behavioral analysis]
+    D3 --&gt; E9[Query rate limiting]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E1 fill:#e8f5e8
+    style E2 fill:#e8f5e8
+    style E3 fill:#e8f5e8
+    style E4 fill:#fff3e0
+    style E5 fill:#fff3e0
+    style E6 fill:#fff3e0
+    style E7 fill:#fce4ec
+    style E8 fill:#fce4ec
+    style E9 fill:#fce4ec</code></pre>
+<h3 id="mitigation-strategies">Mitigation Strategies</h3>
+<h4 id="1-traffic-filtering">1. <strong>Traffic Filtering</strong></h4>
+<ul>
+<li><strong>Blacklisting</strong>: Block known malicious sources</li>
+<li><strong>Whitelisting</strong>: Allow only trusted sources</li>
+<li><strong>Rate Limiting</strong>: Restrict traffic volume</li>
+</ul>
+<h4 id="2-traffic-scrubbing">2. <strong>Traffic Scrubbing</strong></h4>
+<ul>
+<li><strong>DDoS Protection Services</strong>: Cloud-based mitigation</li>
+<li><strong>Traffic Analysis</strong>: Identify and filter attack traffic</li>
+<li><strong>Load Balancing</strong>: Distribute traffic across multiple servers</li>
+</ul>
+<h4 id="3-network-hardening">3. <strong>Network Hardening</strong></h4>
+<ul>
+<li><strong>Bandwidth Management</strong>: Reserve capacity for legitimate traffic</li>
+<li><strong>Redundancy</strong>: Multiple network paths and servers</li>
+<li><strong>Monitoring</strong>: Real-time threat detection</li>
+</ul>
+<h2 id="incident-response-for-network-security">🚨 Incident Response for Network Security</h2>
+<p>Network security incidents require immediate and coordinated response to minimize damage and restore services.</p>
+<h3 id="incident-response-lifecycle">Incident Response Lifecycle</h3>
+<pre class="mermaid"><code>graph TD
+    A[Incident Response] --&gt; B[Preparation]
+    B --&gt; C[Identification]
+    C --&gt; D[Containment]
+    D --&gt; E[Eradication]
+    E --&gt; F[Recovery]
+    F --&gt; G[Lessons Learned]
+    G --&gt; B
+
+    B --&gt; B1[Response plan]
+    B --&gt; B2[Team training]
+    B --&gt; B3[Tools and procedures]
+
+    C --&gt; C1[Detection]
+    C --&gt; C2[Classification]
+    C --&gt; C3[Notification]
+
+    D --&gt; D1[Short-term containment]
+    D --&gt; D2[Long-term containment]
+    D --&gt; D3[Evidence preservation]
+
+    E --&gt; E1[Remove threat]
+    E --&gt; E2[Patch vulnerabilities]
+    E --&gt; E3[Update systems]
+
+    F --&gt; F1[Restore services]
+    F --&gt; F2[Verify security]
+    F --&gt; F3[Monitor systems]
+
+    G --&gt; G1[Document incident]
+    G --&gt; G2[Update procedures]
+    G --&gt; G3[Improve defenses]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+    style G fill:#fff8e1</code></pre>
+<h3 id="response-procedures">Response Procedures</h3>
+<h4 id="1-immediate-response">1. <strong>Immediate Response</strong></h4>
+<ul>
+<li><strong>Isolate affected systems</strong>: Prevent threat spread</li>
+<li><strong>Document everything</strong>: Maintain incident timeline</li>
+<li><strong>Notify stakeholders</strong>: Alert management and users</li>
+</ul>
+<h4 id="2-containment-actions">2. <strong>Containment Actions</strong></h4>
+<ul>
+<li><strong>Network segmentation</strong>: Isolate compromised areas</li>
+<li><strong>Access restrictions</strong>: Limit user and system access</li>
+<li><strong>Traffic monitoring</strong>: Watch for additional threats</li>
+</ul>
+<h4 id="3-recovery-steps">3. <strong>Recovery Steps</strong></h4>
+<ul>
+<li><strong>System restoration</strong>: Restore from clean backups</li>
+<li><strong>Security updates</strong>: Patch vulnerabilities</li>
+<li><strong>Configuration review</strong>: Ensure secure settings</li>
+</ul>
+<h2 id="hands-on-activities">🧪 Hands-on Activities</h2>
+<h3 id="activity-1-wireshark-traffic-analysis">Activity 1: Wireshark Traffic Analysis</h3>
+<p><strong>Objective</strong>: Analyze network traffic to identify security threats.</p>
+<p><strong>Materials</strong>: Wireshark, sample capture files, network access</p>
+<p><strong>Steps</strong>:
+1. <strong>Install Wireshark</strong> on your system
+2. <strong>Capture network traffic</strong> or use sample files
+3. <strong>Apply security filters</strong> to identify threats
+4. <strong>Analyze suspicious traffic</strong> patterns
+5. <strong>Document findings</strong> in a security report</p>
+<p><strong>Filters to Practice</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># HTTP traffic analysis</span>
+http
+
+<span class="c1"># Failed authentication</span>
+http.response.code<span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">401</span>
+
+<span class="c1"># Large file transfers</span>
+frame.len<span class="w"> </span>&gt;<span class="w"> </span><span class="m">1000</span>
+
+<span class="c1"># Unusual ports</span>
+tcp.port<span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="m">80</span><span class="w"> </span>and<span class="w"> </span>tcp.port<span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="m">443</span>
+</code></pre></div></p>
+<h3 id="activity-2-network-topology-design">Activity 2: Network Topology Design</h3>
+<p><strong>Objective</strong>: Design a secure network topology using Cisco Packet Tracer.</p>
+<p><strong>Scenario</strong>: Small business with web presence and internal operations</p>
+<p><strong>Requirements</strong>:
+- Public web server
+- Internal file server
+- User workstations
+- Secure remote access
+- Network monitoring</p>
+<p><strong>Steps</strong>:
+1. <strong>Design network topology</strong> with security zones
+2. <strong>Configure network devices</strong> with security settings
+3. <strong>Implement access controls</strong> and firewall rules
+4. <strong>Test network connectivity</strong> and security
+5. <strong>Document configuration</strong> and security measures</p>
+<h3 id="activity-3-security-incident-simulation">Activity 3: Security Incident Simulation</h3>
+<p><strong>Objective</strong>: Practice responding to network security incidents.</p>
+<p><strong>Scenario</strong>: Detected unusual network activity and potential data exfiltration</p>
+<p><strong>Response Tasks</strong>:
+1. <strong>Assess the situation</strong> using network tools
+2. <strong>Contain the threat</strong> by isolating affected systems
+3. <strong>Investigate the incident</strong> using logs and traffic analysis
+4. <strong>Document the response</strong> actions and findings
+5. <strong>Develop recovery plan</strong> for affected systems</p>
+<h2 id="key-takeaways">📋 Key Takeaways</h2>
+<ol>
+<li>
+<p><strong>Network security requires</strong> understanding of protocols, vulnerabilities, and attack vectors to implement effective defenses.</p>
+</li>
+<li>
+<p><strong>Wireshark is essential</strong> for network traffic analysis and security threat detection in real-time.</p>
+</li>
+<li>
+<p><strong>Network segmentation</strong> improves security by isolating systems and limiting attack surface.</p>
+</li>
+<li>
+<p><strong>Defense in depth</strong> provides multiple layers of security controls to protect against various threats.</p>
+</li>
+<li>
+<p><strong>Incident response</strong> requires preparation, coordination, and systematic approach to minimize damage.</p>
+</li>
+<li>
+<p><strong>Continuous monitoring</strong> and analysis are essential for detecting and responding to network security threats.</p>
+</li>
+</ol>
+<h2 id="review-questions">❓ Review Questions</h2>
+<ol>
+<li>
+<p><strong>What are the key differences</strong> between IDS and IPS systems, and when would you use each?</p>
+</li>
+<li>
+<p><strong>How does network segmentation</strong> improve security, and what are the main security zones?</p>
+</li>
+<li>
+<p><strong>What Wireshark filters</strong> would you use to detect a port scanning attack?</p>
+</li>
+<li>
+<p><strong>How can you mitigate</strong> DDoS attacks using network security controls?</p>
+</li>
+<li>
+<p><strong>What are the essential steps</strong> in responding to a network security incident?</p>
+</li>
+</ol>
+<h2 id="further-reading">📚 Further Reading</h2>
+<h3 id="books">Books</h3>
+<ul>
+<li>"Network Security: Private Communication in a Public World" by Charlie Kaufman</li>
+<li>"The Practice of Network Security Monitoring" by Richard Bejtlich</li>
+<li>"Wireshark Network Analysis" by Laura Chappell</li>
+</ul>
+<h3 id="online-resources">Online Resources</h3>
+<ul>
+<li><a href="https://www.wireshark.org/docs/">Wireshark Documentation</a></li>
+<li><a href="https://www.netacad.com/courses/packet-tracer">Cisco Packet Tracer Learning</a></li>
+<li><a href="https://www.sans.org/network-security/">SANS Network Security Resources</a></li>
+</ul>
+<h3 id="practice-labs">Practice Labs</h3>
+<ul>
+<li><a href="https://tryhackme.com/">TryHackMe Network Security</a></li>
+<li><a href="https://www.cybrary.it/">Cybrary Network Security</a></li>
+<li><a href="https://www.netacad.com/">Cisco Networking Academy</a></li>
+</ul>
+<hr/>
+<p><strong>Next Chapter</strong>: <a href="../chapter05-iam/">Chapter 5: Identity and Access Management</a> - Learn how to implement secure identity and access control systems for enterprise environments.</p>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      © 2026 Data Octo · Enterprise Cloud, Data &amp; AI, Cybersecurity Architecture
+    </div>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "content.code.copy"], "search": "../../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+<script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
+<script src="../../../../assets/javascripts/mermaid-init.js"></script>
+</body>
+</html>
