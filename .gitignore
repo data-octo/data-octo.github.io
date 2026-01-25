@@ -1,3 +1,46 @@
+
+# Ignore everything
+*
+
+# But keep this .gitignore file
+!.gitignore
+
+# Only track the docs directory and its contents
+!/docs/
+!/docs/**
+
+# Ignore MkDocs built site
+/site/
+site/
+
+# OS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+venv/
+.venv/
+.env
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# IDEs / editors
+.vscode/
+.idea/
+
+# But keep this .gitignore file
+!.gitignore
+
+# Only track the docs directory and its contents
+!/docs/
+!/docs/**
+
 # Ignore MkDocs built site
 /site/
 site/
