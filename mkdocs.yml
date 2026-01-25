@@ -13,11 +13,11 @@ theme:
 nav:
   - Home: index.html
   - Blog:
-      - Blog Home: blog/index.html
+      - Blog Home: blog/index.md
   - Books:
-      - books/index.html
+      - Books Home: book/index.md
   - Portfolio:
-      - portfolio/index.html
+      - Portfolio Home: portfolio/index.md
 
 markdown_extensions:
   - admonition
