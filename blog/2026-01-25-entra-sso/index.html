@@ -589,7 +589,7 @@
 <p>Successfully implemented Single Sign-On (SSO) integration for 4 recreation center sites across 8 environments (production and training) using Microsoft Entra ID and ADFS SAML. This comprehensive guide covers the entire implementation journey from planning to deployment.</p>
 <h2 id="project-scope">Project Scope</h2>
 <ul>
-<li><strong>Sites</strong>: 4 recreation center websites (Regional Parks, Seaparc, Saltspring Island, and Panorama)</li>
+<li><strong>Sites</strong>: 4 recreation center websites (Rec Center 1, Rec Center 2, Rec Center 3, and Rec Center 4)</li>
 <li><strong>Environments</strong>: 8 total (4 production + 4 training)</li>
 <li><strong>Integration</strong>: Microsoft Entra ID with ADFS SAML</li>
 <li><strong>User Management</strong>: Active Directory groups with PowerShell automation</li>
@@ -656,10 +656,10 @@
     participant B as Browser
     participant E as Entra ID (IdP)
     participant A as ADFS
-    participant RP as Regional Parks
-    participant SE as Seaparc
-    participant SI as Saltspring Island
-    participant PA as Panorama
+    participant RP as Rec Center 1
+    participant SE as Rec Center 2
+    participant SI as Rec Center 3
+    participant PA as Rec Center 4
 
     U-&gt;&gt;B: Access Recreation Center App
     B-&gt;&gt;E: Redirect to Entra ID
@@ -776,10 +776,10 @@
 <pre class="mermaid"><code>graph TD
     AD[Active Directory] --&gt;|User Sync| Entra[Microsoft Entra ID]
     Entra --&gt;|SAML 2.0| ADFS[ADFS Federation]
-    ADFS --&gt;|SAML Assertions| RP[Regional Parks]
-    ADFS --&gt;|SAML Assertions| SE[Seaparc]
-    ADFS --&gt;|SAML Assertions| SI[Saltspring Island]
-    ADFS --&gt;|SAML Assertions| PA[Panorama]
+    ADFS --&gt;|SAML Assertions| RP[Rec Center 1]
+    ADFS --&gt;|SAML Assertions| SE[Rec Center 2]
+    ADFS --&gt;|SAML Assertions| SI[Rec Center 3]
+    ADFS --&gt;|SAML Assertions| PA[Rec Center 4]
 
     PS[PowerShell Scripts] --&gt;|Group Management| AD
     WT[Playwright Tests] --&gt;|Validation| RP
