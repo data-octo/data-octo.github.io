@@ -1,10 +1,8 @@
----
-title: Sound Alarms for Rec Center Productivity
-date: 2026-01-25
-tags:
-  - productivity
-  - requirements
-  - implementation
+#  Sound Alarms for Rec Center Productivity
+
+**Date:** 2026-01-27 
+**Tags:** productivity improvement, requirement anaysis, solution implementation
+
 ---
 
 **TL;DR:** In a one-month initiative, configuring a distinctive "invalid pass" audio cue within the existing access-control stack reduced service friction and improved staff response times and member satisfaction at two recreation sites.
