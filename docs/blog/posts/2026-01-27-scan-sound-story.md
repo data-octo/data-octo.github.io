@@ -1,3 +1,11 @@
+---
+title: "Sound Alarms for Rec Center Productivity"
+date: 2026-01-27 
+categories: [Productivity, Xplore Rec, Business Analysis]
+tags: [productivity improvement, requirement anaysis, solution implementation]
+---
+
+
 #  Sound Alarms for Rec Center Productivity
 
 **Date:** 2026-01-27 

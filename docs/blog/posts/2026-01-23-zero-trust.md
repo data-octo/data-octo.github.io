@@ -1,7 +1,12 @@
-# Zero Trust Is Not a Product
+---
+title: "Zero Trust Is Not a Product"
+date: 2026-01-23
+tags:
+  - zero-trust
+  - security-architecture
+---
 
-**Date:** 2026-01-23  
-**Tags:** zero-trust, security-architecture
+# Zero Trust Is Not a Product
 
 Most organizations talk about Zero Trust as a tool.  
 That’s the first mistake.
