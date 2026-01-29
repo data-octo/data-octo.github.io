@@ -1,0 +1,2080 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://data-octo.github.io/book/ai_job_hunting/chapters/06_networking/">
+      
+      
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>06 networking - Data Octo</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.e53b48f4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-5-ai-enhanced-professional-networking" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="Data Octo" class="md-header__button md-logo" aria-label="Data Octo" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Data Octo
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              06 networking
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Data Octo" class="md-nav__button md-logo" aria-label="Data Octo" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Data Octo
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../home.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Blog
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Blog
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../blog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Posts
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Archive
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Archive
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../blog/archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2026
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Categories
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            Categories
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../blog/category/ai/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AI
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../blog/category/business-analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Business Analysis
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../blog/category/productivity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Productivity
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../blog/category/software-development/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Software Development
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../blog/category/xplore-rec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Xplore Rec
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Books
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Books
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Books Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Portfolio
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Portfolio
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../portfolio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Portfolio Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#modern-networking-landscape" class="md-nav__link">
+    <span class="md-ellipsis">
+      Modern Networking Landscape
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Modern Networking Landscape">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#online-presence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Online Presence
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#content-creation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Content Creation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#engagement" class="md-nav__link">
+    <span class="md-ellipsis">
+      Engagement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#events" class="md-nav__link">
+    <span class="md-ellipsis">
+      Events
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ai-powered-networking-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      AI-Powered Networking Framework
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AI-Powered Networking Framework">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-five-stages-of-ai-enhanced-networking" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Five Stages of AI-Enhanced Networking
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Five Stages of AI-Enhanced Networking">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-profile-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Profile Optimization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-content-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Content Strategy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-engagement-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Engagement Plan
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-connection-growth" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Connection Growth
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-opportunity-creation" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Opportunity Creation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#balancing-ai-and-authenticity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Balancing AI and Authenticity
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leveraging-your-portfolio-and-showcasing-skills-in-networking" class="md-nav__link">
+    <span class="md-ellipsis">
+      Leveraging Your Portfolio and Showcasing Skills in Networking
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#content-strategy-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      Content Strategy Matrix
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linkedin-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      LinkedIn Optimization
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LinkedIn Optimization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#profile-enhancement" class="md-nav__link">
+    <span class="md-ellipsis">
+      Profile Enhancement
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Profile Enhancement">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#headlines-that-convert" class="md-nav__link">
+    <span class="md-ellipsis">
+      Headlines That Convert
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compelling-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compelling Summary
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#experience-that-tells-a-story" class="md-nav__link">
+    <span class="md-ellipsis">
+      Experience That Tells a Story
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#engagement-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Engagement Strategy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Engagement Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#content-calendar-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Content Calendar Optimization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strategic-engagement-tactics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Strategic Engagement Tactics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#measuring-engagement-success" class="md-nav__link">
+    <span class="md-ellipsis">
+      Measuring Engagement Success
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#twitter-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Twitter Strategy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Twitter Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#content-mix" class="md-nav__link">
+    <span class="md-ellipsis">
+      Content Mix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#posting-schedule" class="md-nav__link">
+    <span class="md-ellipsis">
+      Posting Schedule
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-growth-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Growth Plan
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Network Growth Plan">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#connection-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Connection Strategy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Connection Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#first-degree-connections" class="md-nav__link">
+    <span class="md-ellipsis">
+      First-Degree Connections
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#second-degree-connections" class="md-nav__link">
+    <span class="md-ellipsis">
+      Second-Degree Connections
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#industry-connections" class="md-nav__link">
+    <span class="md-ellipsis">
+      Industry Connections
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relationship-building" class="md-nav__link">
+    <span class="md-ellipsis">
+      Relationship Building
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Relationship Building">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#initial-contact-making-memorable-first-impressions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Initial Contact: Making Memorable First Impressions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#value-add-becoming-a-resource" class="md-nav__link">
+    <span class="md-ellipsis">
+      Value Add: Becoming a Resource
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#engagement-maintaining-meaningful-contact" class="md-nav__link">
+    <span class="md-ellipsis">
+      Engagement: Maintaining Meaningful Contact
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relationship-developing-long-term-professional-allies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Relationship: Developing Long-term Professional Allies
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-networking" class="md-nav__link">
+    <span class="md-ellipsis">
+      Event Networking
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Event Networking">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#virtual-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      Virtual Events
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#in-person-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      In-Person Events
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#engagement-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Engagement Metrics
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Engagement Metrics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#success-tracking" class="md-nav__link">
+    <span class="md-ellipsis">
+      Success Tracking
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ai-powered-follow-up-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      AI-Powered Follow-up System
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AI-Powered Follow-up System">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#template-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      Template Framework
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#action-items" class="md-nav__link">
+    <span class="md-ellipsis">
+      Action Items
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ai-tooling-and-app-availability-for-networking" class="md-nav__link">
+    <span class="md-ellipsis">
+      AI Tooling and App Availability for Networking
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#success-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      Success Framework
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Success Framework">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#consistency-the-foundation-of-networking-success" class="md-nav__link">
+    <span class="md-ellipsis">
+      Consistency: The Foundation of Networking Success
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#value-the-currency-of-meaningful-connections" class="md-nav__link">
+    <span class="md-ellipsis">
+      Value: The Currency of Meaningful Connections
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#growth-the-measure-of-networking-effectiveness" class="md-nav__link">
+    <span class="md-ellipsis">
+      Growth: The Measure of Networking Effectiveness
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#measuring-networking-roi" class="md-nav__link">
+    <span class="md-ellipsis">
+      Measuring Networking ROI
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#continuous-improvement-cycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Continuous Improvement Cycle
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<p>\</p>
+<!-- filepath: /Users/yuant/Downloads/github/books_tedd_yuan/book_ai_job_hunting/chapters/06_networking.md -->
+<h1 id="chapter-5-ai-enhanced-professional-networking">Chapter 5: AI-Enhanced Professional Networking</h1>
+<p>Networking remains one of the most powerful ways to discover job opportunities and advance your career. With AI tools, you can enhance your networking strategy, identify valuable connections, and engage more effectively across various platforms. This chapter explores how to leverage AI for building and maintaining a professional network that opens doors to new opportunities.</p>
+<p>AI can help you optimize your online presence, suggest relevant connections based on your career goals, craft personalized outreach messages, analyze networking patterns, and even identify industry events worth attending. By combining AI insights with authentic relationship-building, you can create a more strategic and effective networking approach.</p>
+<h2 id="modern-networking-landscape">Modern Networking Landscape</h2>
+<p>The professional networking landscape has evolved dramatically in the digital age. Today's job seekers and professionals must navigate a complex ecosystem of platforms, content types, and engagement strategies to build meaningful connections.</p>
+<pre class="mermaid"><code>mindmap
+%%{
+  init: {
+    'theme': 'base',
+    'themeVariables': {
+      'fontFamily': 'Arial',
+      'fontSize': '16px'
+    }
+  }
+}%%
+  root((Network
+  Strategy))
+    Online Presence
+      LinkedIn
+      Twitter
+      GitHub
+    Content Creation
+      Articles
+      Posts
+      Comments
+    Engagement
+      Discussions
+      Reactions
+      Shares
+    Events
+      Webinars
+      Conferences
+      Meetups</code></pre>
+<h3 id="online-presence">Online Presence</h3>
+<p>Your digital footprint serves as your professional identity in today's job market. Each platform plays a distinct role:</p>
+<ul>
+<li>
+<p><strong>LinkedIn</strong>: Your professional home base where recruiters and hiring managers actively search for candidates. A complete, keyword-optimized profile increases your visibility in search results by up to 40%.</p>
+</li>
+<li>
+<p><strong>Twitter</strong>: A platform for demonstrating thought leadership and engaging with industry conversations in real-time. Following and engaging with key industry figures can expand your visibility beyond your immediate network.</p>
+</li>
+<li>
+<p><strong>GitHub</strong>: For technical professionals, your code repository serves as a living portfolio. Public contributions and well-documented projects showcase both technical skills and collaboration abilities.</p>
+</li>
+</ul>
+<h3 id="content-creation">Content Creation</h3>
+<p>Content is the currency of modern networking. Creating valuable content establishes your expertise and provides natural opportunities for connection:</p>
+<ul>
+<li>
+<p><strong>Articles</strong>: Long-form content that demonstrates deep expertise. AI tools can help analyze trending topics in your industry and suggest article structures that resonate with your target audience.</p>
+</li>
+<li>
+<p><strong>Posts</strong>: Short-form updates that maintain visibility. Consistency matters more than volume—AI scheduling tools can identify optimal posting times based on your network's activity patterns.</p>
+</li>
+<li>
+<p><strong>Comments</strong>: Thoughtful engagement on others' content can be as valuable as creating your own. AI tools can alert you to relevant discussions where your expertise would add value.</p>
+</li>
+</ul>
+<h3 id="engagement">Engagement</h3>
+<p>Networking is a two-way street. Strategic engagement builds relationships and increases your visibility:</p>
+<ul>
+<li>
+<p><strong>Discussions</strong>: Participating in industry groups and forums positions you as an active community member. AI tools can identify trending topics and suggest talking points.</p>
+</li>
+<li>
+<p><strong>Reactions</strong>: Even simple engagements signal activity and interest. Developing a consistent engagement routine keeps you visible in others' feeds.</p>
+</li>
+<li>
+<p><strong>Shares</strong>: Amplifying others' content builds goodwill and expands your reach. AI tools can suggest relevant content from your network that aligns with your professional brand.</p>
+</li>
+</ul>
+<h3 id="events">Events</h3>
+<p>Despite digital transformation, live interaction remains powerful for building authentic connections:</p>
+<ul>
+<li>
+<p><strong>Webinars</strong>: Virtual events provide access to global networking opportunities. AI tools can recommend relevant webinars based on your career goals and learning interests.</p>
+</li>
+<li>
+<p><strong>Conferences</strong>: Industry gatherings offer concentrated networking opportunities. AI tools can help identify which events offer the best ROI based on attendee profiles and speaker lineups.</p>
+</li>
+<li>
+<p><strong>Meetups</strong>: Local events build geographically relevant connections. AI-powered event discovery tools can filter for quality and relevance to your specific career objectives.</p>
+</li>
+</ul>
+<h2 id="ai-powered-networking-framework">AI-Powered Networking Framework</h2>
+<p>Effective networking in the digital age requires a systematic approach that leverages AI capabilities at each stage of the process. This framework provides a roadmap for integrating AI tools into your networking strategy to maximize results while maintaining authenticity.</p>
+<pre class="mermaid"><code>graph TD
+%%{
+  init: {
+    'theme': 'base',
+    'themeVariables': {
+      'fontFamily': 'Arial',
+      'fontSize': '16px'
+    }
+  }
+}%%
+    A[Profile Optimization] --&gt; B[Content Strategy]
+    B --&gt; C[Engagement Plan]
+    C --&gt; D[Connection Growth]
+    D --&gt; E[Opportunity Creation]
+
+    subgraph AI Tools
+    F[Profile AI]
+    G[Content AI]
+    H[Analytics AI]
+    end
+
+    F --&gt; A
+    G --&gt; B
+    H --&gt; C</code></pre>
+<h3 id="the-five-stages-of-ai-enhanced-networking">The Five Stages of AI-Enhanced Networking</h3>
+<h4 id="1-profile-optimization">1. Profile Optimization</h4>
+<p>Your digital profiles serve as the foundation of your networking efforts. AI tools can significantly enhance how you present yourself online.</p>
+<p><strong>Key AI Applications:</strong>
+- <strong>Keyword Analysis</strong>: AI tools can analyze job descriptions and industry content to identify high-value keywords for your profile
+- <strong>Competitive Analysis</strong>: Compare your profile against industry leaders and successful professionals in your target roles
+- <strong>Content Enhancement</strong>: Generate more impactful descriptions of your experience and skills
+- <strong>Visual Optimization</strong>: Analyze profile photo effectiveness and suggest improvements</p>
+<p><strong>Implementation Strategy:</strong>
+- Conduct quarterly AI-powered profile audits across all professional platforms
+- A/B test profile elements using AI feedback on engagement metrics
+- Align keywords and messaging across all platforms while maintaining authentic voice</p>
+<h4 id="2-content-strategy">2. Content Strategy</h4>
+<p>Content creation is how you demonstrate expertise and provide value to your network. AI can help you develop a more effective content approach.</p>
+<p><strong>Key AI Applications:</strong>
+- <strong>Topic Identification</strong>: Discover trending and underserved topics in your industry
+- <strong>Content Planning</strong>: Generate content calendars optimized for engagement and consistency
+- <strong>Format Optimization</strong>: Determine which content types (articles, posts, videos) perform best for your audience
+- <strong>Writing Assistance</strong>: Enhance your writing with AI editing and suggestion tools</p>
+<p><strong>Implementation Strategy:</strong>
+- Develop a balanced content mix that showcases expertise while providing genuine value
+- Create a sustainable content schedule that you can maintain consistently
+- Repurpose successful content across platforms with AI-assisted modifications</p>
+<h4 id="3-engagement-plan">3. Engagement Plan</h4>
+<p>Strategic engagement transforms passive connections into active relationships. AI tools can help you engage more effectively and efficiently.</p>
+<p><strong>Key AI Applications:</strong>
+- <strong>Engagement Prioritization</strong>: Identify which connections and conversations deserve your attention
+- <strong>Response Optimization</strong>: Generate thoughtful, personalized responses to network activity
+- <strong>Timing Analysis</strong>: Determine optimal times for engagement based on platform algorithms and audience behavior
+- <strong>Sentiment Analysis</strong>: Gauge the emotional tone of conversations to tailor your approach</p>
+<p><strong>Implementation Strategy:</strong>
+- Develop tiered engagement protocols based on connection priority
+- Create templates for common engagement scenarios that can be personalized
+- Set up AI monitoring for high-value engagement opportunities</p>
+<h4 id="4-connection-growth">4. Connection Growth</h4>
+<p>Expanding your network strategically requires identifying and pursuing the right connections. AI can help target your efforts for maximum impact.</p>
+<p><strong>Key AI Applications:</strong>
+- <strong>Connection Recommendation</strong>: Identify high-value potential connections based on your goals
+- <strong>Outreach Personalization</strong>: Generate customized connection requests with relevant context
+- <strong>Network Gap Analysis</strong>: Identify underrepresented industries, roles, or skills in your network
+- <strong>Relationship Scoring</strong>: Evaluate the strength and potential of existing connections</p>
+<p><strong>Implementation Strategy:</strong>
+- Focus on quality over quantity in new connections
+- Develop specific growth goals tied to career objectives
+- Create pathways for converting online connections to meaningful professional relationships</p>
+<h4 id="5-opportunity-creation">5. Opportunity Creation</h4>
+<p>The ultimate goal of networking is to generate opportunities. AI can help you identify and capitalize on these possibilities.</p>
+<p><strong>Key AI Applications:</strong>
+- <strong>Opportunity Scanning</strong>: Monitor your network for job openings, collaborations, or speaking engagements
+- <strong>Match Analysis</strong>: Evaluate how well opportunities align with your skills and goals
+- <strong>Preparation Assistance</strong>: Generate briefing materials for interviews or meetings
+- <strong>Follow-up Optimization</strong>: Create effective follow-up communications after opportunities arise</p>
+<p><strong>Implementation Strategy:</strong>
+- Develop clear criteria for opportunity evaluation
+- Create systems for tracking and nurturing potential opportunities
+- Establish feedback loops to refine your opportunity targeting</p>
+<h3 id="balancing-ai-and-authenticity">Balancing AI and Authenticity</h3>
+<p>While AI tools can dramatically enhance your networking effectiveness, maintaining authenticity remains crucial. Here are guidelines for striking the right balance:</p>
+<ol>
+<li>
+<p><strong>Use AI as Enhancement, Not Replacement</strong>: Let AI handle research and optimization while you focus on building genuine connections</p>
+</li>
+<li>
+<p><strong>Personalize All AI Output</strong>: Always review and modify AI-generated content to reflect your voice and perspective</p>
+</li>
+<li>
+<p><strong>Focus on Value Exchange</strong>: Use AI to identify how you can genuinely help your connections, not just what you can gain</p>
+</li>
+<li>
+<p><strong>Maintain Ethical Boundaries</strong>: Be transparent about AI use when appropriate and never use AI to misrepresent yourself</p>
+</li>
+<li>
+<p><strong>Prioritize Deep Connections</strong>: Use the efficiency gained through AI to invest more time in meaningful relationship building</p>
+</li>
+</ol>
+<h3 id="leveraging-your-portfolio-and-showcasing-skills-in-networking">Leveraging Your Portfolio and Showcasing Skills in Networking</h3>
+<p>While networking, your ability to demonstrate tangible skills and projects is invaluable. A well-curated portfolio, potentially developed with AI assistance as discussed in other parts of this book (referencing concepts from skill development and portfolio building), serves as powerful evidence of your capabilities.</p>
+<p><strong>Why Portfolios Matter in Networking:</strong>
+- <strong>Concrete Proof:</strong> Instead of just talking about your skills, you can show them.
+- <strong>Conversation Starters:</strong> Sharing a relevant project can lead to deeper, more engaging discussions.
+- <strong>Memorability:</strong> A strong portfolio piece makes you more memorable to new connections.
+- <strong>Demonstrates Initiative:</strong> Shows you're proactive about skill development and application.</p>
+<p><strong>Using AI to Create Portfolio Items for Networking:</strong>
+- <strong>Project Idea Generation:</strong> Use AI to brainstorm project ideas that align with your target roles and the interests of people you want to network with.
+- <strong>Coding/Content Assistance:</strong> Leverage AI tools to help build out technical projects or create content for your portfolio (e.g., case studies, articles, design mockups).
+- <strong>Project Descriptions:</strong> Ask AI to help you write compelling descriptions for your portfolio items, highlighting the skills demonstrated and the problems solved.</p>
+<p><strong>Integrating Your Portfolio into Networking:</strong>
+- <strong>Online Profiles:</strong> Prominently feature links to your portfolio (e.g., GitHub, Behance, personal website) on your LinkedIn and other professional profiles. AI can help optimize the description of these links.
+- <strong>Conversations:</strong> When discussing your experiences, mention relevant portfolio projects. For example, "That reminds me of a project I did on [topic], which you can see in my portfolio. It showcases how I approached [skill/problem]."
+- <strong>Outreach Messages:</strong> When connecting with new people, especially if you're seeking advice or opportunities, you can subtly reference your work: "I've been working on [type of projects], as you can see from my portfolio at [link], and I'm keen to learn more about how these skills are applied at [their company/industry]."
+- <strong>Follow-ups:</strong> After a networking event or conversation, you can share a link to a specific, relevant portfolio piece in your follow-up message.</p>
+<p><strong>Best Practices:</strong>
+- <strong>Tailor Your Showcase:</strong> Just as you tailor your resume, highlight portfolio pieces most relevant to the person or group you're networking with.
+- <strong>Be Ready to Discuss:</strong> Know your projects inside out and be prepared to talk about your process, challenges, and learnings.
+- <strong>Clearly State AI's Role:</strong> If AI played a significant role in a portfolio piece (e.g., AI-generated images, significant code contributions), be transparent about it. This itself can be a talking point about your familiarity with modern tools.</p>
+<p>A strong portfolio, amplified by strategic networking, can significantly boost your job search.</p>
+<h2 id="content-strategy-matrix">Content Strategy Matrix</h2>
+<pre class="mermaid"><code>quadrantChart
+%%{
+  init: {
+    'theme': 'base',
+    'themeVariables': {
+      'fontFamily': 'Arial',
+      'fontSize': '16px'
+    }
+  }
+}%%
+    title Content Impact Analysis
+    x-axis Low Engagement --&gt; High Engagement
+    y-axis Low Reach --&gt; High Reach
+    quadrant-1 Build More
+    quadrant-2 Replicate
+    quadrant-3 Review
+    quadrant-4 Optimize
+    "Technical Posts": [0.8, 0.7]
+    "Career Updates": [0.6, 0.8]
+    "Industry News": [0.7, 0.6]
+    "Personal Stories": [0.9, 0.5]</code></pre>
+<h2 id="linkedin-optimization">LinkedIn Optimization</h2>
+<p>As the premier professional networking platform, LinkedIn deserves special attention in your AI-enhanced networking strategy. With over 875 million members and 95% of recruiters using the platform, optimizing your LinkedIn presence can dramatically increase your visibility to potential employers and valuable connections.</p>
+<h3 id="profile-enhancement">Profile Enhancement</h3>
+<pre class="mermaid"><code>graph LR
+%%{
+  init: {
+    'theme': 'base',
+    'themeVariables': {
+      'fontFamily': 'Arial',
+      'fontSize': '16px'
+    }
+  }
+}%%
+    A[Profile] --&gt; B[Headlines]
+    A --&gt; C[Summary]
+    A --&gt; D[Experience]
+
+    subgraph AI Enhancement
+    E[Keyword Analysis]
+    F[Content Optimization]
+    G[Engagement Metrics]
+    end
+
+    E --&gt; B
+    F --&gt; C
+    G --&gt; D</code></pre>
+<p>Your LinkedIn profile is more than a digital resume—it's a dynamic marketing tool that can work for you 24/7. Here's how to optimize each component with AI assistance:</p>
+<h4 id="headlines-that-convert">Headlines That Convert</h4>
+<p>Your headline is the most visible element of your profile, appearing in search results, connection requests, and activity feeds.</p>
+<p><strong>AI-Enhanced Strategy:</strong>
+- Use AI tools to analyze successful headlines in your industry and identify high-impact keywords
+- Test multiple headline variations with AI feedback on clarity, impact, and keyword optimization
+- Include your value proposition, not just your job title (e.g., "Data Scientist | Turning Complex Data into Business Growth | AI &amp; Machine Learning Expert")</p>
+<p><strong>Implementation Example:</strong>
+<div class="highlight"><pre><span></span><code>Original: Marketing Manager at XYZ Company
+AI-Enhanced: Strategic Marketing Leader | Driving 40% Revenue Growth Through Digital Campaigns | B2B SaaS Specialist
+</code></pre></div></p>
+<h4 id="compelling-summary">Compelling Summary</h4>
+<p>Your summary (About section) provides the narrative context for your professional journey and aspirations.</p>
+<p><strong>AI-Enhanced Strategy:</strong>
+- Use AI content tools to craft a narrative that balances personal voice with professional achievements
+- Incorporate industry-specific keywords identified through AI analysis
+- Structure your summary with a clear pattern: hook, value proposition, proof points, and call to action</p>
+<p><strong>Implementation Example:</strong>
+<div class="highlight"><pre><span></span><code>I transform complex technical challenges into elegant software solutions that real people love to use.
+
+As a Full Stack Developer with 7+ years of experience in fintech and healthcare, I&#39;ve built systems that process over $2M in daily transactions and protect sensitive data for 100,000+ patients.
+
+My technical toolkit includes: [specific technologies]
+
+I&#39;m currently exploring opportunities where I can apply my expertise in [specific area] to help mission-driven organizations scale their impact.
+
+Let&#39;s connect to discuss how we might collaborate!
+</code></pre></div></p>
+<h4 id="experience-that-tells-a-story">Experience That Tells a Story</h4>
+<p>AI can help transform your work history from a list of responsibilities into a compelling narrative of achievements.</p>
+<p><strong>AI-Enhanced Strategy:</strong>
+- Use AI tools to analyze your job descriptions for impact, replacing passive language with achievement-oriented statements
+- Incorporate relevant metrics and quantifiable results
+- Ensure consistent formatting and optimal keyword density across all entries</p>
+<p><strong>Implementation Example:</strong>
+<div class="highlight"><pre><span></span><code>Original: Responsible for managing social media accounts and creating content.
+
+AI-Enhanced: Grew social media engagement by 78% in 6 months by implementing data-driven content strategy, resulting in 15,000+ new followers and $120K in attributable revenue.
+</code></pre></div></p>
+<h3 id="engagement-strategy">Engagement Strategy</h3>
+<pre class="mermaid"><code>gantt
+%%{
+  init: {
+    'theme': 'base',
+    'themeVariables': {
+      'fontFamily': 'Arial',
+      'fontSize': '16px'
+    }
+  }
+}%%
+    title Content Calendar
+    dateFormat YYYY-MM-DD
+    section Articles
+    Industry Insights    :a1, 2025-05-01, 7d
+    Technical Deep Dive  :a2, after a1, 7d
+    section Posts
+    Daily Updates       :b1, 2025-05-01, 30d
+    Career Tips        :b2, 2025-05-15, 30d
+    section Engagement
+    Comments &amp; Likes    :c1, 2025-05-01, 30d
+    Discussions        :c2, 2025-05-01, 30d</code></pre>
+<p>Consistent, strategic engagement is what transforms a static profile into an active networking tool. AI can help you develop and maintain an engagement strategy that maximizes visibility and connection opportunities.</p>
+<h4 id="content-calendar-optimization">Content Calendar Optimization</h4>
+<p>AI tools can analyze platform algorithms and your network's activity patterns to determine optimal posting schedules.</p>
+<p><strong>AI-Enhanced Strategy:</strong>
+- Use AI to identify your network's peak activity times
+- Analyze which content types perform best with your specific audience
+- Develop a balanced content mix that demonstrates your expertise while providing value to your network</p>
+<p><strong>Implementation Framework:</strong>
+1. <strong>Industry Insights</strong>: Share analysis of trends and news (1-2 times weekly)
+2. <strong>Technical Deep Dives</strong>: Showcase your expertise through detailed explanations (bi-weekly)
+3. <strong>Daily Updates</strong>: Brief professional activities or thoughts (2-3 times weekly)
+4. <strong>Career Tips</strong>: Provide value by sharing knowledge (weekly)</p>
+<h4 id="strategic-engagement-tactics">Strategic Engagement Tactics</h4>
+<p>Engagement isn't just about posting—it's about meaningful interaction that builds relationships.</p>
+<p><strong>AI-Enhanced Strategy:</strong>
+- Use AI monitoring tools to identify relevant discussions in your field
+- Set up alerts for posts by key industry figures and potential employers
+- Develop templates for thoughtful comments that add value to discussions</p>
+<p><strong>Implementation Framework:</strong>
+1. <strong>Daily</strong>: Engage with 5-10 posts from your network with substantive comments
+2. <strong>Weekly</strong>: Participate in 2-3 group discussions related to your expertise
+3. <strong>Monthly</strong>: Publish at least one original long-form article
+4. <strong>Ongoing</strong>: Respond to all comments on your content within 24 hours</p>
+<h4 id="measuring-engagement-success">Measuring Engagement Success</h4>
+<p>AI analytics tools can help you track which engagement strategies are yielding results.</p>
+<p><strong>Key Metrics to Monitor:</strong>
+- Profile view increases after specific content types
+- Connection request rates and quality
+- Comment-to-view ratios on your posts
+- Inbound message frequency and relevance to your career goals</p>
+<h2 id="twitter-strategy">Twitter Strategy</h2>
+<h3 id="content-mix">Content Mix</h3>
+<pre class="mermaid"><code>pie title Content Distribution
+%%{
+  init: {
+    'theme': 'base',
+    'themeVariables': {
+      'fontFamily': 'Arial',
+      'fontSize': '16px'
+    }
+  }
+}%%
+    "Industry News" : 30
+    "Technical Tips" : 25
+    "Career Advice" : 20
+    "Personal Updates" : 15
+    "Engagement" : 10</code></pre>
+<h3 id="posting-schedule">Posting Schedule</h3>
+<pre class="mermaid"><code>graph TD
+%%{
+  init: {
+    'theme': 'base',
+    'themeVariables': {
+      'fontFamily': 'Arial',
+      'fontSize': '16px'
+    }
+  }
+}%%
+    A[Content Planning] --&gt; B[AI Analysis]
+    B --&gt; C[Optimal Times]
+    B --&gt; D[Topic Selection]
+    B --&gt; E[Hashtag Strategy]
+    C --&gt; F[Schedule]
+    D --&gt; F
+    E --&gt; F</code></pre>
+<h2 id="network-growth-plan">Network Growth Plan</h2>
+<p>Strategic network growth requires intentionality and structure. AI tools can help you identify the right connections, prioritize relationship-building efforts, and maintain meaningful engagement over time.</p>
+<h3 id="connection-strategy">Connection Strategy</h3>
+<pre class="mermaid"><code>mindmap
+%%{
+  init: {
+    'theme': 'base',
+    'themeVariables': {
+      'fontFamily': 'Arial',
+      'fontSize': '16px'
+    }
+  }
+}%%
+  root((Network
+  Growth))
+    First Degree
+      Direct Contacts
+      Colleagues
+      Classmates
+    Second Degree
+      Introductions
+      Shared Groups
+      Events
+    Industry
+      Leaders
+      Experts
+      Influencers</code></pre>
+<p>A well-structured network combines depth and breadth across different relationship categories. Here's how to approach each level with AI assistance:</p>
+<h4 id="first-degree-connections">First-Degree Connections</h4>
+<p>These direct connections form the foundation of your network and often provide the most immediate value.</p>
+<p><strong>AI-Enhanced Strategy:</strong>
+- Use AI tools to analyze your existing connections for quality, relevance, and engagement level
+- Identify gaps in your first-degree network compared to industry benchmarks
+- Develop personalized reconnection plans for dormant relationships</p>
+<p><strong>Implementation Tactics:</strong>
+- <strong>Direct Contacts</strong>: Schedule quarterly AI-generated check-ins with key contacts based on their recent professional activities
+- <strong>Colleagues</strong>: Maintain relationships with former colleagues through personalized updates about shared interests identified by AI
+- <strong>Classmates</strong>: Use AI to identify alumni working in target companies or roles and prioritize these connections</p>
+<h4 id="second-degree-connections">Second-Degree Connections</h4>
+<p>These connections represent your network's growth potential and can provide access to new opportunities.</p>
+<p><strong>AI-Enhanced Strategy:</strong>
+- Use AI to identify high-value second-degree connections based on your career goals
+- Analyze mutual connections to determine the best introduction pathways
+- Develop personalized outreach templates for different connection scenarios</p>
+<p><strong>Implementation Tactics:</strong>
+- <strong>Introductions</strong>: Request targeted introductions with AI-crafted, personalized messages that highlight mutual benefits
+- <strong>Shared Groups</strong>: Use AI to identify the most active and relevant professional groups where your second-degree connections participate
+- <strong>Events</strong>: Leverage AI event recommendations to attend gatherings where targeted second-degree connections will be present</p>
+<h4 id="industry-connections">Industry Connections</h4>
+<p>These relationships extend beyond your immediate network and can significantly impact your career trajectory.</p>
+<p><strong>AI-Enhanced Strategy:</strong>
+- Use AI to monitor industry leaders' content and identify engagement opportunities
+- Analyze trending topics in your field to develop valuable insights you can share
+- Create a tiered approach to connecting with industry figures based on accessibility and relevance</p>
+<p><strong>Implementation Tactics:</strong>
+- <strong>Leaders</strong>: Follow and meaningfully engage with content from 5-10 industry leaders identified by AI as relevant to your career path
+- <strong>Experts</strong>: Use AI to identify niche experts whose specialized knowledge complements your skills and interests
+- <strong>Influencers</strong>: Leverage AI content analysis to engage with influencers' most underserved topics, increasing your visibility</p>
+<h3 id="relationship-building">Relationship Building</h3>
+<pre class="mermaid"><code>graph LR
+%%{
+  init: {
+    'theme': 'base',
+    'themeVariables': {
+      'fontFamily': 'Arial',
+      'fontSize': '16px'
+    }
+  }
+}%%
+    A[Initial Contact] --&gt; B[Value Add]
+    B --&gt; C[Engagement]
+    C --&gt; D[Relationship]
+
+    subgraph AI Assistance
+    E[Contact Research]
+    F[Content Ideas]
+    G[Follow-up Times]
+    end
+
+    E --&gt; A
+    F --&gt; B
+    G --&gt; C</code></pre>
+<p>Forming connections is just the beginning—building meaningful professional relationships requires ongoing attention and value exchange. AI can help systematize this process without losing authenticity.</p>
+<h4 id="initial-contact-making-memorable-first-impressions">Initial Contact: Making Memorable First Impressions</h4>
+<p><strong>AI-Enhanced Strategy:</strong>
+- Use AI to research potential connections before reaching out, identifying specific shared interests or complementary expertise
+- Analyze successful connection request acceptance patterns in your industry
+- Develop personalized templates that can be customized for different connection types</p>
+<p><strong>Implementation Example:</strong>
+<div class="highlight"><pre><span></span><code>Generic: &quot;I&#39;d like to add you to my professional network.&quot;
+
+AI-Enhanced: &quot;Your recent article on quantum computing applications in finance resonated with my work in algorithmic trading. I&#39;d love to connect and potentially exchange ideas on how these technologies are reshaping risk assessment models.&quot;
+</code></pre></div></p>
+<h4 id="value-add-becoming-a-resource">Value Add: Becoming a Resource</h4>
+<p><strong>AI-Enhanced Strategy:</strong>
+- Use AI content curation tools to identify valuable resources relevant to specific connections
+- Analyze your expertise and content library to match valuable insights with connection needs
+- Develop a system for tracking value-adds to ensure reciprocity and prevent over-giving</p>
+<p><strong>Implementation Framework:</strong>
+1. <strong>Information Sharing</strong>: Use AI to identify and share relevant articles, research, or tools
+2. <strong>Opportunity Connection</strong>: Leverage AI to match opportunities with appropriate connections
+3. <strong>Recognition</strong>: Set up AI alerts for connection achievements to provide timely congratulations
+4. <strong>Feedback</strong>: Offer expertise in your specialty area when connections post related questions</p>
+<h4 id="engagement-maintaining-meaningful-contact">Engagement: Maintaining Meaningful Contact</h4>
+<p><strong>AI-Enhanced Strategy:</strong>
+- Use AI to develop a tiered engagement system based on connection priority and relationship stage
+- Analyze optimal communication frequency based on industry norms and individual response patterns
+- Create engagement triggers based on significant career events or content sharing</p>
+<p><strong>Implementation Framework:</strong>
+1. <strong>Tier 1 Connections</strong> (High priority): Personalized engagement every 30-45 days
+2. <strong>Tier 2 Connections</strong> (Medium priority): Meaningful engagement every 60-90 days
+3. <strong>Tier 3 Connections</strong> (General network): Periodic engagement every 4-6 months</p>
+<h4 id="relationship-developing-long-term-professional-allies">Relationship: Developing Long-term Professional Allies</h4>
+<p><strong>AI-Enhanced Strategy:</strong>
+- Use AI to identify relationship deepening opportunities based on shared interests or complementary goals
+- Analyze relationship health metrics such as reciprocity, engagement quality, and mutual benefit
+- Develop transition pathways from online connections to real-world relationships</p>
+<p><strong>Implementation Tactics:</strong>
+1. <strong>Virtual Coffee</strong>: Invite connections to 15-30 minute video calls to discuss specific shared interests
+2. <strong>Collaborative Opportunities</strong>: Use AI to identify potential collaboration opportunities with connections
+3. <strong>Mentorship Exchange</strong>: Develop reciprocal learning relationships where both parties benefit</p>
+<h2 id="event-networking">Event Networking</h2>
+<h3 id="virtual-events">Virtual Events</h3>
+<pre class="mermaid"><code>sequenceDiagram
+%%{
+  init: {
+    'theme': 'base',
+    'themeVariables': {
+      'fontFamily': 'Arial',
+      'fontSize': '16px'
+    }
+  }
+}%%
+    participant A as Attendee
+    participant E as Event
+    participant N as Network
+    participant F as Follow-up
+
+    A-&gt;&gt;E: Join Event
+    E-&gt;&gt;N: Engage
+    N-&gt;&gt;F: Connect
+    F-&gt;&gt;A: Build Relationship</code></pre>
+<h3 id="in-person-events">In-Person Events</h3>
+<pre class="mermaid"><code>mindmap
+%%{
+  init: {
+    'theme': 'base',
+    'themeVariables': {
+      'fontFamily': 'Arial',
+      'fontSize': '16px'
+    }
+  }
+}%%
+  root((Event
+  Strategy))
+    Before
+      Research
+      Goals
+      Targets
+    During
+      Connections
+      Notes
+      Follow-ups
+    After
+      LinkedIn
+      Email
+      Content</code></pre>
+<h2 id="engagement-metrics">Engagement Metrics</h2>
+<h3 id="success-tracking">Success Tracking</h3>
+<pre class="mermaid"><code>graph TD
+%%{
+  init: {
+    'theme': 'base',
+    'themeVariables': {
+      'fontFamily': 'Arial',
+      'fontSize': '16px'
+    }
+  }
+}%%
+    A[Metrics] --&gt; B[Connection Growth]
+    A --&gt; C[Engagement Rate]
+    A --&gt; D[Opportunity Flow]
+
+    subgraph Growth Metrics
+    B --&gt; B1[New Connections]
+    B --&gt; B2[Quality Score]
+    end
+
+    subgraph Engagement
+    C --&gt; C1[Responses]
+    C --&gt; C2[Interactions]
+    end
+
+    subgraph Opportunities
+    D --&gt; D1[Referrals]
+    D --&gt; D2[Direct Offers]
+    end</code></pre>
+<h2 id="ai-powered-follow-up-system">AI-Powered Follow-up System</h2>
+<h3 id="template-framework">Template Framework</h3>
+<pre class="mermaid"><code>graph LR
+%%{
+  init: {
+    'theme': 'base',
+    'themeVariables': {
+      'fontFamily': 'Arial',
+      'fontSize': '16px'
+    }
+  }
+}%%
+    A[Event] --&gt; B[Connection]
+    B --&gt; C[Follow-up]
+    C --&gt; D[Nurture]
+
+    subgraph AI Tools
+    E[Template Generator]
+    F[Timing Optimizer]
+    G[Content Suggester]
+    end
+
+    E --&gt; C
+    F --&gt; C
+    G --&gt; D</code></pre>
+<h2 id="action-items">Action Items</h2>
+<p>Daily Tasks:
+- [ ] Content review
+- [ ] Engagement check
+- [ ] Response management
+- [ ] Connection requests</p>
+<p>Weekly Tasks:
+- [ ] Content planning
+- [ ] Metrics review
+- [ ] Strategy adjustment
+- [ ] Network growth</p>
+<p>Monthly Tasks:
+- [ ] Deep analysis
+- [ ] Strategy review
+- [ ] Goal setting
+- [ ] Network audit</p>
+<h2 id="ai-tooling-and-app-availability-for-networking">AI Tooling and App Availability for Networking</h2>
+<p>Many tools and platforms mentioned for networking are widely accessible:</p>
+<ul>
+<li><strong>LinkedIn:</strong> The primary professional networking platform.<ul>
+<li><em>App Download Information:</em> Available as a comprehensive website and has official mobile apps for iOS and Android.</li>
+</ul>
+</li>
+<li><strong>Twitter (X):</strong> Useful for real-time industry conversations and thought leadership.<ul>
+<li><em>App Download Information:</em> Available as a website and has official mobile apps for iOS and Android.</li>
+</ul>
+</li>
+<li><strong>GitHub:</strong> Essential for technical professionals to showcase projects.<ul>
+<li><em>App Download Information:</em> Primarily a web platform, with desktop apps (GitHub Desktop) for repository management and mobile apps for notifications and basic interaction.</li>
+</ul>
+</li>
+<li><strong>AI-Powered Networking Tools (General Categories):</strong><ul>
+<li><strong>AI Writing Assistants (e.g., ChatGPT, Gemini, Claude):</strong> For drafting outreach messages, profile summaries, and content.<ul>
+<li><em>App Download Information:</em> Typically available as web applications. ChatGPT and Gemini often have official mobile apps on iOS and Android.</li>
+</ul>
+</li>
+<li><strong>Social Media Management &amp; Scheduling Tools (e.g., Buffer, Hootsuite, Sprout Social):</strong> Many of these platforms incorporate AI features for content suggestions, optimal posting times, and analytics.<ul>
+<li><em>App Download Information:</em> Most offer web platforms and mobile apps (iOS and Android) for managing social media on the go. Check the specific tool's website for details.</li>
+</ul>
+</li>
+<li><strong>CRM (Customer Relationship Management) Tools for Networking:</strong> Some individuals adapt personal CRMs or specialized networking CRMs to manage their connections. Some of these may have AI features for contact management or follow-up reminders.<ul>
+<li><em>App Download Information:</em> Varies widely; many are web-based, with mobile app availability depending on the specific CRM.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>When choosing AI-powered tools for networking, prioritize those that help you personalize and scale your efforts authentically. Always check the official websites of these tools for the most current information on app availability and features.</p>
+<h2 id="success-framework">Success Framework</h2>
+<p>Successful AI-enhanced networking isn't measured solely by the number of connections you accumulate, but by the quality of relationships you build and the opportunities they generate. This framework outlines the key pillars of networking success in the AI age.</p>
+<pre class="mermaid"><code>mindmap
+%%{
+  init: {
+    'theme': 'base',
+    'themeVariables': {
+      'fontFamily': 'Arial',
+      'fontSize': '16px'
+    }
+  }
+}%%
+  root((Networking
+  Success))
+    Consistency
+      Daily Actions
+      Regular Content
+      Timely Response
+    Value
+      Industry Insights
+      Helpful Resources
+      Career Tips
+    Growth
+      Quality Connections
+      Meaningful Engagement
+      Opportunity Creation</code></pre>
+<h3 id="consistency-the-foundation-of-networking-success">Consistency: The Foundation of Networking Success</h3>
+<p>Consistency builds visibility, trust, and momentum in your networking efforts. AI tools can help maintain consistency even during busy periods.</p>
+<p><strong>Key Elements:</strong></p>
+<ul>
+<li><strong>Daily Actions</strong>: Small, regular networking activities compound over time. Use AI to suggest 2-3 high-impact daily actions based on your network's recent activity.</li>
+</ul>
+<p><em>Implementation Example:</em> Set up an AI assistant to identify one person to congratulate, one discussion to contribute to, and one connection to reach out to each day.</p>
+<ul>
+<li><strong>Regular Content</strong>: Consistent content creation establishes your professional voice. Use AI content calendars and idea generation to maintain a sustainable publishing rhythm.</li>
+</ul>
+<p><em>Implementation Example:</em> Develop a content bank with AI assistance that allows you to schedule posts in advance during high-productivity periods.</p>
+<ul>
+<li><strong>Timely Response</strong>: Prompt engagement signals reliability and interest. Use AI to prioritize responses and suggest appropriate reply timeframes based on message importance.</li>
+</ul>
+<p><em>Implementation Example:</em> Set up AI-powered notification systems that categorize incoming messages by urgency and relationship value.</p>
+<h3 id="value-the-currency-of-meaningful-connections">Value: The Currency of Meaningful Connections</h3>
+<p>Providing genuine value to your network transforms transactional interactions into meaningful relationships. AI can help you identify and deliver relevant value.</p>
+<p><strong>Key Elements:</strong></p>
+<ul>
+<li><strong>Industry Insights</strong>: Sharing thoughtful analysis demonstrates expertise. Use AI to identify emerging trends and help craft unique perspectives that showcase your knowledge.</li>
+</ul>
+<p><em>Implementation Example:</em> Set up AI monitoring for industry news with analysis prompts that help you develop original insights worth sharing.</p>
+<ul>
+<li><strong>Helpful Resources</strong>: Becoming a resource hub makes you invaluable to your network. Use AI to match resources to specific connections based on their interests and needs.</li>
+</ul>
+<p><em>Implementation Example:</em> Create an AI-curated resource library tagged by topic, allowing you to quickly share relevant materials when opportunities arise.</p>
+<ul>
+<li><strong>Career Tips</strong>: Helping others advance creates reciprocity. Use AI to identify common career challenges in your industry and develop actionable advice.</li>
+</ul>
+<p><em>Implementation Example:</em> Analyze successful career paths in your field with AI assistance to identify patterns and strategies worth sharing.</p>
+<h3 id="growth-the-measure-of-networking-effectiveness">Growth: The Measure of Networking Effectiveness</h3>
+<p>Strategic network growth focuses on quality over quantity and aligns with your career objectives. AI can help target and measure growth effectively.</p>
+<p><strong>Key Elements:</strong></p>
+<ul>
+<li><strong>Quality Connections</strong>: Valuable relationships with the right people matter more than total connection count. Use AI to evaluate connection quality based on relevance, engagement, and reciprocity.</li>
+</ul>
+<p><em>Implementation Example:</em> Develop an AI-powered connection scoring system that helps you identify which relationships to nurture more actively.</p>
+<ul>
+<li><strong>Meaningful Engagement</strong>: Depth of interaction builds stronger relationships than surface-level engagement. Use AI to suggest substantive conversation starters based on shared interests.</li>
+</ul>
+<p><em>Implementation Example:</em> Create engagement templates for different relationship stages, from initial connection to established relationship.</p>
+<ul>
+<li><strong>Opportunity Creation</strong>: The ultimate measure of networking success is the opportunities it generates. Use AI to track and attribute opportunities to specific networking activities.</li>
+</ul>
+<p><em>Implementation Example:</em> Maintain an opportunity journal that links job leads, collaborations, and other opportunities to their networking sources.</p>
+<h3 id="measuring-networking-roi">Measuring Networking ROI</h3>
+<p>To ensure your networking efforts are effective, establish metrics that align with your career goals:</p>
+<p><strong>Quantitative Metrics:</strong>
+- Connection growth rate in target industries/companies
+- Engagement-to-connection ratio (quality of interaction)
+- Response rate to outreach messages
+- Opportunity generation rate (interviews, collaborations, etc.)</p>
+<p><strong>Qualitative Metrics:</strong>
+- Depth of relationship with key connections
+- Quality of information and insights gained
+- Alignment of new connections with career goals
+- Satisfaction with networking interactions</p>
+<p><strong>AI-Enhanced Tracking:</strong>
+- Use AI tools to automatically log networking activities
+- Analyze patterns in successful networking interactions
+- Identify which platforms and approaches yield the best results
+- Adjust strategies based on data-driven insights</p>
+<h3 id="continuous-improvement-cycle">Continuous Improvement Cycle</h3>
+<p>Effective networking is an iterative process that improves over time:</p>
+<ol>
+<li><strong>Plan</strong>: Set specific networking goals aligned with career objectives</li>
+<li><strong>Execute</strong>: Implement your networking strategy with AI assistance</li>
+<li><strong>Measure</strong>: Track both activity metrics and outcome metrics</li>
+<li><strong>Analyze</strong>: Use AI to identify patterns and opportunities for improvement</li>
+<li><strong>Adjust</strong>: Refine your approach based on what's working</li>
+</ol>
+<p>Remember: AI enhances networking but authentic relationships drive success. The most sophisticated AI tools cannot replace genuine interest, empathy, and the human connection that forms the foundation of valuable professional relationships. Use AI to handle the mechanical aspects of networking so you can focus your human energy on building meaningful connections.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © 2026 Data Octo · Enterprise Cloud, Data & AI, Cybersecurity Architecture
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.tracking", "navigation.sections", "content.code.copy"], "search": "../../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
+      
+        <script src="../../../../assets/javascripts/mermaid-init.js"></script>
+      
+    
+  </body>
+</html>

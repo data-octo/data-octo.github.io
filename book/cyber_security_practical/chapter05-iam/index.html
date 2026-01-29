@@ -1,0 +1,2580 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://data-octo.github.io/book/cyber_security_practical/chapter05-iam/">
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>Chapter 5: Identity and Access Management - Data Octo</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.e53b48f4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-5-identity-and-access-management" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Data Octo" class="md-header__button md-logo" aria-label="Data Octo" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Data Octo
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter 5: Identity and Access Management
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Data Octo" class="md-nav__button md-logo" aria-label="Data Octo" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Data Octo
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../home.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Blog
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Blog
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Posts
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Archive
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Archive
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog/archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2026
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Categories
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            Categories
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog/category/ai/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AI
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog/category/business-analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Business Analysis
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog/category/productivity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Productivity
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog/category/software-development/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Software Development
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog/category/xplore-rec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Xplore Rec
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Books
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Books
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Books Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Portfolio
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Portfolio
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../portfolio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Portfolio Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎯 Learning Objectives
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-identity-and-access-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔐 What is Identity and Access Management?
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔐 What is Identity and Access Management?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-iam-challenge" class="md-nav__link">
+    <span class="md-ellipsis">
+      The IAM Challenge
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-iam-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why IAM Matters
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-aaa-framework-authentication-authorization-and-accounting" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔑 The AAA Framework: Authentication, Authorization, and Accounting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔑 The AAA Framework: Authentication, Authorization, and Accounting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aaa-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      AAA Components
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-authentication-who-are-you" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Authentication (Who are you?)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Authentication (Who are you?)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#authentication-factors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Authentication Factors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multi-factor-authentication-mfa" class="md-nav__link">
+    <span class="md-ellipsis">
+      Multi-Factor Authentication (MFA)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-authorization-what-can-you-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Authorization (What can you access?)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Authorization (What can you access?)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#access-control-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Access Control Models
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-accounting-what-did-you-do" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Accounting (What did you do?)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Accounting (What did you do?)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#logging-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logging Requirements
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#active-directory-microsofts-directory-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      🏢 Active Directory: Microsoft's Directory Service
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🏢 Active Directory: Microsoft&#39;s Directory Service">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-active-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is Active Directory?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#active-directory-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Active Directory Structure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#active-directory-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Active Directory Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Active Directory Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-forest" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Forest
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-domain" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Domain
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-organizational-unit-ou" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Organizational Unit (OU)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-domain-controllers" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Domain Controllers
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#active-directory-security-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      Active Directory Security Features
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Active Directory Security Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#group-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Group Policy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trust-relationships" class="md-nav__link">
+    <span class="md-ellipsis">
+      Trust Relationships
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#active-directory-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Active Directory Deployment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Active Directory Deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installation-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installation Steps
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security Best Practices
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openldap-open-source-directory-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      🐧 OpenLDAP: Open Source Directory Service
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🐧 OpenLDAP: Open Source Directory Service">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-ldap" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is LDAP?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ldap-vs-active-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      LDAP vs Active Directory
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#openldap-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      OpenLDAP Structure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#openldap-installation-and-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      OpenLDAP Installation and Configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OpenLDAP Installation and Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installation-ubuntudebian" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installation (Ubuntu/Debian)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adding-users-and-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adding Users and Groups
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#single-sign-on-sso-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔗 Single Sign-On (SSO) Implementation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔗 Single Sign-On (SSO) Implementation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sso-benefits" class="md-nav__link">
+    <span class="md-ellipsis">
+      SSO Benefits
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sso-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      SSO Architecture
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#openam-open-source-sso-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      OpenAM: Open Source SSO Solution
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OpenAM: Open Source SSO Solution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#openam-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      OpenAM Features
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#openam-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      OpenAM Deployment
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#federation-standards-saml-oauth-and-openid-connect" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔐 Federation Standards: SAML, OAuth, and OpenID Connect
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔐 Federation Standards: SAML, OAuth, and OpenID Connect">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#saml-security-assertion-markup-language" class="md-nav__link">
+    <span class="md-ellipsis">
+      SAML (Security Assertion Markup Language)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SAML (Security Assertion Markup Language)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#saml-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      SAML Components
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#saml-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      SAML Flow
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oauth-20" class="md-nav__link">
+    <span class="md-ellipsis">
+      OAuth 2.0
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OAuth 2.0">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#oauth-20-roles" class="md-nav__link">
+    <span class="md-ellipsis">
+      OAuth 2.0 Roles
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oauth-20-grant-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      OAuth 2.0 Grant Types
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#openid-connect" class="md-nav__link">
+    <span class="md-ellipsis">
+      OpenID Connect
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OpenID Connect">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#openid-connect-benefits" class="md-nav__link">
+    <span class="md-ellipsis">
+      OpenID Connect Benefits
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#access-control-models-rbac-and-abac" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎭 Access Control Models: RBAC and ABAC
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🎭 Access Control Models: RBAC and ABAC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#role-based-access-control-rbac" class="md-nav__link">
+    <span class="md-ellipsis">
+      Role-Based Access Control (RBAC)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Role-Based Access Control (RBAC)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rbac-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      RBAC Components
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rbac-implementation-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      RBAC Implementation Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#attribute-based-access-control-abac" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attribute-Based Access Control (ABAC)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Attribute-Based Access Control (ABAC)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#abac-attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      ABAC Attributes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#abac-policy-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      ABAC Policy Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#access-governance-and-attestation" class="md-nav__link">
+    <span class="md-ellipsis">
+      📊 Access Governance and Attestation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📊 Access Governance and Attestation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#access-governance-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      Access Governance Process
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#access-review-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Access Review Workflow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#access-attestation-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      Access Attestation Tools
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Access Attestation Tools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#manual-attestation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Manual Attestation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#automated-attestation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Automated Attestation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monitoring-and-auditing-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔍 Monitoring and Auditing Access
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔍 Monitoring and Auditing Access">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#access-monitoring-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Access Monitoring Components
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-monitoring-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Monitoring Metrics
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Monitoring Metrics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#authentication-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Authentication Metrics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authorization-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Authorization Metrics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#privilege-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Privilege Metrics
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audit-logging-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audit Logging Requirements
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Audit Logging Requirements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-to-log" class="md-nav__link">
+    <span class="md-ellipsis">
+      What to Log
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log-retention" class="md-nav__link">
+    <span class="md-ellipsis">
+      Log Retention
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hands-on-activities" class="md-nav__link">
+    <span class="md-ellipsis">
+      🧪 Hands-on Activities
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🧪 Hands-on Activities">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#activity-1-active-directory-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Activity 1: Active Directory Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#activity-2-openldap-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Activity 2: OpenLDAP Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#activity-3-sso-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Activity 3: SSO Implementation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#activity-4-access-control-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      Activity 4: Access Control Design
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      📋 Key Takeaways
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#review-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      ❓ Review Questions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      📚 Further Reading
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📚 Further Reading">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#books" class="md-nav__link">
+    <span class="md-ellipsis">
+      Books
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#online-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Online Resources
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tools-and-platforms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tools and Platforms
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-5-identity-and-access-management">Chapter 5: Identity and Access Management</h1>
+<h2 id="learning-objectives">🎯 Learning Objectives</h2>
+<p>By the end of this chapter, you will be able to:
+- Understand the fundamental concepts of identity and access management (IAM)
+- Explain the difference between authentication, authorization, and accounting (AAA)
+- Deploy and configure Active Directory and OpenLDAP systems
+- Implement Single Sign-On (SSO) solutions using OpenAM and federation standards
+- Design and implement Role-Based Access Control (RBAC) and Attribute-Based Access Control (ABAC)
+- Understand SAML, OAuth, and OpenID Connect protocols
+- Implement access governance and attestation processes
+- Monitor and audit access activities for security compliance</p>
+<h2 id="what-is-identity-and-access-management">🔐 What is Identity and Access Management?</h2>
+<p>Identity and Access Management (IAM) is a framework of policies, processes, and technologies that ensures the right individuals have access to the right resources at the right times for the right reasons. IAM is fundamental to cybersecurity as it controls who can access what within an organization.</p>
+<h3 id="the-iam-challenge">The IAM Challenge</h3>
+<p>Organizations face a complex challenge: <strong>providing seamless access to legitimate users while preventing unauthorized access from attackers</strong>. This becomes increasingly difficult as organizations grow, adopt cloud services, and face sophisticated threats.</p>
+<h3 id="why-iam-matters">Why IAM Matters</h3>
+<pre class="mermaid"><code>graph TD
+    A[IAM Benefits] --&gt; B[Security]
+    A --&gt; C[Compliance]
+    A --&gt; D[Efficiency]
+    A --&gt; E[Risk Management]
+
+    B --&gt; B1[Prevent unauthorized access]
+    B --&gt; B2[Reduce insider threats]
+    B --&gt; B3[Protect sensitive data]
+
+    C --&gt; C1[Meet regulatory requirements]
+    C --&gt; C2[Audit trail compliance]
+    C --&gt; C3[Data protection standards]
+
+    D --&gt; D1[Streamlined user access]
+    D --&gt; D2[Automated provisioning]
+    D --&gt; D3[Self-service capabilities]
+
+    E --&gt; E1[Access risk assessment]
+    E --&gt; E2[Privilege escalation control]
+    E --&gt; E3[Continuous monitoring]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec</code></pre>
+<h2 id="the-aaa-framework-authentication-authorization-and-accounting">🔑 The AAA Framework: Authentication, Authorization, and Accounting</h2>
+<p>The AAA framework provides the foundation for secure access control systems.</p>
+<h3 id="aaa-components">AAA Components</h3>
+<pre class="mermaid"><code>graph TD
+    A[AAA Framework] --&gt; B[Authentication]
+    A --&gt; C[Authorization]
+    A --&gt; D[Accounting]
+
+    B --&gt; B1[Who are you?]
+    B --&gt; B2[Verify identity]
+    B --&gt; B3[Multi-factor methods]
+
+    C --&gt; C1[What can you access?]
+    C --&gt; C2[Resource permissions]
+    C --&gt; C3[Access policies]
+
+    D --&gt; D1[What did you do?]
+    D --&gt; D2[Activity logging]
+    D --&gt; D3[Audit trails]
+
+    B1 --&gt; E1[Username/password]
+    B1 --&gt; E2[Biometrics]
+    B1 --&gt; E3[Smart cards]
+
+    C1 --&gt; E4[Role-based access]
+    C1 --&gt; E5[Attribute-based access]
+    C1 --&gt; E6[Time-based restrictions]
+
+    D1 --&gt; E7[Login/logout events]
+    D1 --&gt; E8[Resource access]
+    D1 --&gt; E9[Policy violations]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E1 fill:#e8f5e8
+    style E2 fill:#e8f5e8
+    style E3 fill:#e8f5e8
+    style E4 fill:#fff3e0
+    style E5 fill:#fff3e0
+    style E6 fill:#fff3e0
+    style E7 fill:#fce4ec
+    style E8 fill:#fce4ec
+    style E9 fill:#fce4ec</code></pre>
+<h3 id="1-authentication-who-are-you">1. <strong>Authentication (Who are you?)</strong></h3>
+<p>Authentication verifies the identity of users attempting to access systems or resources.</p>
+<h4 id="authentication-factors">Authentication Factors</h4>
+<p><strong>Something You Know</strong>:
+- Passwords, PINs, security questions
+- <strong>Strengths</strong>: Easy to implement, familiar to users
+- <strong>Weaknesses</strong>: Can be guessed, shared, or stolen</p>
+<p><strong>Something You Have</strong>:
+- Smart cards, security tokens, mobile devices
+- <strong>Strengths</strong>: Hard to duplicate, can be revoked
+- <strong>Weaknesses</strong>: Can be lost, stolen, or damaged</p>
+<p><strong>Something You Are</strong>:
+- Fingerprints, facial recognition, voice patterns
+- <strong>Strengths</strong>: Unique to individual, cannot be lost
+- <strong>Weaknesses</strong>: Can be spoofed, affected by injury/illness</p>
+<h4 id="multi-factor-authentication-mfa">Multi-Factor Authentication (MFA)</h4>
+<p>MFA requires users to provide multiple authentication factors, significantly improving security.</p>
+<pre class="mermaid"><code>graph LR
+    A[User Login] --&gt; B[Username/Password]
+    B --&gt; C[Verification]
+    C --&gt; D[Second Factor]
+    D --&gt; E[Access Granted]
+
+    B --&gt; B1[Knowledge Factor]
+    D --&gt; D1[Possession Factor]
+    D --&gt; D2[Inherence Factor]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec</code></pre>
+<p><strong>MFA Examples</strong>:
+- <strong>Password + SMS Code</strong>: Common but vulnerable to SIM swapping
+- <strong>Password + Authenticator App</strong>: More secure, offline capability
+- <strong>Password + Hardware Token</strong>: Highest security, physical device required</p>
+<h3 id="2-authorization-what-can-you-access">2. <strong>Authorization (What can you access?)</strong></h3>
+<p>Authorization determines what resources and actions a user can access after successful authentication.</p>
+<h4 id="access-control-models">Access Control Models</h4>
+<p><strong>Discretionary Access Control (DAC)</strong>:
+- Resource owners control access permissions
+- Flexible but can lead to permission proliferation
+- Example: File sharing in operating systems</p>
+<p><strong>Mandatory Access Control (MAC)</strong>:
+- System-enforced access policies
+- Rigid but highly secure
+- Example: Military and government systems</p>
+<p><strong>Role-Based Access Control (RBAC)</strong>:
+- Access based on user roles
+- Scalable and manageable
+- Example: Employee roles in organizations</p>
+<p><strong>Attribute-Based Access Control (ABAC)</strong>:
+- Access based on user, resource, and environmental attributes
+- Highly flexible and context-aware
+- Example: Time-based access, location-based restrictions</p>
+<h3 id="3-accounting-what-did-you-do">3. <strong>Accounting (What did you do?)</strong></h3>
+<p>Accounting tracks and logs all user activities for audit and security purposes.</p>
+<h4 id="logging-requirements">Logging Requirements</h4>
+<ul>
+<li><strong>Authentication Events</strong>: Login attempts, successes, failures</li>
+<li><strong>Authorization Events</strong>: Resource access, permission changes</li>
+<li><strong>User Activities</strong>: Commands executed, data accessed, changes made</li>
+<li><strong>System Events</strong>: Configuration changes, security events</li>
+</ul>
+<h2 id="active-directory-microsofts-directory-service">🏢 Active Directory: Microsoft's Directory Service</h2>
+<p>Active Directory (AD) is Microsoft's directory service that provides centralized authentication and authorization for Windows networks.</p>
+<h3 id="what-is-active-directory">What is Active Directory?</h3>
+<p>Active Directory is a hierarchical directory service that stores information about network resources, including users, computers, groups, and organizational units (OUs).</p>
+<h3 id="active-directory-structure">Active Directory Structure</h3>
+<pre class="mermaid"><code>graph TD
+    A[Forest] --&gt; B[Domain Tree]
+    B --&gt; C[Domain]
+    C --&gt; D[Organizational Unit]
+    D --&gt; E[Users]
+    D --&gt; F[Computers]
+    D --&gt; G[Groups]
+
+    B --&gt; B1[contoso.com]
+    B --&gt; B2[us.contoso.com]
+    B --&gt; B3[eu.contoso.com]
+
+    C --&gt; C1[Domain Controllers]
+    C --&gt; C2[Member Servers]
+    C --&gt; C3[Workstations]
+
+    D --&gt; D1[Sales OU]
+    D --&gt; D2[IT OU]
+    D --&gt; D3[Finance OU]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
+    style G fill:#fff8e1</code></pre>
+<h3 id="active-directory-components">Active Directory Components</h3>
+<h4 id="1-forest">1. <strong>Forest</strong></h4>
+<ul>
+<li>Top-level container for AD objects</li>
+<li>Contains one or more domains</li>
+<li>Establishes trust relationships</li>
+</ul>
+<h4 id="2-domain">2. <strong>Domain</strong></h4>
+<ul>
+<li>Logical grouping of AD objects</li>
+<li>Has its own security policies</li>
+<li>Can contain multiple OUs</li>
+</ul>
+<h4 id="3-organizational-unit-ou">3. <strong>Organizational Unit (OU)</strong></h4>
+<ul>
+<li>Container for organizing AD objects</li>
+<li>Can have Group Policy applied</li>
+<li>Enables delegation of administration</li>
+</ul>
+<h4 id="4-domain-controllers">4. <strong>Domain Controllers</strong></h4>
+<ul>
+<li>Servers that authenticate users</li>
+<li>Store AD database</li>
+<li>Replicate changes to other DCs</li>
+</ul>
+<h3 id="active-directory-security-features">Active Directory Security Features</h3>
+<h4 id="group-policy">Group Policy</h4>
+<p>Group Policy allows administrators to centrally manage user and computer settings.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Example Group Policy Settings</span>
+Computer<span class="w"> </span>Configuration:
+-<span class="w"> </span>Password<span class="w"> </span>policies
+-<span class="w"> </span>Account<span class="w"> </span>lockout<span class="w"> </span>policies
+-<span class="w"> </span>Security<span class="w"> </span>settings
+-<span class="w"> </span>Software<span class="w"> </span>installation
+
+User<span class="w"> </span>Configuration:
+-<span class="w"> </span>Desktop<span class="w"> </span>settings
+-<span class="w"> </span>Application<span class="w"> </span>restrictions
+-<span class="w"> </span>Folder<span class="w"> </span>redirection
+-<span class="w"> </span>Scripts
+</code></pre></div>
+<h4 id="trust-relationships">Trust Relationships</h4>
+<p>Trusts enable users in one domain to access resources in another domain.</p>
+<p><strong>Trust Types</strong>:
+- <strong>One-Way Trust</strong>: Domain A trusts Domain B, but not vice versa
+- <strong>Two-Way Trust</strong>: Both domains trust each other
+- <strong>Transitive Trust</strong>: Trust extends through multiple domains</p>
+<h3 id="active-directory-deployment">Active Directory Deployment</h3>
+<h4 id="installation-steps">Installation Steps</h4>
+<ol>
+<li><strong>Prepare the Environment</strong></li>
+<li>Ensure DNS is properly configured</li>
+<li>Verify network connectivity</li>
+<li>
+<p>Plan domain structure</p>
+</li>
+<li>
+<p><strong>Install Active Directory Domain Services</strong>
+   <div class="highlight"><pre><span></span><code><span class="c1"># Install AD DS role</span>
+Install-WindowsFeature<span class="w"> </span>-Name<span class="w"> </span>AD-Domain-Services
+
+<span class="c1"># Promote to Domain Controller</span>
+Install-ADDSForest<span class="w"> </span>-DomainName<span class="w"> </span><span class="s2">&quot;contoso.com&quot;</span>
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Configure Domain Settings</strong></p>
+</li>
+<li>Set password policies</li>
+<li>Configure account lockout policies</li>
+<li>Establish security baselines</li>
+</ol>
+<h4 id="security-best-practices">Security Best Practices</h4>
+<ul>
+<li><strong>Regular Backups</strong>: Backup AD database and system state</li>
+<li><strong>Monitoring</strong>: Monitor for suspicious activities</li>
+<li><strong>Patching</strong>: Keep domain controllers updated</li>
+<li><strong>Access Control</strong>: Limit administrative access</li>
+</ul>
+<h2 id="openldap-open-source-directory-service">🐧 OpenLDAP: Open Source Directory Service</h2>
+<p>OpenLDAP is an open-source implementation of the Lightweight Directory Access Protocol (LDAP), providing directory services for various platforms.</p>
+<h3 id="what-is-ldap">What is LDAP?</h3>
+<p>LDAP is a protocol for accessing and managing directory information. It's platform-independent and widely used for authentication and directory services.</p>
+<h3 id="ldap-vs-active-directory">LDAP vs Active Directory</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>OpenLDAP</th>
+<th>Active Directory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Platform</strong></td>
+<td>Cross-platform</td>
+<td>Windows-centric</td>
+</tr>
+<tr>
+<td><strong>Cost</strong></td>
+<td>Free, open-source</td>
+<td>Licensing required</td>
+</tr>
+<tr>
+<td><strong>Integration</strong></td>
+<td>Standards-based</td>
+<td>Microsoft ecosystem</td>
+</tr>
+<tr>
+<td><strong>Management</strong></td>
+<td>Command-line, web tools</td>
+<td>GUI management tools</td>
+</tr>
+<tr>
+<td><strong>Scalability</strong></td>
+<td>Highly scalable</td>
+<td>Enterprise-scale</td>
+</tr>
+</tbody>
+</table>
+<h3 id="openldap-structure">OpenLDAP Structure</h3>
+<pre class="mermaid"><code>graph TD
+    A[LDAP Directory] --&gt; B[dc=example,dc=com]
+    B --&gt; C[ou=People]
+    B --&gt; D[ou=Groups]
+    B --&gt; E[ou=Computers]
+
+    C --&gt; C1[uid=john]
+    C --&gt; C2[uid=jane]
+    C --&gt; C3[uid=bob]
+
+    D --&gt; D1[cn=Administrators]
+    D --&gt; D2[cn=Users]
+    D --&gt; D3[cn=Guests]
+
+    E --&gt; E1[cn=server1]
+    E --&gt; E2[cn=workstation1]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec</code></pre>
+<h3 id="openldap-installation-and-configuration">OpenLDAP Installation and Configuration</h3>
+<h4 id="installation-ubuntudebian">Installation (Ubuntu/Debian)</h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Install OpenLDAP server</span>
+sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>slapd<span class="w"> </span>ldap-utils
+
+<span class="c1"># Configure basic settings</span>
+sudo<span class="w"> </span>dpkg-reconfigure<span class="w"> </span>slapd
+</code></pre></div>
+<h4 id="basic-configuration">Basic Configuration</h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># LDAP configuration file</span>
+/etc/ldap/slapd.conf
+
+<span class="c1"># Database configuration</span>
+/etc/ldap/slapd.d/
+
+<span class="c1"># Access control</span>
+access<span class="w"> </span>to<span class="w"> </span>*
+<span class="w">    </span>by<span class="w"> </span><span class="nv">dn</span><span class="o">=</span><span class="s2">&quot;cn=admin,dc=example,dc=com&quot;</span><span class="w"> </span>write
+<span class="w">    </span>by<span class="w"> </span>*<span class="w"> </span><span class="nb">read</span>
+</code></pre></div>
+<h4 id="adding-users-and-groups">Adding Users and Groups</h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Add user entry</span>
+ldapadd<span class="w"> </span>-x<span class="w"> </span>-D<span class="w"> </span><span class="s2">&quot;cn=admin,dc=example,dc=com&quot;</span><span class="w"> </span>-W
+dn:<span class="w"> </span><span class="nv">uid</span><span class="o">=</span>john,ou<span class="o">=</span>People,dc<span class="o">=</span>example,dc<span class="o">=</span>com
+objectClass:<span class="w"> </span>inetOrgPerson
+uid:<span class="w"> </span>john
+cn:<span class="w"> </span>John<span class="w"> </span>Doe
+sn:<span class="w"> </span>Doe
+mail:<span class="w"> </span>john@example.com
+
+<span class="c1"># Add group entry</span>
+ldapadd<span class="w"> </span>-x<span class="w"> </span>-D<span class="w"> </span><span class="s2">&quot;cn=admin,dc=example,dc=com&quot;</span><span class="w"> </span>-W
+dn:<span class="w"> </span><span class="nv">cn</span><span class="o">=</span>Users,ou<span class="o">=</span>Groups,dc<span class="o">=</span>example,dc<span class="o">=</span>com
+objectClass:<span class="w"> </span>groupOfNames
+cn:<span class="w"> </span>Users
+member:<span class="w"> </span><span class="nv">uid</span><span class="o">=</span>john,ou<span class="o">=</span>People,dc<span class="o">=</span>example,dc<span class="o">=</span>com
+</code></pre></div>
+<h2 id="single-sign-on-sso-implementation">🔗 Single Sign-On (SSO) Implementation</h2>
+<p>Single Sign-On allows users to authenticate once and access multiple applications without re-entering credentials.</p>
+<h3 id="sso-benefits">SSO Benefits</h3>
+<pre class="mermaid"><code>graph TD
+    A[SSO Benefits] --&gt; B[User Experience]
+    A --&gt; C[Security]
+    A --&gt; D[Administration]
+    A --&gt; E[Compliance]
+
+    B --&gt; B1[Reduced password fatigue]
+    B --&gt; B2[Faster access]
+    B --&gt; B3[Consistent experience]
+
+    C --&gt; C1[Centralized authentication]
+    C --&gt; C2[Stronger passwords]
+    C --&gt; C3[Easier MFA implementation]
+
+    D --&gt; D1[Centralized user management]
+    D --&gt; D2[Reduced help desk calls]
+    D --&gt; D3[Automated provisioning]
+
+    E --&gt; E1[Audit trail compliance]
+    E --&gt; E2[Access policy enforcement]
+    E --&gt; E3[Regular access reviews]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec</code></pre>
+<h3 id="sso-architecture">SSO Architecture</h3>
+<pre class="mermaid"><code>sequenceDiagram
+    participant User
+    participant App1
+    participant App2
+    participant SSO Service
+    participant Directory
+
+    User-&gt;&gt;App1: Access request
+    App1-&gt;&gt;SSO Service: Check authentication
+    SSO Service-&gt;&gt;Directory: Verify user
+    Directory--&gt;&gt;SSO Service: User valid
+    SSO Service--&gt;&gt;App1: Authentication token
+    App1--&gt;&gt;User: Access granted
+
+    User-&gt;&gt;App2: Access request
+    App2-&gt;&gt;SSO Service: Validate token
+    SSO Service--&gt;&gt;App2: Token valid
+    App2--&gt;&gt;User: Access granted</code></pre>
+<h3 id="openam-open-source-sso-solution">OpenAM: Open Source SSO Solution</h3>
+<p>OpenAM is a comprehensive access management solution that provides SSO, federation, and access control capabilities.</p>
+<h4 id="openam-features">OpenAM Features</h4>
+<ul>
+<li><strong>Single Sign-On</strong>: Access multiple applications with one login</li>
+<li><strong>Federation</strong>: Share authentication across organizations</li>
+<li><strong>Access Control</strong>: Fine-grained permission management</li>
+<li><strong>Session Management</strong>: Secure session handling</li>
+<li><strong>Audit Logging</strong>: Comprehensive activity tracking</li>
+</ul>
+<h4 id="openam-deployment">OpenAM Deployment</h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Download OpenAM</span>
+wget<span class="w"> </span>https://downloads.forgerock.org/openam/openam/14.0.0/openam-14.0.0.war
+
+<span class="c1"># Deploy to application server</span>
+cp<span class="w"> </span>openam-14.0.0.war<span class="w"> </span>/path/to/tomcat/webapps/
+
+<span class="c1"># Configure OpenAM</span>
+<span class="c1"># Access configuration wizard at http://server:port/openam</span>
+</code></pre></div>
+<h2 id="federation-standards-saml-oauth-and-openid-connect">🔐 Federation Standards: SAML, OAuth, and OpenID Connect</h2>
+<p>Federation enables secure authentication and authorization across different organizations and systems.</p>
+<h3 id="saml-security-assertion-markup-language">SAML (Security Assertion Markup Language)</h3>
+<p>SAML is an XML-based standard for exchanging authentication and authorization data between parties.</p>
+<h4 id="saml-components">SAML Components</h4>
+<pre class="mermaid"><code>graph TD
+    A[SAML Federation] --&gt; B[Identity Provider IdP]
+    A --&gt; C[Service Provider SP]
+    A --&gt; D[User]
+
+    B --&gt; B1[Authenticates users]
+    B --&gt; B2[Issues SAML assertions]
+    B --&gt; B3[Manages user attributes]
+
+    C --&gt; C1[Provides services]
+    C --&gt; C2[Validates SAML assertions]
+    C --&gt; C3[Enforces access policies]
+
+    D --&gt; D1[Initiates access]
+    D --&gt; D2[Provides credentials]
+    D --&gt; D3[Receives service access]
+
+    B --&gt; E[SAML Response]
+    E --&gt; E1[Authentication statement]
+    E --&gt; E2[Attribute statement]
+    E --&gt; E3[Authorization decision]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec</code></pre>
+<h4 id="saml-flow">SAML Flow</h4>
+<ol>
+<li><strong>User</strong> requests access to Service Provider</li>
+<li><strong>Service Provider</strong> redirects to Identity Provider</li>
+<li><strong>Identity Provider</strong> authenticates user</li>
+<li><strong>Identity Provider</strong> sends SAML assertion to Service Provider</li>
+<li><strong>Service Provider</strong> validates assertion and grants access</li>
+</ol>
+<h3 id="oauth-20">OAuth 2.0</h3>
+<p>OAuth 2.0 is an authorization framework that allows third-party applications to access resources on behalf of users.</p>
+<h4 id="oauth-20-roles">OAuth 2.0 Roles</h4>
+<pre class="mermaid"><code>graph TD
+    A[OAuth 2.0 Flow] --&gt; B[Resource Owner]
+    A --&gt; C[Client Application]
+    A --&gt; D[Authorization Server]
+    A --&gt; E[Resource Server]
+
+    B --&gt; B1[User with resources]
+    B --&gt; B2[Grants permission]
+
+    C --&gt; C1[Third-party app]
+    C --&gt; C2[Requests access]
+    C --&gt; C3[Uses access token]
+
+    D --&gt; D1[Issues tokens]
+    D --&gt; D2[Manages permissions]
+
+    E --&gt; E1[Hosts resources]
+    E --&gt; E2[Validates tokens]
+
+    B --&gt; F[Authorization Grant]
+    F --&gt; D
+    D --&gt; G[Access Token]
+    G --&gt; C
+    C --&gt; H[Protected Resource]
+    H --&gt; E
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#e8f5e8
+    style G fill:#fff3e0
+    style H fill:#fce4ec</code></pre>
+<h4 id="oauth-20-grant-types">OAuth 2.0 Grant Types</h4>
+<ul>
+<li><strong>Authorization Code</strong>: Most secure, for web applications</li>
+<li><strong>Implicit</strong>: Less secure, for mobile/JavaScript apps</li>
+<li><strong>Client Credentials</strong>: For machine-to-machine communication</li>
+<li><strong>Resource Owner Password</strong>: For trusted applications</li>
+</ul>
+<h3 id="openid-connect">OpenID Connect</h3>
+<p>OpenID Connect extends OAuth 2.0 to provide authentication information, not just authorization.</p>
+<h4 id="openid-connect-benefits">OpenID Connect Benefits</h4>
+<ul>
+<li><strong>Standardized</strong>: Industry-standard authentication protocol</li>
+<li><strong>Secure</strong>: Built on OAuth 2.0 security model</li>
+<li><strong>Flexible</strong>: Supports various authentication methods</li>
+<li><strong>Interoperable</strong>: Works across different platforms</li>
+</ul>
+<h2 id="access-control-models-rbac-and-abac">🎭 Access Control Models: RBAC and ABAC</h2>
+<h3 id="role-based-access-control-rbac">Role-Based Access Control (RBAC)</h3>
+<p>RBAC assigns permissions to roles rather than directly to users, simplifying access management.</p>
+<h4 id="rbac-components">RBAC Components</h4>
+<pre class="mermaid"><code>graph TD
+    A[RBAC Model] --&gt; B[Users]
+    A --&gt; C[Roles]
+    A --&gt; D[Permissions]
+    A --&gt; E[Resources]
+
+    B --&gt; B1[John Doe]
+    B --&gt; B2[Jane Smith]
+    B --&gt; B3[Bob Johnson]
+
+    C --&gt; C1[Administrator]
+    C --&gt; C2[Manager]
+    C --&gt; C3[Employee]
+
+    D --&gt; D1[Read]
+    D --&gt; D2[Write]
+    D --&gt; D3[Delete]
+    D --&gt; D4[Execute]
+
+    E --&gt; E1[Files]
+    E --&gt; E2[Databases]
+    E --&gt; E3[Applications]
+
+    B --&gt; F[User Assignment]
+    F --&gt; C
+    C --&gt; G[Permission Assignment]
+    G --&gt; D
+    D --&gt; H[Resource Access]
+    H --&gt; E
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#e8f5e8
+    style G fill:#fff3e0
+    style H fill:#fce4ec</code></pre>
+<h4 id="rbac-implementation-example">RBAC Implementation Example</h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Define roles</span>
+role<span class="w"> </span>Administrator<span class="w"> </span><span class="o">{</span>
+<span class="w">    </span>permissions:<span class="w"> </span><span class="o">[</span><span class="s2">&quot;read&quot;</span>,<span class="w"> </span><span class="s2">&quot;write&quot;</span>,<span class="w"> </span><span class="s2">&quot;delete&quot;</span>,<span class="w"> </span><span class="s2">&quot;execute&quot;</span><span class="o">]</span>
+<span class="w">    </span>resources:<span class="w"> </span><span class="o">[</span><span class="s2">&quot;*&quot;</span><span class="o">]</span>
+<span class="o">}</span>
+
+role<span class="w"> </span>Manager<span class="w"> </span><span class="o">{</span>
+<span class="w">    </span>permissions:<span class="w"> </span><span class="o">[</span><span class="s2">&quot;read&quot;</span>,<span class="w"> </span><span class="s2">&quot;write&quot;</span><span class="o">]</span>
+<span class="w">    </span>resources:<span class="w"> </span><span class="o">[</span><span class="s2">&quot;/data/sales/*&quot;</span>,<span class="w"> </span><span class="s2">&quot;/reports/*&quot;</span><span class="o">]</span>
+<span class="o">}</span>
+
+role<span class="w"> </span>Employee<span class="w"> </span><span class="o">{</span>
+<span class="w">    </span>permissions:<span class="w"> </span><span class="o">[</span><span class="s2">&quot;read&quot;</span><span class="o">]</span>
+<span class="w">    </span>resources:<span class="w"> </span><span class="o">[</span><span class="s2">&quot;/data/sales/own/*&quot;</span><span class="o">]</span>
+<span class="o">}</span>
+
+<span class="c1"># Assign users to roles</span>
+assign<span class="w"> </span>john.doe<span class="w"> </span>to<span class="w"> </span>Administrator
+assign<span class="w"> </span>jane.smith<span class="w"> </span>to<span class="w"> </span>Manager
+assign<span class="w"> </span>bob.johnson<span class="w"> </span>to<span class="w"> </span>Employee
+</code></pre></div>
+<h3 id="attribute-based-access-control-abac">Attribute-Based Access Control (ABAC)</h3>
+<p>ABAC makes access decisions based on attributes of users, resources, actions, and environment.</p>
+<h4 id="abac-attributes">ABAC Attributes</h4>
+<pre class="mermaid"><code>graph TD
+    A[ABAC Decision] --&gt; B[User Attributes]
+    A --&gt; C[Resource Attributes]
+    A --&gt; D[Action Attributes]
+    A --&gt; E[Environment Attributes]
+
+    B --&gt; B1[Department]
+    B --&gt; B2[Security Clearance]
+    B --&gt; B3[Location]
+    B --&gt; B4[Time of Day]
+
+    C --&gt; C1[Classification]
+    C --&gt; C2[Owner]
+    C --&gt; C3[Location]
+    C --&gt; C4[Data Type]
+
+    D --&gt; D1[Operation]
+    D --&gt; D2[Risk Level]
+    D --&gt; D3[Audit Required]
+
+    E --&gt; E1[Time]
+    E --&gt; E2[Location]
+    E --&gt; E3[Network]
+    E --&gt; E4[Device Type]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec</code></pre>
+<h4 id="abac-policy-example">ABAC Policy Example</h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Policy: Allow managers to read sales data during business hours</span>
+policy<span class="w"> </span><span class="s2">&quot;Sales Data Access&quot;</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span>effect:<span class="w"> </span><span class="s2">&quot;allow&quot;</span>
+<span class="w">    </span>condition:<span class="w"> </span><span class="o">{</span>
+<span class="w">        </span>user.department<span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;Sales&quot;</span><span class="w"> </span>AND
+<span class="w">        </span>user.role<span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;Manager&quot;</span><span class="w"> </span>AND
+<span class="w">        </span>resource.type<span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;Sales Data&quot;</span><span class="w"> </span>AND
+<span class="w">        </span><span class="nv">action</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;read&quot;</span><span class="w"> </span>AND
+<span class="w">        </span>time.hour<span class="w"> </span>&gt;<span class="o">=</span><span class="w"> </span><span class="m">8</span><span class="w"> </span>AND<span class="w"> </span>time.hour<span class="w"> </span>&lt;<span class="o">=</span><span class="w"> </span><span class="m">18</span>
+<span class="w">    </span><span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2 id="access-governance-and-attestation">📊 Access Governance and Attestation</h2>
+<p>Access governance ensures that user access remains appropriate over time through regular reviews and attestations.</p>
+<h3 id="access-governance-process">Access Governance Process</h3>
+<pre class="mermaid"><code>graph TD
+    A[Access Governance] --&gt; B[Access Review]
+    A --&gt; C[Access Certification]
+    A --&gt; D[Access Remediation]
+    A --&gt; E[Continuous Monitoring]
+
+    B --&gt; B1[Regular reviews]
+    B --&gt; B2[Manager approval]
+    B --&gt; B3[Risk assessment]
+
+    C --&gt; C1[Formal certification]
+    C --&gt; C2[Documentation]
+    C --&gt; C3[Audit trail]
+
+    D --&gt; D1[Remove access]
+    D --&gt; D2[Modify permissions]
+    D --&gt; D3[Update roles]
+
+    E --&gt; E1[Real-time monitoring]
+    E --&gt; E2[Anomaly detection]
+    E --&gt; E3[Policy enforcement]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec</code></pre>
+<h3 id="access-review-workflow">Access Review Workflow</h3>
+<ol>
+<li><strong>Identify Review Scope</strong></li>
+<li>High-privilege accounts</li>
+<li>Critical system access</li>
+<li>Dormant accounts</li>
+<li>
+<p>Role changes</p>
+</li>
+<li>
+<p><strong>Conduct Reviews</strong></p>
+</li>
+<li>Manager reviews direct reports</li>
+<li>System owners review access</li>
+<li>
+<p>Security team reviews privileged access</p>
+</li>
+<li>
+<p><strong>Document Decisions</strong></p>
+</li>
+<li>Approve access</li>
+<li>Revoke unnecessary access</li>
+<li>Modify permissions</li>
+<li>
+<p>Escalate exceptions</p>
+</li>
+<li>
+<p><strong>Implement Changes</strong></p>
+</li>
+<li>Automated provisioning</li>
+<li>Manual updates</li>
+<li>Verification of changes</li>
+</ol>
+<h3 id="access-attestation-tools">Access Attestation Tools</h3>
+<h4 id="manual-attestation">Manual Attestation</h4>
+<ul>
+<li>Spreadsheet-based reviews</li>
+<li>Email notifications</li>
+<li>Manual approval workflows</li>
+</ul>
+<h4 id="automated-attestation">Automated Attestation</h4>
+<ul>
+<li>Identity governance platforms</li>
+<li>Workflow automation</li>
+<li>Integration with HR systems</li>
+<li>Automated provisioning</li>
+</ul>
+<h2 id="monitoring-and-auditing-access">🔍 Monitoring and Auditing Access</h2>
+<p>Continuous monitoring and auditing of access activities is essential for security and compliance.</p>
+<h3 id="access-monitoring-components">Access Monitoring Components</h3>
+<pre class="mermaid"><code>graph TD
+    A[Access Monitoring] --&gt; B[Authentication Monitoring]
+    A --&gt; C[Authorization Monitoring]
+    A --&gt; D[Privilege Monitoring]
+    A --&gt; E[Behavioral Analysis]
+
+    B --&gt; B1[Login attempts]
+    B --&gt; B2[Failed authentications]
+    B --&gt; B3[Multi-factor usage]
+
+    C --&gt; C1[Resource access]
+    C --&gt; C2[Permission changes]
+    C --&gt; C3[Policy violations]
+
+    D --&gt; D1[Privilege escalation]
+    D --&gt; D2[Administrative actions]
+    D --&gt; D3[Sudo usage]
+
+    E --&gt; E1[User behavior patterns]
+    E --&gt; E2[Anomaly detection]
+    E --&gt; E3[Risk scoring]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec</code></pre>
+<h3 id="key-monitoring-metrics">Key Monitoring Metrics</h3>
+<h4 id="authentication-metrics">Authentication Metrics</h4>
+<ul>
+<li><strong>Failed login attempts</strong>: Detect brute force attacks</li>
+<li><strong>Successful logins</strong>: Track user activity patterns</li>
+<li><strong>Multi-factor usage</strong>: Ensure MFA compliance</li>
+<li><strong>Account lockouts</strong>: Identify attack patterns</li>
+</ul>
+<h4 id="authorization-metrics">Authorization Metrics</h4>
+<ul>
+<li><strong>Resource access patterns</strong>: Understand usage</li>
+<li><strong>Permission changes</strong>: Track administrative actions</li>
+<li><strong>Policy violations</strong>: Identify security issues</li>
+<li><strong>Access denials</strong>: Detect unauthorized attempts</li>
+</ul>
+<h4 id="privilege-metrics">Privilege Metrics</h4>
+<ul>
+<li><strong>Privilege escalation</strong>: Monitor administrative access</li>
+<li><strong>Sudo usage</strong>: Track elevated privileges</li>
+<li><strong>Role changes</strong>: Monitor permission modifications</li>
+<li><strong>Emergency access</strong>: Track break-glass procedures</li>
+</ul>
+<h3 id="audit-logging-requirements">Audit Logging Requirements</h3>
+<h4 id="what-to-log">What to Log</h4>
+<ul>
+<li><strong>User identification</strong>: Who performed the action</li>
+<li><strong>Action performed</strong>: What was done</li>
+<li><strong>Resource accessed</strong>: What was affected</li>
+<li><strong>Timestamp</strong>: When it occurred</li>
+<li><strong>Source location</strong>: Where it came from</li>
+<li><strong>Result</strong>: Success or failure</li>
+</ul>
+<h4 id="log-retention">Log Retention</h4>
+<ul>
+<li><strong>Authentication logs</strong>: 1-2 years minimum</li>
+<li><strong>Access logs</strong>: 3-7 years for compliance</li>
+<li><strong>Administrative logs</strong>: 7+ years for audit</li>
+<li><strong>Security events</strong>: Permanent retention</li>
+</ul>
+<h2 id="hands-on-activities">🧪 Hands-on Activities</h2>
+<h3 id="activity-1-active-directory-setup">Activity 1: Active Directory Setup</h3>
+<p><strong>Objective</strong>: Deploy and configure Active Directory in a lab environment.</p>
+<p><strong>Materials</strong>: Windows Server VM, client workstations</p>
+<p><strong>Steps</strong>:
+1. <strong>Install Windows Server</strong> and configure networking
+2. <strong>Install Active Directory Domain Services</strong>
+3. <strong>Promote server to Domain Controller</strong>
+4. <strong>Create organizational units</strong> for different departments
+5. <strong>Add users and groups</strong> with appropriate permissions
+6. <strong>Configure Group Policy</strong> for security settings
+7. <strong>Join client workstations</strong> to the domain</p>
+<h3 id="activity-2-openldap-configuration">Activity 2: OpenLDAP Configuration</h3>
+<p><strong>Objective</strong>: Set up OpenLDAP directory service with user management.</p>
+<p><strong>Materials</strong>: Linux VM, LDAP client tools</p>
+<p><strong>Steps</strong>:
+1. <strong>Install OpenLDAP</strong> server and utilities
+2. <strong>Configure basic LDAP settings</strong> and database
+3. <strong>Create organizational structure</strong> (OUs, users, groups)
+4. <strong>Configure access control</strong> policies
+5. <strong>Test authentication</strong> with LDAP clients
+6. <strong>Implement password policies</strong> and security</p>
+<h3 id="activity-3-sso-implementation">Activity 3: SSO Implementation</h3>
+<p><strong>Objective</strong>: Implement Single Sign-On using OpenAM or similar solution.</p>
+<p><strong>Materials</strong>: Application server, OpenAM, sample applications</p>
+<p><strong>Steps</strong>:
+1. <strong>Deploy OpenAM</strong> to application server
+2. <strong>Configure identity provider</strong> settings
+3. <strong>Set up service providers</strong> for applications
+4. <strong>Configure federation</strong> between systems
+5. <strong>Test SSO functionality</strong> across applications
+6. <strong>Implement access control</strong> policies</p>
+<h3 id="activity-4-access-control-design">Activity 4: Access Control Design</h3>
+<p><strong>Objective</strong>: Design and implement RBAC and ABAC models.</p>
+<p><strong>Scenario</strong>: University with different user types and access requirements</p>
+<p><strong>Requirements</strong>:
+- <strong>Students</strong>: Access to course materials, limited library resources
+- <strong>Faculty</strong>: Access to course management, research databases
+- <strong>Staff</strong>: Access to administrative systems, student records
+- <strong>Administrators</strong>: Full system access with monitoring</p>
+<p><strong>Steps</strong>:
+1. <strong>Define user roles</strong> and responsibilities
+2. <strong>Identify resources</strong> and access requirements
+3. <strong>Design permission matrix</strong> for each role
+4. <strong>Implement access controls</strong> in directory service
+5. <strong>Test access patterns</strong> and verify security
+6. <strong>Document access policies</strong> and procedures</p>
+<h2 id="key-takeaways">📋 Key Takeaways</h2>
+<ol>
+<li>
+<p><strong>IAM is fundamental</strong> to cybersecurity, controlling who can access what resources and when.</p>
+</li>
+<li>
+<p><strong>The AAA framework</strong> provides the foundation for secure access control systems.</p>
+</li>
+<li>
+<p><strong>Directory services</strong> like Active Directory and OpenLDAP centralize user management and authentication.</p>
+</li>
+<li>
+<p><strong>Single Sign-On</strong> improves user experience while maintaining security through centralized authentication.</p>
+</li>
+<li>
+<p><strong>Federation standards</strong> enable secure authentication across organizational boundaries.</p>
+</li>
+<li>
+<p><strong>Access governance</strong> ensures that user access remains appropriate through regular reviews and monitoring.</p>
+</li>
+<li>
+<p><strong>Continuous monitoring</strong> and auditing are essential for detecting security threats and maintaining compliance.</p>
+</li>
+</ol>
+<h2 id="review-questions">❓ Review Questions</h2>
+<ol>
+<li>
+<p><strong>What are the three components</strong> of the AAA framework, and how do they work together?</p>
+</li>
+<li>
+<p><strong>How does Active Directory</strong> differ from OpenLDAP, and when would you choose each?</p>
+</li>
+<li>
+<p><strong>What are the benefits</strong> of implementing Single Sign-On, and what are the security considerations?</p>
+</li>
+<li>
+<p><strong>How do RBAC and ABAC</strong> differ, and what are the advantages of each approach?</p>
+</li>
+<li>
+<p><strong>What is access governance</strong>, and why is it important for security and compliance?</p>
+</li>
+</ol>
+<h2 id="further-reading">📚 Further Reading</h2>
+<h3 id="books">Books</h3>
+<ul>
+<li>"Identity Management: A Business Perspective" by Graham Williamson</li>
+<li>"Active Directory: Designing, Deploying, and Running Active Directory" by Brian Desmond</li>
+<li>"LDAP System Administration" by Gerald Carter</li>
+</ul>
+<h3 id="online-resources">Online Resources</h3>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/windows-server/identity/ad-ds/">Microsoft Active Directory Documentation</a></li>
+<li><a href="https://www.openldap.org/doc/">OpenLDAP Documentation</a></li>
+<li><a href="http://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html">SAML 2.0 Specification</a></li>
+<li><a href="https://tools.ietf.org/html/rfc6749">OAuth 2.0 Framework</a></li>
+</ul>
+<h3 id="tools-and-platforms">Tools and Platforms</h3>
+<ul>
+<li><a href="https://www.forgerock.com/platform/access-management/">OpenAM</a></li>
+<li><a href="https://www.keycloak.org/">Keycloak</a> - Open source identity and access management</li>
+<li><a href="https://www.freeipa.org/">FreeIPA</a> - Identity, policy, and audit solution</li>
+</ul>
+<hr />
+<p><strong>Next Chapter</strong>: <a href="../chapter06-security-architecture/">Chapter 6: Security Architecture and Threat Modeling</a> - Learn how to design secure systems using proven frameworks and methodologies.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © 2026 Data Octo · Enterprise Cloud, Data & AI, Cybersecurity Architecture
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tracking", "navigation.sections", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
+      
+        <script src="../../../assets/javascripts/mermaid-init.js"></script>
+      
+    
+  </body>
+</html>
