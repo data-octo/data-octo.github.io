@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Dorm BC - Cybersecurity Adventure</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', -apple-system, sans-serif;
+            background: linear-gradient(135deg, #e0f4f8 0%, #f0f7fa 50%, #e8f4e8 100%);
+            min-height: 100vh;
+            color: #212529;
+            line-height: 1.6;
+        }
+        .container { max-width: 750px; margin: 0 auto; padding: 15px; }
+        
+        .header {
+            background: linear-gradient(135deg, #0055b3 0%, #0077be 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+        .header h1 { font-size: 1.4rem; }
+        .progress-wrap {
+            background: rgba(255,255,255,0.25);
+            border-radius: 8px;
+            height: 10px;
+            margin: 12px 0 8px;
+        }
+        .progress-bar {
+            height: 100%;
+            background: #ffb703;
+            border-radius: 8px;
+            width: 0%;
+            transition: width 0.4s;
+        }
+        .progress-text { font-size: 0.8rem; opacity: 0.95; }
+        
+        .stats { display: flex; gap: 10px; margin-bottom: 15px; }
+        .stat {
+            flex: 1;
+            background: white;
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .stat .value { font-size: 1.4rem; font-weight: 700; color: #0055b3; }
+        .stat .label { font-size: 0.7rem; color: #6c757d; text-transform: uppercase; }
+        .stat.highlight { border-left: 4px solid #ffb703; }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .badge {
+            background: #ffb703;
+            color: #212529;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        .badge.chapter { background: #0055b3; color: white; }
+        .badge.assessment { background: #2d6a4f; color: white; }
+        
+        .chapter-title { font-size: 1.1rem; color: #0055b3; margin-bottom: 12px; }
+        .difficulty { float: right; font-size: 0.7rem; color: #6c757d; }
+        
+        .story p { margin-bottom: 12px; font-size: 0.95rem; }
+        .thought {
+            background: #e8f4fd;
+            border-left: 4px solid #0055b3;
+            padding: 12px;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            margin: 12px 0;
+            font-size: 0.9rem;
+        }
+        
+        .choice {
+            display: block;
+            width: 100%;
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            padding: 14px;
+            border-radius: 8px;
+            margin: 10px 0;
+            text-align: left;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        .choice:hover {
+            background: #0055b3;
+            border-color: #0055b3;
+            color: white;
+            transform: translateX(5px);
+        }
+        .choice-result {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+        .choice:hover .choice-result { color: rgba(255,255,255,0.85); }
+        
+        .feedback {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        .feedback.pos { background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); border: 1px solid #b1dfbb; }
+        .feedback.neg { background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%); border: 1px solid #f5c6cb; }
+        .feedback-title { font-weight: 700; font-size: 1rem; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .fb-pts { background: #198754; color: white; padding: 3px 12px; border-radius: 15px; font-size: 0.8rem; }
+        .feedback.neg .fb-pts { background: #dc3545; }
+        
+        .quiz {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px dashed #0055b3;
+            border-radius: 10px;
+            padding: 18px;
+            margin: 18px 0;
+        }
+        .quiz h4 { color: #0055b3; font-size: 0.95rem; margin-bottom: 5px; }
+        .quiz p { font-size: 0.85rem; color: #6c757d; margin-bottom: 12px; }
+        .quiz-opt {
+            background: white;
+            border: 2px solid #dee2e6;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 8px 0;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+        .quiz-opt:hover { border-color: #0055b3; background: #f0f7fa; }
+        .quiz-opt.correct { background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); border-color: #198754; }
+        .quiz-opt.wrong { background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%); border-color: #dc3545; }
+        
+        .res-box {
+            background: linear-gradient(135deg, #e8f4fd 0%, #d0ebff 100%);
+            border: 1px solid #b8daff;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .res-box h4 { color: #0055b3; font-size: 0.9rem; margin-bottom: 10px; }
+        .res-box ul { list-style: none; padding: 0; }
+        .res-box li { font-size: 0.8rem; padding: 5px 0; display: flex; align-items: flex-start; gap: 8px; }
+        .res-icon { font-size: 0.9rem; }
+        
+        .nav { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+        .nav-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .nav-btn.primary { background: linear-gradient(135deg, #0055b3 0%, #0077be 100%); color: white; }
+        .nav-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,85,179,0.3); }
+        .nav-btn.secondary { background: #6c757d; color: white; }
+        .nav-btn.secondary:hover { background: #5a6268; }
+        .nav-btn.success { background: linear-gradient(135deg, #2d6a4f 0%, #40916c 100%); color: white; }
+        
+        .start { text-align: center; padding: 20px 10px; }
+        .start .logo { font-size: 3.5rem; margin-bottom: 12px; }
+        .start h2 { font-size: 1.4rem; color: #0055b3; margin-bottom: 10px; }
+        .start .tagline { font-size: 0.95rem; color: #6c757d; margin-bottom: 18px; }
+        .intro { background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 18px; border-radius: 12px; text-align: left; margin-bottom: 18px; font-size: 0.9rem; border: 1px solid #dee2e6; }
+        .intro li { margin: 6px 0; margin-left: 15px; }
+        .start-btn {
+            background: linear-gradient(135deg, #2d6a4f 0%, #40916c 100%);
+            color: white;
+            padding: 16px 40px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .start-btn:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(45,106,79,0.4); }
+        
+        .ending { text-align: center; padding: 15px; }
+        .ending .trophy { font-size: 4rem; margin-bottom: 12px; }
+        .ending h2 { font-size: 1.3rem; margin-bottom: 8px; }
+        .ending .title { font-size: 1.2rem; color: #0055b3; margin: 12px 0; font-weight: 600; }
+        .ending-message { background: #f8f9fa; padding: 18px; border-radius: 10px; margin: 15px 0; text-align: left; font-size: 0.9rem; }
+        
+        .assessment-result {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeeba 100%);
+            border: 1px solid #ffc107;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .assessment-result h4 { color: #856404; margin-bottom: 8px; }
+        .recommendation {
+            background: linear-gradient(135deg, #e8f4fd 0%, #d0ebff 100%);
+            border-left: 4px solid #0055b3;
+            padding: 12px 15px;
+            border-radius: 0 8px 8px 0;
+            margin: 10px 0;
+            font-size: 0.85rem;
+        }
+        .recommendation strong { color: #0055b3; }
+        
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #0055b3;
+            color: white;
+            padding: 14px 22px;
+            border-radius: 10px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+            font-weight: 500;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .progress-dots { display: flex; justify-content: center; gap: 6px; margin-top: 15px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.4); }
+        .dot.active { background: #ffb703; }
+        .dot.completed { background: #28a745; }
+        
+        @media (max-width: 550px) {
+            .container { padding: 10px; }
+            .stats { flex-direction: column; }
+            .nav { flex-direction: column; }
+            .nav-btn { width: 100%; text-align: center; }
+            .start-btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🛡️ Digital Dorm BC</h1>
+            <p style="font-size: 0.85rem; opacity: 0.95;">A Cybersecurity Adventure for UBC Students</p>
+            <div class="progress-wrap"><div class="progress-bar" id="progress"></div></div>
+            <p class="progress-text" id="progText">Get Started</p>
+            <div class="progress-dots" id="progressDots"></div>
+        </header>
+        
+        <div class="stats" id="stats" style="display:none;">
+            <div class="stat"><div class="value" id="score">0</div><div class="label">Score</div></div>
+            <div class="stat highlight"><div class="value" id="inc">0</div><div class="label">Incidents</div></div>
+            <div class="stat"><div class="value" id="chapter">1</div><div class="label">Chapter</div></div>
+        </div>
+        
+        <div id="game"></div>
+    </div>
+
+    <script>
+    // ==================== GAME DATA ====================
+    
+    const assessmentQuestions = [
+        {
+            q: "What's the safest way to reset your bank password?",
+            opts: ["Click link in email", "Call bank using number on card", "Reply with current password", "Ask friend to do it"],
+            correct: 1,
+            topic: "banking"
+        },
+        {
+            q: "A friend texts: 'Send me your driver's license photo for ID'... what do you do?",
+            opts: ["Send it immediately", "Ask why, verify by phone", "Send without asking", "Ignore forever"],
+            correct: 1,
+            topic: "id"
+        },
+        {
+            q: "You're looking for apartments. Landlord says: 'Send deposit first, I'll mail keys'...",
+            opts: ["Send money immediately", "See the place first, in person", "Send half deposit", "Share with friends"],
+            correct: 1,
+            topic: "rental"
+        },
+        {
+            q: "Your bank emails: 'Account suspended, click here immediately'...",
+            opts: ["Click the link", "Call bank using card number", "Reply with account info", "Delete and ignore"],
+            correct: 1,
+            topic: "banking"
+        },
+        {
+            q: "Job posting: 'Work from home, $600/week, send $50 equipment fee'...",
+            opts: ["Send money", "It's a scam - no job asks for money", "Ask for more details", "Share with friends"],
+            correct: 1,
+            topic: "employment"
+        },
+        {
+            q: "QR code on restaurant table says 'Scan to see menu'...",
+            opts: ["Scan immediately", "Verify it's restaurant's actual QR", "Never scan", "Ask waiter"],
+            correct: 1,
+            topic: "banking"
+        },
+        {
+            q: "Someone calls: 'This is BC Medical Services, verify your health card'...",
+            opts: ["Verify over phone", "Hang up - call official number", "Give all info", "Call back same number"],
+            correct: 1,
+            topic: "health"
+        },
+        {
+            q: "Dating app match: 'Can't video chat, but send me your number'...",
+            opts: ["Send your number", "Request video chat first", "Send immediately", "Share profile"],
+            correct: 1,
+            topic: "social"
+        },
+        {
+            q: "Your landlord asks for SIN 'for rental application'...",
+            opts: ["Provide it", "Question why - SIN not needed for rentals", "Send without asking", "Post on social media"],
+            correct: 1,
+            topic: "id"
+        },
+        {
+            q: "Text from 'Canada Post': 'Delivery failed, click to reschedule'...",
+            opts: ["Click the link", "Track directly at canadapost.ca", "Reply with address", "Call number in text"],
+            correct: 1,
+            topic: "shopping"
+        }
+    ];
+    
+    const chapters = [
+        {
+            id: 1, title: "Move-In Mayhem", icon: "🏠", badge: "Account Security", difficulty: "Easy",
+            intro: `<p>September morning. You're moving into your <strong>Orchard Commons residence room</strong> at the University of British Columbia. The Point Grey campus feels huge, and you're finally independent!</p>
+            <p>After unpacking boxes, your phone buzzes. Two messages:</p>
+            <p class="thought">"Welcome to UBC! Your student account created. Click here to set up password: ubc-login.com/new-student"</p>
+            <p class="thought">"You qualify for a $500 BC Student Grant! Claim now before funds run out. Click: bc-grants.com/claim"</p>
+            <p>Your UBC email also shows a message about "urgent IT verification" from "UBC IT Support."</p>`,
+            choices: [
+                { txt: "Click the UBC text link right away", pts: -15, inc: true, res: "Phishing! Real universities never send password links via text. You just gave credentials to scammers.", fb: "Security Incident!", fbType: "neg" },
+                { txt: "Click the $500 grant email", pts: -20, inc: true, res: "Scam! Government grants don't work this way. They wanted your banking information.", fb: "Major Scam!", fbType: "neg" },
+                { txt: "Click the 'UBC IT Support' urgent verification", pts: -18, inc: true, res: "Phishing! Urgency is a red flag. Real UBC IT doesn't send urgent verification links.", fb: "IT Scam!", fbType: "neg" },
+                { txt: "Go to UBC IT website directly", pts: 10, inc: false, res: "Smart! You found the real portal and set up secure login with strong password.", fb: "Great Decision!", fbType: "pos" },
+                { txt: "Ignore all, set up accounts properly later", pts: 5, inc: false, res: "Safe choice - you avoided all scams but should set up accounts soon.", fb: "Good Choice!", fbType: "pos" },
+                { txt: "Report all three as phishing, then set up properly", pts: 15, inc: false, res: "Excellent! You protected yourself AND helped others by reporting.", fb: "Cybersecurity Champion!", fbType: "pos" }
+            ],
+            quiz: {
+                q: "What's the safest way to set up your UBC account?",
+                opts: ["Click a text link", "Go to official UBC website", "Reply with personal info", "Call a random number"],
+                correct: 1,
+                exp: "Always go directly to official UBC websites. Never click links in unexpected messages."
+            },
+            res: ["Canadian Centre for Cyber Security: cyber.gc.ca", "UBC IT: it.ubc.ca", "Report phishing: security@ubc.ca"]
+        },
+        {
+            id: 2, title: "The Ghost Network", icon: "📶", badge: "Network Safety", difficulty: "Easy",
+            intro: `<p>Week 3 at UBC. You're at <strong>Ike's Place</strong> near the Rose Garden, trying to finish an assignment due tonight. The UBC Secure WiFi is slow, but you see networks:</p>
+            <p class="thought">"UBC Secure" (requires login)<br>"UBC_Guest" (no password)<br>"Ikes_Free_Premium" (looks official)</p>
+            <p>Your laptop auto-connects to "UBC_Guest." Across the cafe, a stranger smiles and says: "Hey, I'm having WiFi issues too. Want to share my personal hotspot? It's super fast!"</p>
+            <p>You also notice you're at a table near the window where the UBC Secure signal is weak.</p>`,
+            choices: [
+                { txt: "Connect to UBC_Guest (no password needed)", pts: -12, inc: true, res: "Risky! Unsecured networks can monitor your traffic. That 'guest' network might be fake.", fb: "Network Risk!", fbType: "neg" },
+                { txt: "Accept the stranger's hotspot offer", pts: -18, inc: true, res: "Dangerous! Strangers can see all your unencrypted traffic and data.", fb: "Major Risk!", fbType: "neg" },
+                { txt: "Use your phone's cellular data only", pts: 10, inc: false, res: "Good choice! Cellular data is encrypted and secure.", fb: "Smart!", fbType: "pos" },
+                { txt: "Use cellular data + VPN", pts: 15, inc: false, res: "Perfect! VPN encrypts everything for maximum protection. UBC provides free VPN!", fb: "Excellent!", fbType: "pos" },
+                { txt: "Move closer to get UBC Secure signal, use VPN", pts: 12, inc: false, res: "Smart! Good UBC Secure connection + VPN = secure studying.", fb: "Security Pro!", fbType: "pos" }
+            ],
+            quiz: {
+                q: "What's the safest way to use public WiFi at UBC?",
+                opts: ["Use VPN always", "UBC WiFi is safe enough", "Don't log in", "Incognito mode"],
+                correct: 0,
+                exp: "VPN encrypts all your traffic. UBC provides free VPN software for all students!"
+            },
+            res: ["UBC VPN: it.ubc.ca/services/vpn", "Use VPN on ALL public networks", "Verify network names with staff"]
+        },
+        {
+            id: 3, title: "Post Perfectly", icon: "📱", badge: "Social Media", difficulty: "Easy",
+            intro: `<p>Gorgeous BC autumn day! You just hiked the <strong>BC Place (Grouse) Grind</strong> for the first time and conquered it! The view of UBC and the ocean is incredible.</p>
+            <p>You want to share this moment. Your Instagram draft says:</p>
+            <p class="thought">"Living my best life! 🏔️ Just crushed the Grouse Grind! Currently at the top! Views for days! Who wants to join next time? 🏃‍♂️"</p>
+            <p>Location tag is on by default. You also notice three new follower requests from accounts with attractive profile pictures.</p>
+            <p>Your roommate Jordan texts: "Hey, can I use your Netflix account this weekend? My cousin is visiting from the内陆 Mainland."</p>`,
+            choices: [
+                { txt: "Post with location tag enabled", pts: -15, inc: true, res: "Safety risk! Strangers now know exactly where you are and that your UBC room is empty.", fb: "Safety Risk!", fbType: "neg" },
+                { txt: "Accept all follower requests", pts: -10, inc: true, res: "Scammers collect personal info from social media for phishing attacks.", fb: "Info Exposure!", fbType: "neg" },
+                { txt: "Post without location, decline strangers", pts: 12, inc: false, res: "Beautiful photo, maximum privacy protected!", fb: "Great Balance!", fbType: "pos" },
+                { txt: "Post nothing, help Jordan get own Netflix", pts: 10, inc: false, res: "Privacy protected! Account sharing violates Netflix terms anyway.", fb: "Safe Choice!", fbType: "pos" },
+                { txt: "Post photo of view only (no location), set private", pts: 15, inc: false, res: "Perfect! You shared the moment without exposing yourself.", fb: "Cyber Savvy!", fbType: "pos" }
+            ],
+            quiz: {
+                q: "When is it safe to share location on social media?",
+                opts: ["In real-time", "After you leave", "Only with close friends", "Always fine"],
+                correct: 1,
+                exp: "Post AFTER you leave a location to protect from burglary and stalking."
+            },
+            res: ["Never share real-time location", "Review privacy settings regularly", "Limit followers to people you know"]
+        },
+        {
+            id: 4, title: "Too Good to Be True", icon: "🎓", badge: "Phishing & Scams", difficulty: "Easy",
+            intro: `<p>Midterm week at UBC. You're stressed, tired, and your bank account is looking scary. Suddenly, two urgent messages appear:</p>
+            <p class="thought">"URGENT: CRA Tax Refund Available - $847<br>Claim now: cra-refund-portal.com<br>Deadline: 48 hours only!"</p>
+            <p class="thought">"UBC Student Services: Your tuition payment failed!<br>Click here to pay immediately or your courses will be dropped:<br>ubc-tuition-urgent.com"</p>
+            <p>You also notice a Facebook message from "Mom's friend" you haven't met: "Hey honey, I'm in Vancouver and my car broke down. Can you wire me $200? I'll pay you back when I get home."</p>`,
+            choices: [
+                { txt: "Click the CRA refund link", pts: -25, inc: true, res: "Identity theft! They stole your SIN and banking info. CRA never emails refund links.", fb: "Identity Theft!", fbType: "neg" },
+                { txt: "Click the UBC tuition payment link", pts: -25, inc: true, res: "Phishing! Real UBC doesn't threaten to drop courses via urgent links.", fb: "Major Scam!", fbType: "neg" },
+                { txt: "Wire money to 'mom's friend'", pts: -20, inc: true, res: "Scam! This is a classic emergency money scam targeting students.", fb: "Money Scam!", fbType: "neg" },
+                { txt: "Check your real CRA account at canada.ca", pts: 15, inc: false, res: "No refund pending, but you avoided the scam!", fb: "Smart Move!", fbType: "pos" },
+                { txt: "Log into Workday to check your real UBC tuition status", pts: 18, inc: false, res: "Perfect! Workday is UBC's official portal. You verified securely.", fb: "Security Expert!", fbType: "pos" },
+                { txt: "Report all three as scams", pts: 20, inc: false, res: "Perfect! You recognized all the red flags and took action.", fb: "Cyber-Aware!", fbType: "pos" }
+            ],
+            quiz: {
+                q: "Which is a red flag in UBC or government emails?",
+                opts: ["Uses official logo", "Creates urgency", "Proper spelling", "Real return address"],
+                correct: 1,
+                exp: "Urgency and pressure are classic phishing tactics used by scammers."
+            },
+            res: ["CRA: Never click email links", "UBC Workday: workday.ubc.ca", "Report UBC phishing: security@ubc.ca"]
+        },
+        {
+            id: 5, title: "The Delivery Dilemma", icon: "📦", badge: "Online Shopping", difficulty: "Easy",
+            intro: `<p>Black Friday week. You've been saving for a new laptop for your UBC Computer Science courses. You find:</p>
+            <p class="thought">"MacBook Pro 2024 - Only $699! (Regular $2,399)<br>BestTechDeals-Canada.com<br⭐⭐⭐⭐⭐ 847 reviews - Canadian Company - Ships from Vancouver!"</p>
+            <p>They only accept e-transfer or cryptocurrency. Meanwhile, your phone buzzes:</p>
+            <p class="thought">"Canada Post: Your package couldn't be delivered.<br>Update delivery preferences here: canada-post-delivery.net/track-MZ12345"</p>
+            <p>You're also waiting for a real package from Amazon at your UBC residence.</p>`,
+            choices: [
+                { txt: "Buy the laptop deal", pts: -20, inc: true, res: "Fake store! Impossible prices = scam. You lost $699.", fb: "Scammed!", fbType: "neg" },
+                { txt: "Click the Canada Post link", pts: -18, inc: true, res: "Phishing! Canada Post doesn't send texts with links.", fb: "Phishing!", fbType: "neg" },
+                { txt: "Research the laptop deal, ignore text", pts: 18, inc: false, res: "Skepticism pays off! All were scams!", fb: "Scam Detector!", fbType: "pos" },
+                { txt: "Track your real Amazon package through the app", pts: 15, inc: false, res: "Smart! Use official apps for real deliveries.", fb: "Smart Consumer!", fbType: "pos" },
+                { txt: "Report all scams, buy from official Apple Store", pts: 22, inc: false, res: "Perfect! Protected yourself and took action!", fb: "Smart Consumer!", fbType: "pos" }
+            ],
+            quiz: {
+                q: "Best payment method for online protection?",
+                opts: ["E-transfer", "Cryptocurrency", "Credit card", "Gift card"],
+                correct: 2,
+                exp: "Credit cards offer fraud protection. E-transfers and crypto are irreversible."
+            },
+            res: ["Use credit cards online", "Track packages at canadapost.ca or amazon.ca", "BBB Canada: bbb.org/marketplace/canada"]
+        },
+        {
+            id: 6, title: "Digital Banking", icon: "🏦", badge: "Financial Security", difficulty: "Medium",
+            intro: `<p>First month managing your own money as a UBC student. You check your bank app and notice a $47 charge to "Spotify Premium" - but you don't have Spotify!</p>
+            <p>Suddenly, you get two urgent messages:</p>
+            <p class="thought">"TD Bank: Unusual activity detected on your account.<br>Login immediately to secure: td-canada-security.com"<br>ACTING NOW - 24 HOURS ONLY</p>
+            <p class="thought">"RBC: Your student account has been suspended!<br>Click here to verify your identity: rbc-verify-urgent.net"</p>
+            <p>Your mom texts: "Quick question - did you lose your bank card? Someone tried to use it at a gas station near UBC."</p>`,
+            choices: [
+                { txt: "Click the TD Bank link immediately", pts: -25, inc: true, res: "Phishing! Banks never send links. You gave criminals your login.", fb: "Account Stolen!", fbType: "neg" },
+                { txt: "Click the RBC link to verify", pts: -25, inc: true, res: "Fake! RBC doesn't work this way. Phishing for your banking info.", fb: "Account Compromised!", fbType: "neg" },
+                { txt: "Reply to mom with your card number 'just in case'", pts: -25, inc: true, res: "Never share card info! Mom would never ask this way.", fb: "Major Risk!", fbType: "neg" },
+                { txt: "Call TD using number on your actual card", pts: 18, inc: false, res: "Perfect! You verified through official channels.", fb: "Security Expert!", fbType: "pos" },
+                { txt: "Call mom to verify, then report suspicious charge", pts: 15, inc: false, res: "Good instincts! Family emergency scams are common.", fb: "Smart Response!", fbType: "pos" },
+                { txt: "Ignore everything and block your card in the app", pts: 12, inc: false, res: "Smart first step! Then verify through official channels.", fb: "Good Instincts!", fbType: "pos" }
+            ],
+            quiz: {
+                q: "Bank sends 'suspended account' email - what do?",
+                opts: ["Click the link", "Call using number on card", "Reply with info", "Delete"],
+                correct: 1,
+                exp: "Banks never send links. Call using the number on YOUR card."
+            },
+            res: ["Canadian Anti-Fraud Centre: 1-888-495-8501", "Financial Consumer Agency of Canada: fcac-acfc.gc.ca", "Equifax Canada: 1-800-465-7166"]
+        },
+        {
+            id: 7, title: "Your Digital ID", icon: "🪪", badge: "Personal Identity", difficulty: "Medium",
+            intro: `<p>You're looking for a part-time job at UBC or downtown. Your friend Maya asks: "Can you send me a photo of your driver's license? My boss needs to verify your age for employment at the UBC Bookstore."</p>
+            <p>Meanwhile, an "employment verification" form asks for your Social Insurance Number (SIN):</p>
+            <p class="thought">"Canadian Employment Verification Portal<br>Please provide: Driver's License number, SIN, Birth Date, Passport copy"</p>
+            <p>You also find an old photo of your BC Services Card in your camera roll from when you applied for MSP. Your wallet was stolen last week on the 99 B-Line!</p>
+            <p>Someone texts: "Oops, wrong number! But while I have you, can you verify your identity for a quick survey? Just need your name, address, and SIN."</p>`,
+            choices: [
+                { txt: "Send driver's license photo to Maya", pts: -15, inc: true, res: "Risky! Your ID could be used for identity theft. Verify why she needs it first.", fb: "ID Risk!", fbType: "neg" },
+                { txt: "Complete the employment form with all info", pts: -25, inc: true, res: "Identity theft! Real employers don't collect all this via random forms.", fb: "Identity Theft!", fbType: "neg" },
+                { txt: "Report your lost wallet immediately", pts: 20, inc: false, res: "Critical step! Report lost ID to police and ICBC ASAP.", fb: "Critical Step!", fbType: "pos" },
+                { txt: "Question Maya, verify by calling her", pts: 15, inc: false, res: "Smart! Verify requests before sharing sensitive info.", fb: "Good Verification!", fbType: "pos" },
+                { txt: "Block 'wrong number' texter, ignore survey", pts: 12, inc: false, res: "Perfect! Wrong number + identity questions = scam.", fb: "Smart!", fbType: "pos" },
+                { txt: "Contact employment directly to verify form legitimacy", pts: 18, inc: false, res: "Excellent! Always verify through official channels.", fb: "Security Pro!", fbType: "pos" }
+            ],
+            quiz: {
+                q: "Who should have your Social Insurance Number?",
+                opts: ["Employers (after hiring)", "Online forms", "Friends", "Random surveys"],
+                correct: 0,
+                exp: "SIN is sacred. Only provide to real employers after you're hired."
+            },
+            res: ["Report lost ID to police", "ICBC for license: icbc.com", "Service Canada for SIN concerns: 1-800-206-7218"]
+        },
+        {
+            id: 8, title: "Finding a Place", icon: "🏠", badge: "Rental Scams", difficulty: "Medium",
+            intro: `<p>January - you're looking for off-campus housing for next year. You live in Kitsilano and want to stay close to UBC. Facebook Marketplace has great listings:</p>
+            <p class="thought">"Kitsilano 2BR - $1,200/month!<br>Available Feb 1. Text me: 778-555-0123<br>Landlord: Dr. Michael Anderson (lives in Toronto)"</p>
+            <p class="thought">"UBC Area Bachelor - $900/month<br>All inclusive, pet friendly. Send application + $200 deposit to hold."</p>
+            <p>You also see a room on Craigslist: "UBC adjacent - $600/month utilities included - must be clean student." The landlord only communicates via email and asks for a security deposit before showing.</p>
+            <p>A "property management company" emails: "Your rental application approved! Pay first month's rent ($1,500) via e-transfer to secure your keys."</p>`,
+            choices: [
+                { txt: "Send deposit to 'Dr. Anderson' in Toronto", pts: -20, inc: true, res: "Scam! Landlord living elsewhere + below-market rent = huge red flag.", fb: "Rental Scam!", fbType: "neg" },
+                { txt: "Pay $200 to hold the Kitsilano suite", pts: -18, inc: true, res: "Scam! Never pay before seeing the actual place.", fb: "Deposit Scam!", fbType: "neg" },
+                { txt: "Email the Craigslist landlord and send deposit", pts: -20, inc: true, res: "Scam! Craigslist rentals often target UBC students. Always see first.", fb: "Craigslist Scam!", fbType: "neg" },
+                { txt: "E-transfer $1,500 to property management", pts: -25, inc: true, res: "Major scam! You just sent money to criminals.", fb: "Major Fraud!", fbType: "neg" },
+                { txt: "See the Kitsilano place in person first", pts: 18, inc: false, res: "Smart! Always see the actual unit before paying anything.", fb: "Smart Move!", fbType: "pos" },
+                { txt: "Research property management company online", pts: 15, inc: false, res: "Good verification! Find reviews and legitimate contact info.", fb: "Good Research!", fbType: "pos" }
+            ],
+            quiz: {
+                q: "Landlord wants deposit before seeing apartment...",
+                opts: ["Send money immediately", "See the place first, in person", "Send half deposit", "Share with friends"],
+                correct: 1,
+                exp: "Never send money before seeing the actual place. In-person viewing is essential."
+            },
+            res: ["BC Residential Tenancy Branch: residentialtenancybc.ca", "Better Business Bureau BC: bbb.org/marketplace/canada", "Canadian Anti-Fraud Centre: 1-888-495-8501"]
+        },
+        {
+            id: 9, title: "Swipe Right for Danger?", icon: "💕", badge: "Dating & Social", difficulty: "Medium",
+            intro: `<p>You've been talking to "Jordan" on Hinge for almost two weeks. Jordan is cute, funny, and says they also go to UBC. You've been texting daily.</p>
+            <p class="thought">"I really like you! Let's meet this weekend 😊<br>How about Saturday night, 10 PM at this chill bar I know near UBC? It's really cozy and quiet."</p>
+            <p>Jordan can't seem to video chat ("my camera is broken") but has asked for your phone number and sent a link to their "private Instagram."</p>
+            <p>On another dating app, "Sophia" asks: "Want to continue this on WhatsApp? I don't check this app much."</p>
+            <p>Your friend Maya had a bad experience: "I met someone from a dating app and they turned out to be weird. They wanted to know exactly where I lived near campus."</p>`,
+            choices: [
+                { txt: "Meet Jordan at 10 PM at the quiet bar near UBC", pts: -20, inc: true, res: "Safety risk! Quiet, late-night location + can't video chat = major red flags.", fb: "Safety Risk!", fbType: "neg" },
+                { txt: "Give Jordan your phone number", pts: -10, inc: true, res: "Risky! Personal info shared before meeting. Could lead to harassment.", fb: "Privacy Risk!", fbType: "neg" },
+                { txt: "Move to WhatsApp with Sophia", pts: -8, inc: true, res: "Warning! Scammers often move to less-tracked platforms.", fb: "Warning!", fbType: "neg" },
+                { txt: "Suggest meeting at a busy coffee shop during the day", pts: 15, inc: false, res: "Perfect! Real people understand and respect safety concerns.", fb: "Safe Date!", fbType: "pos" },
+                { txt: "Request video chat before meeting", pts: 18, inc: false, res: "Smart! Real people have no problem with quick video verification.", fb: "Smart Verify!", fbType: "pos" },
+                { txt: "Trust instincts - something feels off, stop talking", pts: 12, inc: false, res: "Good instincts! Multiple red flags (no video, private location).", fb: "Safety First!", fbType: "pos" }
+            ],
+            quiz: {
+                q: "Dating app match can't video chat - what do?",
+                opts: ["Give phone number", "Request video chat first", "Meet anyway", "Share location"],
+                correct: 1,
+                exp: "Video chat verification is essential. Refusal = major red flag."
+            },
+            res: ["Women's Safety BC: womenssafetybc.ca", "Here2Talk: here2talk.ca", "UBC Safewalk: 604-822-5355"]
+        },
+        {
+            id: 10, title: "The Group Chat", icon: "💬", badge: "Account Sharing", difficulty: "Easy",
+            intro: `<p>Exam season chaos! Your UBC course Discord study group has exploded to 200+ members. Someone shared the invite link on the UBC subreddit, and now strangers are joining.</p>
+            <p>Your friend Jordan DMs: "Hey, can I use your Netflix this week? My account got locked and I really want to watch something to de-stress. Everyone shares passwords, right?"</p>
+            <p class="thought">Discord stranger in #general: "Hey new members! Click this link for free Discord Nitro! Only takes 30 seconds! discord-nitro-free.net/claim"</p>
+            <p>Your classmate's cousin needs to access "UBC library e-resources from home" and asks for your Campus Wide Login (CWL). "It'll just take a minute, and I'll owe you one!"</p>`,
+            choices: [
+                { txt: "Share Netflix with Jordan", pts: -10, inc: true, res: "Account risk! Once shared, you lose control. Could lead to payment issues.", fb: "Account Risk!", fbType: "neg" },
+                { txt: "Click the Discord Nitro link", pts: -20, inc: true, res: "Malware! Free Nitro = phishing for your account.", fb: "Account Stolen!", fbType: "neg" },
+                { txt: "Share your UBC CWL credentials", pts: -25, inc: true, res: "Serious violation! You could face UBC disciplinary action.", fb: "Policy Violation!", fbType: "neg" },
+                { txt: "Remove strangers from Discord, keep group secure", pts: 15, inc: false, res: "Good moderation! Protect the study community.", fb: "Good Moderation!", fbType: "pos" },
+                { txt: "Help Jordan contact Netflix support properly", pts: 12, inc: false, res: "Helpful without compromising security!", fb: "Helpful!", fbType: "pos" },
+                { txt: "Create shared Canvas group or Google Drive folder", pts: 18, inc: false, res: "Perfect! Share content, not credentials.", fb: "Secure Solution!", fbType: "pos" }
+            ],
+            quiz: {
+                q: "Safest way to collaborate on UBC study materials?",
+                opts: ["Share streaming passwords", "UBC Canvas/Office 365 with permissions", "Public Discord", "Email credentials"],
+                correct: 1,
+                exp: "UBC-provided tools have proper permissions and don't expose accounts."
+            },
+            res: ["Never share login credentials", "UBC Canvas: canvas.ubc.ca", "UBC Office 365: office.ubc.ca", "Report suspicious Discord members"]
+        },
+        {
+            id: 11, title: "Your Health Data", icon: "🏥", badge: "Medical Privacy", difficulty: "Medium",
+            intro: `<p>It's been a long flu season at UBC. You're feeling run down and receive a call:</p>
+            <p class="thought">"Hello, this is BC Medical Services. We've detected unusual activity with your BC Services Card. For security, please verify your personal information including your health card number and date of birth."</p>
+            <p>You also get a text: "Your prescription for amoxicillin is ready for pickup at Vancouver Pharmacy. Click to confirm: vancouver-rx.com/confirm-12345"</p>
+            <p>Your friend downloaded a popular mental health app "CalmMind" that asks for your birth date, email, and "permission to analyze your mood patterns."</p>
+            <p>UBC Student Health Service emails: "Complete this health survey for research: ubc-medical-research.com - includes your health history and family medical info."</p>`,
+            choices: [
+                { txt: "Verify your health card over the phone", pts: -20, inc: true, res: "Phishing! Real health services never call asking for verification.", fb: "Health Scam!", fbType: "neg" },
+                { txt: "Click the pharmacy prescription link", pts: -18, inc: true, res: "Fake! Could install malware or steal personal health info.", fb: "Phishing Link!", fbType: "neg" },
+                { txt: "Complete the UBC health survey", pts: -15, inc: true, res: "Risky! Real UBC surveys use official portals, not random links.", fb: "Data Risk!", fbType: "neg" },
+                { txt: "Hang up, call BC Medical Services using official number", pts: 18, inc: false, res: "Perfect! Official verification through proper channels.", fb: "Smart!", fbType: "pos" },
+                { txt: "Research CalmMind app privacy policy first", pts: 15, inc: false, res: "Smart! Check what data apps collect before downloading.", fb: "Privacy Smart!", fbType: "pos" },
+                { txt: "Ignore all, visit UBC Health Services in person if needed", pts: 12, inc: false, res: "Safe choice! In-person at trusted locations is best.", fb: "Safe Approach!", fbType: "pos" }
+            ],
+            quiz: {
+                q: "Health Services calls asking for health card - what do?",
+                opts: ["Verify over phone", "Hang up, call official number", "Give all info", "Call back same number"],
+                correct: 1,
+                exp: "Never verify sensitive info over incoming calls. Call official numbers instead."
+            },
+            res: ["BC Ministry of Health: gov.bc.ca/health", "UBC Student Health Service: students.ubc.ca/health", "Here2Talk: here2talk.ca"]
+        },
+        {
+            id: 12, title: "Job Hunt", icon: "💼", badge: "Employment Scams", difficulty: "Hard",
+            intro: `<p>You're looking for part-time work to help with UBC tuition. Indeed and LinkedIn have postings:</p>
+            <p class="thought">"Data Entry Clerk - $25/hour, Work From Home!<br>No experience needed. Immediate start.<br>Send $50 training deposit via e-transfer."</p>
+            <p class="thought">"UBC Research Assistant - $22/hour<br>Must be UBC student. Work from home.<br>Interview via WhatsApp: message +1-555-0199"</p>
+            <p class="thought">"Mystery Shopper Needed - $150 per assignment!<br>Get paid to shop at stores and evaluate service.<br>We'll send you a $500 cheque to deposit, keep $150."</p>
+            <p>You also get a text: "Work from home and make $600/week! No experience! Just buy our starter kit for $99."</p>`,
+            choices: [
+                { txt: "Send $50 training deposit", pts: -20, inc: true, res: "Scam! Legitimate jobs never ask for money to start.", fb: "Job Scam!", fbType: "neg" },
+                { txt: "Interview for 'UBC Research Assistant' on WhatsApp", pts: -20, inc: true, res: "Scam! Real UBC jobs have formal application processes.", fb: "Scam Interview!", fbType: "neg" },
+                { txt: "Accept the mystery shopper 'job'", pts: -25, inc: true, res: "Cheque fraud! The cheque will bounce and you've lost money.", fb: "Cheque Fraud!", fbType: "neg" },
+                { txt: "Pay $99 for starter kit to work from home", pts: -20, inc: true, res: "Scam! Never pay to get a job.", fb: "Job Scam!", fbType: "neg" },
+                { txt: "Research company on LinkedIn before applying", pts: 15, inc: false, res: "Smart! Verify legitimate companies through official channels.", fb: "Smart Research!", fbType: "pos" },
+                { txt: "Check UBC CareersOnline for legitimate part-time jobs", pts: 18, inc: false, res: "Perfect! UBC's job board is legitimate and scam-free.", fb: "Legitimate!", fbType: "pos" }
+            ],
+            quiz: {
+                q: "Job asks for money before starting - what do?",
+                opts: ["Send money", "It's a scam", "Ask for details", "Share with friends"],
+                correct: 1,
+                exp: "Never pay to get a job. All legitimate jobs are free to apply."
+            },
+            res: ["UBC CareersOnline: careersonline.ubc.ca", "Canada Job Bank: jobbank.gc.ca", "Report job scams: antifraudcentre.ca"]
+        },
+        {
+            id: 13, title: "The Aftermath", icon: "🌅", badge: "Recovery & Resources", difficulty: "N/A",
+            intro: `<p>Congratulations! You've completed your cybersecurity journey at UBC. Take a moment to reflect...</p>
+            <p class="thought">"I can't believe how many scams are out there! The CRA emails, the rental scams, those job postings... I'm so glad I learned this stuff at UBC."</p>
+            <p>Your friend Maya had her Instagram hacked last month after clicking a "copyright infringement" link. She's devastated and doesn't know what to do.</p>
+            <p>You also received a text today: "Your UBC account was accessed from an unrecognized device in Beijing. If this wasn't you, click here to secure your account immediately: ubc-security-verify.net"</p>`,
+            choices: [
+                { txt: "Click the link to secure your account", pts: -25, inc: true, res: "Phishing! You just gave criminals your UBC password.", fb: "Account Stolen!", fbType: "neg" },
+                { txt: "Help Maya first, then check your account directly", pts: 15, inc: false, res: "Good priorities! Your account is safe - the alert was fake.", fb: "Good Priorities!", fbType: "pos" },
+                { txt: "Contact UBC IT Security directly", pts: 18, inc: false, res: "Perfect! Official verification is always safest.", fb: "Security Expert!", fbType: "pos" },
+                { txt: "Help Maya recover AND report the phishing email", pts: 22, inc: false, res: "Outstanding! You're a cybersecurity champion!", fb: "Cyber Champion!", fbType: "pos" }
+            ],
+            quiz: {
+                q: "Friend's account hacked - what's the first step?",
+                opts: ["Click their links", "Call using official number", "Reply to their email", "Ignore them"],
+                correct: 1,
+                exp: "Contact friends through OTHER channels. Their account may be compromised."
+            },
+            res: ["UBC IT Security: security@ubc.ca", "UBC IT Help Desk: it.ubc.ca/help", "Canadian Centre for Cyber Security: cyber.gc.ca", "Here2Talk: here2talk.ca"]
+        }
+    ];
+    
+    const endings = [
+        {
+            title: "Cyber Guardian",
+            icon: "🏆",
+            minScore: 140,
+            maxIncidents: 4,
+            desc: "Cyber Guardian",
+            msg: "Outstanding! You made smart decisions throughout your year at UBC. Your friends now come to YOU for cybersecurity advice. UBC IT offers you a part-time job as a security peer educator! Your journey from newcomer to cybersecurity champion is inspiring.",
+            strengths: ["Banking security", "Personal ID protection", "Scam detection", "Helping others"]
+        },
+        {
+            title: "Financial Fortress",
+            icon: "🛡️",
+            minScore: 120,
+            maxIncidents: 6,
+            desc: "Financial Fortress",
+            msg: "Excellent! Your accounts and identity are secure. You've mastered banking safety, ID protection, and financial scam detection. You can confidently navigate the complex world of online finance while studying at UBC.",
+            strengths: ["Digital banking", "Personal ID", "Financial awareness"]
+        },
+        {
+            title: "Social Media Savvy",
+            icon: "🌟",
+            minScore: 110,
+            maxIncidents: 6,
+            desc: "Social Media Savvy",
+            msg: "Great job! You navigate online relationships, social media, and dating apps safely. You understand privacy settings and know how to protect yourself in digital social spaces while enjoying your UBC experience.",
+            strengths: ["Social media privacy", "Dating app safety", "Account sharing awareness"]
+        },
+        {
+            title: "Learning Warrior",
+            icon: "🎓",
+            minScore: 70,
+            maxIncidents: 10,
+            desc: "Learning Warrior",
+            msg: "You made some mistakes but learned valuable lessons along the way. Many scams are sophisticated and designed to trick even careful people. The important thing is that you're learning and improving! UBC has resources to help.",
+            strengths: ["Recovery mindset", "Willingness to learn", "Growing awareness"]
+        },
+        {
+            title: "Building Awareness",
+            icon: "🌱",
+            minScore: 40,
+            maxIncidents: 15,
+            desc: "Building Awareness",
+            msg: "Good start! You have foundational cybersecurity awareness, but there's more to learn. Consider revisiting chapters where you struggled and practice the skills you've learned. UBC IT and security resources are here to help.",
+            strengths: ["Basic security concepts", "Resource awareness"]
+        },
+        {
+            title: "At Risk",
+            icon: "⚠️",
+            minScore: -50,
+            maxIncidents: 20,
+            desc: "At Risk",
+            msg: "You need to revisit key security concepts. Don't worry - everyone starts somewhere! The important thing is recognizing you need to learn more. Focus on UBC IT's resources and practice making security-conscious decisions in your daily life.",
+            strengths: ["Acknowledging need for help", "Access to resources"]
+        }
+    ];
+    
+    // ==================== GAME STATE ====================
+    
+    let gameState = {
+        phase: 'start',
+        chapter: 0,
+        score: 0,
+        incidents: 0,
+        assessmentAnswers: [],
+        chapterProgress: [],
+        categoryScores: {
+            banking: 0, id: 0, rental: 0, employment: 0, 
+            shopping: 0, social: 0, health: 0, phishing: 0
+        }
+    };
+    
+    // ==================== RENDER FUNCTIONS ====================
+    
+    function updateDisplay() {
+        document.getElementById('score').textContent = gameState.score;
+        document.getElementById('inc').textContent = gameState.incidents;
+        document.getElementById('chapter').textContent = gameState.chapter + 1;
+        
+        const progress = gameState.phase === 'chapters' ? ((gameState.chapter + 1) / 13 * 100) : 
+                       gameState.phase === 'assessment' ? 5 : 
+                       gameState.phase === 'ending' ? 100 : 0;
+        document.getElementById('progress').style.width = progress + '%';
+        
+        const progText = gameState.phase === 'start' ? 'Get Started' :
+                        gameState.phase === 'assessment' ? `Assessment Q${gameState.assessmentAnswers.length + 1}/10` :
+                        gameState.phase === 'chapters' ? `Chapter ${gameState.chapter + 1} of 13` :
+                        'Complete!';
+        document.getElementById('progText').textContent = progText;
+        
+        const dots = document.getElementById('progressDots');
+        dots.innerHTML = '';
+        for (let i = 0; i < 13; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'dot' + (i <= gameState.chapter ? (gameState.chapter > i ? ' completed' : ' active') : '');
+            dots.appendChild(dot);
+        }
+    }
+    
+    function showToast(msg) {
+        const t = document.createElement('div');
+        t.className = 'toast';
+        t.textContent = msg;
+        document.body.appendChild(t);
+        setTimeout(() => t.remove(), 3000);
+    }
+    
+    function showStart() {
+        gameState.phase = 'start';
+        document.getElementById('stats').style.display = 'none';
+        updateDisplay();
+        
+        document.getElementById('game').innerHTML = `
+            <div class="start">
+                <div class="logo">🛡️</div>
+                <h2>Welcome to Digital Dorm BC!</h2>
+                <p class="tagline">A Cybersecurity Adventure for UBC Students</p>
+                
+                <div class="intro">
+                    <p><strong>Meet Alex</strong>, a first-year student at the University of British Columbia in Vancouver. Just like you, Alex is navigating independence, new friendships, and the challenges of university life at UBC.</p>
+                    <p><strong>Your mission:</strong> Help Alex make smart decisions about cybersecurity in realistic daily scenarios while living in Vancouver and studying at UBC.</p>
+                    <p><strong>What you'll learn:</strong></p>
+                    <ul>
+                        <li>🔐 Account security & strong passwords (UBC CWL)</li>
+                        <li>📶 Safe WiFi & VPN usage (UBC Secure, campus study spots)</li>
+                        <li>🏦 Banking & financial security</li>
+                        <li>🪪 Personal ID protection (SIN, driver's license)</li>
+                        <li>🏠 Rental scam awareness (Kitsilano, UBC area)</li>
+                        <li>📱 Social media & dating app safety</li>
+                        <li>💼 Employment scam detection (UBC jobs, downtown)</li>
+                        <li>🏥 Health data privacy (UBC Health Services)</li>
+                    </ul>
+                    <p>Based on <strong>real threats</strong> facing UBC students and BC university students.</p>
+                </div>
+                
+                <button class="start-btn" onclick="startAssessment()">🚀 Start Your Journey</button>
+                
+                <p style="margin-top:18px;font-size:0.85rem;color:#6c757d;">
+                    ⏱️ 13 Chapters + 10-Question Assessment • Multiple Endings<br>
+                    Progress automatically saves
+                </p>
+            </div>
+        `;
+    }
+    
+    function startAssessment() {
+        gameState.phase = 'assessment';
+        gameState.assessmentAnswers = [];
+        document.getElementById('stats').style.display = 'flex';
+        updateDisplay();
+        showAssessmentQuestion(0);
+    }
+    
+    function showAssessmentQuestion(idx) {
+        const q = assessmentQuestions[idx];
+        updateDisplay();
+        
+        document.getElementById('game').innerHTML = `
+            <div class="card">
+                <span class="badge assessment">Initial Assessment - Question ${idx + 1}/10</span>
+                <h3 class="chapter-title">Test Your Knowledge</h3>
+                <p>${q.q}</p>
+                ${q.opts.map((opt, i) => 
+                    `<button class="choice" onclick="answerAssessment(${i}, ${idx})">${String.fromCharCode(65+i)}. ${opt}</button>`
+                ).join('')}
+            </div>
+        `;
+    }
+    
+    function answerAssessment(selectedIdx, questionIdx) {
+        const q = assessmentQuestions[questionIdx];
+        const isCorrect = selectedIdx === q.correct;
+        gameState.assessmentAnswers.push({
+            question: questionIdx,
+            correct: isCorrect,
+            topic: q.topic
+        });
+        
+        if (isCorrect) showToast('✅ Correct!');
+        else showToast('❌ Review the correct answer');
+        
+        if (questionIdx < 9) {
+            showAssessmentQuestion(questionIdx + 1);
+        } else {
+            showAssessmentResults();
+        }
+    }
+    
+    function showAssessmentResults() {
+        gameState.phase = 'chapters';
+        gameState.chapter = 0;
+        gameState.score = 0;
+        gameState.incidents = 0;
+        
+        const topics = ['banking', 'id', 'rental', 'employment', 'shopping', 'social', 'health', 'phishing'];
+        const correctByTopic = {};
+        topics.forEach(t => correctByTopic[t] = 0);
+        
+        gameState.assessmentAnswers.forEach(a => {
+            if (a.correct) correctByTopic[a.topic]++;
+        });
+        
+        const weakTopics = topics.filter(t => correctByTopic[t] < 2);
+        
+        updateDisplay();
+        
+        let weakHTML = weakTopics.length ? weakTopics.map(t => {
+            const names = {banking: '💳 Banking', id: '🪪 Personal ID', rental: '🏠 Rental', employment: '💼 Employment', 
+                          shopping: '📦 Shopping', social: '📱 Social Media', health: '🏥 Health', phishing: '🎣 Phishing'};
+            return `<div class="recommendation"><strong>${names[t]}</strong>: Focus on chapters covering this topic</div>`;
+        }).join('') : '<div class="recommendation"><strong>🌟 Great job!</strong> You scored well across all topics!</div>';
+        
+        document.getElementById('game').innerHTML = `
+            <div class="card">
+                <span class="badge">Assessment Complete!</span>
+                <h3 class="chapter-title">Your Cybersecurity Baseline</h3>
+                
+                <div class="assessment-result">
+                    <h4>📊 Your Results</h4>
+                    <p>Correct answers: <strong>${gameState.assessmentAnswers.filter(a => a.correct).length}/10</strong></p>
+                </div>
+                
+                <div class="intro" style="margin-top:15px;">
+                    <h4 style="margin-bottom:10px;">📌 Areas to Focus On:</h4>
+                    ${weakHTML}
+                </div>
+                
+                <p style="margin-top:15px;color:#6c757d;font-size:0.9rem;">
+                    <strong>Tip:</strong> Pay extra attention to chapters covering your weak areas. 
+                    The game will highlight recommendations throughout your journey.
+                </p>
+            </div>
+            
+            <div class="nav">
+                <button class="nav-btn secondary" onclick="showStart()">← Back</button>
+                <button class="nav-btn primary" onclick="showChapter(0)">Begin Chapter 1 →</button>
+            </div>
+        `;
+    }
+    
+    function showChapter(idx) {
+        gameState.chapter = idx;
+        const ch = chapters[idx];
+        gameState.chapterProgress[idx] = true;
+        updateDisplay();
+        
+        let choicesHTML = ch.choices.map((c, i) => 
+            `<button class="choice" onclick="makeChoice(${i})">
+                <strong>${String.fromCharCode(65+i)}. ${c.txt}</strong>
+                <div class="choice-result">${c.res}</div>
+            </button>`
+        ).join('');
+        
+        let resHTML = ch.res.map(r => `<li><span class="res-icon">🔗</span> ${r}</li>`).join('');
+        
+        document.getElementById('game').innerHTML = `
+            <div class="card">
+                <span class="badge chapter">Chapter ${ch.id}</span>
+                <span class="difficulty">${ch.difficulty}</span>
+                <h3 class="chapter-title">${ch.icon} ${ch.title}</h3>
+                
+                <div class="story">${ch.intro}</div>
+                <div class="choices">${choicesHTML}</div>
+            </div>
+            
+            <div class="res-box">
+                <h4>🇨🇦 BC & Canadian / UBC Resources</h4>
+                <ul>${resHTML}</ul>
+            </div>
+        `;
+    }
+    
+    function makeChoice(choiceIdx) {
+        const ch = chapters[gameState.chapter];
+        const c = ch.choices[choiceIdx];
+        
+        if (c.inc) gameState.incidents++;
+        gameState.score = Math.max(-50, gameState.score + c.pts);
+        updateDisplay();
+        
+        let resHTML = c.res.split('. ').map(r => `<li><span class="res-icon">📚</span> ${r}</li>`).join('');
+        
+        document.getElementById('game').innerHTML = `
+            <div class="feedback ${c.fbType}">
+                <div class="feedback-title">
+                    ${c.fb}
+                    <span class="fb-pts">${c.pts >= 0 ? '+' : ''}${c.pts} pts</span>
+                </div>
+                <p>${c.res}</p>
+            </div>
+            
+            <div class="quiz">
+                <h4>🧠 Quick Knowledge Check</h4>
+                <p>${ch.quiz.q}</p>
+                ${ch.quiz.opts.map((opt, i) => 
+                    `<div class="quiz-opt" onclick="answerQuiz(${i})">${String.fromCharCode(65+i)}. ${opt}</div>`
+                ).join('')}
+                <div id="quizRes"></div>
+            </div>
+            
+            <div class="nav">
+                <button class="nav-btn secondary" onclick="showChapter(${gameState.chapter})">↻ Try Again</button>
+                <button class="nav-btn primary" id="nextBtn" onclick="nextChapter()">
+                    ${gameState.chapter < 12 ? 'Next Chapter →' : '🏆 See Your Ending'}
+                </button>
+            </div>
+        `;
+    }
+    
+    let quizAnswered = false;
+    
+    function answerQuiz(idx) {
+        if (quizAnswered) return;
+        quizAnswered = true;
+        
+        const ch = chapters[gameState.chapter];
+        const correct = ch.quiz.correct;
+        const opts = document.querySelectorAll('.quiz-opt');
+        
+        opts.forEach((o, i) => {
+            o.style.pointerEvents = 'none';
+            if (i === correct) o.classList.add('correct');
+            else if (i === idx) o.classList.add('wrong');
+        });
+        
+        if (idx === correct) {
+            gameState.score = Math.min(200, gameState.score + 3);
+            updateDisplay();
+            document.getElementById('quizRes').innerHTML = `<p style="color:#155724;margin-top:8px;"><strong>✅ Correct! +3 points</strong><br>${ch.quiz.exp}</p>`;
+            showToast('🎉 +3 points!');
+        } else {
+            document.getElementById('quizRes').innerHTML = `<p style="color:#721c24;margin-top:8px;"><strong>❌ Not quite...</strong><br>${ch.quiz.exp}</p>`;
+        }
+    }
+    
+    function nextChapter() {
+        quizAnswered = false;
+        if (gameState.chapter < 12) {
+            gameState.chapter++;
+            showChapter(gameState.chapter);
+        } else {
+            showEnding();
+        }
+    }
+    
+    function showEnding() {
+        gameState.phase = 'ending';
+        updateDisplay();
+        
+        let ending = endings[0];
+        for (let e of endings) {
+            if (gameState.score >= e.minScore && gameState.incidents <= e.maxIncidents) {
+                ending = e;
+            }
+        }
+        
+        const allResources = `
+            <div class="res-box">
+                <h4>🇨🇦 Continue Your Cybersecurity Journey</h4>
+                <ul>
+                    <li><span class="res-icon">🛡️</span> UBC IT Security: security@ubc.ca</li>
+                    <li><span class="res-icon">🛡️</span> UBC IT Help Desk: it.ubc.ca/help</li>
+                    <li><span class="res-icon">🌐</span> Canadian Centre for Cyber Security: cyber.gc.ca</li>
+                    <li><span class="res-icon">🚨</span> Canadian Anti-Fraud Centre: 1-888-495-8501</li>
+                    <li><span class="res-icon">📱</span> Get Cyber Safe: getcybersafe.gc.ca</li>
+                    <li><span class="res-icon">💳</span> Equifax Canada: 1-800-465-7166</li>
+                    <li><span class="res-icon">🏠</span> BC Residential Tenancy: residentialtenancybc.ca</li>
+                    <li><span class="res-icon">🧠</span> Here2Talk: here2talk.ca (BC mental health)</li>
+                </ul>
+            </div>
+        `;
+        
+        document.getElementById('game').innerHTML = `
+            <div class="card ending">
+                <div class="trophy">${ending.icon}</div>
+                <h2>First Year Complete!</h2>
+                <div class="title">${ending.desc}</div>
+                
+                <div class="ending-message">
+                    <p>${ending.msg}</p>
+                </div>
+                
+                <div class="stats" style="margin-top:15px;">
+                    <div class="stat"><div class="value">${gameState.score}</div><div class="label">Final Score</div></div>
+                    <div class="stat"><div class="value">${gameState.incidents}</div><div class="label">Incidents</div></div>
+                    <div class="stat"><div class="value">${Object.values(gameState.chapterProgress).filter(v => v).length}/13</div><div class="label">Chapters</div></div>
+                </div>
+                
+                <div class="assessment-result" style="margin-top:15px;">
+                    <h4>🌟 Your UBC Cybersecurity Journey</h4>
+                    <p>You completed ${Object.values(gameState.chapterProgress).filter(v => v).length} chapters and made ${gameState.incidents} security mistakes along the way.</p>
+                    <p style="margin-top:10px;"><strong>Remember:</strong> Cybersecurity is an ongoing journey. Keep learning, stay vigilant, and help others do the same!</p>
+                </div>
+                
+                ${allResources}
+                
+                <div class="nav" style="margin-top:20px;">
+                    <button class="nav-btn secondary" onclick="showStart()">🔄 Play Again</button>
+                </div>
+            </div>
+        `;
+    }
+    
+    showStart();
+    </script>
+</body>
+</html>
